@@ -1,0 +1,105 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsGUCoF.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"bsp_printf.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../BSP/bsp_printf.c"
+  19              		.section	.text._write,"ax",%progbits
+  20              		.align	1
+  21              		.global	_write
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	_write:
+  27              	.LVL0:
+  28              	.LFB147:
+   1:../../BSP/bsp_printf.c **** /**
+   2:../../BSP/bsp_printf.c ****  **************************************************************************************************
+   3:../../BSP/bsp_printf.c ****  * @file        bsp_printf.c
+   4:../../BSP/bsp_printf.c ****  * @brief       Retarget printf to USART1
+   5:../../BSP/bsp_printf.c ****  **************************************************************************************************
+   6:../../BSP/bsp_printf.c ****  */
+   7:../../BSP/bsp_printf.c **** 
+   8:../../BSP/bsp_printf.c **** #include "usart.h"
+   9:../../BSP/bsp_printf.c **** #include <stdio.h>
+  10:../../BSP/bsp_printf.c **** 
+  11:../../BSP/bsp_printf.c **** #if defined(__GNUC__)
+  12:../../BSP/bsp_printf.c **** int _write(int file, char *ptr, int len)
+  13:../../BSP/bsp_printf.c **** {
+  29              		.loc 1 13 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 13 1 is_stmt 0 view .LVU1
+  34 0000 10B5     		push	{r4, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+  39 0002 1446     		mov	r4, r2
+  14:../../BSP/bsp_printf.c ****     (void)file;
+  40              		.loc 1 14 5 is_stmt 1 view .LVU2
+  15:../../BSP/bsp_printf.c ****     HAL_UART_Transmit(&huart1, (uint8_t *)ptr, (uint16_t)len, HAL_MAX_DELAY);
+  41              		.loc 1 15 5 view .LVU3
+  42 0004 4FF0FF33 		mov	r3, #-1
+  43 0008 92B2     		uxth	r2, r2
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsGUCoF.s 			page 2
+
+
+  44              	.LVL1:
+  45              		.loc 1 15 5 is_stmt 0 view .LVU4
+  46 000a 0248     		ldr	r0, .L3
+  47              	.LVL2:
+  48              		.loc 1 15 5 view .LVU5
+  49 000c FFF7FEFF 		bl	HAL_UART_Transmit
+  50              	.LVL3:
+  16:../../BSP/bsp_printf.c ****     return len;
+  51              		.loc 1 16 5 is_stmt 1 view .LVU6
+  17:../../BSP/bsp_printf.c **** }
+  52              		.loc 1 17 1 is_stmt 0 view .LVU7
+  53 0010 2046     		mov	r0, r4
+  54 0012 10BD     		pop	{r4, pc}
+  55              	.LVL4:
+  56              	.L4:
+  57              		.loc 1 17 1 view .LVU8
+  58              		.align	2
+  59              	.L3:
+  60 0014 00000000 		.word	huart1
+  61              		.cfi_endproc
+  62              	.LFE147:
+  64              		.text
+  65              	.Letext0:
+  66              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+  67              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+  68              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+  69              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+  70              		.file 6 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
+  71              		.file 7 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h"
+  72              		.file 8 "../../CM7/Core/Inc/usart.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsGUCoF.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bsp_printf.c
+C:\Users\28576\AppData\Local\Temp\ccsGUCoF.s:20     .text._write:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccsGUCoF.s:26     .text._write:00000000 _write
+C:\Users\28576\AppData\Local\Temp\ccsGUCoF.s:60     .text._write:00000014 $d
+
+UNDEFINED SYMBOLS
+HAL_UART_Transmit
+huart1

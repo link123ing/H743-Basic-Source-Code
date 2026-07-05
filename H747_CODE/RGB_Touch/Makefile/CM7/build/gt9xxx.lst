@@ -1,0 +1,1609 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"gt9xxx.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../BSP/TOUCH/gt9xxx.c"
+  19              		.section	.text.gt9xxx_wr_reg,"ax",%progbits
+  20              		.align	1
+  21              		.global	gt9xxx_wr_reg
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	gt9xxx_wr_reg:
+  27              	.LVL0:
+  28              	.LFB147:
+   1:../../BSP/TOUCH/gt9xxx.c **** /**
+   2:../../BSP/TOUCH/gt9xxx.c ****  * @file        gt9xxx.c
+   3:../../BSP/TOUCH/gt9xxx.c ****  * @brief       GT9xxx capacitive touch controller driver.
+   4:../../BSP/TOUCH/gt9xxx.c ****  *
+   5:../../BSP/TOUCH/gt9xxx.c ****  * This driver is written to be self-contained for the current CubeMX project:
+   6:../../BSP/TOUCH/gt9xxx.c ****  * - Software I2C (GPIO bit-bang) via ctiic.c
+   7:../../BSP/TOUCH/gt9xxx.c ****  * - Polling scan (no external interrupt dependency)
+   8:../../BSP/TOUCH/gt9xxx.c ****  * - Coordinate mapping using lcddev.dir and lcddev.id hints (based on your example logic)
+   9:../../BSP/TOUCH/gt9xxx.c ****  */
+  10:../../BSP/TOUCH/gt9xxx.c **** #include "gt9xxx.h"
+  11:../../BSP/TOUCH/gt9xxx.c **** #include "ctiic.h"
+  12:../../BSP/TOUCH/gt9xxx.c **** #include "touch.h"
+  13:../../BSP/TOUCH/gt9xxx.c **** 
+  14:../../BSP/TOUCH/gt9xxx.c **** #include "lcd.h"
+  15:../../BSP/TOUCH/gt9xxx.c **** #include "bsp_delay.h"
+  16:../../BSP/TOUCH/gt9xxx.c **** 
+  17:../../BSP/TOUCH/gt9xxx.c **** #include <stdio.h>
+  18:../../BSP/TOUCH/gt9xxx.c **** #include <string.h>
+  19:../../BSP/TOUCH/gt9xxx.c **** 
+  20:../../BSP/TOUCH/gt9xxx.c **** /* Default point number for most GT9xxx chips in 5-point mode. */
+  21:../../BSP/TOUCH/gt9xxx.c **** static uint8_t g_gt_tnum = 5;
+  22:../../BSP/TOUCH/gt9xxx.c **** 
+  23:../../BSP/TOUCH/gt9xxx.c **** uint8_t gt9xxx_wr_reg(uint16_t reg, uint8_t *buf, uint8_t len)
+  24:../../BSP/TOUCH/gt9xxx.c **** {
+  29              		.loc 1 24 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 24 1 is_stmt 0 view .LVU1
+  34 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 2
+
+
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 24
+  37              		.cfi_offset 3, -24
+  38              		.cfi_offset 4, -20
+  39              		.cfi_offset 5, -16
+  40              		.cfi_offset 6, -12
+  41              		.cfi_offset 7, -8
+  42              		.cfi_offset 14, -4
+  43 0002 0446     		mov	r4, r0
+  44 0004 0E46     		mov	r6, r1
+  45 0006 1546     		mov	r5, r2
+  25:../../BSP/TOUCH/gt9xxx.c ****     uint8_t ret = 0;
+  46              		.loc 1 25 5 is_stmt 1 view .LVU2
+  47              	.LVL1:
+  26:../../BSP/TOUCH/gt9xxx.c **** 
+  27:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_start();
+  48              		.loc 1 27 5 view .LVU3
+  49 0008 FFF7FEFF 		bl	ct_iic_start
+  50              	.LVL2:
+  28:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_send_byte(GT9XXX_CMD_WR);
+  51              		.loc 1 28 5 view .LVU4
+  52 000c 2820     		movs	r0, #40
+  53 000e FFF7FEFF 		bl	ct_iic_send_byte
+  54              	.LVL3:
+  29:../../BSP/TOUCH/gt9xxx.c ****     ret = ct_iic_wait_ack();
+  55              		.loc 1 29 5 view .LVU5
+  56              		.loc 1 29 11 is_stmt 0 view .LVU6
+  57 0012 FFF7FEFF 		bl	ct_iic_wait_ack
+  58              	.LVL4:
+  30:../../BSP/TOUCH/gt9xxx.c ****     if (ret) { ct_iic_stop(); return ret; }
+  59              		.loc 1 30 5 is_stmt 1 view .LVU7
+  60              		.loc 1 30 8 is_stmt 0 view .LVU8
+  61 0016 D0B9     		cbnz	r0, .L10
+  31:../../BSP/TOUCH/gt9xxx.c **** 
+  32:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_send_byte((uint8_t)(reg >> 8));
+  62              		.loc 1 32 5 is_stmt 1 view .LVU9
+  63 0018 200A     		lsrs	r0, r4, #8
+  64              	.LVL5:
+  65              		.loc 1 32 5 is_stmt 0 view .LVU10
+  66 001a FFF7FEFF 		bl	ct_iic_send_byte
+  67              	.LVL6:
+  33:../../BSP/TOUCH/gt9xxx.c ****     ret = ct_iic_wait_ack();
+  68              		.loc 1 33 5 is_stmt 1 view .LVU11
+  69              		.loc 1 33 11 is_stmt 0 view .LVU12
+  70 001e FFF7FEFF 		bl	ct_iic_wait_ack
+  71              	.LVL7:
+  34:../../BSP/TOUCH/gt9xxx.c ****     if (ret) { ct_iic_stop(); return ret; }
+  72              		.loc 1 34 5 is_stmt 1 view .LVU13
+  73              		.loc 1 34 8 is_stmt 0 view .LVU14
+  74 0022 0746     		mov	r7, r0
+  75 0024 B8B9     		cbnz	r0, .L11
+  35:../../BSP/TOUCH/gt9xxx.c **** 
+  36:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_send_byte((uint8_t)(reg & 0xFF));
+  76              		.loc 1 36 5 is_stmt 1 view .LVU15
+  77 0026 E0B2     		uxtb	r0, r4
+  78              	.LVL8:
+  79              		.loc 1 36 5 is_stmt 0 view .LVU16
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 3
+
+
+  80 0028 FFF7FEFF 		bl	ct_iic_send_byte
+  81              	.LVL9:
+  37:../../BSP/TOUCH/gt9xxx.c ****     ret = ct_iic_wait_ack();
+  82              		.loc 1 37 5 is_stmt 1 view .LVU17
+  83              		.loc 1 37 11 is_stmt 0 view .LVU18
+  84 002c FFF7FEFF 		bl	ct_iic_wait_ack
+  85              	.LVL10:
+  38:../../BSP/TOUCH/gt9xxx.c ****     if (ret) { ct_iic_stop(); return ret; }
+  86              		.loc 1 38 5 is_stmt 1 view .LVU19
+  87              		.loc 1 38 8 is_stmt 0 view .LVU20
+  88 0030 0746     		mov	r7, r0
+  89 0032 98B9     		cbnz	r0, .L12
+  90              	.LBB2:
+  39:../../BSP/TOUCH/gt9xxx.c **** 
+  40:../../BSP/TOUCH/gt9xxx.c ****     for (uint8_t i = 0; i < len; i++)
+  91              		.loc 1 40 18 view .LVU21
+  92 0034 0446     		mov	r4, r0
+  93              	.LVL11:
+  94              	.L5:
+  95              		.loc 1 40 27 is_stmt 1 discriminator 1 view .LVU22
+  96 0036 AC42     		cmp	r4, r5
+  97 0038 13D2     		bcs	.L6
+  41:../../BSP/TOUCH/gt9xxx.c ****     {
+  42:../../BSP/TOUCH/gt9xxx.c ****         ct_iic_send_byte(buf[i]);
+  98              		.loc 1 42 9 view .LVU23
+  99 003a 305D     		ldrb	r0, [r6, r4]	@ zero_extendqisi2
+ 100 003c FFF7FEFF 		bl	ct_iic_send_byte
+ 101              	.LVL12:
+  43:../../BSP/TOUCH/gt9xxx.c ****         ret = ct_iic_wait_ack();
+ 102              		.loc 1 43 9 view .LVU24
+ 103              		.loc 1 43 15 is_stmt 0 view .LVU25
+ 104 0040 FFF7FEFF 		bl	ct_iic_wait_ack
+ 105              	.LVL13:
+  44:../../BSP/TOUCH/gt9xxx.c ****         if (ret) break;
+ 106              		.loc 1 44 9 is_stmt 1 view .LVU26
+ 107              		.loc 1 44 12 is_stmt 0 view .LVU27
+ 108 0044 0746     		mov	r7, r0
+ 109 0046 60B9     		cbnz	r0, .L6
+  40:../../BSP/TOUCH/gt9xxx.c ****     {
+ 110              		.loc 1 40 35 is_stmt 1 discriminator 2 view .LVU28
+ 111 0048 0134     		adds	r4, r4, #1
+ 112              	.LVL14:
+  40:../../BSP/TOUCH/gt9xxx.c ****     {
+ 113              		.loc 1 40 35 is_stmt 0 discriminator 2 view .LVU29
+ 114 004a E4B2     		uxtb	r4, r4
+ 115              	.LVL15:
+  40:../../BSP/TOUCH/gt9xxx.c ****     {
+ 116              		.loc 1 40 35 discriminator 2 view .LVU30
+ 117 004c F3E7     		b	.L5
+ 118              	.LVL16:
+ 119              	.L10:
+  40:../../BSP/TOUCH/gt9xxx.c ****     {
+ 120              		.loc 1 40 35 discriminator 2 view .LVU31
+ 121 004e 0746     		mov	r7, r0
+ 122              	.LBE2:
+  30:../../BSP/TOUCH/gt9xxx.c **** 
+ 123              		.loc 1 30 16 is_stmt 1 discriminator 1 view .LVU32
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 4
+
+
+ 124 0050 FFF7FEFF 		bl	ct_iic_stop
+ 125              	.LVL17:
+  30:../../BSP/TOUCH/gt9xxx.c **** 
+ 126              		.loc 1 30 31 discriminator 2 view .LVU33
+  30:../../BSP/TOUCH/gt9xxx.c **** 
+ 127              		.loc 1 30 38 is_stmt 0 view .LVU34
+ 128 0054 07E0     		b	.L3
+ 129              	.LVL18:
+ 130              	.L11:
+  34:../../BSP/TOUCH/gt9xxx.c **** 
+ 131              		.loc 1 34 16 is_stmt 1 discriminator 1 view .LVU35
+ 132 0056 FFF7FEFF 		bl	ct_iic_stop
+ 133              	.LVL19:
+  34:../../BSP/TOUCH/gt9xxx.c **** 
+ 134              		.loc 1 34 31 discriminator 2 view .LVU36
+  34:../../BSP/TOUCH/gt9xxx.c **** 
+ 135              		.loc 1 34 38 is_stmt 0 view .LVU37
+ 136 005a 04E0     		b	.L3
+ 137              	.LVL20:
+ 138              	.L12:
+  38:../../BSP/TOUCH/gt9xxx.c **** 
+ 139              		.loc 1 38 16 is_stmt 1 discriminator 1 view .LVU38
+ 140 005c FFF7FEFF 		bl	ct_iic_stop
+ 141              	.LVL21:
+  38:../../BSP/TOUCH/gt9xxx.c **** 
+ 142              		.loc 1 38 31 discriminator 2 view .LVU39
+  38:../../BSP/TOUCH/gt9xxx.c **** 
+ 143              		.loc 1 38 38 is_stmt 0 view .LVU40
+ 144 0060 01E0     		b	.L3
+ 145              	.LVL22:
+ 146              	.L6:
+  45:../../BSP/TOUCH/gt9xxx.c ****     }
+  46:../../BSP/TOUCH/gt9xxx.c **** 
+  47:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_stop();
+ 147              		.loc 1 47 5 is_stmt 1 view .LVU41
+ 148 0062 FFF7FEFF 		bl	ct_iic_stop
+ 149              	.LVL23:
+  48:../../BSP/TOUCH/gt9xxx.c ****     return ret;
+ 150              		.loc 1 48 5 view .LVU42
+ 151              	.L3:
+  49:../../BSP/TOUCH/gt9xxx.c **** }
+ 152              		.loc 1 49 1 is_stmt 0 view .LVU43
+ 153 0066 3846     		mov	r0, r7
+ 154 0068 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 155              		.loc 1 49 1 view .LVU44
+ 156              		.cfi_endproc
+ 157              	.LFE147:
+ 159              		.section	.text.gt9xxx_rd_reg,"ax",%progbits
+ 160              		.align	1
+ 161              		.global	gt9xxx_rd_reg
+ 162              		.syntax unified
+ 163              		.thumb
+ 164              		.thumb_func
+ 166              	gt9xxx_rd_reg:
+ 167              	.LVL24:
+ 168              	.LFB148:
+  50:../../BSP/TOUCH/gt9xxx.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 5
+
+
+  51:../../BSP/TOUCH/gt9xxx.c **** void gt9xxx_rd_reg(uint16_t reg, uint8_t *buf, uint8_t len)
+  52:../../BSP/TOUCH/gt9xxx.c **** {
+ 169              		.loc 1 52 1 is_stmt 1 view -0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173              		.loc 1 52 1 is_stmt 0 view .LVU46
+ 174 0000 70B5     		push	{r4, r5, r6, lr}
+ 175              	.LCFI1:
+ 176              		.cfi_def_cfa_offset 16
+ 177              		.cfi_offset 4, -16
+ 178              		.cfi_offset 5, -12
+ 179              		.cfi_offset 6, -8
+ 180              		.cfi_offset 14, -4
+ 181 0002 0446     		mov	r4, r0
+ 182 0004 0E46     		mov	r6, r1
+ 183 0006 1546     		mov	r5, r2
+  53:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_start();
+ 184              		.loc 1 53 5 is_stmt 1 view .LVU47
+ 185 0008 FFF7FEFF 		bl	ct_iic_start
+ 186              	.LVL25:
+  54:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_send_byte(GT9XXX_CMD_WR);
+ 187              		.loc 1 54 5 view .LVU48
+ 188 000c 2820     		movs	r0, #40
+ 189 000e FFF7FEFF 		bl	ct_iic_send_byte
+ 190              	.LVL26:
+  55:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_wait_ack();
+ 191              		.loc 1 55 5 view .LVU49
+ 192 0012 FFF7FEFF 		bl	ct_iic_wait_ack
+ 193              	.LVL27:
+  56:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_send_byte((uint8_t)(reg >> 8));
+ 194              		.loc 1 56 5 view .LVU50
+ 195 0016 200A     		lsrs	r0, r4, #8
+ 196 0018 FFF7FEFF 		bl	ct_iic_send_byte
+ 197              	.LVL28:
+  57:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_wait_ack();
+ 198              		.loc 1 57 5 view .LVU51
+ 199 001c FFF7FEFF 		bl	ct_iic_wait_ack
+ 200              	.LVL29:
+  58:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_send_byte((uint8_t)(reg & 0xFF));
+ 201              		.loc 1 58 5 view .LVU52
+ 202 0020 E0B2     		uxtb	r0, r4
+ 203 0022 FFF7FEFF 		bl	ct_iic_send_byte
+ 204              	.LVL30:
+  59:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_wait_ack();
+ 205              		.loc 1 59 5 view .LVU53
+ 206 0026 FFF7FEFF 		bl	ct_iic_wait_ack
+ 207              	.LVL31:
+  60:../../BSP/TOUCH/gt9xxx.c **** 
+  61:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_start();
+ 208              		.loc 1 61 5 view .LVU54
+ 209 002a FFF7FEFF 		bl	ct_iic_start
+ 210              	.LVL32:
+  62:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_send_byte(GT9XXX_CMD_RD);
+ 211              		.loc 1 62 5 view .LVU55
+ 212 002e 2920     		movs	r0, #41
+ 213 0030 FFF7FEFF 		bl	ct_iic_send_byte
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 6
+
+
+ 214              	.LVL33:
+  63:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_wait_ack();
+ 215              		.loc 1 63 5 view .LVU56
+ 216 0034 FFF7FEFF 		bl	ct_iic_wait_ack
+ 217              	.LVL34:
+  64:../../BSP/TOUCH/gt9xxx.c **** 
+  65:../../BSP/TOUCH/gt9xxx.c ****     for (uint8_t i = 0; i < len; i++)
+ 218              		.loc 1 65 5 view .LVU57
+ 219              	.LBB3:
+ 220              		.loc 1 65 10 view .LVU58
+ 221              		.loc 1 65 18 is_stmt 0 view .LVU59
+ 222 0038 0024     		movs	r4, #0
+ 223              	.LVL35:
+ 224              		.loc 1 65 5 view .LVU60
+ 225 003a 08E0     		b	.L14
+ 226              	.LVL36:
+ 227              	.L15:
+  66:../../BSP/TOUCH/gt9xxx.c ****     {
+  67:../../BSP/TOUCH/gt9xxx.c ****         buf[i] = ct_iic_read_byte(i == (len - 1) ? 0 : 1);
+ 228              		.loc 1 67 9 is_stmt 1 view .LVU61
+ 229              		.loc 1 67 45 is_stmt 0 view .LVU62
+ 230 003c 681E     		subs	r0, r5, #1
+ 231              		.loc 1 67 18 view .LVU63
+ 232 003e 201A     		subs	r0, r4, r0
+ 233 0040 18BF     		it	ne
+ 234 0042 0120     		movne	r0, #1
+ 235 0044 FFF7FEFF 		bl	ct_iic_read_byte
+ 236              	.LVL37:
+ 237              		.loc 1 67 16 discriminator 1 view .LVU64
+ 238 0048 3055     		strb	r0, [r6, r4]
+  65:../../BSP/TOUCH/gt9xxx.c ****     {
+ 239              		.loc 1 65 35 is_stmt 1 discriminator 3 view .LVU65
+ 240 004a 0134     		adds	r4, r4, #1
+ 241              	.LVL38:
+  65:../../BSP/TOUCH/gt9xxx.c ****     {
+ 242              		.loc 1 65 35 is_stmt 0 discriminator 3 view .LVU66
+ 243 004c E4B2     		uxtb	r4, r4
+ 244              	.LVL39:
+ 245              	.L14:
+  65:../../BSP/TOUCH/gt9xxx.c ****     {
+ 246              		.loc 1 65 27 is_stmt 1 discriminator 1 view .LVU67
+ 247 004e AC42     		cmp	r4, r5
+ 248 0050 F4D3     		bcc	.L15
+ 249              	.LBE3:
+  68:../../BSP/TOUCH/gt9xxx.c ****     }
+  69:../../BSP/TOUCH/gt9xxx.c **** 
+  70:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_stop();
+ 250              		.loc 1 70 5 view .LVU68
+ 251 0052 FFF7FEFF 		bl	ct_iic_stop
+ 252              	.LVL40:
+  71:../../BSP/TOUCH/gt9xxx.c **** }
+ 253              		.loc 1 71 1 is_stmt 0 view .LVU69
+ 254 0056 70BD     		pop	{r4, r5, r6, pc}
+ 255              		.loc 1 71 1 view .LVU70
+ 256              		.cfi_endproc
+ 257              	.LFE148:
+ 259              		.section	.rodata.gt9xxx_init.str1.4,"aMS",%progbits,1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 7
+
+
+ 260              		.align	2
+ 261              	.LC0:
+ 262 0000 43545020 		.ascii	"CTP ID:%s\015\012\000"
+ 262      49443A25 
+ 262      730D0A00 
+ 263              		.align	2
+ 264              	.LC1:
+ 265 000c 39313100 		.ascii	"911\000"
+ 266              		.align	2
+ 267              	.LC2:
+ 268 0010 39313437 		.ascii	"9147\000"
+ 268      00
+ 269 0015 000000   		.align	2
+ 270              	.LC3:
+ 271 0018 31313538 		.ascii	"1158\000"
+ 271      00
+ 272 001d 000000   		.align	2
+ 273              	.LC4:
+ 274 0020 39323731 		.ascii	"9271\000"
+ 274      00
+ 275 0025 000000   		.align	2
+ 276              	.LC5:
+ 277 0028 39363700 		.ascii	"967\000"
+ 278              		.section	.text.gt9xxx_init,"ax",%progbits
+ 279              		.align	1
+ 280              		.global	gt9xxx_init
+ 281              		.syntax unified
+ 282              		.thumb
+ 283              		.thumb_func
+ 285              	gt9xxx_init:
+ 286              	.LFB149:
+  72:../../BSP/TOUCH/gt9xxx.c **** 
+  73:../../BSP/TOUCH/gt9xxx.c **** uint8_t gt9xxx_init(void)
+  74:../../BSP/TOUCH/gt9xxx.c **** {
+ 287              		.loc 1 74 1 is_stmt 1 view -0
+ 288              		.cfi_startproc
+ 289              		@ args = 0, pretend = 0, frame = 40
+ 290              		@ frame_needed = 0, uses_anonymous_args = 0
+ 291 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 292              	.LCFI2:
+ 293              		.cfi_def_cfa_offset 28
+ 294              		.cfi_offset 4, -28
+ 295              		.cfi_offset 5, -24
+ 296              		.cfi_offset 6, -20
+ 297              		.cfi_offset 7, -16
+ 298              		.cfi_offset 8, -12
+ 299              		.cfi_offset 9, -8
+ 300              		.cfi_offset 14, -4
+ 301 0004 8BB0     		sub	sp, sp, #44
+ 302              	.LCFI3:
+ 303              		.cfi_def_cfa_offset 72
+  75:../../BSP/TOUCH/gt9xxx.c ****     GPIO_InitTypeDef gpio_init_struct = {0};
+ 304              		.loc 1 75 5 view .LVU72
+ 305              		.loc 1 75 22 is_stmt 0 view .LVU73
+ 306 0006 05AD     		add	r5, sp, #20
+ 307 0008 0024     		movs	r4, #0
+ 308 000a 0594     		str	r4, [sp, #20]
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 8
+
+
+ 309 000c 0694     		str	r4, [sp, #24]
+ 310 000e 0794     		str	r4, [sp, #28]
+ 311 0010 0894     		str	r4, [sp, #32]
+ 312 0012 0994     		str	r4, [sp, #36]
+  76:../../BSP/TOUCH/gt9xxx.c **** 
+  77:../../BSP/TOUCH/gt9xxx.c ****     GT9XXX_RST_GPIO_CLK_ENABLE();
+ 313              		.loc 1 77 5 is_stmt 1 view .LVU74
+ 314              		.loc 1 77 5 view .LVU75
+ 315              	.LBB4:
+ 316              		.loc 1 77 5 view .LVU76
+ 317              		.loc 1 77 5 view .LVU77
+ 318 0014 4F4B     		ldr	r3, .L23
+ 319 0016 D3F8E020 		ldr	r2, [r3, #224]
+ 320 001a 42F00202 		orr	r2, r2, #2
+ 321 001e C3F8E020 		str	r2, [r3, #224]
+ 322              		.loc 1 77 5 view .LVU78
+ 323 0022 D3F8E020 		ldr	r2, [r3, #224]
+ 324 0026 02F00202 		and	r2, r2, #2
+ 325 002a 0092     		str	r2, [sp]
+ 326              		.loc 1 77 5 view .LVU79
+ 327 002c 009A     		ldr	r2, [sp]
+ 328              	.LBE4:
+ 329              		.loc 1 77 5 view .LVU80
+ 330              		.loc 1 77 5 view .LVU81
+  78:../../BSP/TOUCH/gt9xxx.c ****     GT9XXX_INT_GPIO_CLK_ENABLE();
+ 331              		.loc 1 78 5 view .LVU82
+ 332              		.loc 1 78 5 view .LVU83
+ 333              	.LBB5:
+ 334              		.loc 1 78 5 view .LVU84
+ 335              		.loc 1 78 5 view .LVU85
+ 336 002e D3F8E020 		ldr	r2, [r3, #224]
+ 337 0032 42F00202 		orr	r2, r2, #2
+ 338 0036 C3F8E020 		str	r2, [r3, #224]
+ 339              		.loc 1 78 5 view .LVU86
+ 340 003a D3F8E030 		ldr	r3, [r3, #224]
+ 341 003e 03F00203 		and	r3, r3, #2
+ 342 0042 0193     		str	r3, [sp, #4]
+ 343              		.loc 1 78 5 view .LVU87
+ 344 0044 019B     		ldr	r3, [sp, #4]
+ 345              	.LBE5:
+ 346              		.loc 1 78 5 view .LVU88
+ 347              		.loc 1 78 5 view .LVU89
+  79:../../BSP/TOUCH/gt9xxx.c **** 
+  80:../../BSP/TOUCH/gt9xxx.c ****     /* RST as push-pull output */
+  81:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Pin = GT9XXX_RST_GPIO_PIN;
+ 348              		.loc 1 81 5 view .LVU90
+ 349              		.loc 1 81 26 is_stmt 0 view .LVU91
+ 350 0046 4FF48058 		mov	r8, #4096
+ 351 004a CDF81480 		str	r8, [sp, #20]
+  82:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Mode = GPIO_MODE_OUTPUT_PP;
+ 352              		.loc 1 82 5 is_stmt 1 view .LVU92
+ 353              		.loc 1 82 27 is_stmt 0 view .LVU93
+ 354 004e 0126     		movs	r6, #1
+ 355 0050 0696     		str	r6, [sp, #24]
+  83:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Pull = GPIO_PULLUP;
+ 356              		.loc 1 83 5 is_stmt 1 view .LVU94
+ 357              		.loc 1 83 27 is_stmt 0 view .LVU95
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 9
+
+
+ 358 0052 0796     		str	r6, [sp, #28]
+  84:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+ 359              		.loc 1 84 5 is_stmt 1 view .LVU96
+ 360              		.loc 1 84 28 is_stmt 0 view .LVU97
+ 361 0054 0896     		str	r6, [sp, #32]
+  85:../../BSP/TOUCH/gt9xxx.c ****     HAL_GPIO_Init(GT9XXX_RST_GPIO_PORT, &gpio_init_struct);
+ 362              		.loc 1 85 5 is_stmt 1 view .LVU98
+ 363 0056 404F     		ldr	r7, .L23+4
+ 364 0058 2946     		mov	r1, r5
+ 365 005a 3846     		mov	r0, r7
+ 366 005c FFF7FEFF 		bl	HAL_GPIO_Init
+ 367              	.LVL41:
+  86:../../BSP/TOUCH/gt9xxx.c **** 
+  87:../../BSP/TOUCH/gt9xxx.c ****     /* INT as input (polling scan does not strictly need it) */
+  88:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Pin = GT9XXX_INT_GPIO_PIN;
+ 368              		.loc 1 88 5 view .LVU99
+ 369              		.loc 1 88 26 is_stmt 0 view .LVU100
+ 370 0060 4FF02009 		mov	r9, #32
+ 371 0064 CDF81490 		str	r9, [sp, #20]
+  89:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Mode = GPIO_MODE_INPUT;
+ 372              		.loc 1 89 5 is_stmt 1 view .LVU101
+ 373              		.loc 1 89 27 is_stmt 0 view .LVU102
+ 374 0068 0694     		str	r4, [sp, #24]
+  90:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Pull = GPIO_PULLUP;
+ 375              		.loc 1 90 5 is_stmt 1 view .LVU103
+ 376              		.loc 1 90 27 is_stmt 0 view .LVU104
+ 377 006a 0796     		str	r6, [sp, #28]
+  91:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+ 378              		.loc 1 91 5 is_stmt 1 view .LVU105
+ 379              		.loc 1 91 28 is_stmt 0 view .LVU106
+ 380 006c 0896     		str	r6, [sp, #32]
+  92:../../BSP/TOUCH/gt9xxx.c ****     HAL_GPIO_Init(GT9XXX_INT_GPIO_PORT, &gpio_init_struct);
+ 381              		.loc 1 92 5 is_stmt 1 view .LVU107
+ 382 006e 2946     		mov	r1, r5
+ 383 0070 3846     		mov	r0, r7
+ 384 0072 FFF7FEFF 		bl	HAL_GPIO_Init
+ 385              	.LVL42:
+  93:../../BSP/TOUCH/gt9xxx.c **** 
+  94:../../BSP/TOUCH/gt9xxx.c ****     ct_iic_init();
+ 386              		.loc 1 94 5 view .LVU108
+ 387 0076 FFF7FEFF 		bl	ct_iic_init
+ 388              	.LVL43:
+  95:../../BSP/TOUCH/gt9xxx.c **** 
+  96:../../BSP/TOUCH/gt9xxx.c ****     /* Hardware reset (same sequence as 实验24) */
+  97:../../BSP/TOUCH/gt9xxx.c ****     GT9XXX_RST(0);
+ 389              		.loc 1 97 5 view .LVU109
+ 390              		.loc 1 97 5 view .LVU110
+ 391              		.loc 1 97 5 discriminator 2 view .LVU111
+ 392 007a 2246     		mov	r2, r4
+ 393 007c 4146     		mov	r1, r8
+ 394 007e 3846     		mov	r0, r7
+ 395 0080 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 396              	.LVL44:
+ 397              		.loc 1 97 5 view .LVU112
+  98:../../BSP/TOUCH/gt9xxx.c ****     delay_ms(30);
+ 398              		.loc 1 98 5 view .LVU113
+ 399 0084 1E20     		movs	r0, #30
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 10
+
+
+ 400 0086 FFF7FEFF 		bl	delay_ms
+ 401              	.LVL45:
+  99:../../BSP/TOUCH/gt9xxx.c ****     GT9XXX_RST(1);
+ 402              		.loc 1 99 5 view .LVU114
+ 403              		.loc 1 99 5 view .LVU115
+ 404              		.loc 1 99 5 discriminator 1 view .LVU116
+ 405 008a 3246     		mov	r2, r6
+ 406 008c 4146     		mov	r1, r8
+ 407 008e 3846     		mov	r0, r7
+ 408 0090 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 409              	.LVL46:
+ 410              		.loc 1 99 5 view .LVU117
+ 100:../../BSP/TOUCH/gt9xxx.c ****     delay_ms(30);
+ 411              		.loc 1 100 5 view .LVU118
+ 412 0094 1E20     		movs	r0, #30
+ 413 0096 FFF7FEFF 		bl	delay_ms
+ 414              	.LVL47:
+ 101:../../BSP/TOUCH/gt9xxx.c **** 
+ 102:../../BSP/TOUCH/gt9xxx.c ****     /* INT: floating input after reset */
+ 103:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Pin = GT9XXX_INT_GPIO_PIN;
+ 415              		.loc 1 103 5 view .LVU119
+ 416              		.loc 1 103 26 is_stmt 0 view .LVU120
+ 417 009a CDF81490 		str	r9, [sp, #20]
+ 104:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Mode = GPIO_MODE_INPUT;
+ 418              		.loc 1 104 5 is_stmt 1 view .LVU121
+ 419              		.loc 1 104 27 is_stmt 0 view .LVU122
+ 420 009e 0694     		str	r4, [sp, #24]
+ 105:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Pull = GPIO_NOPULL;
+ 421              		.loc 1 105 5 is_stmt 1 view .LVU123
+ 422              		.loc 1 105 27 is_stmt 0 view .LVU124
+ 423 00a0 0794     		str	r4, [sp, #28]
+ 106:../../BSP/TOUCH/gt9xxx.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+ 424              		.loc 1 106 5 is_stmt 1 view .LVU125
+ 425              		.loc 1 106 28 is_stmt 0 view .LVU126
+ 426 00a2 0896     		str	r6, [sp, #32]
+ 107:../../BSP/TOUCH/gt9xxx.c ****     HAL_GPIO_Init(GT9XXX_INT_GPIO_PORT, &gpio_init_struct);
+ 427              		.loc 1 107 5 is_stmt 1 view .LVU127
+ 428 00a4 2946     		mov	r1, r5
+ 429 00a6 3846     		mov	r0, r7
+ 430 00a8 FFF7FEFF 		bl	HAL_GPIO_Init
+ 431              	.LVL48:
+ 108:../../BSP/TOUCH/gt9xxx.c **** 
+ 109:../../BSP/TOUCH/gt9xxx.c ****     delay_ms(100);
+ 432              		.loc 1 109 5 view .LVU128
+ 433 00ac 6420     		movs	r0, #100
+ 434 00ae FFF7FEFF 		bl	delay_ms
+ 435              	.LVL49:
+ 110:../../BSP/TOUCH/gt9xxx.c **** 
+ 111:../../BSP/TOUCH/gt9xxx.c ****     uint8_t pid_raw[5] = {0};
+ 436              		.loc 1 111 5 view .LVU129
+ 437              		.loc 1 111 13 is_stmt 0 view .LVU130
+ 438 00b2 03AD     		add	r5, sp, #12
+ 439 00b4 0394     		str	r4, [sp, #12]
+ 440 00b6 8DF81040 		strb	r4, [sp, #16]
+ 112:../../BSP/TOUCH/gt9xxx.c ****     gt9xxx_rd_reg(GT9XXX_PID_REG, pid_raw, 4);
+ 441              		.loc 1 112 5 is_stmt 1 view .LVU131
+ 442 00ba 0422     		movs	r2, #4
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 11
+
+
+ 443 00bc 2946     		mov	r1, r5
+ 444 00be 48F24010 		movw	r0, #33088
+ 445 00c2 FFF7FEFF 		bl	gt9xxx_rd_reg
+ 446              	.LVL50:
+ 113:../../BSP/TOUCH/gt9xxx.c ****     pid_raw[4] = 0;
+ 447              		.loc 1 113 5 view .LVU132
+ 448              		.loc 1 113 16 is_stmt 0 view .LVU133
+ 449 00c6 8DF81040 		strb	r4, [sp, #16]
+ 114:../../BSP/TOUCH/gt9xxx.c **** 
+ 115:../../BSP/TOUCH/gt9xxx.c ****     printf("CTP ID:%s\r\n", pid_raw);
+ 450              		.loc 1 115 5 is_stmt 1 view .LVU134
+ 451 00ca 2946     		mov	r1, r5
+ 452 00cc 2348     		ldr	r0, .L23+8
+ 453 00ce FFF7FEFF 		bl	printf
+ 454              	.LVL51:
+ 116:../../BSP/TOUCH/gt9xxx.c **** 
+ 117:../../BSP/TOUCH/gt9xxx.c ****     g_gt_tnum = 5;
+ 455              		.loc 1 117 5 view .LVU135
+ 456              		.loc 1 117 15 is_stmt 0 view .LVU136
+ 457 00d2 234B     		ldr	r3, .L23+12
+ 458 00d4 0522     		movs	r2, #5
+ 459 00d6 1A70     		strb	r2, [r3]
+ 118:../../BSP/TOUCH/gt9xxx.c ****     if (strcmp((char *)pid_raw, "911") && strcmp((char *)pid_raw, "9147") &&
+ 460              		.loc 1 118 5 is_stmt 1 view .LVU137
+ 461              		.loc 1 118 9 is_stmt 0 view .LVU138
+ 462 00d8 2249     		ldr	r1, .L23+16
+ 463 00da 2846     		mov	r0, r5
+ 464 00dc FFF7FEFF 		bl	strcmp
+ 465              	.LVL52:
+ 466              		.loc 1 118 8 discriminator 1 view .LVU139
+ 467 00e0 98B1     		cbz	r0, .L18
+ 468              		.loc 1 118 43 discriminator 2 view .LVU140
+ 469 00e2 2149     		ldr	r1, .L23+20
+ 470 00e4 2846     		mov	r0, r5
+ 471 00e6 FFF7FEFF 		bl	strcmp
+ 472              	.LVL53:
+ 473              		.loc 1 118 40 discriminator 3 view .LVU141
+ 474 00ea 70B1     		cbz	r0, .L18
+ 119:../../BSP/TOUCH/gt9xxx.c ****         strcmp((char *)pid_raw, "1158") && strcmp((char *)pid_raw, "9271") &&
+ 475              		.loc 1 119 9 view .LVU142
+ 476 00ec 1F49     		ldr	r1, .L23+24
+ 477 00ee 2846     		mov	r0, r5
+ 478 00f0 FFF7FEFF 		bl	strcmp
+ 479              	.LVL54:
+ 118:../../BSP/TOUCH/gt9xxx.c ****     if (strcmp((char *)pid_raw, "911") && strcmp((char *)pid_raw, "9147") &&
+ 480              		.loc 1 118 75 discriminator 4 view .LVU143
+ 481 00f4 48B1     		cbz	r0, .L18
+ 482              		.loc 1 119 44 view .LVU144
+ 483 00f6 1E49     		ldr	r1, .L23+28
+ 484 00f8 2846     		mov	r0, r5
+ 485 00fa FFF7FEFF 		bl	strcmp
+ 486              	.LVL55:
+ 487              		.loc 1 119 41 discriminator 2 view .LVU145
+ 488 00fe 20B1     		cbz	r0, .L18
+ 120:../../BSP/TOUCH/gt9xxx.c ****         strcmp((char *)pid_raw, "967"))
+ 489              		.loc 1 120 9 view .LVU146
+ 490 0100 1C49     		ldr	r1, .L23+32
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 12
+
+
+ 491 0102 2846     		mov	r0, r5
+ 492 0104 FFF7FEFF 		bl	strcmp
+ 493              	.LVL56:
+ 119:../../BSP/TOUCH/gt9xxx.c ****         strcmp((char *)pid_raw, "1158") && strcmp((char *)pid_raw, "9271") &&
+ 494              		.loc 1 119 76 discriminator 3 view .LVU147
+ 495 0108 08BB     		cbnz	r0, .L21
+ 496              	.L18:
+ 121:../../BSP/TOUCH/gt9xxx.c ****     {
+ 122:../../BSP/TOUCH/gt9xxx.c ****         return 1;
+ 123:../../BSP/TOUCH/gt9xxx.c ****     }
+ 124:../../BSP/TOUCH/gt9xxx.c **** 
+ 125:../../BSP/TOUCH/gt9xxx.c ****     if (strcmp((char *)pid_raw, "9271") == 0)
+ 497              		.loc 1 125 5 is_stmt 1 view .LVU148
+ 498              		.loc 1 125 9 is_stmt 0 view .LVU149
+ 499 010a 1949     		ldr	r1, .L23+28
+ 500 010c 03A8     		add	r0, sp, #12
+ 501 010e FFF7FEFF 		bl	strcmp
+ 502              	.LVL57:
+ 503              		.loc 1 125 8 discriminator 1 view .LVU150
+ 504 0112 10B9     		cbnz	r0, .L20
+ 126:../../BSP/TOUCH/gt9xxx.c ****     {
+ 127:../../BSP/TOUCH/gt9xxx.c ****         g_gt_tnum = 10;
+ 505              		.loc 1 127 9 is_stmt 1 view .LVU151
+ 506              		.loc 1 127 19 is_stmt 0 view .LVU152
+ 507 0114 124B     		ldr	r3, .L23+12
+ 508 0116 0A22     		movs	r2, #10
+ 509 0118 1A70     		strb	r2, [r3]
+ 510              	.L20:
+ 128:../../BSP/TOUCH/gt9xxx.c ****     }
+ 129:../../BSP/TOUCH/gt9xxx.c **** 
+ 130:../../BSP/TOUCH/gt9xxx.c ****     /* Soft reset: 0x02 then 0x00 */
+ 131:../../BSP/TOUCH/gt9xxx.c ****     uint8_t temp[1];
+ 511              		.loc 1 131 5 is_stmt 1 view .LVU153
+ 132:../../BSP/TOUCH/gt9xxx.c ****     temp[0] = 0x02;
+ 512              		.loc 1 132 5 view .LVU154
+ 513              		.loc 1 132 13 is_stmt 0 view .LVU155
+ 514 011a 0223     		movs	r3, #2
+ 515 011c 8DF80830 		strb	r3, [sp, #8]
+ 133:../../BSP/TOUCH/gt9xxx.c ****     gt9xxx_wr_reg(GT9XXX_CTRL_REG, temp, 1);
+ 516              		.loc 1 133 5 is_stmt 1 view .LVU156
+ 517 0120 02AD     		add	r5, sp, #8
+ 518 0122 0122     		movs	r2, #1
+ 519 0124 2946     		mov	r1, r5
+ 520 0126 48F24000 		movw	r0, #32832
+ 521 012a FFF7FEFF 		bl	gt9xxx_wr_reg
+ 522              	.LVL58:
+ 134:../../BSP/TOUCH/gt9xxx.c ****     delay_ms(10);
+ 523              		.loc 1 134 5 view .LVU157
+ 524 012e 0A20     		movs	r0, #10
+ 525 0130 FFF7FEFF 		bl	delay_ms
+ 526              	.LVL59:
+ 135:../../BSP/TOUCH/gt9xxx.c **** 
+ 136:../../BSP/TOUCH/gt9xxx.c ****     temp[0] = 0x00;
+ 527              		.loc 1 136 5 view .LVU158
+ 528              		.loc 1 136 13 is_stmt 0 view .LVU159
+ 529 0134 0024     		movs	r4, #0
+ 530 0136 8DF80840 		strb	r4, [sp, #8]
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 13
+
+
+ 137:../../BSP/TOUCH/gt9xxx.c ****     gt9xxx_wr_reg(GT9XXX_CTRL_REG, temp, 1);
+ 531              		.loc 1 137 5 is_stmt 1 view .LVU160
+ 532 013a 0122     		movs	r2, #1
+ 533 013c 2946     		mov	r1, r5
+ 534 013e 48F24000 		movw	r0, #32832
+ 535 0142 FFF7FEFF 		bl	gt9xxx_wr_reg
+ 536              	.LVL60:
+ 138:../../BSP/TOUCH/gt9xxx.c **** 
+ 139:../../BSP/TOUCH/gt9xxx.c ****     return 0;
+ 537              		.loc 1 139 5 view .LVU161
+ 538              		.loc 1 139 12 is_stmt 0 view .LVU162
+ 539 0146 2046     		mov	r0, r4
+ 540              	.L19:
+ 140:../../BSP/TOUCH/gt9xxx.c **** }
+ 541              		.loc 1 140 1 view .LVU163
+ 542 0148 0BB0     		add	sp, sp, #44
+ 543              	.LCFI4:
+ 544              		.cfi_remember_state
+ 545              		.cfi_def_cfa_offset 28
+ 546              		@ sp needed
+ 547 014a BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 548              	.L21:
+ 549              	.LCFI5:
+ 550              		.cfi_restore_state
+ 122:../../BSP/TOUCH/gt9xxx.c ****     }
+ 551              		.loc 1 122 16 view .LVU164
+ 552 014e 0120     		movs	r0, #1
+ 553 0150 FAE7     		b	.L19
+ 554              	.L24:
+ 555 0152 00BF     		.align	2
+ 556              	.L23:
+ 557 0154 00440258 		.word	1476543488
+ 558 0158 00040258 		.word	1476527104
+ 559 015c 00000000 		.word	.LC0
+ 560 0160 00000000 		.word	g_gt_tnum
+ 561 0164 0C000000 		.word	.LC1
+ 562 0168 10000000 		.word	.LC2
+ 563 016c 18000000 		.word	.LC3
+ 564 0170 20000000 		.word	.LC4
+ 565 0174 28000000 		.word	.LC5
+ 566              		.cfi_endproc
+ 567              	.LFE149:
+ 569              		.section	.text.gt9xxx_scan,"ax",%progbits
+ 570              		.align	1
+ 571              		.global	gt9xxx_scan
+ 572              		.syntax unified
+ 573              		.thumb
+ 574              		.thumb_func
+ 576              	gt9xxx_scan:
+ 577              	.LVL61:
+ 578              	.LFB150:
+ 141:../../BSP/TOUCH/gt9xxx.c **** 
+ 142:../../BSP/TOUCH/gt9xxx.c **** static const uint16_t GT9XXX_TPX_TBL[10] = {
+ 143:../../BSP/TOUCH/gt9xxx.c ****     GT9XXX_TP1_REG,  GT9XXX_TP2_REG,  GT9XXX_TP3_REG,  GT9XXX_TP4_REG,  GT9XXX_TP5_REG,
+ 144:../../BSP/TOUCH/gt9xxx.c ****     GT9XXX_TP6_REG,  GT9XXX_TP7_REG,  GT9XXX_TP8_REG,  GT9XXX_TP9_REG,  GT9XXX_TP10_REG
+ 145:../../BSP/TOUCH/gt9xxx.c **** };
+ 146:../../BSP/TOUCH/gt9xxx.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 14
+
+
+ 147:../../BSP/TOUCH/gt9xxx.c **** uint8_t gt9xxx_scan(uint8_t mode_unused)
+ 148:../../BSP/TOUCH/gt9xxx.c **** {
+ 579              		.loc 1 148 1 is_stmt 1 view -0
+ 580              		.cfi_startproc
+ 581              		@ args = 0, pretend = 0, frame = 8
+ 582              		@ frame_needed = 0, uses_anonymous_args = 0
+ 583              		.loc 1 148 1 is_stmt 0 view .LVU166
+ 584 0000 30B5     		push	{r4, r5, lr}
+ 585              	.LCFI6:
+ 586              		.cfi_def_cfa_offset 12
+ 587              		.cfi_offset 4, -12
+ 588              		.cfi_offset 5, -8
+ 589              		.cfi_offset 14, -4
+ 590 0002 83B0     		sub	sp, sp, #12
+ 591              	.LCFI7:
+ 592              		.cfi_def_cfa_offset 24
+ 149:../../BSP/TOUCH/gt9xxx.c ****     (void)mode_unused;
+ 593              		.loc 1 149 5 is_stmt 1 view .LVU167
+ 150:../../BSP/TOUCH/gt9xxx.c **** 
+ 151:../../BSP/TOUCH/gt9xxx.c ****     uint8_t gst = 0;
+ 594              		.loc 1 151 5 view .LVU168
+ 595              		.loc 1 151 13 is_stmt 0 view .LVU169
+ 596 0004 0023     		movs	r3, #0
+ 597 0006 8DF80730 		strb	r3, [sp, #7]
+ 152:../../BSP/TOUCH/gt9xxx.c ****     uint8_t i = 0;
+ 598              		.loc 1 152 5 is_stmt 1 view .LVU170
+ 599              		.loc 1 152 13 is_stmt 0 view .LVU171
+ 600 000a 8DF80630 		strb	r3, [sp, #6]
+ 153:../../BSP/TOUCH/gt9xxx.c ****     uint16_t temp = 0;
+ 601              		.loc 1 153 5 is_stmt 1 view .LVU172
+ 602              	.LVL62:
+ 154:../../BSP/TOUCH/gt9xxx.c ****     uint16_t tempsta = 0;
+ 603              		.loc 1 154 5 view .LVU173
+ 155:../../BSP/TOUCH/gt9xxx.c **** 
+ 156:../../BSP/TOUCH/gt9xxx.c ****     /* Reduce CPU load: poll every 10 calls */
+ 157:../../BSP/TOUCH/gt9xxx.c ****     static uint8_t poll_div = 0;
+ 604              		.loc 1 157 5 view .LVU174
+ 158:../../BSP/TOUCH/gt9xxx.c ****     poll_div++;
+ 605              		.loc 1 158 5 view .LVU175
+ 606              		.loc 1 158 13 is_stmt 0 view .LVU176
+ 607 000e 904B     		ldr	r3, .L49
+ 608 0010 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 609 0012 0132     		adds	r2, r2, #1
+ 610 0014 D2B2     		uxtb	r2, r2
+ 611 0016 1A70     		strb	r2, [r3]
+ 159:../../BSP/TOUCH/gt9xxx.c **** 
+ 160:../../BSP/TOUCH/gt9xxx.c ****     if (!((poll_div % 10) == 0 || poll_div < 10))
+ 612              		.loc 1 160 5 is_stmt 1 view .LVU177
+ 613              		.loc 1 160 27 is_stmt 0 view .LVU178
+ 614 0018 8E4B     		ldr	r3, .L49+4
+ 615 001a A3FB0213 		umull	r1, r3, r3, r2
+ 616 001e DB08     		lsrs	r3, r3, #3
+ 617 0020 03EB8303 		add	r3, r3, r3, lsl #2
+ 618 0024 A2EB4303 		sub	r3, r2, r3, lsl #1
+ 619              		.loc 1 160 8 view .LVU179
+ 620 0028 13F0FF0F 		tst	r3, #255
+ 621 002c 02D0     		beq	.L26
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 15
+
+
+ 622              		.loc 1 160 9 discriminator 1 view .LVU180
+ 623 002e 092A     		cmp	r2, #9
+ 624 0030 00F20B81 		bhi	.L43
+ 625              	.L26:
+ 161:../../BSP/TOUCH/gt9xxx.c ****         return 0;
+ 162:../../BSP/TOUCH/gt9xxx.c **** 
+ 163:../../BSP/TOUCH/gt9xxx.c ****     /* Read touch status */
+ 164:../../BSP/TOUCH/gt9xxx.c ****     gt9xxx_rd_reg(GT9XXX_GSTID_REG, &gst, 1);
+ 626              		.loc 1 164 5 is_stmt 1 view .LVU181
+ 627 0034 0122     		movs	r2, #1
+ 628 0036 0DF10701 		add	r1, sp, #7
+ 629 003a 48F24E10 		movw	r0, #33102
+ 630              	.LVL63:
+ 631              		.loc 1 164 5 is_stmt 0 view .LVU182
+ 632 003e FFF7FEFF 		bl	gt9xxx_rd_reg
+ 633              	.LVL64:
+ 165:../../BSP/TOUCH/gt9xxx.c **** 
+ 166:../../BSP/TOUCH/gt9xxx.c ****     uint8_t point_count = gst & 0x0F;
+ 634              		.loc 1 166 5 is_stmt 1 view .LVU183
+ 635              		.loc 1 166 31 is_stmt 0 view .LVU184
+ 636 0042 9DF80740 		ldrb	r4, [sp, #7]	@ zero_extendqisi2
+ 637              		.loc 1 166 13 view .LVU185
+ 638 0046 04F00F02 		and	r2, r4, #15
+ 639 004a 1546     		mov	r5, r2
+ 640              	.LVL65:
+ 167:../../BSP/TOUCH/gt9xxx.c **** 
+ 168:../../BSP/TOUCH/gt9xxx.c ****     if ((gst & 0x80U) && (point_count <= g_gt_tnum))
+ 641              		.loc 1 168 5 is_stmt 1 view .LVU186
+ 642              		.loc 1 168 8 is_stmt 0 view .LVU187
+ 643 004c 14F0800F 		tst	r4, #128
+ 644 0050 11D1     		bne	.L45
+ 645              	.L28:
+ 169:../../BSP/TOUCH/gt9xxx.c ****     {
+ 170:../../BSP/TOUCH/gt9xxx.c ****         i = 0;
+ 171:../../BSP/TOUCH/gt9xxx.c ****         gt9xxx_wr_reg(GT9XXX_GSTID_REG, &i, 1); /* clear flag */
+ 172:../../BSP/TOUCH/gt9xxx.c **** 
+ 173:../../BSP/TOUCH/gt9xxx.c ****         if (point_count > 0 && point_count <= g_gt_tnum)
+ 174:../../BSP/TOUCH/gt9xxx.c ****         {
+ 175:../../BSP/TOUCH/gt9xxx.c ****             temp = 0xFFFFU << point_count;
+ 176:../../BSP/TOUCH/gt9xxx.c ****             tempsta = tp_dev.sta;
+ 177:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.sta = (uint16_t)(~temp) | TP_PRES_DOWN | TP_CATH_PRES;
+ 178:../../BSP/TOUCH/gt9xxx.c **** 
+ 179:../../BSP/TOUCH/gt9xxx.c ****             /* keep previous first point at last position like your example */
+ 180:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.x[g_gt_tnum - 1] = tp_dev.x[0];
+ 181:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.y[g_gt_tnum - 1] = tp_dev.y[0];
+ 182:../../BSP/TOUCH/gt9xxx.c **** 
+ 183:../../BSP/TOUCH/gt9xxx.c ****             for (i = 0; i < g_gt_tnum; i++)
+ 184:../../BSP/TOUCH/gt9xxx.c ****             {
+ 185:../../BSP/TOUCH/gt9xxx.c ****                 if (tp_dev.sta & (1U << i))
+ 186:../../BSP/TOUCH/gt9xxx.c ****                 {
+ 187:../../BSP/TOUCH/gt9xxx.c ****                     uint8_t buf[4] = {0};
+ 188:../../BSP/TOUCH/gt9xxx.c ****                     gt9xxx_rd_reg(GT9XXX_TPX_TBL[i], buf, 4);
+ 189:../../BSP/TOUCH/gt9xxx.c **** 
+ 190:../../BSP/TOUCH/gt9xxx.c ****                     /* Raw X/Y from GT9xxx register bytes */
+ 191:../../BSP/TOUCH/gt9xxx.c ****                     uint16_t raw_x = (uint16_t)((buf[3] << 8) | buf[2]);
+ 192:../../BSP/TOUCH/gt9xxx.c ****                     uint16_t raw_y = (uint16_t)((buf[1] << 8) | buf[0]);
+ 193:../../BSP/TOUCH/gt9xxx.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 16
+
+
+ 194:../../BSP/TOUCH/gt9xxx.c ****                     /* Coordinate mapping:
+ 195:../../BSP/TOUCH/gt9xxx.c ****                      * Use same branching idea as your example code to maximize compatibility.
+ 196:../../BSP/TOUCH/gt9xxx.c ****                      */
+ 197:../../BSP/TOUCH/gt9xxx.c ****                     if (lcddev.id == 0x5510 || lcddev.id == 0x5310 ||
+ 198:../../BSP/TOUCH/gt9xxx.c ****                         lcddev.id == 0x7796 || lcddev.id == 0x7789 ||
+ 199:../../BSP/TOUCH/gt9xxx.c ****                         lcddev.id == 0x9806)
+ 200:../../BSP/TOUCH/gt9xxx.c ****                     {
+ 201:../../BSP/TOUCH/gt9xxx.c ****                         if (tp_dev.touchtype & 0x01U)
+ 202:../../BSP/TOUCH/gt9xxx.c ****                         {
+ 203:../../BSP/TOUCH/gt9xxx.c ****                             /* horizontal: mirror X */
+ 204:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.x[i] = (uint16_t)(lcddev.width - raw_x);
+ 205:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 206:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 207:../../BSP/TOUCH/gt9xxx.c ****                         else
+ 208:../../BSP/TOUCH/gt9xxx.c ****                         {
+ 209:../../BSP/TOUCH/gt9xxx.c ****                             /* vertical: swap X/Y */
+ 210:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.x[i] = raw_y;
+ 211:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_x;
+ 212:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 213:../../BSP/TOUCH/gt9xxx.c ****                     }
+ 214:../../BSP/TOUCH/gt9xxx.c ****                     else
+ 215:../../BSP/TOUCH/gt9xxx.c ****                     {
+ 216:../../BSP/TOUCH/gt9xxx.c ****                         if (tp_dev.touchtype & 0x01U)
+ 217:../../BSP/TOUCH/gt9xxx.c ****                         {
+ 218:../../BSP/TOUCH/gt9xxx.c ****                             /* horizontal: swap X/Y */
+ 219:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.x[i] = raw_y;
+ 220:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_x;
+ 221:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 222:../../BSP/TOUCH/gt9xxx.c ****                         else
+ 223:../../BSP/TOUCH/gt9xxx.c ****                         {
+ 224:../../BSP/TOUCH/gt9xxx.c ****                             /* vertical: mirror X */
+ 225:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.x[i] = (uint16_t)(lcddev.width - raw_x);
+ 226:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 227:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 228:../../BSP/TOUCH/gt9xxx.c ****                     }
+ 229:../../BSP/TOUCH/gt9xxx.c ****                 }
+ 230:../../BSP/TOUCH/gt9xxx.c ****             }
+ 231:../../BSP/TOUCH/gt9xxx.c **** 
+ 232:../../BSP/TOUCH/gt9xxx.c ****             /* Validate first point */
+ 233:../../BSP/TOUCH/gt9xxx.c ****             if (tp_dev.x[0] > lcddev.width || tp_dev.y[0] > lcddev.height)
+ 234:../../BSP/TOUCH/gt9xxx.c ****             {
+ 235:../../BSP/TOUCH/gt9xxx.c ****                 if (point_count > 1)
+ 236:../../BSP/TOUCH/gt9xxx.c ****                 {
+ 237:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.x[0] = tp_dev.x[1];
+ 238:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.y[0] = tp_dev.y[1];
+ 239:../../BSP/TOUCH/gt9xxx.c ****                     poll_div = 0;
+ 240:../../BSP/TOUCH/gt9xxx.c ****                 }
+ 241:../../BSP/TOUCH/gt9xxx.c ****                 else
+ 242:../../BSP/TOUCH/gt9xxx.c ****                 {
+ 243:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.x[0] = tp_dev.x[g_gt_tnum - 1];
+ 244:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.y[0] = tp_dev.y[g_gt_tnum - 1];
+ 245:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.sta = tempsta; /* restore */
+ 246:../../BSP/TOUCH/gt9xxx.c ****                     gst = 0x80;
+ 247:../../BSP/TOUCH/gt9xxx.c ****                 }
+ 248:../../BSP/TOUCH/gt9xxx.c ****             }
+ 249:../../BSP/TOUCH/gt9xxx.c ****             else
+ 250:../../BSP/TOUCH/gt9xxx.c ****             {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 17
+
+
+ 251:../../BSP/TOUCH/gt9xxx.c ****                 poll_div = 0;
+ 252:../../BSP/TOUCH/gt9xxx.c ****             }
+ 253:../../BSP/TOUCH/gt9xxx.c ****         }
+ 254:../../BSP/TOUCH/gt9xxx.c ****     }
+ 255:../../BSP/TOUCH/gt9xxx.c ****     else if ((gst & 0x8FU) == 0x80U)
+ 646              		.loc 1 255 10 is_stmt 1 view .LVU188
+ 647              		.loc 1 255 13 is_stmt 0 view .LVU189
+ 648 0052 04F08F04 		and	r4, r4, #143
+ 649 0056 802C     		cmp	r4, #128
+ 650 0058 00F0E380 		beq	.L46
+ 651              	.LVL66:
+ 652              	.L29:
+ 256:../../BSP/TOUCH/gt9xxx.c ****     {
+ 257:../../BSP/TOUCH/gt9xxx.c ****         /* No touch: handle press/release state */
+ 258:../../BSP/TOUCH/gt9xxx.c ****         if (tp_dev.sta & TP_PRES_DOWN)
+ 259:../../BSP/TOUCH/gt9xxx.c ****         {
+ 260:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.sta &= ~TP_PRES_DOWN;
+ 261:../../BSP/TOUCH/gt9xxx.c ****         }
+ 262:../../BSP/TOUCH/gt9xxx.c ****         else
+ 263:../../BSP/TOUCH/gt9xxx.c ****         {
+ 264:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.x[0] = 0xFFFFU;
+ 265:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.y[0] = 0xFFFFU;
+ 266:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.sta &= 0xE000U;
+ 267:../../BSP/TOUCH/gt9xxx.c ****         }
+ 268:../../BSP/TOUCH/gt9xxx.c ****     }
+ 269:../../BSP/TOUCH/gt9xxx.c **** 
+ 270:../../BSP/TOUCH/gt9xxx.c ****     if (poll_div > 240)
+ 653              		.loc 1 270 5 is_stmt 1 view .LVU190
+ 654              		.loc 1 270 18 is_stmt 0 view .LVU191
+ 655 005c 7C4B     		ldr	r3, .L49
+ 656 005e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 657              		.loc 1 270 8 view .LVU192
+ 658 0060 F02B     		cmp	r3, #240
+ 659 0062 02D9     		bls	.L42
+ 271:../../BSP/TOUCH/gt9xxx.c ****         poll_div = 10;
+ 660              		.loc 1 271 9 is_stmt 1 view .LVU193
+ 661              		.loc 1 271 18 is_stmt 0 view .LVU194
+ 662 0064 7A4B     		ldr	r3, .L49
+ 663 0066 0A22     		movs	r2, #10
+ 664 0068 1A70     		strb	r2, [r3]
+ 665              	.L42:
+ 272:../../BSP/TOUCH/gt9xxx.c **** 
+ 273:../../BSP/TOUCH/gt9xxx.c ****     return (tp_dev.sta & TP_PRES_DOWN) ? 1 : 0;
+ 666              		.loc 1 273 5 is_stmt 1 view .LVU195
+ 667              		.loc 1 273 19 is_stmt 0 view .LVU196
+ 668 006a 7B4B     		ldr	r3, .L49+8
+ 669              		.loc 1 273 40 view .LVU197
+ 670 006c B3F93400 		ldrsh	r0, [r3, #52]
+ 671              		.loc 1 273 44 view .LVU198
+ 672 0070 C00F     		lsrs	r0, r0, #31
+ 673              	.LVL67:
+ 674              	.L27:
+ 274:../../BSP/TOUCH/gt9xxx.c **** }
+ 675              		.loc 1 274 1 view .LVU199
+ 676 0072 03B0     		add	sp, sp, #12
+ 677              	.LCFI8:
+ 678              		.cfi_remember_state
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 18
+
+
+ 679              		.cfi_def_cfa_offset 12
+ 680              		@ sp needed
+ 681 0074 30BD     		pop	{r4, r5, pc}
+ 682              	.LVL68:
+ 683              	.L45:
+ 684              	.LCFI9:
+ 685              		.cfi_restore_state
+ 168:../../BSP/TOUCH/gt9xxx.c ****     {
+ 686              		.loc 1 168 39 discriminator 1 view .LVU200
+ 687 0076 794B     		ldr	r3, .L49+12
+ 688 0078 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 168:../../BSP/TOUCH/gt9xxx.c ****     {
+ 689              		.loc 1 168 23 discriminator 1 view .LVU201
+ 690 007a 9342     		cmp	r3, r2
+ 691 007c E9D3     		bcc	.L28
+ 170:../../BSP/TOUCH/gt9xxx.c ****         gt9xxx_wr_reg(GT9XXX_GSTID_REG, &i, 1); /* clear flag */
+ 692              		.loc 1 170 9 is_stmt 1 view .LVU202
+ 170:../../BSP/TOUCH/gt9xxx.c ****         gt9xxx_wr_reg(GT9XXX_GSTID_REG, &i, 1); /* clear flag */
+ 693              		.loc 1 170 11 is_stmt 0 view .LVU203
+ 694 007e 0023     		movs	r3, #0
+ 695 0080 8DF80630 		strb	r3, [sp, #6]
+ 171:../../BSP/TOUCH/gt9xxx.c **** 
+ 696              		.loc 1 171 9 is_stmt 1 view .LVU204
+ 697 0084 0122     		movs	r2, #1
+ 698              	.LVL69:
+ 171:../../BSP/TOUCH/gt9xxx.c **** 
+ 699              		.loc 1 171 9 is_stmt 0 view .LVU205
+ 700 0086 0DF10601 		add	r1, sp, #6
+ 701 008a 48F24E10 		movw	r0, #33102
+ 702 008e FFF7FEFF 		bl	gt9xxx_wr_reg
+ 703              	.LVL70:
+ 173:../../BSP/TOUCH/gt9xxx.c ****         {
+ 704              		.loc 1 173 9 is_stmt 1 view .LVU206
+ 173:../../BSP/TOUCH/gt9xxx.c ****         {
+ 705              		.loc 1 173 12 is_stmt 0 view .LVU207
+ 706 0092 002D     		cmp	r5, #0
+ 707 0094 E2D0     		beq	.L29
+ 173:../../BSP/TOUCH/gt9xxx.c ****         {
+ 708              		.loc 1 173 44 discriminator 1 view .LVU208
+ 709 0096 714B     		ldr	r3, .L49+12
+ 710 0098 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 173:../../BSP/TOUCH/gt9xxx.c ****         {
+ 711              		.loc 1 173 29 discriminator 1 view .LVU209
+ 712 009a AB42     		cmp	r3, r5
+ 713 009c DED3     		bcc	.L29
+ 175:../../BSP/TOUCH/gt9xxx.c ****             tempsta = tp_dev.sta;
+ 714              		.loc 1 175 13 is_stmt 1 view .LVU210
+ 175:../../BSP/TOUCH/gt9xxx.c ****             tempsta = tp_dev.sta;
+ 715              		.loc 1 175 28 is_stmt 0 view .LVU211
+ 716 009e 4FF6FF71 		movw	r1, #65535
+ 717 00a2 A940     		lsls	r1, r1, r5
+ 175:../../BSP/TOUCH/gt9xxx.c ****             tempsta = tp_dev.sta;
+ 718              		.loc 1 175 18 view .LVU212
+ 719 00a4 89B2     		uxth	r1, r1
+ 720              	.LVL71:
+ 176:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.sta = (uint16_t)(~temp) | TP_PRES_DOWN | TP_CATH_PRES;
+ 721              		.loc 1 176 13 is_stmt 1 view .LVU213
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 19
+
+
+ 176:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.sta = (uint16_t)(~temp) | TP_PRES_DOWN | TP_CATH_PRES;
+ 722              		.loc 1 176 21 is_stmt 0 view .LVU214
+ 723 00a6 6C4A     		ldr	r2, .L49+8
+ 724 00a8 908E     		ldrh	r0, [r2, #52]
+ 725 00aa 0546     		mov	r5, r0
+ 726              	.LVL72:
+ 177:../../BSP/TOUCH/gt9xxx.c **** 
+ 727              		.loc 1 177 13 is_stmt 1 view .LVU215
+ 177:../../BSP/TOUCH/gt9xxx.c **** 
+ 728              		.loc 1 177 26 is_stmt 0 view .LVU216
+ 729 00ac 4FF6FF70 		movw	r0, #65535
+ 730 00b0 4840     		eors	r0, r0, r1
+ 177:../../BSP/TOUCH/gt9xxx.c **** 
+ 731              		.loc 1 177 24 view .LVU217
+ 732 00b2 6B49     		ldr	r1, .L49+16
+ 733              	.LVL73:
+ 177:../../BSP/TOUCH/gt9xxx.c **** 
+ 734              		.loc 1 177 24 view .LVU218
+ 735 00b4 0143     		orrs	r1, r1, r0
+ 736 00b6 9186     		strh	r1, [r2, #52]	@ movhi
+ 180:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.y[g_gt_tnum - 1] = tp_dev.y[0];
+ 737              		.loc 1 180 13 is_stmt 1 view .LVU219
+ 180:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.y[g_gt_tnum - 1] = tp_dev.y[0];
+ 738              		.loc 1 180 47 is_stmt 0 view .LVU220
+ 739 00b8 9089     		ldrh	r0, [r2, #12]
+ 180:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.y[g_gt_tnum - 1] = tp_dev.y[0];
+ 740              		.loc 1 180 37 view .LVU221
+ 741 00ba D91C     		adds	r1, r3, #3
+ 742 00bc 02EB4101 		add	r1, r2, r1, lsl #1
+ 743 00c0 8880     		strh	r0, [r1, #4]	@ movhi
+ 181:../../BSP/TOUCH/gt9xxx.c **** 
+ 744              		.loc 1 181 13 is_stmt 1 view .LVU222
+ 181:../../BSP/TOUCH/gt9xxx.c **** 
+ 745              		.loc 1 181 47 is_stmt 0 view .LVU223
+ 746 00c2 118C     		ldrh	r1, [r2, #32]
+ 181:../../BSP/TOUCH/gt9xxx.c **** 
+ 747              		.loc 1 181 37 view .LVU224
+ 748 00c4 0F33     		adds	r3, r3, #15
+ 749 00c6 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
+ 183:../../BSP/TOUCH/gt9xxx.c ****             {
+ 750              		.loc 1 183 13 is_stmt 1 view .LVU225
+ 183:../../BSP/TOUCH/gt9xxx.c ****             {
+ 751              		.loc 1 183 20 is_stmt 0 view .LVU226
+ 752 00ca 0023     		movs	r3, #0
+ 753 00cc 8DF80630 		strb	r3, [sp, #6]
+ 183:../../BSP/TOUCH/gt9xxx.c ****             {
+ 754              		.loc 1 183 13 view .LVU227
+ 755 00d0 19E0     		b	.L30
+ 756              	.LVL74:
+ 757              	.L32:
+ 758              	.LBB6:
+ 201:../../BSP/TOUCH/gt9xxx.c ****                         {
+ 759              		.loc 1 201 25 is_stmt 1 view .LVU228
+ 201:../../BSP/TOUCH/gt9xxx.c ****                         {
+ 760              		.loc 1 201 35 is_stmt 0 view .LVU229
+ 761 00d2 614B     		ldr	r3, .L49+8
+ 762 00d4 93F83630 		ldrb	r3, [r3, #54]	@ zero_extendqisi2
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 20
+
+
+ 201:../../BSP/TOUCH/gt9xxx.c ****                         {
+ 763              		.loc 1 201 28 view .LVU230
+ 764 00d8 13F0010F 		tst	r3, #1
+ 765 00dc 5BD0     		beq	.L34
+ 204:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 766              		.loc 1 204 29 is_stmt 1 view .LVU231
+ 204:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 767              		.loc 1 204 60 is_stmt 0 view .LVU232
+ 768 00de 614B     		ldr	r3, .L49+20
+ 769 00e0 1988     		ldrh	r1, [r3]
+ 204:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 770              		.loc 1 204 37 view .LVU233
+ 771 00e2 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 204:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 772              		.loc 1 204 43 view .LVU234
+ 773 00e6 A1EB0C01 		sub	r1, r1, ip
+ 204:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 774              		.loc 1 204 41 view .LVU235
+ 775 00ea DFF86CC1 		ldr	ip, .L49+8
+ 776              	.LVL75:
+ 204:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 777              		.loc 1 204 41 view .LVU236
+ 778 00ee 1A1D     		adds	r2, r3, #4
+ 779 00f0 0CEB4202 		add	r2, ip, r2, lsl #1
+ 780 00f4 9180     		strh	r1, [r2, #4]	@ movhi
+ 205:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 781              		.loc 1 205 29 is_stmt 1 view .LVU237
+ 205:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 782              		.loc 1 205 41 is_stmt 0 view .LVU238
+ 783 00f6 1033     		adds	r3, r3, #16
+ 784 00f8 2CF81300 		strh	r0, [ip, r3, lsl #1]	@ movhi
+ 785              	.LVL76:
+ 786              	.L31:
+ 205:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 787              		.loc 1 205 41 view .LVU239
+ 788              	.LBE6:
+ 183:../../BSP/TOUCH/gt9xxx.c ****             {
+ 789              		.loc 1 183 41 is_stmt 1 discriminator 2 view .LVU240
+ 790 00fc 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 791 0100 0133     		adds	r3, r3, #1
+ 792 0102 8DF80630 		strb	r3, [sp, #6]
+ 793              	.L30:
+ 183:../../BSP/TOUCH/gt9xxx.c ****             {
+ 794              		.loc 1 183 27 discriminator 1 view .LVU241
+ 795 0106 9DF80600 		ldrb	r0, [sp, #6]	@ zero_extendqisi2
+ 796 010a 544B     		ldr	r3, .L49+12
+ 797 010c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 798 010e 9842     		cmp	r0, r3
+ 799 0110 5CD2     		bcs	.L47
+ 185:../../BSP/TOUCH/gt9xxx.c ****                 {
+ 800              		.loc 1 185 17 view .LVU242
+ 185:../../BSP/TOUCH/gt9xxx.c ****                 {
+ 801              		.loc 1 185 27 is_stmt 0 view .LVU243
+ 802 0112 514B     		ldr	r3, .L49+8
+ 803 0114 9B8E     		ldrh	r3, [r3, #52]
+ 185:../../BSP/TOUCH/gt9xxx.c ****                 {
+ 804              		.loc 1 185 21 view .LVU244
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 21
+
+
+ 805 0116 C340     		lsrs	r3, r3, r0
+ 185:../../BSP/TOUCH/gt9xxx.c ****                 {
+ 806              		.loc 1 185 20 view .LVU245
+ 807 0118 13F0010F 		tst	r3, #1
+ 808 011c EED0     		beq	.L31
+ 809              	.LBB7:
+ 187:../../BSP/TOUCH/gt9xxx.c ****                     gt9xxx_rd_reg(GT9XXX_TPX_TBL[i], buf, 4);
+ 810              		.loc 1 187 21 is_stmt 1 view .LVU246
+ 187:../../BSP/TOUCH/gt9xxx.c ****                     gt9xxx_rd_reg(GT9XXX_TPX_TBL[i], buf, 4);
+ 811              		.loc 1 187 29 is_stmt 0 view .LVU247
+ 812 011e 0023     		movs	r3, #0
+ 813 0120 0093     		str	r3, [sp]
+ 188:../../BSP/TOUCH/gt9xxx.c **** 
+ 814              		.loc 1 188 21 is_stmt 1 view .LVU248
+ 815 0122 0422     		movs	r2, #4
+ 816 0124 6946     		mov	r1, sp
+ 817 0126 504B     		ldr	r3, .L49+24
+ 818 0128 33F81000 		ldrh	r0, [r3, r0, lsl #1]
+ 819 012c FFF7FEFF 		bl	gt9xxx_rd_reg
+ 820              	.LVL77:
+ 191:../../BSP/TOUCH/gt9xxx.c ****                     uint16_t raw_y = (uint16_t)((buf[1] << 8) | buf[0]);
+ 821              		.loc 1 191 21 view .LVU249
+ 191:../../BSP/TOUCH/gt9xxx.c ****                     uint16_t raw_y = (uint16_t)((buf[1] << 8) | buf[0]);
+ 822              		.loc 1 191 53 is_stmt 0 view .LVU250
+ 823 0130 9DF80320 		ldrb	r2, [sp, #3]	@ zero_extendqisi2
+ 191:../../BSP/TOUCH/gt9xxx.c ****                     uint16_t raw_y = (uint16_t)((buf[1] << 8) | buf[0]);
+ 824              		.loc 1 191 68 view .LVU251
+ 825 0134 9DF80230 		ldrb	r3, [sp, #2]	@ zero_extendqisi2
+ 191:../../BSP/TOUCH/gt9xxx.c ****                     uint16_t raw_y = (uint16_t)((buf[1] << 8) | buf[0]);
+ 826              		.loc 1 191 30 view .LVU252
+ 827 0138 43EA022C 		orr	ip, r3, r2, lsl #8
+ 828              	.LVL78:
+ 192:../../BSP/TOUCH/gt9xxx.c **** 
+ 829              		.loc 1 192 21 is_stmt 1 view .LVU253
+ 192:../../BSP/TOUCH/gt9xxx.c **** 
+ 830              		.loc 1 192 53 is_stmt 0 view .LVU254
+ 831 013c 9DF80120 		ldrb	r2, [sp, #1]	@ zero_extendqisi2
+ 192:../../BSP/TOUCH/gt9xxx.c **** 
+ 832              		.loc 1 192 68 view .LVU255
+ 833 0140 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
+ 192:../../BSP/TOUCH/gt9xxx.c **** 
+ 834              		.loc 1 192 30 view .LVU256
+ 835 0144 43EA0220 		orr	r0, r3, r2, lsl #8
+ 836              	.LVL79:
+ 197:../../BSP/TOUCH/gt9xxx.c ****                         lcddev.id == 0x7796 || lcddev.id == 0x7789 ||
+ 837              		.loc 1 197 21 is_stmt 1 view .LVU257
+ 197:../../BSP/TOUCH/gt9xxx.c ****                         lcddev.id == 0x7796 || lcddev.id == 0x7789 ||
+ 838              		.loc 1 197 31 is_stmt 0 view .LVU258
+ 839 0148 464B     		ldr	r3, .L49+20
+ 840 014a 9B88     		ldrh	r3, [r3, #4]
+ 197:../../BSP/TOUCH/gt9xxx.c ****                         lcddev.id == 0x7796 || lcddev.id == 0x7789 ||
+ 841              		.loc 1 197 24 view .LVU259
+ 842 014c 45F21051 		movw	r1, #21776
+ 843 0150 45F21032 		movw	r2, #21264
+ 844 0154 9342     		cmp	r3, r2
+ 845 0156 18BF     		it	ne
+ 846 0158 8B42     		cmpne	r3, r1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 22
+
+
+ 847 015a BAD0     		beq	.L32
+ 197:../../BSP/TOUCH/gt9xxx.c ****                         lcddev.id == 0x7796 || lcddev.id == 0x7789 ||
+ 848              		.loc 1 197 68 discriminator 1 view .LVU260
+ 849 015c 47F29672 		movw	r2, #30614
+ 850 0160 9342     		cmp	r3, r2
+ 851 0162 B6D0     		beq	.L32
+ 198:../../BSP/TOUCH/gt9xxx.c ****                         lcddev.id == 0x9806)
+ 852              		.loc 1 198 45 view .LVU261
+ 853 0164 47F28972 		movw	r2, #30601
+ 854 0168 9342     		cmp	r3, r2
+ 855 016a B2D0     		beq	.L32
+ 198:../../BSP/TOUCH/gt9xxx.c ****                         lcddev.id == 0x9806)
+ 856              		.loc 1 198 68 discriminator 1 view .LVU262
+ 857 016c 49F60602 		movw	r2, #38918
+ 858 0170 9342     		cmp	r3, r2
+ 859 0172 AED0     		beq	.L32
+ 216:../../BSP/TOUCH/gt9xxx.c ****                         {
+ 860              		.loc 1 216 25 is_stmt 1 view .LVU263
+ 216:../../BSP/TOUCH/gt9xxx.c ****                         {
+ 861              		.loc 1 216 35 is_stmt 0 view .LVU264
+ 862 0174 384B     		ldr	r3, .L49+8
+ 863 0176 93F83630 		ldrb	r3, [r3, #54]	@ zero_extendqisi2
+ 216:../../BSP/TOUCH/gt9xxx.c ****                         {
+ 864              		.loc 1 216 28 view .LVU265
+ 865 017a 13F0010F 		tst	r3, #1
+ 866 017e 15D0     		beq	.L36
+ 219:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_x;
+ 867              		.loc 1 219 29 is_stmt 1 view .LVU266
+ 219:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_x;
+ 868              		.loc 1 219 37 is_stmt 0 view .LVU267
+ 869 0180 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 219:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_x;
+ 870              		.loc 1 219 41 view .LVU268
+ 871 0184 3449     		ldr	r1, .L49+8
+ 872 0186 1A1D     		adds	r2, r3, #4
+ 873 0188 01EB4202 		add	r2, r1, r2, lsl #1
+ 874 018c 9080     		strh	r0, [r2, #4]	@ movhi
+ 220:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 875              		.loc 1 220 29 is_stmt 1 view .LVU269
+ 220:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 876              		.loc 1 220 41 is_stmt 0 view .LVU270
+ 877 018e 1033     		adds	r3, r3, #16
+ 878 0190 21F813C0 		strh	ip, [r1, r3, lsl #1]	@ movhi
+ 879 0194 B2E7     		b	.L31
+ 880              	.L34:
+ 210:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_x;
+ 881              		.loc 1 210 29 is_stmt 1 view .LVU271
+ 210:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_x;
+ 882              		.loc 1 210 37 is_stmt 0 view .LVU272
+ 883 0196 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 210:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_x;
+ 884              		.loc 1 210 41 view .LVU273
+ 885 019a 2F49     		ldr	r1, .L49+8
+ 886 019c 1A1D     		adds	r2, r3, #4
+ 887 019e 01EB4202 		add	r2, r1, r2, lsl #1
+ 888 01a2 9080     		strh	r0, [r2, #4]	@ movhi
+ 211:../../BSP/TOUCH/gt9xxx.c ****                         }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 23
+
+
+ 889              		.loc 1 211 29 is_stmt 1 view .LVU274
+ 211:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 890              		.loc 1 211 41 is_stmt 0 view .LVU275
+ 891 01a4 1033     		adds	r3, r3, #16
+ 892 01a6 21F813C0 		strh	ip, [r1, r3, lsl #1]	@ movhi
+ 893 01aa A7E7     		b	.L31
+ 894              	.L36:
+ 225:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 895              		.loc 1 225 29 is_stmt 1 view .LVU276
+ 225:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 896              		.loc 1 225 60 is_stmt 0 view .LVU277
+ 897 01ac 2D4B     		ldr	r3, .L49+20
+ 898 01ae 1988     		ldrh	r1, [r3]
+ 225:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 899              		.loc 1 225 37 view .LVU278
+ 900 01b0 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 225:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 901              		.loc 1 225 43 view .LVU279
+ 902 01b4 A1EB0C01 		sub	r1, r1, ip
+ 225:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 903              		.loc 1 225 41 view .LVU280
+ 904 01b8 DFF89CC0 		ldr	ip, .L49+8
+ 905              	.LVL80:
+ 225:../../BSP/TOUCH/gt9xxx.c ****                             tp_dev.y[i] = raw_y;
+ 906              		.loc 1 225 41 view .LVU281
+ 907 01bc 1A1D     		adds	r2, r3, #4
+ 908 01be 0CEB4202 		add	r2, ip, r2, lsl #1
+ 909 01c2 9180     		strh	r1, [r2, #4]	@ movhi
+ 226:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 910              		.loc 1 226 29 is_stmt 1 view .LVU282
+ 226:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 911              		.loc 1 226 41 is_stmt 0 view .LVU283
+ 912 01c4 1033     		adds	r3, r3, #16
+ 913 01c6 2CF81300 		strh	r0, [ip, r3, lsl #1]	@ movhi
+ 914 01ca 97E7     		b	.L31
+ 915              	.LVL81:
+ 916              	.L47:
+ 226:../../BSP/TOUCH/gt9xxx.c ****                         }
+ 917              		.loc 1 226 41 view .LVU284
+ 918              	.LBE7:
+ 233:../../BSP/TOUCH/gt9xxx.c ****             {
+ 919              		.loc 1 233 13 is_stmt 1 view .LVU285
+ 233:../../BSP/TOUCH/gt9xxx.c ****             {
+ 920              		.loc 1 233 25 is_stmt 0 view .LVU286
+ 921 01cc 224A     		ldr	r2, .L49+8
+ 922 01ce 9189     		ldrh	r1, [r2, #12]
+ 233:../../BSP/TOUCH/gt9xxx.c ****             {
+ 923              		.loc 1 233 37 view .LVU287
+ 924 01d0 244A     		ldr	r2, .L49+20
+ 925 01d2 1288     		ldrh	r2, [r2]
+ 233:../../BSP/TOUCH/gt9xxx.c ****             {
+ 926              		.loc 1 233 16 view .LVU288
+ 927 01d4 9142     		cmp	r1, r2
+ 928 01d6 05D8     		bhi	.L38
+ 233:../../BSP/TOUCH/gt9xxx.c ****             {
+ 929              		.loc 1 233 55 discriminator 1 view .LVU289
+ 930 01d8 1F4A     		ldr	r2, .L49+8
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 24
+
+
+ 931 01da 118C     		ldrh	r1, [r2, #32]
+ 233:../../BSP/TOUCH/gt9xxx.c ****             {
+ 932              		.loc 1 233 67 discriminator 1 view .LVU290
+ 933 01dc 214A     		ldr	r2, .L49+20
+ 934 01de 5288     		ldrh	r2, [r2, #2]
+ 233:../../BSP/TOUCH/gt9xxx.c ****             {
+ 935              		.loc 1 233 44 discriminator 1 view .LVU291
+ 936 01e0 9142     		cmp	r1, r2
+ 937 01e2 1AD9     		bls	.L39
+ 938              	.L38:
+ 235:../../BSP/TOUCH/gt9xxx.c ****                 {
+ 939              		.loc 1 235 17 is_stmt 1 view .LVU292
+ 235:../../BSP/TOUCH/gt9xxx.c ****                 {
+ 940              		.loc 1 235 20 is_stmt 0 view .LVU293
+ 941 01e4 14F00E0F 		tst	r4, #14
+ 942 01e8 08D0     		beq	.L40
+ 237:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.y[0] = tp_dev.y[1];
+ 943              		.loc 1 237 21 is_stmt 1 view .LVU294
+ 237:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.y[0] = tp_dev.y[1];
+ 944              		.loc 1 237 43 is_stmt 0 view .LVU295
+ 945 01ea 1B4B     		ldr	r3, .L49+8
+ 946 01ec DA89     		ldrh	r2, [r3, #14]
+ 237:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.y[0] = tp_dev.y[1];
+ 947              		.loc 1 237 33 view .LVU296
+ 948 01ee 9A81     		strh	r2, [r3, #12]	@ movhi
+ 238:../../BSP/TOUCH/gt9xxx.c ****                     poll_div = 0;
+ 949              		.loc 1 238 21 is_stmt 1 view .LVU297
+ 238:../../BSP/TOUCH/gt9xxx.c ****                     poll_div = 0;
+ 950              		.loc 1 238 43 is_stmt 0 view .LVU298
+ 951 01f0 5A8C     		ldrh	r2, [r3, #34]
+ 238:../../BSP/TOUCH/gt9xxx.c ****                     poll_div = 0;
+ 952              		.loc 1 238 33 view .LVU299
+ 953 01f2 1A84     		strh	r2, [r3, #32]	@ movhi
+ 239:../../BSP/TOUCH/gt9xxx.c ****                 }
+ 954              		.loc 1 239 21 is_stmt 1 view .LVU300
+ 239:../../BSP/TOUCH/gt9xxx.c ****                 }
+ 955              		.loc 1 239 30 is_stmt 0 view .LVU301
+ 956 01f4 164B     		ldr	r3, .L49
+ 957 01f6 0022     		movs	r2, #0
+ 958 01f8 1A70     		strb	r2, [r3]
+ 959 01fa 2FE7     		b	.L29
+ 960              	.L40:
+ 243:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.y[0] = tp_dev.y[g_gt_tnum - 1];
+ 961              		.loc 1 243 21 is_stmt 1 view .LVU302
+ 243:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.y[0] = tp_dev.y[g_gt_tnum - 1];
+ 962              		.loc 1 243 43 is_stmt 0 view .LVU303
+ 963 01fc 164A     		ldr	r2, .L49+8
+ 964 01fe D91C     		adds	r1, r3, #3
+ 965 0200 02EB4101 		add	r1, r2, r1, lsl #1
+ 966 0204 8988     		ldrh	r1, [r1, #4]
+ 243:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.y[0] = tp_dev.y[g_gt_tnum - 1];
+ 967              		.loc 1 243 33 view .LVU304
+ 968 0206 9181     		strh	r1, [r2, #12]	@ movhi
+ 244:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.sta = tempsta; /* restore */
+ 969              		.loc 1 244 21 is_stmt 1 view .LVU305
+ 244:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.sta = tempsta; /* restore */
+ 970              		.loc 1 244 43 is_stmt 0 view .LVU306
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 25
+
+
+ 971 0208 0F33     		adds	r3, r3, #15
+ 972 020a 32F81330 		ldrh	r3, [r2, r3, lsl #1]
+ 244:../../BSP/TOUCH/gt9xxx.c ****                     tp_dev.sta = tempsta; /* restore */
+ 973              		.loc 1 244 33 view .LVU307
+ 974 020e 1384     		strh	r3, [r2, #32]	@ movhi
+ 245:../../BSP/TOUCH/gt9xxx.c ****                     gst = 0x80;
+ 975              		.loc 1 245 21 is_stmt 1 view .LVU308
+ 245:../../BSP/TOUCH/gt9xxx.c ****                     gst = 0x80;
+ 976              		.loc 1 245 32 is_stmt 0 view .LVU309
+ 977 0210 9586     		strh	r5, [r2, #52]	@ movhi
+ 246:../../BSP/TOUCH/gt9xxx.c ****                 }
+ 978              		.loc 1 246 21 is_stmt 1 view .LVU310
+ 246:../../BSP/TOUCH/gt9xxx.c ****                 }
+ 979              		.loc 1 246 25 is_stmt 0 view .LVU311
+ 980 0212 8023     		movs	r3, #128
+ 981 0214 8DF80730 		strb	r3, [sp, #7]
+ 982 0218 20E7     		b	.L29
+ 983              	.L39:
+ 251:../../BSP/TOUCH/gt9xxx.c ****             }
+ 984              		.loc 1 251 17 is_stmt 1 view .LVU312
+ 251:../../BSP/TOUCH/gt9xxx.c ****             }
+ 985              		.loc 1 251 26 is_stmt 0 view .LVU313
+ 986 021a 0D4B     		ldr	r3, .L49
+ 987 021c 0022     		movs	r2, #0
+ 988 021e 1A70     		strb	r2, [r3]
+ 989 0220 1CE7     		b	.L29
+ 990              	.LVL82:
+ 991              	.L46:
+ 258:../../BSP/TOUCH/gt9xxx.c ****         {
+ 992              		.loc 1 258 9 is_stmt 1 view .LVU314
+ 258:../../BSP/TOUCH/gt9xxx.c ****         {
+ 993              		.loc 1 258 19 is_stmt 0 view .LVU315
+ 994 0222 0D4A     		ldr	r2, .L49+8
+ 995              	.LVL83:
+ 258:../../BSP/TOUCH/gt9xxx.c ****         {
+ 996              		.loc 1 258 19 view .LVU316
+ 997 0224 938E     		ldrh	r3, [r2, #52]
+ 258:../../BSP/TOUCH/gt9xxx.c ****         {
+ 998              		.loc 1 258 13 view .LVU317
+ 999 0226 B2F93420 		ldrsh	r2, [r2, #52]
+ 258:../../BSP/TOUCH/gt9xxx.c ****         {
+ 1000              		.loc 1 258 12 view .LVU318
+ 1001 022a 002A     		cmp	r2, #0
+ 1002 022c 08DB     		blt	.L48
+ 264:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.y[0] = 0xFFFFU;
+ 1003              		.loc 1 264 13 is_stmt 1 view .LVU319
+ 264:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.y[0] = 0xFFFFU;
+ 1004              		.loc 1 264 25 is_stmt 0 view .LVU320
+ 1005 022e 0A4A     		ldr	r2, .L49+8
+ 1006 0230 4FF6FF71 		movw	r1, #65535
+ 1007 0234 9181     		strh	r1, [r2, #12]	@ movhi
+ 265:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.sta &= 0xE000U;
+ 1008              		.loc 1 265 13 is_stmt 1 view .LVU321
+ 265:../../BSP/TOUCH/gt9xxx.c ****             tp_dev.sta &= 0xE000U;
+ 1009              		.loc 1 265 25 is_stmt 0 view .LVU322
+ 1010 0236 1184     		strh	r1, [r2, #32]	@ movhi
+ 266:../../BSP/TOUCH/gt9xxx.c ****         }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 26
+
+
+ 1011              		.loc 1 266 13 is_stmt 1 view .LVU323
+ 266:../../BSP/TOUCH/gt9xxx.c ****         }
+ 1012              		.loc 1 266 24 is_stmt 0 view .LVU324
+ 1013 0238 03F46043 		and	r3, r3, #57344
+ 1014 023c 9386     		strh	r3, [r2, #52]	@ movhi
+ 1015 023e 0DE7     		b	.L29
+ 1016              	.L48:
+ 260:../../BSP/TOUCH/gt9xxx.c ****         }
+ 1017              		.loc 1 260 13 is_stmt 1 view .LVU325
+ 260:../../BSP/TOUCH/gt9xxx.c ****         }
+ 1018              		.loc 1 260 24 is_stmt 0 view .LVU326
+ 1019 0240 C3F30E03 		ubfx	r3, r3, #0, #15
+ 1020 0244 044A     		ldr	r2, .L49+8
+ 1021 0246 9386     		strh	r3, [r2, #52]	@ movhi
+ 1022 0248 08E7     		b	.L29
+ 1023              	.LVL84:
+ 1024              	.L43:
+ 161:../../BSP/TOUCH/gt9xxx.c **** 
+ 1025              		.loc 1 161 16 view .LVU327
+ 1026 024a 0020     		movs	r0, #0
+ 1027              	.LVL85:
+ 161:../../BSP/TOUCH/gt9xxx.c **** 
+ 1028              		.loc 1 161 16 view .LVU328
+ 1029 024c 11E7     		b	.L27
+ 1030              	.L50:
+ 1031 024e 00BF     		.align	2
+ 1032              	.L49:
+ 1033 0250 00000000 		.word	poll_div.0
+ 1034 0254 CDCCCCCC 		.word	-858993459
+ 1035 0258 00000000 		.word	tp_dev
+ 1036 025c 00000000 		.word	g_gt_tnum
+ 1037 0260 00C0FFFF 		.word	-16384
+ 1038 0264 00000000 		.word	lcddev
+ 1039 0268 00000000 		.word	GT9XXX_TPX_TBL
+ 1040              		.cfi_endproc
+ 1041              	.LFE150:
+ 1043              		.section	.bss.poll_div.0,"aw",%nobits
+ 1046              	poll_div.0:
+ 1047 0000 00       		.space	1
+ 1048              		.section	.rodata.GT9XXX_TPX_TBL,"a"
+ 1049              		.align	2
+ 1052              	GT9XXX_TPX_TBL:
+ 1053 0000 5081     		.short	-32432
+ 1054 0002 5881     		.short	-32424
+ 1055 0004 6081     		.short	-32416
+ 1056 0006 6881     		.short	-32408
+ 1057 0008 7081     		.short	-32400
+ 1058 000a 7881     		.short	-32392
+ 1059 000c 8081     		.short	-32384
+ 1060 000e 8881     		.short	-32376
+ 1061 0010 9081     		.short	-32368
+ 1062 0012 9881     		.short	-32360
+ 1063              		.section	.data.g_gt_tnum,"aw"
+ 1066              	g_gt_tnum:
+ 1067 0000 05       		.byte	5
+ 1068              		.text
+ 1069              	.Letext0:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 27
+
+
+ 1070              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1071              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1072              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 1073              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 1074              		.file 6 "../../BSP/LCD/lcd.h"
+ 1075              		.file 7 "../../BSP/TOUCH/touch.h"
+ 1076              		.file 8 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1077              		.file 9 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1078              		.file 10 "../../BSP/bsp_delay.h"
+ 1079              		.file 11 "../../BSP/TOUCH/ctiic.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 gt9xxx.c
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:20     .text.gt9xxx_wr_reg:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:26     .text.gt9xxx_wr_reg:00000000 gt9xxx_wr_reg
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:160    .text.gt9xxx_rd_reg:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:166    .text.gt9xxx_rd_reg:00000000 gt9xxx_rd_reg
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:260    .rodata.gt9xxx_init.str1.4:00000000 $d
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:279    .text.gt9xxx_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:285    .text.gt9xxx_init:00000000 gt9xxx_init
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:557    .text.gt9xxx_init:00000154 $d
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:1066   .data.g_gt_tnum:00000000 g_gt_tnum
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:570    .text.gt9xxx_scan:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:576    .text.gt9xxx_scan:00000000 gt9xxx_scan
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:1033   .text.gt9xxx_scan:00000250 $d
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:1046   .bss.poll_div.0:00000000 poll_div.0
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:1052   .rodata.GT9XXX_TPX_TBL:00000000 GT9XXX_TPX_TBL
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:1047   .bss.poll_div.0:00000000 $d
+C:\Users\28576\AppData\Local\Temp\ccGVrwqd.s:1049   .rodata.GT9XXX_TPX_TBL:00000000 $d
+
+UNDEFINED SYMBOLS
+ct_iic_start
+ct_iic_send_byte
+ct_iic_wait_ack
+ct_iic_stop
+ct_iic_read_byte
+HAL_GPIO_Init
+ct_iic_init
+HAL_GPIO_WritePin
+delay_ms
+printf
+strcmp
+tp_dev
+lcddev

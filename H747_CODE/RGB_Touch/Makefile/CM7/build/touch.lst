@@ -1,0 +1,390 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"touch.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../BSP/TOUCH/touch.c"
+  19              		.section	.text.tp_scan_dummy,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	tp_scan_dummy:
+  26              	.LVL0:
+  27              	.LFB144:
+   1:../../BSP/TOUCH/touch.c **** /**
+   2:../../BSP/TOUCH/touch.c ****  * @file        touch.c
+   3:../../BSP/TOUCH/touch.c ****  * @brief       Touch driver frontend: auto-detect and wrap GT9xxx / FT5206.
+   4:../../BSP/TOUCH/touch.c ****  */
+   5:../../BSP/TOUCH/touch.c **** #include "touch.h"
+   6:../../BSP/TOUCH/touch.c **** 
+   7:../../BSP/TOUCH/touch.c **** #include "gt9xxx.h"
+   8:../../BSP/TOUCH/touch.c **** #include "ft5206.h"
+   9:../../BSP/TOUCH/touch.c **** 
+  10:../../BSP/TOUCH/touch.c **** /* Default tp_dev instance (scan function pointer will be replaced in tp_init()). */
+  11:../../BSP/TOUCH/touch.c **** _m_tp_dev tp_dev =
+  12:../../BSP/TOUCH/touch.c **** {
+  13:../../BSP/TOUCH/touch.c ****     .init = tp_init,
+  14:../../BSP/TOUCH/touch.c ****     .scan = 0,
+  15:../../BSP/TOUCH/touch.c ****     .adjust = 0,
+  16:../../BSP/TOUCH/touch.c ****     .x = {0},
+  17:../../BSP/TOUCH/touch.c ****     .y = {0},
+  18:../../BSP/TOUCH/touch.c ****     .sta = 0,
+  19:../../BSP/TOUCH/touch.c ****     .touchtype = 0
+  20:../../BSP/TOUCH/touch.c **** };
+  21:../../BSP/TOUCH/touch.c **** 
+  22:../../BSP/TOUCH/touch.c **** static uint8_t tp_scan_dummy(uint8_t mode)
+  23:../../BSP/TOUCH/touch.c **** {
+  28              		.loc 1 23 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  24:../../BSP/TOUCH/touch.c ****     (void)mode;
+  33              		.loc 1 24 5 view .LVU1
+  25:../../BSP/TOUCH/touch.c ****     return 0;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s 			page 2
+
+
+  34              		.loc 1 25 5 view .LVU2
+  26:../../BSP/TOUCH/touch.c **** }
+  35              		.loc 1 26 1 is_stmt 0 view .LVU3
+  36 0000 0020     		movs	r0, #0
+  37              	.LVL1:
+  38              		.loc 1 26 1 view .LVU4
+  39 0002 7047     		bx	lr
+  40              		.cfi_endproc
+  41              	.LFE144:
+  43              		.section	.text.tp_adjust_dummy,"ax",%progbits
+  44              		.align	1
+  45              		.syntax unified
+  46              		.thumb
+  47              		.thumb_func
+  49              	tp_adjust_dummy:
+  50              	.LFB145:
+  27:../../BSP/TOUCH/touch.c **** 
+  28:../../BSP/TOUCH/touch.c **** static void tp_adjust_dummy(void)
+  29:../../BSP/TOUCH/touch.c **** {
+  51              		.loc 1 29 1 is_stmt 1 view -0
+  52              		.cfi_startproc
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  55              		@ link register save eliminated.
+  30:../../BSP/TOUCH/touch.c ****     /* No calibration implemented for capacitive touch in this simplified BSP integration. */
+  31:../../BSP/TOUCH/touch.c **** }
+  56              		.loc 1 31 1 view .LVU6
+  57 0000 7047     		bx	lr
+  58              		.cfi_endproc
+  59              	.LFE145:
+  61              		.section	.text.tp_init,"ax",%progbits
+  62              		.align	1
+  63              		.global	tp_init
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  68              	tp_init:
+  69              	.LFB146:
+  32:../../BSP/TOUCH/touch.c **** 
+  33:../../BSP/TOUCH/touch.c **** uint8_t tp_init(void)
+  34:../../BSP/TOUCH/touch.c **** {
+  70              		.loc 1 34 1 view -0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74 0000 08B5     		push	{r3, lr}
+  75              	.LCFI0:
+  76              		.cfi_def_cfa_offset 8
+  77              		.cfi_offset 3, -8
+  78              		.cfi_offset 14, -4
+  35:../../BSP/TOUCH/touch.c ****     /* Orientation hint comes from LCD direction (same approach as your example). */
+  36:../../BSP/TOUCH/touch.c ****     tp_dev.touchtype = (uint8_t)(lcddev.dir & 0x01U);
+  79              		.loc 1 36 5 view .LVU8
+  80              		.loc 1 36 40 is_stmt 0 view .LVU9
+  81 0002 1C4B     		ldr	r3, .L11
+  82 0004 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+  83              		.loc 1 36 24 view .LVU10
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s 			page 3
+
+
+  84 0006 03F00103 		and	r3, r3, #1
+  85              		.loc 1 36 22 view .LVU11
+  86 000a 1B4A     		ldr	r2, .L11+4
+  87 000c 82F83630 		strb	r3, [r2, #54]
+  37:../../BSP/TOUCH/touch.c **** 
+  38:../../BSP/TOUCH/touch.c ****     /* init scan pointer defaults */
+  39:../../BSP/TOUCH/touch.c ****     tp_dev.scan = tp_scan_dummy;
+  88              		.loc 1 39 5 is_stmt 1 view .LVU12
+  89              		.loc 1 39 17 is_stmt 0 view .LVU13
+  90 0010 1A4B     		ldr	r3, .L11+8
+  91 0012 5360     		str	r3, [r2, #4]
+  40:../../BSP/TOUCH/touch.c ****     tp_dev.adjust = tp_adjust_dummy;
+  92              		.loc 1 40 5 is_stmt 1 view .LVU14
+  93              		.loc 1 40 19 is_stmt 0 view .LVU15
+  94 0014 1A4B     		ldr	r3, .L11+12
+  95 0016 9360     		str	r3, [r2, #8]
+  41:../../BSP/TOUCH/touch.c **** 
+  42:../../BSP/TOUCH/touch.c ****     tp_dev.sta = 0;
+  96              		.loc 1 42 5 is_stmt 1 view .LVU16
+  97              		.loc 1 42 16 is_stmt 0 view .LVU17
+  98 0018 0023     		movs	r3, #0
+  99 001a 9386     		strh	r3, [r2, #52]	@ movhi
+  43:../../BSP/TOUCH/touch.c ****     for (uint8_t i = 0; i < CT_MAX_TOUCH; i++)
+ 100              		.loc 1 43 5 is_stmt 1 view .LVU18
+ 101              	.LBB2:
+ 102              		.loc 1 43 10 view .LVU19
+ 103              	.LVL2:
+ 104              		.loc 1 43 5 is_stmt 0 view .LVU20
+ 105 001c 0CE0     		b	.L4
+ 106              	.LVL3:
+ 107              	.L5:
+  44:../../BSP/TOUCH/touch.c ****     {
+  45:../../BSP/TOUCH/touch.c ****         tp_dev.x[i] = 0xFFFFU;
+ 108              		.loc 1 45 9 is_stmt 1 view .LVU21
+ 109              		.loc 1 45 21 is_stmt 0 view .LVU22
+ 110 001e 1649     		ldr	r1, .L11+4
+ 111 0020 1A1D     		adds	r2, r3, #4
+ 112 0022 01EB4202 		add	r2, r1, r2, lsl #1
+ 113 0026 4FF6FF70 		movw	r0, #65535
+ 114 002a 9080     		strh	r0, [r2, #4]	@ movhi
+  46:../../BSP/TOUCH/touch.c ****         tp_dev.y[i] = 0xFFFFU;
+ 115              		.loc 1 46 9 is_stmt 1 view .LVU23
+ 116              		.loc 1 46 21 is_stmt 0 view .LVU24
+ 117 002c 03F11002 		add	r2, r3, #16
+ 118 0030 21F81200 		strh	r0, [r1, r2, lsl #1]	@ movhi
+  43:../../BSP/TOUCH/touch.c ****     for (uint8_t i = 0; i < CT_MAX_TOUCH; i++)
+ 119              		.loc 1 43 44 is_stmt 1 discriminator 3 view .LVU25
+ 120 0034 0133     		adds	r3, r3, #1
+ 121              	.LVL4:
+  43:../../BSP/TOUCH/touch.c ****     for (uint8_t i = 0; i < CT_MAX_TOUCH; i++)
+ 122              		.loc 1 43 44 is_stmt 0 discriminator 3 view .LVU26
+ 123 0036 DBB2     		uxtb	r3, r3
+ 124              	.LVL5:
+ 125              	.L4:
+  43:../../BSP/TOUCH/touch.c ****     for (uint8_t i = 0; i < CT_MAX_TOUCH; i++)
+ 126              		.loc 1 43 27 is_stmt 1 discriminator 1 view .LVU27
+ 127 0038 092B     		cmp	r3, #9
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s 			page 4
+
+
+ 128 003a F0D9     		bls	.L5
+ 129              	.LBE2:
+  47:../../BSP/TOUCH/touch.c ****     }
+  48:../../BSP/TOUCH/touch.c **** 
+  49:../../BSP/TOUCH/touch.c ****     /* Try GT9xxx first */
+  50:../../BSP/TOUCH/touch.c ****     if (gt9xxx_init() == 0)
+ 130              		.loc 1 50 5 view .LVU28
+ 131              		.loc 1 50 9 is_stmt 0 view .LVU29
+ 132 003c FFF7FEFF 		bl	gt9xxx_init
+ 133              	.LVL6:
+ 134              		.loc 1 50 8 discriminator 1 view .LVU30
+ 135 0040 48B9     		cbnz	r0, .L6
+  51:../../BSP/TOUCH/touch.c ****     {
+  52:../../BSP/TOUCH/touch.c ****         tp_dev.scan = gt9xxx_scan;
+ 136              		.loc 1 52 9 is_stmt 1 view .LVU31
+ 137              		.loc 1 52 21 is_stmt 0 view .LVU32
+ 138 0042 0D4B     		ldr	r3, .L11+4
+ 139 0044 0F4A     		ldr	r2, .L11+16
+ 140 0046 5A60     		str	r2, [r3, #4]
+  53:../../BSP/TOUCH/touch.c ****         tp_dev.touchtype |= 0x80U; /* capacitive */
+ 141              		.loc 1 53 9 is_stmt 1 view .LVU33
+ 142              		.loc 1 53 15 is_stmt 0 view .LVU34
+ 143 0048 93F83620 		ldrb	r2, [r3, #54]	@ zero_extendqisi2
+ 144              		.loc 1 53 26 view .LVU35
+ 145 004c 62F07F02 		orn	r2, r2, #127
+ 146 0050 83F83620 		strb	r2, [r3, #54]
+  54:../../BSP/TOUCH/touch.c ****         return 0;
+ 147              		.loc 1 54 9 is_stmt 1 view .LVU36
+ 148              	.L7:
+  55:../../BSP/TOUCH/touch.c ****     }
+  56:../../BSP/TOUCH/touch.c **** 
+  57:../../BSP/TOUCH/touch.c ****     /* Fallback to FT5206/FT5426 */
+  58:../../BSP/TOUCH/touch.c ****     if (ft5206_init() == 0)
+  59:../../BSP/TOUCH/touch.c ****     {
+  60:../../BSP/TOUCH/touch.c ****         tp_dev.scan = ft5206_scan;
+  61:../../BSP/TOUCH/touch.c ****         tp_dev.touchtype |= 0x80U; /* capacitive */
+  62:../../BSP/TOUCH/touch.c ****         return 0;
+  63:../../BSP/TOUCH/touch.c ****     }
+  64:../../BSP/TOUCH/touch.c **** 
+  65:../../BSP/TOUCH/touch.c ****     return 1;
+  66:../../BSP/TOUCH/touch.c **** }
+ 149              		.loc 1 66 1 is_stmt 0 view .LVU37
+ 150 0054 08BD     		pop	{r3, pc}
+ 151              	.L6:
+  58:../../BSP/TOUCH/touch.c ****     {
+ 152              		.loc 1 58 5 is_stmt 1 view .LVU38
+  58:../../BSP/TOUCH/touch.c ****     {
+ 153              		.loc 1 58 9 is_stmt 0 view .LVU39
+ 154 0056 FFF7FEFF 		bl	ft5206_init
+ 155              	.LVL7:
+  58:../../BSP/TOUCH/touch.c ****     {
+ 156              		.loc 1 58 8 discriminator 1 view .LVU40
+ 157 005a 08B1     		cbz	r0, .L10
+  65:../../BSP/TOUCH/touch.c **** }
+ 158              		.loc 1 65 12 view .LVU41
+ 159 005c 0120     		movs	r0, #1
+ 160 005e F9E7     		b	.L7
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s 			page 5
+
+
+ 161              	.L10:
+  60:../../BSP/TOUCH/touch.c ****         tp_dev.touchtype |= 0x80U; /* capacitive */
+ 162              		.loc 1 60 9 is_stmt 1 view .LVU42
+  60:../../BSP/TOUCH/touch.c ****         tp_dev.touchtype |= 0x80U; /* capacitive */
+ 163              		.loc 1 60 21 is_stmt 0 view .LVU43
+ 164 0060 054B     		ldr	r3, .L11+4
+ 165 0062 094A     		ldr	r2, .L11+20
+ 166 0064 5A60     		str	r2, [r3, #4]
+  61:../../BSP/TOUCH/touch.c ****         return 0;
+ 167              		.loc 1 61 9 is_stmt 1 view .LVU44
+  61:../../BSP/TOUCH/touch.c ****         return 0;
+ 168              		.loc 1 61 15 is_stmt 0 view .LVU45
+ 169 0066 93F83620 		ldrb	r2, [r3, #54]	@ zero_extendqisi2
+  61:../../BSP/TOUCH/touch.c ****         return 0;
+ 170              		.loc 1 61 26 view .LVU46
+ 171 006a 62F07F02 		orn	r2, r2, #127
+ 172 006e 83F83620 		strb	r2, [r3, #54]
+  62:../../BSP/TOUCH/touch.c ****     }
+ 173              		.loc 1 62 9 is_stmt 1 view .LVU47
+  62:../../BSP/TOUCH/touch.c ****     }
+ 174              		.loc 1 62 16 is_stmt 0 view .LVU48
+ 175 0072 EFE7     		b	.L7
+ 176              	.L12:
+ 177              		.align	2
+ 178              	.L11:
+ 179 0074 00000000 		.word	lcddev
+ 180 0078 00000000 		.word	tp_dev
+ 181 007c 00000000 		.word	tp_scan_dummy
+ 182 0080 00000000 		.word	tp_adjust_dummy
+ 183 0084 00000000 		.word	gt9xxx_scan
+ 184 0088 00000000 		.word	ft5206_scan
+ 185              		.cfi_endproc
+ 186              	.LFE146:
+ 188              		.section	.text.tp_scan,"ax",%progbits
+ 189              		.align	1
+ 190              		.global	tp_scan
+ 191              		.syntax unified
+ 192              		.thumb
+ 193              		.thumb_func
+ 195              	tp_scan:
+ 196              	.LVL8:
+ 197              	.LFB147:
+  67:../../BSP/TOUCH/touch.c **** 
+  68:../../BSP/TOUCH/touch.c **** uint8_t tp_scan(uint8_t mode)
+  69:../../BSP/TOUCH/touch.c **** {
+ 198              		.loc 1 69 1 is_stmt 1 view -0
+ 199              		.cfi_startproc
+ 200              		@ args = 0, pretend = 0, frame = 0
+ 201              		@ frame_needed = 0, uses_anonymous_args = 0
+ 202              		.loc 1 69 1 is_stmt 0 view .LVU50
+ 203 0000 08B5     		push	{r3, lr}
+ 204              	.LCFI1:
+ 205              		.cfi_def_cfa_offset 8
+ 206              		.cfi_offset 3, -8
+ 207              		.cfi_offset 14, -4
+  70:../../BSP/TOUCH/touch.c ****     if (tp_dev.scan)
+ 208              		.loc 1 70 5 is_stmt 1 view .LVU51
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s 			page 6
+
+
+ 209              		.loc 1 70 15 is_stmt 0 view .LVU52
+ 210 0002 034B     		ldr	r3, .L17
+ 211 0004 5B68     		ldr	r3, [r3, #4]
+ 212              		.loc 1 70 8 view .LVU53
+ 213 0006 0BB1     		cbz	r3, .L15
+  71:../../BSP/TOUCH/touch.c ****         return tp_dev.scan(mode);
+ 214              		.loc 1 71 9 is_stmt 1 view .LVU54
+ 215              		.loc 1 71 16 is_stmt 0 view .LVU55
+ 216 0008 9847     		blx	r3
+ 217              	.LVL9:
+ 218              	.L14:
+  72:../../BSP/TOUCH/touch.c ****     return 0;
+  73:../../BSP/TOUCH/touch.c **** }
+ 219              		.loc 1 73 1 view .LVU56
+ 220 000a 08BD     		pop	{r3, pc}
+ 221              	.LVL10:
+ 222              	.L15:
+  72:../../BSP/TOUCH/touch.c ****     return 0;
+ 223              		.loc 1 72 12 view .LVU57
+ 224 000c 1846     		mov	r0, r3
+ 225              	.LVL11:
+  72:../../BSP/TOUCH/touch.c ****     return 0;
+ 226              		.loc 1 72 12 view .LVU58
+ 227 000e FCE7     		b	.L14
+ 228              	.L18:
+ 229              		.align	2
+ 230              	.L17:
+ 231 0010 00000000 		.word	tp_dev
+ 232              		.cfi_endproc
+ 233              	.LFE147:
+ 235              		.global	tp_dev
+ 236              		.section	.data.tp_dev,"aw"
+ 237              		.align	2
+ 240              	tp_dev:
+ 241 0000 00000000 		.word	tp_init
+ 242 0004 00000000 		.word	0
+ 243 0008 00000000 		.word	0
+ 244 000c 0000     		.short	0
+ 245 000e 00000000 		.space	18
+ 245      00000000 
+ 245      00000000 
+ 245      00000000 
+ 245      0000
+ 246 0020 0000     		.short	0
+ 247 0022 00000000 		.space	18
+ 247      00000000 
+ 247      00000000 
+ 247      00000000 
+ 247      0000
+ 248 0034 0000     		.short	0
+ 249 0036 00       		.byte	0
+ 250 0037 00       		.space	1
+ 251              		.text
+ 252              	.Letext0:
+ 253              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 254              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 255              		.file 4 "../../BSP/LCD/lcd.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s 			page 7
+
+
+ 256              		.file 5 "../../BSP/TOUCH/touch.h"
+ 257              		.file 6 "../../BSP/TOUCH/ft5206.h"
+ 258              		.file 7 "../../BSP/TOUCH/gt9xxx.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 touch.c
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:20     .text.tp_scan_dummy:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:25     .text.tp_scan_dummy:00000000 tp_scan_dummy
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:44     .text.tp_adjust_dummy:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:49     .text.tp_adjust_dummy:00000000 tp_adjust_dummy
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:62     .text.tp_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:68     .text.tp_init:00000000 tp_init
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:179    .text.tp_init:00000074 $d
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:240    .data.tp_dev:00000000 tp_dev
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:189    .text.tp_scan:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:195    .text.tp_scan:00000000 tp_scan
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:231    .text.tp_scan:00000010 $d
+C:\Users\28576\AppData\Local\Temp\cc2Q6cTl.s:237    .data.tp_dev:00000000 $d
+
+UNDEFINED SYMBOLS
+gt9xxx_init
+ft5206_init
+lcddev
+gt9xxx_scan
+ft5206_scan

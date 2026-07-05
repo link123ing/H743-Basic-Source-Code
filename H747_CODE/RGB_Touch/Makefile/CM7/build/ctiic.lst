@@ -1,0 +1,1113 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"ctiic.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../BSP/TOUCH/ctiic.c"
+  19              		.section	.text.ct_iic_delay,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	ct_iic_delay:
+  26              	.LFB144:
+   1:../../BSP/TOUCH/ctiic.c **** /**
+   2:../../BSP/TOUCH/ctiic.c ****  * @file        ctiic.c
+   3:../../BSP/TOUCH/ctiic.c ****  * @brief       Capacitive touch software I2C (bit-bang) implementation.
+   4:../../BSP/TOUCH/ctiic.c ****  */
+   5:../../BSP/TOUCH/ctiic.c **** #include "ctiic.h"
+   6:../../BSP/TOUCH/ctiic.c **** #include "bsp_delay.h"
+   7:../../BSP/TOUCH/ctiic.c **** 
+   8:../../BSP/TOUCH/ctiic.c **** static void ct_iic_delay(void)
+   9:../../BSP/TOUCH/ctiic.c **** {
+  27              		.loc 1 9 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  10:../../BSP/TOUCH/ctiic.c ****     /* Simple timing; tune if needed for your touch IC. */
+  11:../../BSP/TOUCH/ctiic.c ****     delay_us(2);
+  36              		.loc 1 11 5 view .LVU1
+  37 0002 0220     		movs	r0, #2
+  38 0004 FFF7FEFF 		bl	delay_us
+  39              	.LVL0:
+  12:../../BSP/TOUCH/ctiic.c **** }
+  40              		.loc 1 12 1 is_stmt 0 view .LVU2
+  41 0008 08BD     		pop	{r3, pc}
+  42              		.cfi_endproc
+  43              	.LFE144:
+  45              		.section	.text.ct_iic_start,"ax",%progbits
+  46              		.align	1
+  47              		.global	ct_iic_start
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 2
+
+
+  48              		.syntax unified
+  49              		.thumb
+  50              		.thumb_func
+  52              	ct_iic_start:
+  53              	.LFB146:
+  13:../../BSP/TOUCH/ctiic.c **** 
+  14:../../BSP/TOUCH/ctiic.c **** void ct_iic_init(void)
+  15:../../BSP/TOUCH/ctiic.c **** {
+  16:../../BSP/TOUCH/ctiic.c ****     GPIO_InitTypeDef gpio_init_struct = {0};
+  17:../../BSP/TOUCH/ctiic.c **** 
+  18:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SCL_GPIO_CLK_ENABLE();
+  19:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();
+  20:../../BSP/TOUCH/ctiic.c **** 
+  21:../../BSP/TOUCH/ctiic.c ****     /* SCL: push-pull output */
+  22:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Pin = CT_IIC_SCL_GPIO_PIN;
+  23:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Mode = GPIO_MODE_OUTPUT_PP;
+  24:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Pull = GPIO_PULLUP;
+  25:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  26:../../BSP/TOUCH/ctiic.c ****     HAL_GPIO_Init(CT_IIC_SCL_GPIO_PORT, &gpio_init_struct);
+  27:../../BSP/TOUCH/ctiic.c **** 
+  28:../../BSP/TOUCH/ctiic.c ****     /* SDA: open-drain output (release by writing 1) */
+  29:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Pin = CT_IIC_SDA_GPIO_PIN;
+  30:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Mode = GPIO_MODE_OUTPUT_OD;
+  31:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Pull = GPIO_PULLUP;
+  32:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  33:../../BSP/TOUCH/ctiic.c ****     HAL_GPIO_Init(CT_IIC_SDA_GPIO_PORT, &gpio_init_struct);
+  34:../../BSP/TOUCH/ctiic.c **** 
+  35:../../BSP/TOUCH/ctiic.c ****     ct_iic_stop();
+  36:../../BSP/TOUCH/ctiic.c **** }
+  37:../../BSP/TOUCH/ctiic.c **** 
+  38:../../BSP/TOUCH/ctiic.c **** void ct_iic_start(void)
+  39:../../BSP/TOUCH/ctiic.c **** {
+  54              		.loc 1 39 1 is_stmt 1 view -0
+  55              		.cfi_startproc
+  56              		@ args = 0, pretend = 0, frame = 0
+  57              		@ frame_needed = 0, uses_anonymous_args = 0
+  58 0000 10B5     		push	{r4, lr}
+  59              	.LCFI1:
+  60              		.cfi_def_cfa_offset 8
+  61              		.cfi_offset 4, -8
+  62              		.cfi_offset 14, -4
+  40:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA(1);
+  63              		.loc 1 40 5 view .LVU4
+  64              		.loc 1 40 5 view .LVU5
+  65              		.loc 1 40 5 discriminator 1 view .LVU6
+  66 0002 104C     		ldr	r4, .L5
+  67 0004 0122     		movs	r2, #1
+  68 0006 4FF40061 		mov	r1, #2048
+  69 000a 2046     		mov	r0, r4
+  70 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+  71              	.LVL1:
+  72              		.loc 1 40 5 view .LVU7
+  41:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SCL(1);
+  73              		.loc 1 41 5 view .LVU8
+  74              		.loc 1 41 5 view .LVU9
+  75              		.loc 1 41 5 discriminator 1 view .LVU10
+  76 0010 0122     		movs	r2, #1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 3
+
+
+  77 0012 4FF48061 		mov	r1, #1024
+  78 0016 2046     		mov	r0, r4
+  79 0018 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  80              	.LVL2:
+  81              		.loc 1 41 5 view .LVU11
+  42:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+  82              		.loc 1 42 5 view .LVU12
+  83 001c FFF7FEFF 		bl	ct_iic_delay
+  84              	.LVL3:
+  43:../../BSP/TOUCH/ctiic.c **** 
+  44:../../BSP/TOUCH/ctiic.c ****     /* START: SDA high -> low while SCL high */
+  45:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA(0);
+  85              		.loc 1 45 5 view .LVU13
+  86              		.loc 1 45 5 view .LVU14
+  87              		.loc 1 45 5 discriminator 2 view .LVU15
+  88 0020 0022     		movs	r2, #0
+  89 0022 4FF40061 		mov	r1, #2048
+  90 0026 2046     		mov	r0, r4
+  91 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  92              	.LVL4:
+  93              		.loc 1 45 5 view .LVU16
+  46:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+  94              		.loc 1 46 5 view .LVU17
+  95 002c FFF7FEFF 		bl	ct_iic_delay
+  96              	.LVL5:
+  47:../../BSP/TOUCH/ctiic.c **** 
+  48:../../BSP/TOUCH/ctiic.c ****     /* Hold SCL low for next transfer */
+  49:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SCL(0);
+  97              		.loc 1 49 5 view .LVU18
+  98              		.loc 1 49 5 view .LVU19
+  99              		.loc 1 49 5 discriminator 2 view .LVU20
+ 100 0030 0022     		movs	r2, #0
+ 101 0032 4FF48061 		mov	r1, #1024
+ 102 0036 2046     		mov	r0, r4
+ 103 0038 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 104              	.LVL6:
+ 105              		.loc 1 49 5 view .LVU21
+  50:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 106              		.loc 1 50 5 view .LVU22
+ 107 003c FFF7FEFF 		bl	ct_iic_delay
+ 108              	.LVL7:
+  51:../../BSP/TOUCH/ctiic.c **** }
+ 109              		.loc 1 51 1 is_stmt 0 view .LVU23
+ 110 0040 10BD     		pop	{r4, pc}
+ 111              	.L6:
+ 112 0042 00BF     		.align	2
+ 113              	.L5:
+ 114 0044 00040258 		.word	1476527104
+ 115              		.cfi_endproc
+ 116              	.LFE146:
+ 118              		.section	.text.ct_iic_stop,"ax",%progbits
+ 119              		.align	1
+ 120              		.global	ct_iic_stop
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 125              	ct_iic_stop:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 4
+
+
+ 126              	.LFB147:
+  52:../../BSP/TOUCH/ctiic.c **** 
+  53:../../BSP/TOUCH/ctiic.c **** void ct_iic_stop(void)
+  54:../../BSP/TOUCH/ctiic.c **** {
+ 127              		.loc 1 54 1 is_stmt 1 view -0
+ 128              		.cfi_startproc
+ 129              		@ args = 0, pretend = 0, frame = 0
+ 130              		@ frame_needed = 0, uses_anonymous_args = 0
+ 131 0000 10B5     		push	{r4, lr}
+ 132              	.LCFI2:
+ 133              		.cfi_def_cfa_offset 8
+ 134              		.cfi_offset 4, -8
+ 135              		.cfi_offset 14, -4
+  55:../../BSP/TOUCH/ctiic.c ****     /* STOP: SDA low -> high while SCL high */
+  56:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA(0);
+ 136              		.loc 1 56 5 view .LVU25
+ 137              		.loc 1 56 5 view .LVU26
+ 138              		.loc 1 56 5 discriminator 2 view .LVU27
+ 139 0002 0D4C     		ldr	r4, .L9
+ 140 0004 0022     		movs	r2, #0
+ 141 0006 4FF40061 		mov	r1, #2048
+ 142 000a 2046     		mov	r0, r4
+ 143 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 144              	.LVL8:
+ 145              		.loc 1 56 5 view .LVU28
+  57:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 146              		.loc 1 57 5 view .LVU29
+ 147 0010 FFF7FEFF 		bl	ct_iic_delay
+ 148              	.LVL9:
+  58:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SCL(1);
+ 149              		.loc 1 58 5 view .LVU30
+ 150              		.loc 1 58 5 view .LVU31
+ 151              		.loc 1 58 5 discriminator 1 view .LVU32
+ 152 0014 0122     		movs	r2, #1
+ 153 0016 4FF48061 		mov	r1, #1024
+ 154 001a 2046     		mov	r0, r4
+ 155 001c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 156              	.LVL10:
+ 157              		.loc 1 58 5 view .LVU33
+  59:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 158              		.loc 1 59 5 view .LVU34
+ 159 0020 FFF7FEFF 		bl	ct_iic_delay
+ 160              	.LVL11:
+  60:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA(1);
+ 161              		.loc 1 60 5 view .LVU35
+ 162              		.loc 1 60 5 view .LVU36
+ 163              		.loc 1 60 5 discriminator 1 view .LVU37
+ 164 0024 0122     		movs	r2, #1
+ 165 0026 4FF40061 		mov	r1, #2048
+ 166 002a 2046     		mov	r0, r4
+ 167 002c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 168              	.LVL12:
+ 169              		.loc 1 60 5 view .LVU38
+  61:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 170              		.loc 1 61 5 view .LVU39
+ 171 0030 FFF7FEFF 		bl	ct_iic_delay
+ 172              	.LVL13:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 5
+
+
+  62:../../BSP/TOUCH/ctiic.c **** }
+ 173              		.loc 1 62 1 is_stmt 0 view .LVU40
+ 174 0034 10BD     		pop	{r4, pc}
+ 175              	.L10:
+ 176 0036 00BF     		.align	2
+ 177              	.L9:
+ 178 0038 00040258 		.word	1476527104
+ 179              		.cfi_endproc
+ 180              	.LFE147:
+ 182              		.section	.text.ct_iic_init,"ax",%progbits
+ 183              		.align	1
+ 184              		.global	ct_iic_init
+ 185              		.syntax unified
+ 186              		.thumb
+ 187              		.thumb_func
+ 189              	ct_iic_init:
+ 190              	.LFB145:
+  15:../../BSP/TOUCH/ctiic.c ****     GPIO_InitTypeDef gpio_init_struct = {0};
+ 191              		.loc 1 15 1 is_stmt 1 view -0
+ 192              		.cfi_startproc
+ 193              		@ args = 0, pretend = 0, frame = 32
+ 194              		@ frame_needed = 0, uses_anonymous_args = 0
+ 195 0000 70B5     		push	{r4, r5, r6, lr}
+ 196              	.LCFI3:
+ 197              		.cfi_def_cfa_offset 16
+ 198              		.cfi_offset 4, -16
+ 199              		.cfi_offset 5, -12
+ 200              		.cfi_offset 6, -8
+ 201              		.cfi_offset 14, -4
+ 202 0002 88B0     		sub	sp, sp, #32
+ 203              	.LCFI4:
+ 204              		.cfi_def_cfa_offset 48
+  16:../../BSP/TOUCH/ctiic.c **** 
+ 205              		.loc 1 16 5 view .LVU42
+  16:../../BSP/TOUCH/ctiic.c **** 
+ 206              		.loc 1 16 22 is_stmt 0 view .LVU43
+ 207 0004 03AC     		add	r4, sp, #12
+ 208 0006 0023     		movs	r3, #0
+ 209 0008 0393     		str	r3, [sp, #12]
+ 210 000a 0493     		str	r3, [sp, #16]
+ 211 000c 0593     		str	r3, [sp, #20]
+ 212 000e 0693     		str	r3, [sp, #24]
+ 213 0010 0793     		str	r3, [sp, #28]
+  18:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();
+ 214              		.loc 1 18 5 is_stmt 1 view .LVU44
+  18:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();
+ 215              		.loc 1 18 5 view .LVU45
+ 216              	.LBB2:
+  18:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();
+ 217              		.loc 1 18 5 view .LVU46
+  18:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();
+ 218              		.loc 1 18 5 view .LVU47
+ 219 0012 1A4B     		ldr	r3, .L13
+ 220 0014 D3F8E020 		ldr	r2, [r3, #224]
+ 221 0018 42F00202 		orr	r2, r2, #2
+ 222 001c C3F8E020 		str	r2, [r3, #224]
+  18:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 6
+
+
+ 223              		.loc 1 18 5 view .LVU48
+ 224 0020 D3F8E020 		ldr	r2, [r3, #224]
+ 225 0024 02F00202 		and	r2, r2, #2
+ 226 0028 0192     		str	r2, [sp, #4]
+  18:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();
+ 227              		.loc 1 18 5 view .LVU49
+ 228 002a 019A     		ldr	r2, [sp, #4]
+ 229              	.LBE2:
+  18:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();
+ 230              		.loc 1 18 5 view .LVU50
+  18:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA_GPIO_CLK_ENABLE();
+ 231              		.loc 1 18 5 view .LVU51
+  19:../../BSP/TOUCH/ctiic.c **** 
+ 232              		.loc 1 19 5 view .LVU52
+  19:../../BSP/TOUCH/ctiic.c **** 
+ 233              		.loc 1 19 5 view .LVU53
+ 234              	.LBB3:
+  19:../../BSP/TOUCH/ctiic.c **** 
+ 235              		.loc 1 19 5 view .LVU54
+  19:../../BSP/TOUCH/ctiic.c **** 
+ 236              		.loc 1 19 5 view .LVU55
+ 237 002c D3F8E020 		ldr	r2, [r3, #224]
+ 238 0030 42F00202 		orr	r2, r2, #2
+ 239 0034 C3F8E020 		str	r2, [r3, #224]
+  19:../../BSP/TOUCH/ctiic.c **** 
+ 240              		.loc 1 19 5 view .LVU56
+ 241 0038 D3F8E030 		ldr	r3, [r3, #224]
+ 242 003c 03F00203 		and	r3, r3, #2
+ 243 0040 0293     		str	r3, [sp, #8]
+  19:../../BSP/TOUCH/ctiic.c **** 
+ 244              		.loc 1 19 5 view .LVU57
+ 245 0042 029B     		ldr	r3, [sp, #8]
+ 246              	.LBE3:
+  19:../../BSP/TOUCH/ctiic.c **** 
+ 247              		.loc 1 19 5 view .LVU58
+  19:../../BSP/TOUCH/ctiic.c **** 
+ 248              		.loc 1 19 5 view .LVU59
+  22:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Mode = GPIO_MODE_OUTPUT_PP;
+ 249              		.loc 1 22 5 view .LVU60
+  22:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Mode = GPIO_MODE_OUTPUT_PP;
+ 250              		.loc 1 22 26 is_stmt 0 view .LVU61
+ 251 0044 4FF48063 		mov	r3, #1024
+ 252 0048 0393     		str	r3, [sp, #12]
+  23:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Pull = GPIO_PULLUP;
+ 253              		.loc 1 23 5 is_stmt 1 view .LVU62
+  23:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Pull = GPIO_PULLUP;
+ 254              		.loc 1 23 27 is_stmt 0 view .LVU63
+ 255 004a 0125     		movs	r5, #1
+ 256 004c 0495     		str	r5, [sp, #16]
+  24:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+ 257              		.loc 1 24 5 is_stmt 1 view .LVU64
+  24:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+ 258              		.loc 1 24 27 is_stmt 0 view .LVU65
+ 259 004e 0595     		str	r5, [sp, #20]
+  25:../../BSP/TOUCH/ctiic.c ****     HAL_GPIO_Init(CT_IIC_SCL_GPIO_PORT, &gpio_init_struct);
+ 260              		.loc 1 25 5 is_stmt 1 view .LVU66
+  25:../../BSP/TOUCH/ctiic.c ****     HAL_GPIO_Init(CT_IIC_SCL_GPIO_PORT, &gpio_init_struct);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 7
+
+
+ 261              		.loc 1 25 28 is_stmt 0 view .LVU67
+ 262 0050 0695     		str	r5, [sp, #24]
+  26:../../BSP/TOUCH/ctiic.c **** 
+ 263              		.loc 1 26 5 is_stmt 1 view .LVU68
+ 264 0052 0B4E     		ldr	r6, .L13+4
+ 265 0054 2146     		mov	r1, r4
+ 266 0056 3046     		mov	r0, r6
+ 267 0058 FFF7FEFF 		bl	HAL_GPIO_Init
+ 268              	.LVL14:
+  29:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Mode = GPIO_MODE_OUTPUT_OD;
+ 269              		.loc 1 29 5 view .LVU69
+  29:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Mode = GPIO_MODE_OUTPUT_OD;
+ 270              		.loc 1 29 26 is_stmt 0 view .LVU70
+ 271 005c 4FF40063 		mov	r3, #2048
+ 272 0060 0393     		str	r3, [sp, #12]
+  30:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Pull = GPIO_PULLUP;
+ 273              		.loc 1 30 5 is_stmt 1 view .LVU71
+  30:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Pull = GPIO_PULLUP;
+ 274              		.loc 1 30 27 is_stmt 0 view .LVU72
+ 275 0062 1123     		movs	r3, #17
+ 276 0064 0493     		str	r3, [sp, #16]
+  31:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+ 277              		.loc 1 31 5 is_stmt 1 view .LVU73
+  31:../../BSP/TOUCH/ctiic.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+ 278              		.loc 1 31 27 is_stmt 0 view .LVU74
+ 279 0066 0595     		str	r5, [sp, #20]
+  32:../../BSP/TOUCH/ctiic.c ****     HAL_GPIO_Init(CT_IIC_SDA_GPIO_PORT, &gpio_init_struct);
+ 280              		.loc 1 32 5 is_stmt 1 view .LVU75
+  32:../../BSP/TOUCH/ctiic.c ****     HAL_GPIO_Init(CT_IIC_SDA_GPIO_PORT, &gpio_init_struct);
+ 281              		.loc 1 32 28 is_stmt 0 view .LVU76
+ 282 0068 0695     		str	r5, [sp, #24]
+  33:../../BSP/TOUCH/ctiic.c **** 
+ 283              		.loc 1 33 5 is_stmt 1 view .LVU77
+ 284 006a 2146     		mov	r1, r4
+ 285 006c 3046     		mov	r0, r6
+ 286 006e FFF7FEFF 		bl	HAL_GPIO_Init
+ 287              	.LVL15:
+  35:../../BSP/TOUCH/ctiic.c **** }
+ 288              		.loc 1 35 5 view .LVU78
+ 289 0072 FFF7FEFF 		bl	ct_iic_stop
+ 290              	.LVL16:
+  36:../../BSP/TOUCH/ctiic.c **** 
+ 291              		.loc 1 36 1 is_stmt 0 view .LVU79
+ 292 0076 08B0     		add	sp, sp, #32
+ 293              	.LCFI5:
+ 294              		.cfi_def_cfa_offset 16
+ 295              		@ sp needed
+ 296 0078 70BD     		pop	{r4, r5, r6, pc}
+ 297              	.L14:
+ 298 007a 00BF     		.align	2
+ 299              	.L13:
+ 300 007c 00440258 		.word	1476543488
+ 301 0080 00040258 		.word	1476527104
+ 302              		.cfi_endproc
+ 303              	.LFE145:
+ 305              		.section	.text.ct_iic_wait_ack,"ax",%progbits
+ 306              		.align	1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 8
+
+
+ 307              		.global	ct_iic_wait_ack
+ 308              		.syntax unified
+ 309              		.thumb
+ 310              		.thumb_func
+ 312              	ct_iic_wait_ack:
+ 313              	.LFB148:
+  63:../../BSP/TOUCH/ctiic.c **** 
+  64:../../BSP/TOUCH/ctiic.c **** uint8_t ct_iic_wait_ack(void)
+  65:../../BSP/TOUCH/ctiic.c **** {
+ 314              		.loc 1 65 1 is_stmt 1 view -0
+ 315              		.cfi_startproc
+ 316              		@ args = 0, pretend = 0, frame = 0
+ 317              		@ frame_needed = 0, uses_anonymous_args = 0
+ 318 0000 38B5     		push	{r3, r4, r5, lr}
+ 319              	.LCFI6:
+ 320              		.cfi_def_cfa_offset 16
+ 321              		.cfi_offset 3, -16
+ 322              		.cfi_offset 4, -12
+ 323              		.cfi_offset 5, -8
+ 324              		.cfi_offset 14, -4
+  66:../../BSP/TOUCH/ctiic.c ****     uint16_t waittime = 0;
+ 325              		.loc 1 66 5 view .LVU81
+ 326              	.LVL17:
+  67:../../BSP/TOUCH/ctiic.c **** 
+  68:../../BSP/TOUCH/ctiic.c ****     /* Release SDA (open-drain -> high-Z) */
+  69:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA(1);
+ 327              		.loc 1 69 5 view .LVU82
+ 328              		.loc 1 69 5 view .LVU83
+ 329              		.loc 1 69 5 discriminator 1 view .LVU84
+ 330 0002 174C     		ldr	r4, .L23
+ 331 0004 0122     		movs	r2, #1
+ 332 0006 4FF40061 		mov	r1, #2048
+ 333 000a 2046     		mov	r0, r4
+ 334 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 335              	.LVL18:
+ 336              		.loc 1 69 5 view .LVU85
+  70:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 337              		.loc 1 70 5 view .LVU86
+ 338 0010 FFF7FEFF 		bl	ct_iic_delay
+ 339              	.LVL19:
+  71:../../BSP/TOUCH/ctiic.c **** 
+  72:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SCL(1);
+ 340              		.loc 1 72 5 view .LVU87
+ 341              		.loc 1 72 5 view .LVU88
+ 342              		.loc 1 72 5 discriminator 1 view .LVU89
+ 343 0014 0122     		movs	r2, #1
+ 344 0016 4FF48061 		mov	r1, #1024
+ 345 001a 2046     		mov	r0, r4
+ 346 001c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 347              	.LVL20:
+ 348              		.loc 1 72 5 view .LVU90
+  73:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 349              		.loc 1 73 5 view .LVU91
+ 350 0020 FFF7FEFF 		bl	ct_iic_delay
+ 351              	.LVL21:
+  74:../../BSP/TOUCH/ctiic.c **** 
+  75:../../BSP/TOUCH/ctiic.c ****     /* Wait until SDA is pulled low by slave (ACK) */
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 9
+
+
+  76:../../BSP/TOUCH/ctiic.c ****     while (CT_READ_SDA != 0)
+ 352              		.loc 1 76 5 view .LVU92
+  66:../../BSP/TOUCH/ctiic.c **** 
+ 353              		.loc 1 66 14 is_stmt 0 view .LVU93
+ 354 0024 0024     		movs	r4, #0
+ 355              	.LVL22:
+ 356              	.L16:
+ 357              		.loc 1 76 24 is_stmt 1 view .LVU94
+ 358              		.loc 1 76 12 is_stmt 0 view .LVU95
+ 359 0026 4FF40061 		mov	r1, #2048
+ 360 002a 0D48     		ldr	r0, .L23
+ 361 002c FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 362              	.LVL23:
+ 363              		.loc 1 76 24 discriminator 1 view .LVU96
+ 364 0030 0546     		mov	r5, r0
+ 365 0032 50B1     		cbz	r0, .L21
+  77:../../BSP/TOUCH/ctiic.c ****     {
+  78:../../BSP/TOUCH/ctiic.c ****         waittime++;
+ 366              		.loc 1 78 9 is_stmt 1 view .LVU97
+ 367              		.loc 1 78 17 is_stmt 0 view .LVU98
+ 368 0034 0134     		adds	r4, r4, #1
+ 369              	.LVL24:
+ 370              		.loc 1 78 17 view .LVU99
+ 371 0036 A4B2     		uxth	r4, r4
+ 372              	.LVL25:
+  79:../../BSP/TOUCH/ctiic.c ****         if (waittime > 250)
+ 373              		.loc 1 79 9 is_stmt 1 view .LVU100
+ 374              		.loc 1 79 12 is_stmt 0 view .LVU101
+ 375 0038 FA2C     		cmp	r4, #250
+ 376 003a 02D8     		bhi	.L22
+  80:../../BSP/TOUCH/ctiic.c ****         {
+  81:../../BSP/TOUCH/ctiic.c ****             ct_iic_stop();
+  82:../../BSP/TOUCH/ctiic.c ****             return 1;
+  83:../../BSP/TOUCH/ctiic.c ****         }
+  84:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 377              		.loc 1 84 9 is_stmt 1 view .LVU102
+ 378 003c FFF7FEFF 		bl	ct_iic_delay
+ 379              	.LVL26:
+ 380 0040 F1E7     		b	.L16
+ 381              	.L22:
+  81:../../BSP/TOUCH/ctiic.c ****             return 1;
+ 382              		.loc 1 81 13 view .LVU103
+ 383 0042 FFF7FEFF 		bl	ct_iic_stop
+ 384              	.LVL27:
+  82:../../BSP/TOUCH/ctiic.c ****         }
+ 385              		.loc 1 82 13 view .LVU104
+  82:../../BSP/TOUCH/ctiic.c ****         }
+ 386              		.loc 1 82 20 is_stmt 0 view .LVU105
+ 387 0046 0125     		movs	r5, #1
+ 388 0048 07E0     		b	.L18
+ 389              	.L21:
+  85:../../BSP/TOUCH/ctiic.c ****     }
+  86:../../BSP/TOUCH/ctiic.c **** 
+  87:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SCL(0);
+ 390              		.loc 1 87 5 is_stmt 1 view .LVU106
+ 391              		.loc 1 87 5 view .LVU107
+ 392              		.loc 1 87 5 discriminator 2 view .LVU108
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 10
+
+
+ 393 004a 0246     		mov	r2, r0
+ 394 004c 4FF48061 		mov	r1, #1024
+ 395 0050 0348     		ldr	r0, .L23
+ 396 0052 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 397              	.LVL28:
+ 398              		.loc 1 87 5 view .LVU109
+  88:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 399              		.loc 1 88 5 view .LVU110
+ 400 0056 FFF7FEFF 		bl	ct_iic_delay
+ 401              	.LVL29:
+  89:../../BSP/TOUCH/ctiic.c ****     return 0;
+ 402              		.loc 1 89 5 view .LVU111
+ 403              	.L18:
+  90:../../BSP/TOUCH/ctiic.c **** }
+ 404              		.loc 1 90 1 is_stmt 0 view .LVU112
+ 405 005a 2846     		mov	r0, r5
+ 406 005c 38BD     		pop	{r3, r4, r5, pc}
+ 407              	.LVL30:
+ 408              	.L24:
+ 409              		.loc 1 90 1 view .LVU113
+ 410 005e 00BF     		.align	2
+ 411              	.L23:
+ 412 0060 00040258 		.word	1476527104
+ 413              		.cfi_endproc
+ 414              	.LFE148:
+ 416              		.section	.text.ct_iic_ack,"ax",%progbits
+ 417              		.align	1
+ 418              		.global	ct_iic_ack
+ 419              		.syntax unified
+ 420              		.thumb
+ 421              		.thumb_func
+ 423              	ct_iic_ack:
+ 424              	.LFB149:
+  91:../../BSP/TOUCH/ctiic.c **** 
+  92:../../BSP/TOUCH/ctiic.c **** void ct_iic_ack(void)
+  93:../../BSP/TOUCH/ctiic.c **** {
+ 425              		.loc 1 93 1 is_stmt 1 view -0
+ 426              		.cfi_startproc
+ 427              		@ args = 0, pretend = 0, frame = 0
+ 428              		@ frame_needed = 0, uses_anonymous_args = 0
+ 429 0000 10B5     		push	{r4, lr}
+ 430              	.LCFI7:
+ 431              		.cfi_def_cfa_offset 8
+ 432              		.cfi_offset 4, -8
+ 433              		.cfi_offset 14, -4
+  94:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA(0);
+ 434              		.loc 1 94 5 view .LVU115
+ 435              		.loc 1 94 5 view .LVU116
+ 436              		.loc 1 94 5 discriminator 2 view .LVU117
+ 437 0002 114C     		ldr	r4, .L27
+ 438 0004 0022     		movs	r2, #0
+ 439 0006 4FF40061 		mov	r1, #2048
+ 440 000a 2046     		mov	r0, r4
+ 441 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 442              	.LVL31:
+ 443              		.loc 1 94 5 view .LVU118
+  95:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 11
+
+
+ 444              		.loc 1 95 5 view .LVU119
+ 445 0010 FFF7FEFF 		bl	ct_iic_delay
+ 446              	.LVL32:
+  96:../../BSP/TOUCH/ctiic.c **** 
+  97:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SCL(1);
+ 447              		.loc 1 97 5 view .LVU120
+ 448              		.loc 1 97 5 view .LVU121
+ 449              		.loc 1 97 5 discriminator 1 view .LVU122
+ 450 0014 0122     		movs	r2, #1
+ 451 0016 4FF48061 		mov	r1, #1024
+ 452 001a 2046     		mov	r0, r4
+ 453 001c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 454              	.LVL33:
+ 455              		.loc 1 97 5 view .LVU123
+  98:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 456              		.loc 1 98 5 view .LVU124
+ 457 0020 FFF7FEFF 		bl	ct_iic_delay
+ 458              	.LVL34:
+  99:../../BSP/TOUCH/ctiic.c **** 
+ 100:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SCL(0);
+ 459              		.loc 1 100 5 view .LVU125
+ 460              		.loc 1 100 5 view .LVU126
+ 461              		.loc 1 100 5 discriminator 2 view .LVU127
+ 462 0024 0022     		movs	r2, #0
+ 463 0026 4FF48061 		mov	r1, #1024
+ 464 002a 2046     		mov	r0, r4
+ 465 002c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 466              	.LVL35:
+ 467              		.loc 1 100 5 view .LVU128
+ 101:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 468              		.loc 1 101 5 view .LVU129
+ 469 0030 FFF7FEFF 		bl	ct_iic_delay
+ 470              	.LVL36:
+ 102:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA(1);
+ 471              		.loc 1 102 5 view .LVU130
+ 472              		.loc 1 102 5 view .LVU131
+ 473              		.loc 1 102 5 discriminator 1 view .LVU132
+ 474 0034 0122     		movs	r2, #1
+ 475 0036 4FF40061 		mov	r1, #2048
+ 476 003a 2046     		mov	r0, r4
+ 477 003c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 478              	.LVL37:
+ 479              		.loc 1 102 5 view .LVU133
+ 103:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 480              		.loc 1 103 5 view .LVU134
+ 481 0040 FFF7FEFF 		bl	ct_iic_delay
+ 482              	.LVL38:
+ 104:../../BSP/TOUCH/ctiic.c **** }
+ 483              		.loc 1 104 1 is_stmt 0 view .LVU135
+ 484 0044 10BD     		pop	{r4, pc}
+ 485              	.L28:
+ 486 0046 00BF     		.align	2
+ 487              	.L27:
+ 488 0048 00040258 		.word	1476527104
+ 489              		.cfi_endproc
+ 490              	.LFE149:
+ 492              		.section	.text.ct_iic_nack,"ax",%progbits
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 12
+
+
+ 493              		.align	1
+ 494              		.global	ct_iic_nack
+ 495              		.syntax unified
+ 496              		.thumb
+ 497              		.thumb_func
+ 499              	ct_iic_nack:
+ 500              	.LFB150:
+ 105:../../BSP/TOUCH/ctiic.c **** 
+ 106:../../BSP/TOUCH/ctiic.c **** void ct_iic_nack(void)
+ 107:../../BSP/TOUCH/ctiic.c **** {
+ 501              		.loc 1 107 1 is_stmt 1 view -0
+ 502              		.cfi_startproc
+ 503              		@ args = 0, pretend = 0, frame = 0
+ 504              		@ frame_needed = 0, uses_anonymous_args = 0
+ 505 0000 10B5     		push	{r4, lr}
+ 506              	.LCFI8:
+ 507              		.cfi_def_cfa_offset 8
+ 508              		.cfi_offset 4, -8
+ 509              		.cfi_offset 14, -4
+ 108:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA(1);
+ 510              		.loc 1 108 5 view .LVU137
+ 511              		.loc 1 108 5 view .LVU138
+ 512              		.loc 1 108 5 discriminator 1 view .LVU139
+ 513 0002 0D4C     		ldr	r4, .L31
+ 514 0004 0122     		movs	r2, #1
+ 515 0006 4FF40061 		mov	r1, #2048
+ 516 000a 2046     		mov	r0, r4
+ 517 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 518              	.LVL39:
+ 519              		.loc 1 108 5 view .LVU140
+ 109:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 520              		.loc 1 109 5 view .LVU141
+ 521 0010 FFF7FEFF 		bl	ct_iic_delay
+ 522              	.LVL40:
+ 110:../../BSP/TOUCH/ctiic.c **** 
+ 111:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SCL(1);
+ 523              		.loc 1 111 5 view .LVU142
+ 524              		.loc 1 111 5 view .LVU143
+ 525              		.loc 1 111 5 discriminator 1 view .LVU144
+ 526 0014 0122     		movs	r2, #1
+ 527 0016 4FF48061 		mov	r1, #1024
+ 528 001a 2046     		mov	r0, r4
+ 529 001c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 530              	.LVL41:
+ 531              		.loc 1 111 5 view .LVU145
+ 112:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 532              		.loc 1 112 5 view .LVU146
+ 533 0020 FFF7FEFF 		bl	ct_iic_delay
+ 534              	.LVL42:
+ 113:../../BSP/TOUCH/ctiic.c **** 
+ 114:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SCL(0);
+ 535              		.loc 1 114 5 view .LVU147
+ 536              		.loc 1 114 5 view .LVU148
+ 537              		.loc 1 114 5 discriminator 2 view .LVU149
+ 538 0024 0022     		movs	r2, #0
+ 539 0026 4FF48061 		mov	r1, #1024
+ 540 002a 2046     		mov	r0, r4
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 13
+
+
+ 541 002c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 542              	.LVL43:
+ 543              		.loc 1 114 5 view .LVU150
+ 115:../../BSP/TOUCH/ctiic.c ****     ct_iic_delay();
+ 544              		.loc 1 115 5 view .LVU151
+ 545 0030 FFF7FEFF 		bl	ct_iic_delay
+ 546              	.LVL44:
+ 116:../../BSP/TOUCH/ctiic.c **** }
+ 547              		.loc 1 116 1 is_stmt 0 view .LVU152
+ 548 0034 10BD     		pop	{r4, pc}
+ 549              	.L32:
+ 550 0036 00BF     		.align	2
+ 551              	.L31:
+ 552 0038 00040258 		.word	1476527104
+ 553              		.cfi_endproc
+ 554              	.LFE150:
+ 556              		.section	.text.ct_iic_send_byte,"ax",%progbits
+ 557              		.align	1
+ 558              		.global	ct_iic_send_byte
+ 559              		.syntax unified
+ 560              		.thumb
+ 561              		.thumb_func
+ 563              	ct_iic_send_byte:
+ 564              	.LVL45:
+ 565              	.LFB151:
+ 117:../../BSP/TOUCH/ctiic.c **** 
+ 118:../../BSP/TOUCH/ctiic.c **** void ct_iic_send_byte(uint8_t data)
+ 119:../../BSP/TOUCH/ctiic.c **** {
+ 566              		.loc 1 119 1 is_stmt 1 view -0
+ 567              		.cfi_startproc
+ 568              		@ args = 0, pretend = 0, frame = 0
+ 569              		@ frame_needed = 0, uses_anonymous_args = 0
+ 570              		.loc 1 119 1 is_stmt 0 view .LVU154
+ 571 0000 70B5     		push	{r4, r5, r6, lr}
+ 572              	.LCFI9:
+ 573              		.cfi_def_cfa_offset 16
+ 574              		.cfi_offset 4, -16
+ 575              		.cfi_offset 5, -12
+ 576              		.cfi_offset 6, -8
+ 577              		.cfi_offset 14, -4
+ 578 0002 0446     		mov	r4, r0
+ 120:../../BSP/TOUCH/ctiic.c ****     for (uint8_t i = 0; i < 8; i++)
+ 579              		.loc 1 120 5 is_stmt 1 view .LVU155
+ 580              	.LBB4:
+ 581              		.loc 1 120 10 view .LVU156
+ 582              	.LVL46:
+ 583              		.loc 1 120 18 is_stmt 0 view .LVU157
+ 584 0004 0025     		movs	r5, #0
+ 585              		.loc 1 120 5 view .LVU158
+ 586 0006 1CE0     		b	.L34
+ 587              	.LVL47:
+ 588              	.L35:
+ 121:../../BSP/TOUCH/ctiic.c ****     {
+ 122:../../BSP/TOUCH/ctiic.c ****         /* MSB first */
+ 123:../../BSP/TOUCH/ctiic.c ****         CT_IIC_SDA((data & 0x80U) ? 1 : 0);
+ 589              		.loc 1 123 9 is_stmt 1 discriminator 2 view .LVU159
+ 590 0008 0022     		movs	r2, #0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 14
+
+
+ 591 000a 4FF40061 		mov	r1, #2048
+ 592 000e 1648     		ldr	r0, .L40
+ 593 0010 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 594              	.LVL48:
+ 595              	.L36:
+ 596              		.loc 1 123 9 view .LVU160
+ 124:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 597              		.loc 1 124 9 view .LVU161
+ 598 0014 FFF7FEFF 		bl	ct_iic_delay
+ 599              	.LVL49:
+ 125:../../BSP/TOUCH/ctiic.c **** 
+ 126:../../BSP/TOUCH/ctiic.c ****         CT_IIC_SCL(1);
+ 600              		.loc 1 126 9 view .LVU162
+ 601              		.loc 1 126 9 view .LVU163
+ 602              		.loc 1 126 9 discriminator 1 view .LVU164
+ 603 0018 134E     		ldr	r6, .L40
+ 604 001a 0122     		movs	r2, #1
+ 605 001c 4FF48061 		mov	r1, #1024
+ 606 0020 3046     		mov	r0, r6
+ 607 0022 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 608              	.LVL50:
+ 609              		.loc 1 126 9 view .LVU165
+ 127:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 610              		.loc 1 127 9 view .LVU166
+ 611 0026 FFF7FEFF 		bl	ct_iic_delay
+ 612              	.LVL51:
+ 128:../../BSP/TOUCH/ctiic.c **** 
+ 129:../../BSP/TOUCH/ctiic.c ****         CT_IIC_SCL(0);
+ 613              		.loc 1 129 9 view .LVU167
+ 614              		.loc 1 129 9 view .LVU168
+ 615              		.loc 1 129 9 discriminator 2 view .LVU169
+ 616 002a 0022     		movs	r2, #0
+ 617 002c 4FF48061 		mov	r1, #1024
+ 618 0030 3046     		mov	r0, r6
+ 619 0032 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 620              	.LVL52:
+ 621              		.loc 1 129 9 view .LVU170
+ 130:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 622              		.loc 1 130 9 view .LVU171
+ 623 0036 FFF7FEFF 		bl	ct_iic_delay
+ 624              	.LVL53:
+ 131:../../BSP/TOUCH/ctiic.c **** 
+ 132:../../BSP/TOUCH/ctiic.c ****         data <<= 1;
+ 625              		.loc 1 132 9 view .LVU172
+ 626              		.loc 1 132 14 is_stmt 0 view .LVU173
+ 627 003a 6400     		lsls	r4, r4, #1
+ 628              	.LVL54:
+ 629              		.loc 1 132 14 view .LVU174
+ 630 003c E4B2     		uxtb	r4, r4
+ 631              	.LVL55:
+ 120:../../BSP/TOUCH/ctiic.c ****     {
+ 632              		.loc 1 120 33 is_stmt 1 discriminator 2 view .LVU175
+ 633 003e 0135     		adds	r5, r5, #1
+ 634              	.LVL56:
+ 120:../../BSP/TOUCH/ctiic.c ****     {
+ 635              		.loc 1 120 33 is_stmt 0 discriminator 2 view .LVU176
+ 636 0040 EDB2     		uxtb	r5, r5
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 15
+
+
+ 637              	.LVL57:
+ 638              	.L34:
+ 120:../../BSP/TOUCH/ctiic.c ****     {
+ 639              		.loc 1 120 27 is_stmt 1 discriminator 1 view .LVU177
+ 640 0042 072D     		cmp	r5, #7
+ 641 0044 08D8     		bhi	.L39
+ 123:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 642              		.loc 1 123 9 view .LVU178
+ 123:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 643              		.loc 1 123 9 view .LVU179
+ 644 0046 E309     		lsrs	r3, r4, #7
+ 645 0048 DED0     		beq	.L35
+ 123:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 646              		.loc 1 123 9 discriminator 1 view .LVU180
+ 647 004a 0122     		movs	r2, #1
+ 648 004c 4FF40061 		mov	r1, #2048
+ 649 0050 0548     		ldr	r0, .L40
+ 650 0052 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 651              	.LVL58:
+ 652 0056 DDE7     		b	.L36
+ 653              	.L39:
+ 654              	.LBE4:
+ 133:../../BSP/TOUCH/ctiic.c ****     }
+ 134:../../BSP/TOUCH/ctiic.c **** 
+ 135:../../BSP/TOUCH/ctiic.c ****     /* Release SDA after byte */
+ 136:../../BSP/TOUCH/ctiic.c ****     CT_IIC_SDA(1);
+ 655              		.loc 1 136 5 view .LVU181
+ 656              		.loc 1 136 5 view .LVU182
+ 657              		.loc 1 136 5 discriminator 1 view .LVU183
+ 658 0058 0122     		movs	r2, #1
+ 659 005a 4FF40061 		mov	r1, #2048
+ 660 005e 0248     		ldr	r0, .L40
+ 661 0060 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 662              	.LVL59:
+ 663              		.loc 1 136 5 view .LVU184
+ 137:../../BSP/TOUCH/ctiic.c **** }
+ 664              		.loc 1 137 1 is_stmt 0 view .LVU185
+ 665 0064 70BD     		pop	{r4, r5, r6, pc}
+ 666              	.LVL60:
+ 667              	.L41:
+ 668              		.loc 1 137 1 view .LVU186
+ 669 0066 00BF     		.align	2
+ 670              	.L40:
+ 671 0068 00040258 		.word	1476527104
+ 672              		.cfi_endproc
+ 673              	.LFE151:
+ 675              		.section	.text.ct_iic_read_byte,"ax",%progbits
+ 676              		.align	1
+ 677              		.global	ct_iic_read_byte
+ 678              		.syntax unified
+ 679              		.thumb
+ 680              		.thumb_func
+ 682              	ct_iic_read_byte:
+ 683              	.LVL61:
+ 684              	.LFB152:
+ 138:../../BSP/TOUCH/ctiic.c **** 
+ 139:../../BSP/TOUCH/ctiic.c **** uint8_t ct_iic_read_byte(uint8_t ack)
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 16
+
+
+ 140:../../BSP/TOUCH/ctiic.c **** {
+ 685              		.loc 1 140 1 is_stmt 1 view -0
+ 686              		.cfi_startproc
+ 687              		@ args = 0, pretend = 0, frame = 0
+ 688              		@ frame_needed = 0, uses_anonymous_args = 0
+ 689              		.loc 1 140 1 is_stmt 0 view .LVU188
+ 690 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 691              	.LCFI10:
+ 692              		.cfi_def_cfa_offset 24
+ 693              		.cfi_offset 3, -24
+ 694              		.cfi_offset 4, -20
+ 695              		.cfi_offset 5, -16
+ 696              		.cfi_offset 6, -12
+ 697              		.cfi_offset 7, -8
+ 698              		.cfi_offset 14, -4
+ 699 0002 0746     		mov	r7, r0
+ 141:../../BSP/TOUCH/ctiic.c ****     uint8_t receive = 0;
+ 700              		.loc 1 141 5 is_stmt 1 view .LVU189
+ 701              	.LVL62:
+ 142:../../BSP/TOUCH/ctiic.c **** 
+ 143:../../BSP/TOUCH/ctiic.c ****     for (uint8_t i = 0; i < 8; i++)
+ 702              		.loc 1 143 5 view .LVU190
+ 703              	.LBB5:
+ 704              		.loc 1 143 10 view .LVU191
+ 705              		.loc 1 143 18 is_stmt 0 view .LVU192
+ 706 0004 0024     		movs	r4, #0
+ 707              	.LBE5:
+ 141:../../BSP/TOUCH/ctiic.c ****     uint8_t receive = 0;
+ 708              		.loc 1 141 13 view .LVU193
+ 709 0006 2546     		mov	r5, r4
+ 710              	.LBB6:
+ 711              		.loc 1 143 5 view .LVU194
+ 712 0008 09E0     		b	.L43
+ 713              	.LVL63:
+ 714              	.L44:
+ 144:../../BSP/TOUCH/ctiic.c ****     {
+ 145:../../BSP/TOUCH/ctiic.c ****         receive <<= 1;
+ 146:../../BSP/TOUCH/ctiic.c **** 
+ 147:../../BSP/TOUCH/ctiic.c ****         CT_IIC_SCL(1);
+ 148:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 149:../../BSP/TOUCH/ctiic.c **** 
+ 150:../../BSP/TOUCH/ctiic.c ****         if (CT_READ_SDA != 0)
+ 151:../../BSP/TOUCH/ctiic.c ****         {
+ 152:../../BSP/TOUCH/ctiic.c ****             receive |= 1;
+ 153:../../BSP/TOUCH/ctiic.c ****         }
+ 154:../../BSP/TOUCH/ctiic.c **** 
+ 155:../../BSP/TOUCH/ctiic.c ****         CT_IIC_SCL(0);
+ 715              		.loc 1 155 9 is_stmt 1 view .LVU195
+ 716              		.loc 1 155 9 view .LVU196
+ 717              		.loc 1 155 9 discriminator 2 view .LVU197
+ 718 000a 0022     		movs	r2, #0
+ 719 000c 4FF48061 		mov	r1, #1024
+ 720 0010 1248     		ldr	r0, .L50
+ 721 0012 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 722              	.LVL64:
+ 723              		.loc 1 155 9 view .LVU198
+ 156:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 17
+
+
+ 724              		.loc 1 156 9 view .LVU199
+ 725 0016 FFF7FEFF 		bl	ct_iic_delay
+ 726              	.LVL65:
+ 143:../../BSP/TOUCH/ctiic.c ****     {
+ 727              		.loc 1 143 33 discriminator 2 view .LVU200
+ 728 001a 0134     		adds	r4, r4, #1
+ 729              	.LVL66:
+ 143:../../BSP/TOUCH/ctiic.c ****     {
+ 730              		.loc 1 143 33 is_stmt 0 discriminator 2 view .LVU201
+ 731 001c E4B2     		uxtb	r4, r4
+ 732              	.LVL67:
+ 733              	.L43:
+ 143:../../BSP/TOUCH/ctiic.c ****     {
+ 734              		.loc 1 143 27 is_stmt 1 discriminator 1 view .LVU202
+ 735 001e 072C     		cmp	r4, #7
+ 736 0020 14D8     		bhi	.L49
+ 145:../../BSP/TOUCH/ctiic.c **** 
+ 737              		.loc 1 145 9 view .LVU203
+ 145:../../BSP/TOUCH/ctiic.c **** 
+ 738              		.loc 1 145 17 is_stmt 0 view .LVU204
+ 739 0022 6D00     		lsls	r5, r5, #1
+ 740              	.LVL68:
+ 145:../../BSP/TOUCH/ctiic.c **** 
+ 741              		.loc 1 145 17 view .LVU205
+ 742 0024 EDB2     		uxtb	r5, r5
+ 743              	.LVL69:
+ 147:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 744              		.loc 1 147 9 is_stmt 1 view .LVU206
+ 147:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 745              		.loc 1 147 9 view .LVU207
+ 147:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 746              		.loc 1 147 9 discriminator 1 view .LVU208
+ 747 0026 0D4E     		ldr	r6, .L50
+ 748 0028 0122     		movs	r2, #1
+ 749 002a 4FF48061 		mov	r1, #1024
+ 750 002e 3046     		mov	r0, r6
+ 751 0030 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 752              	.LVL70:
+ 147:../../BSP/TOUCH/ctiic.c ****         ct_iic_delay();
+ 753              		.loc 1 147 9 view .LVU209
+ 148:../../BSP/TOUCH/ctiic.c **** 
+ 754              		.loc 1 148 9 view .LVU210
+ 755 0034 FFF7FEFF 		bl	ct_iic_delay
+ 756              	.LVL71:
+ 150:../../BSP/TOUCH/ctiic.c ****         {
+ 757              		.loc 1 150 9 view .LVU211
+ 150:../../BSP/TOUCH/ctiic.c ****         {
+ 758              		.loc 1 150 13 is_stmt 0 view .LVU212
+ 759 0038 4FF40061 		mov	r1, #2048
+ 760 003c 3046     		mov	r0, r6
+ 761 003e FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 762              	.LVL72:
+ 150:../../BSP/TOUCH/ctiic.c ****         {
+ 763              		.loc 1 150 12 discriminator 1 view .LVU213
+ 764 0042 0028     		cmp	r0, #0
+ 765 0044 E1D0     		beq	.L44
+ 152:../../BSP/TOUCH/ctiic.c ****         }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 18
+
+
+ 766              		.loc 1 152 13 is_stmt 1 view .LVU214
+ 152:../../BSP/TOUCH/ctiic.c ****         }
+ 767              		.loc 1 152 21 is_stmt 0 view .LVU215
+ 768 0046 45F00105 		orr	r5, r5, #1
+ 769              	.LVL73:
+ 152:../../BSP/TOUCH/ctiic.c ****         }
+ 770              		.loc 1 152 21 view .LVU216
+ 771 004a DEE7     		b	.L44
+ 772              	.LVL74:
+ 773              	.L49:
+ 152:../../BSP/TOUCH/ctiic.c ****         }
+ 774              		.loc 1 152 21 view .LVU217
+ 775              	.LBE6:
+ 157:../../BSP/TOUCH/ctiic.c ****     }
+ 158:../../BSP/TOUCH/ctiic.c **** 
+ 159:../../BSP/TOUCH/ctiic.c ****     if (ack)
+ 776              		.loc 1 159 5 is_stmt 1 view .LVU218
+ 777              		.loc 1 159 8 is_stmt 0 view .LVU219
+ 778 004c 1FB1     		cbz	r7, .L46
+ 160:../../BSP/TOUCH/ctiic.c ****         ct_iic_ack();
+ 779              		.loc 1 160 9 is_stmt 1 view .LVU220
+ 780 004e FFF7FEFF 		bl	ct_iic_ack
+ 781              	.LVL75:
+ 782              	.L47:
+ 161:../../BSP/TOUCH/ctiic.c ****     else
+ 162:../../BSP/TOUCH/ctiic.c ****         ct_iic_nack();
+ 163:../../BSP/TOUCH/ctiic.c **** 
+ 164:../../BSP/TOUCH/ctiic.c ****     return receive;
+ 783              		.loc 1 164 5 view .LVU221
+ 165:../../BSP/TOUCH/ctiic.c **** }
+ 784              		.loc 1 165 1 is_stmt 0 view .LVU222
+ 785 0052 2846     		mov	r0, r5
+ 786 0054 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 787              	.LVL76:
+ 788              	.L46:
+ 162:../../BSP/TOUCH/ctiic.c **** 
+ 789              		.loc 1 162 9 is_stmt 1 view .LVU223
+ 790 0056 FFF7FEFF 		bl	ct_iic_nack
+ 791              	.LVL77:
+ 792 005a FAE7     		b	.L47
+ 793              	.L51:
+ 794              		.align	2
+ 795              	.L50:
+ 796 005c 00040258 		.word	1476527104
+ 797              		.cfi_endproc
+ 798              	.LFE152:
+ 800              		.text
+ 801              	.Letext0:
+ 802              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 803              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 804              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 805              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 806              		.file 6 "../../BSP/bsp_delay.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s 			page 19
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ctiic.c
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:20     .text.ct_iic_delay:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:25     .text.ct_iic_delay:00000000 ct_iic_delay
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:46     .text.ct_iic_start:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:52     .text.ct_iic_start:00000000 ct_iic_start
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:114    .text.ct_iic_start:00000044 $d
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:119    .text.ct_iic_stop:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:125    .text.ct_iic_stop:00000000 ct_iic_stop
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:178    .text.ct_iic_stop:00000038 $d
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:183    .text.ct_iic_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:189    .text.ct_iic_init:00000000 ct_iic_init
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:300    .text.ct_iic_init:0000007c $d
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:306    .text.ct_iic_wait_ack:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:312    .text.ct_iic_wait_ack:00000000 ct_iic_wait_ack
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:412    .text.ct_iic_wait_ack:00000060 $d
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:417    .text.ct_iic_ack:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:423    .text.ct_iic_ack:00000000 ct_iic_ack
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:488    .text.ct_iic_ack:00000048 $d
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:493    .text.ct_iic_nack:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:499    .text.ct_iic_nack:00000000 ct_iic_nack
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:552    .text.ct_iic_nack:00000038 $d
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:557    .text.ct_iic_send_byte:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:563    .text.ct_iic_send_byte:00000000 ct_iic_send_byte
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:671    .text.ct_iic_send_byte:00000068 $d
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:676    .text.ct_iic_read_byte:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:682    .text.ct_iic_read_byte:00000000 ct_iic_read_byte
+C:\Users\28576\AppData\Local\Temp\ccFXMR8d.s:796    .text.ct_iic_read_byte:0000005c $d
+
+UNDEFINED SYMBOLS
+delay_us
+HAL_GPIO_WritePin
+HAL_GPIO_Init
+HAL_GPIO_ReadPin

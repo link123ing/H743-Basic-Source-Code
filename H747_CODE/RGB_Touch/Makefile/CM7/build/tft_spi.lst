@@ -1,0 +1,1762 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"tft_spi.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../BSP/LCD/tft_spi.c"
+  19              		.section	.text.tft_spi_write_byte,"ax",%progbits
+  20              		.align	1
+  21              		.global	tft_spi_write_byte
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	tft_spi_write_byte:
+  27              	.LVL0:
+  28              	.LFB144:
+   1:../../BSP/LCD/tft_spi.c **** ﻿/**
+   2:../../BSP/LCD/tft_spi.c ****  **************************************************************************************************
+   3:../../BSP/LCD/tft_spi.c ****  * @file        tft_spi.c
+   4:../../BSP/LCD/tft_spi.c ****  * @version     V1.0
+   5:../../BSP/LCD/tft_spi.c ****  * @brief       TFTLCD(RGB��) SPI�ӿ� ��������
+   6:../../BSP/LCD/tft_spi.c ****  **************************************************************************************************
+   7:../../BSP/LCD/tft_spi.c ****  * @attention   Waiken-Smart ������Զ
+   8:../../BSP/LCD/tft_spi.c ****  *
+   9:../../BSP/LCD/tft_spi.c ****  * ʵ��ƽ̨:    STM32H747XIH6Сϵͳ��
+  10:../../BSP/LCD/tft_spi.c ****  *
+  11:../../BSP/LCD/tft_spi.c ****  **************************************************************************************************
+  12:../../BSP/LCD/tft_spi.c ****  */
+  13:../../BSP/LCD/tft_spi.c ****  
+  14:../../BSP/LCD/tft_spi.c **** #include "tft_spi.h"
+  15:../../BSP/LCD/tft_spi.c **** #include "bsp_delay.h"
+  16:../../BSP/LCD/tft_spi.c **** 
+  17:../../BSP/LCD/tft_spi.c **** 
+  18:../../BSP/LCD/tft_spi.c **** /**
+  19:../../BSP/LCD/tft_spi.c ****  * @brief       SPIд����
+  20:../../BSP/LCD/tft_spi.c ****  * @note        ��LCD����ICд��1 byte����
+  21:../../BSP/LCD/tft_spi.c ****  * @param       buf: Ҫд�������
+  22:../../BSP/LCD/tft_spi.c ****  * @retval      ��
+  23:../../BSP/LCD/tft_spi.c ****  */
+  24:../../BSP/LCD/tft_spi.c **** void tft_spi_write_byte(uint8_t buf)
+  25:../../BSP/LCD/tft_spi.c **** {    
+  29              		.loc 1 25 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 25 1 is_stmt 0 view .LVU1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 2
+
+
+  34 0000 70B5     		push	{r4, r5, r6, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 4, -16
+  38              		.cfi_offset 5, -12
+  39              		.cfi_offset 6, -8
+  40              		.cfi_offset 14, -4
+  41 0002 0446     		mov	r4, r0
+  26:../../BSP/LCD/tft_spi.c ****     uint8_t count = 0;
+  42              		.loc 1 26 5 is_stmt 1 view .LVU2
+  27:../../BSP/LCD/tft_spi.c **** 
+  28:../../BSP/LCD/tft_spi.c ****     for (count = 0 ; count < 8 ; count++)
+  43              		.loc 1 28 5 view .LVU3
+  44              	.LVL1:
+  45              		.loc 1 28 16 is_stmt 0 view .LVU4
+  46 0004 0025     		movs	r5, #0
+  47              		.loc 1 28 5 view .LVU5
+  48 0006 1CE0     		b	.L2
+  49              	.LVL2:
+  50              	.L8:
+  29:../../BSP/LCD/tft_spi.c ****     {        
+  30:../../BSP/LCD/tft_spi.c ****         if (buf & 0x80)       
+  31:../../BSP/LCD/tft_spi.c ****         {  
+  32:../../BSP/LCD/tft_spi.c ****             TFT_SPI_SDA(1);   /* ����1 */
+  51              		.loc 1 32 13 is_stmt 1 view .LVU6
+  52              		.loc 1 32 13 view .LVU7
+  53 0008 0122     		movs	r2, #1
+  54 000a 4FF48051 		mov	r1, #4096
+  55 000e 1348     		ldr	r0, .L9
+  56 0010 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  57              	.LVL3:
+  58              		.loc 1 32 13 discriminator 1 view .LVU8
+  59              	.L4:
+  33:../../BSP/LCD/tft_spi.c ****         }
+  34:../../BSP/LCD/tft_spi.c ****         else                  
+  35:../../BSP/LCD/tft_spi.c ****         {
+  36:../../BSP/LCD/tft_spi.c ****             TFT_SPI_SDA(0);   /* ����0 */
+  60              		.loc 1 36 13 view .LVU9
+  37:../../BSP/LCD/tft_spi.c ****         }
+  38:../../BSP/LCD/tft_spi.c ****          
+  39:../../BSP/LCD/tft_spi.c ****         buf <<= 1;
+  61              		.loc 1 39 9 view .LVU10
+  62              		.loc 1 39 13 is_stmt 0 view .LVU11
+  63 0014 6400     		lsls	r4, r4, #1
+  64              	.LVL4:
+  65              		.loc 1 39 13 view .LVU12
+  66 0016 E4B2     		uxtb	r4, r4
+  67              	.LVL5:
+  40:../../BSP/LCD/tft_spi.c ****         TFT_SPI_SCL(0);
+  68              		.loc 1 40 9 is_stmt 1 view .LVU13
+  69              		.loc 1 40 9 view .LVU14
+  70 0018 104E     		ldr	r6, .L9
+  71 001a 0022     		movs	r2, #0
+  72 001c 4FF40051 		mov	r1, #8192
+  73 0020 3046     		mov	r0, r6
+  74 0022 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  75              	.LVL6:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 3
+
+
+  76              		.loc 1 40 9 discriminator 1 view .LVU15
+  41:../../BSP/LCD/tft_spi.c ****         delay_us(1);
+  77              		.loc 1 41 9 view .LVU16
+  78 0026 0120     		movs	r0, #1
+  79 0028 FFF7FEFF 		bl	delay_us
+  80              	.LVL7:
+  42:../../BSP/LCD/tft_spi.c ****         TFT_SPI_SCL(1);       /* ��������Ч */ 
+  81              		.loc 1 42 9 view .LVU17
+  82              		.loc 1 42 9 view .LVU18
+  83 002c 0122     		movs	r2, #1
+  84 002e 4FF40051 		mov	r1, #8192
+  85 0032 3046     		mov	r0, r6
+  86 0034 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  87              	.LVL8:
+  88              		.loc 1 42 9 discriminator 1 view .LVU19
+  43:../../BSP/LCD/tft_spi.c ****         delay_us(1);
+  89              		.loc 1 43 9 view .LVU20
+  90 0038 0120     		movs	r0, #1
+  91 003a FFF7FEFF 		bl	delay_us
+  92              	.LVL9:
+  28:../../BSP/LCD/tft_spi.c ****     {        
+  93              		.loc 1 28 39 discriminator 2 view .LVU21
+  94 003e 0135     		adds	r5, r5, #1
+  95              	.LVL10:
+  28:../../BSP/LCD/tft_spi.c ****     {        
+  96              		.loc 1 28 39 is_stmt 0 discriminator 2 view .LVU22
+  97 0040 EDB2     		uxtb	r5, r5
+  98              	.LVL11:
+  99              	.L2:
+  28:../../BSP/LCD/tft_spi.c ****     {        
+ 100              		.loc 1 28 28 is_stmt 1 discriminator 1 view .LVU23
+ 101 0042 072D     		cmp	r5, #7
+ 102 0044 09D8     		bhi	.L7
+  30:../../BSP/LCD/tft_spi.c ****         {  
+ 103              		.loc 1 30 9 view .LVU24
+  30:../../BSP/LCD/tft_spi.c ****         {  
+ 104              		.loc 1 30 12 is_stmt 0 view .LVU25
+ 105 0046 14F0800F 		tst	r4, #128
+ 106 004a DDD1     		bne	.L8
+  36:../../BSP/LCD/tft_spi.c ****         }
+ 107              		.loc 1 36 13 is_stmt 1 view .LVU26
+  36:../../BSP/LCD/tft_spi.c ****         }
+ 108              		.loc 1 36 13 view .LVU27
+ 109 004c 0022     		movs	r2, #0
+ 110 004e 4FF48051 		mov	r1, #4096
+ 111 0052 0248     		ldr	r0, .L9
+ 112 0054 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 113              	.LVL12:
+ 114 0058 DCE7     		b	.L4
+ 115              	.L7:
+  44:../../BSP/LCD/tft_spi.c ****     }
+  45:../../BSP/LCD/tft_spi.c **** }
+ 116              		.loc 1 45 1 is_stmt 0 view .LVU28
+ 117 005a 70BD     		pop	{r4, r5, r6, pc}
+ 118              	.LVL13:
+ 119              	.L10:
+ 120              		.loc 1 45 1 view .LVU29
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 4
+
+
+ 121              		.align	2
+ 122              	.L9:
+ 123 005c 00200258 		.word	1476534272
+ 124              		.cfi_endproc
+ 125              	.LFE144:
+ 127              		.section	.text.tft_spi_write_cmd,"ax",%progbits
+ 128              		.align	1
+ 129              		.global	tft_spi_write_cmd
+ 130              		.syntax unified
+ 131              		.thumb
+ 132              		.thumb_func
+ 134              	tft_spi_write_cmd:
+ 135              	.LVL14:
+ 136              	.LFB145:
+  46:../../BSP/LCD/tft_spi.c **** 
+  47:../../BSP/LCD/tft_spi.c **** /**
+  48:../../BSP/LCD/tft_spi.c ****  * @brief       ��LCD����ICд���� 
+  49:../../BSP/LCD/tft_spi.c ****  * @param       cmd: Ҫд�������
+  50:../../BSP/LCD/tft_spi.c ****  * @retval      ��
+  51:../../BSP/LCD/tft_spi.c ****  */
+  52:../../BSP/LCD/tft_spi.c **** void tft_spi_write_cmd(uint8_t cmd)
+  53:../../BSP/LCD/tft_spi.c **** {
+ 137              		.loc 1 53 1 is_stmt 1 view -0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141              		.loc 1 53 1 is_stmt 0 view .LVU31
+ 142 0000 70B5     		push	{r4, r5, r6, lr}
+ 143              	.LCFI1:
+ 144              		.cfi_def_cfa_offset 16
+ 145              		.cfi_offset 4, -16
+ 146              		.cfi_offset 5, -12
+ 147              		.cfi_offset 6, -8
+ 148              		.cfi_offset 14, -4
+ 149 0002 0646     		mov	r6, r0
+  54:../../BSP/LCD/tft_spi.c ****     TFT_SPI_CS(0);
+ 150              		.loc 1 54 5 is_stmt 1 view .LVU32
+ 151              		.loc 1 54 5 view .LVU33
+ 152 0004 134D     		ldr	r5, .L13
+ 153 0006 0022     		movs	r2, #0
+ 154 0008 4FF40051 		mov	r1, #8192
+ 155 000c 2846     		mov	r0, r5
+ 156              	.LVL15:
+ 157              		.loc 1 54 5 is_stmt 0 view .LVU34
+ 158 000e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 159              	.LVL16:
+ 160              		.loc 1 54 5 is_stmt 1 discriminator 1 view .LVU35
+  55:../../BSP/LCD/tft_spi.c ****     TFT_SPI_SDA(0);      /* д���� */
+ 161              		.loc 1 55 5 view .LVU36
+ 162              		.loc 1 55 5 view .LVU37
+ 163 0012 114C     		ldr	r4, .L13+4
+ 164 0014 0022     		movs	r2, #0
+ 165 0016 4FF48051 		mov	r1, #4096
+ 166 001a 2046     		mov	r0, r4
+ 167 001c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 168              	.LVL17:
+ 169              		.loc 1 55 5 discriminator 1 view .LVU38
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 5
+
+
+  56:../../BSP/LCD/tft_spi.c ****     TFT_SPI_SCL(0);
+ 170              		.loc 1 56 5 view .LVU39
+ 171              		.loc 1 56 5 view .LVU40
+ 172 0020 0022     		movs	r2, #0
+ 173 0022 4FF40051 		mov	r1, #8192
+ 174 0026 2046     		mov	r0, r4
+ 175 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 176              	.LVL18:
+ 177              		.loc 1 56 5 discriminator 1 view .LVU41
+  57:../../BSP/LCD/tft_spi.c ****     TFT_SPI_SCL(1);
+ 178              		.loc 1 57 5 view .LVU42
+ 179              		.loc 1 57 5 view .LVU43
+ 180 002c 0122     		movs	r2, #1
+ 181 002e 4FF40051 		mov	r1, #8192
+ 182 0032 2046     		mov	r0, r4
+ 183 0034 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 184              	.LVL19:
+ 185              		.loc 1 57 5 discriminator 1 view .LVU44
+  58:../../BSP/LCD/tft_spi.c ****     delay_us(2);
+ 186              		.loc 1 58 5 view .LVU45
+ 187 0038 0220     		movs	r0, #2
+ 188 003a FFF7FEFF 		bl	delay_us
+ 189              	.LVL20:
+  59:../../BSP/LCD/tft_spi.c ****     tft_spi_write_byte(cmd);
+ 190              		.loc 1 59 5 view .LVU46
+ 191 003e 3046     		mov	r0, r6
+ 192 0040 FFF7FEFF 		bl	tft_spi_write_byte
+ 193              	.LVL21:
+  60:../../BSP/LCD/tft_spi.c ****     TFT_SPI_CS(1);
+ 194              		.loc 1 60 5 view .LVU47
+ 195              		.loc 1 60 5 view .LVU48
+ 196 0044 0122     		movs	r2, #1
+ 197 0046 4FF40051 		mov	r1, #8192
+ 198 004a 2846     		mov	r0, r5
+ 199 004c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 200              	.LVL22:
+ 201              		.loc 1 60 5 discriminator 1 view .LVU49
+  61:../../BSP/LCD/tft_spi.c **** }  
+ 202              		.loc 1 61 1 is_stmt 0 view .LVU50
+ 203 0050 70BD     		pop	{r4, r5, r6, pc}
+ 204              	.LVL23:
+ 205              	.L14:
+ 206              		.loc 1 61 1 view .LVU51
+ 207 0052 00BF     		.align	2
+ 208              	.L13:
+ 209 0054 00040258 		.word	1476527104
+ 210 0058 00200258 		.word	1476534272
+ 211              		.cfi_endproc
+ 212              	.LFE145:
+ 214              		.section	.text.tft_spi_write_data,"ax",%progbits
+ 215              		.align	1
+ 216              		.global	tft_spi_write_data
+ 217              		.syntax unified
+ 218              		.thumb
+ 219              		.thumb_func
+ 221              	tft_spi_write_data:
+ 222              	.LVL24:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 6
+
+
+ 223              	.LFB146:
+  62:../../BSP/LCD/tft_spi.c **** 
+  63:../../BSP/LCD/tft_spi.c **** /**
+  64:../../BSP/LCD/tft_spi.c ****  * @brief       ��LCD����ICд���� 
+  65:../../BSP/LCD/tft_spi.c ****  * @param       data: Ҫд�������
+  66:../../BSP/LCD/tft_spi.c ****  * @retval      ��
+  67:../../BSP/LCD/tft_spi.c ****  */
+  68:../../BSP/LCD/tft_spi.c **** void tft_spi_write_data(uint8_t data)
+  69:../../BSP/LCD/tft_spi.c **** {
+ 224              		.loc 1 69 1 is_stmt 1 view -0
+ 225              		.cfi_startproc
+ 226              		@ args = 0, pretend = 0, frame = 0
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+ 228              		.loc 1 69 1 is_stmt 0 view .LVU53
+ 229 0000 70B5     		push	{r4, r5, r6, lr}
+ 230              	.LCFI2:
+ 231              		.cfi_def_cfa_offset 16
+ 232              		.cfi_offset 4, -16
+ 233              		.cfi_offset 5, -12
+ 234              		.cfi_offset 6, -8
+ 235              		.cfi_offset 14, -4
+ 236 0002 0646     		mov	r6, r0
+  70:../../BSP/LCD/tft_spi.c ****     TFT_SPI_CS(0);
+ 237              		.loc 1 70 5 is_stmt 1 view .LVU54
+ 238              		.loc 1 70 5 view .LVU55
+ 239 0004 134D     		ldr	r5, .L17
+ 240 0006 0022     		movs	r2, #0
+ 241 0008 4FF40051 		mov	r1, #8192
+ 242 000c 2846     		mov	r0, r5
+ 243              	.LVL25:
+ 244              		.loc 1 70 5 is_stmt 0 view .LVU56
+ 245 000e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 246              	.LVL26:
+ 247              		.loc 1 70 5 is_stmt 1 discriminator 1 view .LVU57
+  71:../../BSP/LCD/tft_spi.c ****     TFT_SPI_SDA(1);      /* д���� */
+ 248              		.loc 1 71 5 view .LVU58
+ 249              		.loc 1 71 5 view .LVU59
+ 250 0012 114C     		ldr	r4, .L17+4
+ 251 0014 0122     		movs	r2, #1
+ 252 0016 4FF48051 		mov	r1, #4096
+ 253 001a 2046     		mov	r0, r4
+ 254 001c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 255              	.LVL27:
+ 256              		.loc 1 71 5 discriminator 1 view .LVU60
+  72:../../BSP/LCD/tft_spi.c ****     TFT_SPI_SCL(0);
+ 257              		.loc 1 72 5 view .LVU61
+ 258              		.loc 1 72 5 view .LVU62
+ 259 0020 0022     		movs	r2, #0
+ 260 0022 4FF40051 		mov	r1, #8192
+ 261 0026 2046     		mov	r0, r4
+ 262 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 263              	.LVL28:
+ 264              		.loc 1 72 5 discriminator 1 view .LVU63
+  73:../../BSP/LCD/tft_spi.c ****     TFT_SPI_SCL(1);
+ 265              		.loc 1 73 5 view .LVU64
+ 266              		.loc 1 73 5 view .LVU65
+ 267 002c 0122     		movs	r2, #1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 7
+
+
+ 268 002e 4FF40051 		mov	r1, #8192
+ 269 0032 2046     		mov	r0, r4
+ 270 0034 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 271              	.LVL29:
+ 272              		.loc 1 73 5 discriminator 1 view .LVU66
+  74:../../BSP/LCD/tft_spi.c ****     delay_us(2);
+ 273              		.loc 1 74 5 view .LVU67
+ 274 0038 0220     		movs	r0, #2
+ 275 003a FFF7FEFF 		bl	delay_us
+ 276              	.LVL30:
+  75:../../BSP/LCD/tft_spi.c ****     tft_spi_write_byte(data);
+ 277              		.loc 1 75 5 view .LVU68
+ 278 003e 3046     		mov	r0, r6
+ 279 0040 FFF7FEFF 		bl	tft_spi_write_byte
+ 280              	.LVL31:
+  76:../../BSP/LCD/tft_spi.c ****     TFT_SPI_CS(1);
+ 281              		.loc 1 76 5 view .LVU69
+ 282              		.loc 1 76 5 view .LVU70
+ 283 0044 0122     		movs	r2, #1
+ 284 0046 4FF40051 		mov	r1, #8192
+ 285 004a 2846     		mov	r0, r5
+ 286 004c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 287              	.LVL32:
+ 288              		.loc 1 76 5 discriminator 1 view .LVU71
+  77:../../BSP/LCD/tft_spi.c **** } 
+ 289              		.loc 1 77 1 is_stmt 0 view .LVU72
+ 290 0050 70BD     		pop	{r4, r5, r6, pc}
+ 291              	.LVL33:
+ 292              	.L18:
+ 293              		.loc 1 77 1 view .LVU73
+ 294 0052 00BF     		.align	2
+ 295              	.L17:
+ 296 0054 00040258 		.word	1476527104
+ 297 0058 00200258 		.word	1476534272
+ 298              		.cfi_endproc
+ 299              	.LFE146:
+ 301              		.section	.text.tft_spi_write_reg,"ax",%progbits
+ 302              		.align	1
+ 303              		.global	tft_spi_write_reg
+ 304              		.syntax unified
+ 305              		.thumb
+ 306              		.thumb_func
+ 308              	tft_spi_write_reg:
+ 309              	.LVL34:
+ 310              	.LFB147:
+  78:../../BSP/LCD/tft_spi.c **** 
+  79:../../BSP/LCD/tft_spi.c **** /**
+  80:../../BSP/LCD/tft_spi.c ****  * @brief       ��LCD����ICд�Ĵ��� 
+  81:../../BSP/LCD/tft_spi.c ****  * @param       reg : �Ĵ������
+  82:../../BSP/LCD/tft_spi.c ****  * @param       data: Ҫд�������
+  83:../../BSP/LCD/tft_spi.c ****  * @retval      ��
+  84:../../BSP/LCD/tft_spi.c ****  */
+  85:../../BSP/LCD/tft_spi.c **** void tft_spi_write_reg(uint8_t reg, uint8_t data)
+  86:../../BSP/LCD/tft_spi.c **** { 
+ 311              		.loc 1 86 1 is_stmt 1 view -0
+ 312              		.cfi_startproc
+ 313              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 8
+
+
+ 314              		@ frame_needed = 0, uses_anonymous_args = 0
+ 315              		.loc 1 86 1 is_stmt 0 view .LVU75
+ 316 0000 10B5     		push	{r4, lr}
+ 317              	.LCFI3:
+ 318              		.cfi_def_cfa_offset 8
+ 319              		.cfi_offset 4, -8
+ 320              		.cfi_offset 14, -4
+ 321 0002 0C46     		mov	r4, r1
+  87:../../BSP/LCD/tft_spi.c ****     tft_spi_write_cmd(reg);       /* д��Ҫд�ļĴ������/���� */
+ 322              		.loc 1 87 5 is_stmt 1 view .LVU76
+ 323 0004 FFF7FEFF 		bl	tft_spi_write_cmd
+ 324              	.LVL35:
+  88:../../BSP/LCD/tft_spi.c ****     tft_spi_write_data(data);     /* д������ */
+ 325              		.loc 1 88 5 view .LVU77
+ 326 0008 2046     		mov	r0, r4
+ 327 000a FFF7FEFF 		bl	tft_spi_write_data
+ 328              	.LVL36:
+  89:../../BSP/LCD/tft_spi.c **** }
+ 329              		.loc 1 89 1 is_stmt 0 view .LVU78
+ 330 000e 10BD     		pop	{r4, pc}
+ 331              		.loc 1 89 1 view .LVU79
+ 332              		.cfi_endproc
+ 333              	.LFE147:
+ 335              		.section	.text.tft_spi_init,"ax",%progbits
+ 336              		.align	1
+ 337              		.global	tft_spi_init
+ 338              		.syntax unified
+ 339              		.thumb
+ 340              		.thumb_func
+ 342              	tft_spi_init:
+ 343              	.LFB148:
+  90:../../BSP/LCD/tft_spi.c **** 
+  91:../../BSP/LCD/tft_spi.c **** /**
+  92:../../BSP/LCD/tft_spi.c ****  * @brief       TFTLCD SPI�ӿڳ�ʼ��
+  93:../../BSP/LCD/tft_spi.c ****  * @param       ��
+  94:../../BSP/LCD/tft_spi.c ****  * @retval      ��
+  95:../../BSP/LCD/tft_spi.c ****  */
+  96:../../BSP/LCD/tft_spi.c **** void tft_spi_init(void)
+  97:../../BSP/LCD/tft_spi.c **** {    
+ 344              		.loc 1 97 1 is_stmt 1 view -0
+ 345              		.cfi_startproc
+ 346              		@ args = 0, pretend = 0, frame = 40
+ 347              		@ frame_needed = 0, uses_anonymous_args = 0
+ 348 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 349              	.LCFI4:
+ 350              		.cfi_def_cfa_offset 24
+ 351              		.cfi_offset 4, -24
+ 352              		.cfi_offset 5, -20
+ 353              		.cfi_offset 6, -16
+ 354              		.cfi_offset 7, -12
+ 355              		.cfi_offset 8, -8
+ 356              		.cfi_offset 14, -4
+ 357 0004 8AB0     		sub	sp, sp, #40
+ 358              	.LCFI5:
+ 359              		.cfi_def_cfa_offset 64
+  98:../../BSP/LCD/tft_spi.c ****     GPIO_InitTypeDef gpio_init_struct;
+ 360              		.loc 1 98 5 view .LVU81
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 9
+
+
+  99:../../BSP/LCD/tft_spi.c **** 
+ 100:../../BSP/LCD/tft_spi.c ****     /* IO �� ʱ������ */
+ 101:../../BSP/LCD/tft_spi.c ****     TFT_SPI_CS_GPIO_CLK_ENABLE();      /* TFT_SPI_CS����ʱ��ʹ�� */
+ 361              		.loc 1 101 5 view .LVU82
+ 362              		.loc 1 101 5 view .LVU83
+ 363              	.LBB2:
+ 364              		.loc 1 101 5 view .LVU84
+ 365              		.loc 1 101 5 view .LVU85
+ 366 0006 F54B     		ldr	r3, .L23
+ 367 0008 D3F8E020 		ldr	r2, [r3, #224]
+ 368 000c 42F00202 		orr	r2, r2, #2
+ 369 0010 C3F8E020 		str	r2, [r3, #224]
+ 370              		.loc 1 101 5 view .LVU86
+ 371 0014 D3F8E020 		ldr	r2, [r3, #224]
+ 372 0018 02F00202 		and	r2, r2, #2
+ 373 001c 0192     		str	r2, [sp, #4]
+ 374              		.loc 1 101 5 view .LVU87
+ 375 001e 019A     		ldr	r2, [sp, #4]
+ 376              	.LBE2:
+ 377              		.loc 1 101 5 view .LVU88
+ 378              		.loc 1 101 5 view .LVU89
+ 102:../../BSP/LCD/tft_spi.c ****     TFT_SPI_SCL_GPIO_CLK_ENABLE();     /* TFT_SPI_SCL����ʱ��ʹ�� */
+ 379              		.loc 1 102 5 view .LVU90
+ 380              		.loc 1 102 5 view .LVU91
+ 381              	.LBB3:
+ 382              		.loc 1 102 5 view .LVU92
+ 383              		.loc 1 102 5 view .LVU93
+ 384 0020 D3F8E020 		ldr	r2, [r3, #224]
+ 385 0024 42F48072 		orr	r2, r2, #256
+ 386 0028 C3F8E020 		str	r2, [r3, #224]
+ 387              		.loc 1 102 5 view .LVU94
+ 388 002c D3F8E020 		ldr	r2, [r3, #224]
+ 389 0030 02F48072 		and	r2, r2, #256
+ 390 0034 0292     		str	r2, [sp, #8]
+ 391              		.loc 1 102 5 view .LVU95
+ 392 0036 029A     		ldr	r2, [sp, #8]
+ 393              	.LBE3:
+ 394              		.loc 1 102 5 view .LVU96
+ 395              		.loc 1 102 5 view .LVU97
+ 103:../../BSP/LCD/tft_spi.c ****     TFT_SPI_SDA_GPIO_CLK_ENABLE();     /* TFT_SPI_SDA����ʱ��ʹ�� */
+ 396              		.loc 1 103 5 view .LVU98
+ 397              		.loc 1 103 5 view .LVU99
+ 398              	.LBB4:
+ 399              		.loc 1 103 5 view .LVU100
+ 400              		.loc 1 103 5 view .LVU101
+ 401 0038 D3F8E020 		ldr	r2, [r3, #224]
+ 402 003c 42F48072 		orr	r2, r2, #256
+ 403 0040 C3F8E020 		str	r2, [r3, #224]
+ 404              		.loc 1 103 5 view .LVU102
+ 405 0044 D3F8E020 		ldr	r2, [r3, #224]
+ 406 0048 02F48072 		and	r2, r2, #256
+ 407 004c 0392     		str	r2, [sp, #12]
+ 408              		.loc 1 103 5 view .LVU103
+ 409 004e 039A     		ldr	r2, [sp, #12]
+ 410              	.LBE4:
+ 411              		.loc 1 103 5 view .LVU104
+ 412              		.loc 1 103 5 view .LVU105
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 10
+
+
+ 104:../../BSP/LCD/tft_spi.c ****     TFT_SPI_RST_GPIO_CLK_ENABLE();     /* TFT_SPI_RST����ʱ��ʹ�� */
+ 413              		.loc 1 104 5 view .LVU106
+ 414              		.loc 1 104 5 view .LVU107
+ 415              	.LBB5:
+ 416              		.loc 1 104 5 view .LVU108
+ 417              		.loc 1 104 5 view .LVU109
+ 418 0050 D3F8E020 		ldr	r2, [r3, #224]
+ 419 0054 42F08002 		orr	r2, r2, #128
+ 420 0058 C3F8E020 		str	r2, [r3, #224]
+ 421              		.loc 1 104 5 view .LVU110
+ 422 005c D3F8E030 		ldr	r3, [r3, #224]
+ 423 0060 03F08003 		and	r3, r3, #128
+ 424 0064 0493     		str	r3, [sp, #16]
+ 425              		.loc 1 104 5 view .LVU111
+ 426 0066 049B     		ldr	r3, [sp, #16]
+ 427              	.LBE5:
+ 428              		.loc 1 104 5 view .LVU112
+ 429              		.loc 1 104 5 view .LVU113
+ 105:../../BSP/LCD/tft_spi.c **** 
+ 106:../../BSP/LCD/tft_spi.c ****     gpio_init_struct.Pin = TFT_SPI_CS_GPIO_PIN;
+ 430              		.loc 1 106 5 view .LVU114
+ 431              		.loc 1 106 26 is_stmt 0 view .LVU115
+ 432 0068 4FF40056 		mov	r6, #8192
+ 433 006c 0596     		str	r6, [sp, #20]
+ 107:../../BSP/LCD/tft_spi.c ****     gpio_init_struct.Mode = GPIO_MODE_OUTPUT_PP;                 /* ������� */
+ 434              		.loc 1 107 5 is_stmt 1 view .LVU116
+ 435              		.loc 1 107 27 is_stmt 0 view .LVU117
+ 436 006e 0124     		movs	r4, #1
+ 437 0070 0694     		str	r4, [sp, #24]
+ 108:../../BSP/LCD/tft_spi.c ****     gpio_init_struct.Pull = GPIO_PULLUP;                         /* ���� */
+ 438              		.loc 1 108 5 is_stmt 1 view .LVU118
+ 439              		.loc 1 108 27 is_stmt 0 view .LVU119
+ 440 0072 0794     		str	r4, [sp, #28]
+ 109:../../BSP/LCD/tft_spi.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;          /* ���� */
+ 441              		.loc 1 109 5 is_stmt 1 view .LVU120
+ 442              		.loc 1 109 28 is_stmt 0 view .LVU121
+ 443 0074 0325     		movs	r5, #3
+ 444 0076 0895     		str	r5, [sp, #32]
+ 110:../../BSP/LCD/tft_spi.c ****     HAL_GPIO_Init(TFT_SPI_CS_GPIO_PORT, &gpio_init_struct);      /* ��ʼ��TFT_SPI_CS���
+ 445              		.loc 1 110 5 is_stmt 1 view .LVU122
+ 446 0078 0DF11408 		add	r8, sp, #20
+ 447 007c 4146     		mov	r1, r8
+ 448 007e D848     		ldr	r0, .L23+4
+ 449 0080 FFF7FEFF 		bl	HAL_GPIO_Init
+ 450              	.LVL37:
+ 111:../../BSP/LCD/tft_spi.c **** 
+ 112:../../BSP/LCD/tft_spi.c ****     gpio_init_struct.Pin = TFT_SPI_SCL_GPIO_PIN;
+ 451              		.loc 1 112 5 view .LVU123
+ 452              		.loc 1 112 26 is_stmt 0 view .LVU124
+ 453 0084 0596     		str	r6, [sp, #20]
+ 113:../../BSP/LCD/tft_spi.c ****     HAL_GPIO_Init(TFT_SPI_SCL_GPIO_PORT, &gpio_init_struct);     /* ��ʼ��TFT_SPI_SCL��
+ 454              		.loc 1 113 5 is_stmt 1 view .LVU125
+ 455 0086 D74E     		ldr	r6, .L23+8
+ 456 0088 4146     		mov	r1, r8
+ 457 008a 3046     		mov	r0, r6
+ 458 008c FFF7FEFF 		bl	HAL_GPIO_Init
+ 459              	.LVL38:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 11
+
+
+ 114:../../BSP/LCD/tft_spi.c ****   
+ 115:../../BSP/LCD/tft_spi.c ****     gpio_init_struct.Pin = TFT_SPI_SDA_GPIO_PIN;
+ 460              		.loc 1 115 5 view .LVU126
+ 461              		.loc 1 115 26 is_stmt 0 view .LVU127
+ 462 0090 4FF48053 		mov	r3, #4096
+ 463 0094 0593     		str	r3, [sp, #20]
+ 116:../../BSP/LCD/tft_spi.c ****     HAL_GPIO_Init(TFT_SPI_SDA_GPIO_PORT, &gpio_init_struct);     /* ��ʼ��TFT_SPI_SDA��
+ 464              		.loc 1 116 5 is_stmt 1 view .LVU128
+ 465 0096 4146     		mov	r1, r8
+ 466 0098 3046     		mov	r0, r6
+ 467 009a FFF7FEFF 		bl	HAL_GPIO_Init
+ 468              	.LVL39:
+ 117:../../BSP/LCD/tft_spi.c ****     
+ 118:../../BSP/LCD/tft_spi.c ****     gpio_init_struct.Pin = TFT_SPI_RST_GPIO_PIN;
+ 469              		.loc 1 118 5 view .LVU129
+ 470              		.loc 1 118 26 is_stmt 0 view .LVU130
+ 471 009e 2027     		movs	r7, #32
+ 472 00a0 0597     		str	r7, [sp, #20]
+ 119:../../BSP/LCD/tft_spi.c ****     HAL_GPIO_Init(TFT_SPI_RST_GPIO_PORT, &gpio_init_struct);     /* ��ʼ��TFT_SPI_RST��
+ 473              		.loc 1 119 5 is_stmt 1 view .LVU131
+ 474 00a2 A6F58066 		sub	r6, r6, #1024
+ 475 00a6 4146     		mov	r1, r8
+ 476 00a8 3046     		mov	r0, r6
+ 477 00aa FFF7FEFF 		bl	HAL_GPIO_Init
+ 478              	.LVL40:
+ 120:../../BSP/LCD/tft_spi.c ****         
+ 121:../../BSP/LCD/tft_spi.c **** 	  delay_ms(50);
+ 479              		.loc 1 121 4 view .LVU132
+ 480 00ae 3220     		movs	r0, #50
+ 481 00b0 FFF7FEFF 		bl	delay_ms
+ 482              	.LVL41:
+ 122:../../BSP/LCD/tft_spi.c ****      
+ 123:../../BSP/LCD/tft_spi.c ****     /* LCD��λ */
+ 124:../../BSP/LCD/tft_spi.c **** 	  TFT_SPI_RST(1);
+ 483              		.loc 1 124 4 view .LVU133
+ 484              		.loc 1 124 4 view .LVU134
+ 485 00b4 2246     		mov	r2, r4
+ 486 00b6 3946     		mov	r1, r7
+ 487 00b8 3046     		mov	r0, r6
+ 488 00ba FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 489              	.LVL42:
+ 490              		.loc 1 124 4 discriminator 1 view .LVU135
+ 125:../../BSP/LCD/tft_spi.c **** 	  delay_ms(10);
+ 491              		.loc 1 125 4 view .LVU136
+ 492 00be 0A20     		movs	r0, #10
+ 493 00c0 FFF7FEFF 		bl	delay_ms
+ 494              	.LVL43:
+ 126:../../BSP/LCD/tft_spi.c **** 	  TFT_SPI_RST(0);
+ 495              		.loc 1 126 4 view .LVU137
+ 496              		.loc 1 126 4 view .LVU138
+ 497 00c4 0022     		movs	r2, #0
+ 498 00c6 3946     		mov	r1, r7
+ 499 00c8 3046     		mov	r0, r6
+ 500 00ca FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 501              	.LVL44:
+ 502              		.loc 1 126 4 discriminator 1 view .LVU139
+ 127:../../BSP/LCD/tft_spi.c **** 	  delay_ms(50);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 12
+
+
+ 503              		.loc 1 127 4 view .LVU140
+ 504 00ce 3220     		movs	r0, #50
+ 505 00d0 FFF7FEFF 		bl	delay_ms
+ 506              	.LVL45:
+ 128:../../BSP/LCD/tft_spi.c **** 	  TFT_SPI_RST(1); 
+ 507              		.loc 1 128 4 view .LVU141
+ 508              		.loc 1 128 4 view .LVU142
+ 509 00d4 2246     		mov	r2, r4
+ 510 00d6 3946     		mov	r1, r7
+ 511 00d8 3046     		mov	r0, r6
+ 512 00da FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 513              	.LVL46:
+ 514              		.loc 1 128 4 discriminator 1 view .LVU143
+ 129:../../BSP/LCD/tft_spi.c **** 		delay_ms(200); 
+ 515              		.loc 1 129 3 view .LVU144
+ 516 00de C820     		movs	r0, #200
+ 517 00e0 FFF7FEFF 		bl	delay_ms
+ 518              	.LVL47:
+ 130:../../BSP/LCD/tft_spi.c **** 
+ 131:../../BSP/LCD/tft_spi.c **** //---------------------NV3052CGRB+HSD5.46(HSD055BHW5-C) Initial---
+ 132:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x30);
+ 519              		.loc 1 132 5 view .LVU145
+ 520 00e4 3021     		movs	r1, #48
+ 521 00e6 FF20     		movs	r0, #255
+ 522 00e8 FFF7FEFF 		bl	tft_spi_write_reg
+ 523              	.LVL48:
+ 133:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x52);
+ 524              		.loc 1 133 5 view .LVU146
+ 525 00ec 5221     		movs	r1, #82
+ 526 00ee FF20     		movs	r0, #255
+ 527 00f0 FFF7FEFF 		bl	tft_spi_write_reg
+ 528              	.LVL49:
+ 134:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x01);
+ 529              		.loc 1 134 5 view .LVU147
+ 530 00f4 2146     		mov	r1, r4
+ 531 00f6 FF20     		movs	r0, #255
+ 532 00f8 FFF7FEFF 		bl	tft_spi_write_reg
+ 533              	.LVL50:
+ 135:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xE3, 0x00);
+ 534              		.loc 1 135 5 view .LVU148
+ 535 00fc 0021     		movs	r1, #0
+ 536 00fe E320     		movs	r0, #227
+ 537 0100 FFF7FEFF 		bl	tft_spi_write_reg
+ 538              	.LVL51:
+ 136:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xF6, 0xC0);
+ 539              		.loc 1 136 5 view .LVU149
+ 540 0104 C021     		movs	r1, #192
+ 541 0106 F620     		movs	r0, #246
+ 542 0108 FFF7FEFF 		bl	tft_spi_write_reg
+ 543              	.LVL52:
+ 137:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xF0, 0x00);
+ 544              		.loc 1 137 5 view .LVU150
+ 545 010c 0021     		movs	r1, #0
+ 546 010e F020     		movs	r0, #240
+ 547 0110 FFF7FEFF 		bl	tft_spi_write_reg
+ 548              	.LVL53:
+ 138:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x0a, 0x00);  
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 13
+
+
+ 549              		.loc 1 138 5 view .LVU151
+ 550 0114 0021     		movs	r1, #0
+ 551 0116 0A20     		movs	r0, #10
+ 552 0118 FFF7FEFF 		bl	tft_spi_write_reg
+ 553              	.LVL54:
+ 139:../../BSP/LCD/tft_spi.c ****     
+ 140:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x23, 0xA2);  //A0   
+ 554              		.loc 1 140 5 view .LVU152
+ 555 011c A221     		movs	r1, #162
+ 556 011e 2320     		movs	r0, #35
+ 557 0120 FFF7FEFF 		bl	tft_spi_write_reg
+ 558              	.LVL55:
+ 141:../../BSP/LCD/tft_spi.c ****     
+ 142:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x24, 0x10);
+ 559              		.loc 1 142 5 view .LVU153
+ 560 0124 1021     		movs	r1, #16
+ 561 0126 2420     		movs	r0, #36
+ 562 0128 FFF7FEFF 		bl	tft_spi_write_reg
+ 563              	.LVL56:
+ 143:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x25, 0x0a);
+ 564              		.loc 1 143 5 view .LVU154
+ 565 012c 0A21     		movs	r1, #10
+ 566 012e 2520     		movs	r0, #37
+ 567 0130 FFF7FEFF 		bl	tft_spi_write_reg
+ 568              	.LVL57:
+ 144:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x26, 0x2E);
+ 569              		.loc 1 144 5 view .LVU155
+ 570 0134 2E21     		movs	r1, #46
+ 571 0136 2620     		movs	r0, #38
+ 572 0138 FFF7FEFF 		bl	tft_spi_write_reg
+ 573              	.LVL58:
+ 145:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x27, 0x2E);
+ 574              		.loc 1 145 5 view .LVU156
+ 575 013c 2E21     		movs	r1, #46
+ 576 013e 2720     		movs	r0, #39
+ 577 0140 FFF7FEFF 		bl	tft_spi_write_reg
+ 578              	.LVL59:
+ 146:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x29, 0x04);
+ 579              		.loc 1 146 5 view .LVU157
+ 580 0144 0421     		movs	r1, #4
+ 581 0146 2920     		movs	r0, #41
+ 582 0148 FFF7FEFF 		bl	tft_spi_write_reg
+ 583              	.LVL60:
+ 147:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x2A, 0xFF);
+ 584              		.loc 1 147 5 view .LVU158
+ 585 014c FF21     		movs	r1, #255
+ 586 014e 2A20     		movs	r0, #42
+ 587 0150 FFF7FEFF 		bl	tft_spi_write_reg
+ 588              	.LVL61:
+ 148:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x38, 0x9C);
+ 589              		.loc 1 148 5 view .LVU159
+ 590 0154 9C21     		movs	r1, #156
+ 591 0156 3820     		movs	r0, #56
+ 592 0158 FFF7FEFF 		bl	tft_spi_write_reg
+ 593              	.LVL62:
+ 149:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x39, 0xA7);
+ 594              		.loc 1 149 5 view .LVU160
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 14
+
+
+ 595 015c A721     		movs	r1, #167
+ 596 015e 3920     		movs	r0, #57
+ 597 0160 FFF7FEFF 		bl	tft_spi_write_reg
+ 598              	.LVL63:
+ 150:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x3A, 0x5E);  //VCOM  
+ 599              		.loc 1 150 5 view .LVU161
+ 600 0164 5E21     		movs	r1, #94
+ 601 0166 3A20     		movs	r0, #58
+ 602 0168 FFF7FEFF 		bl	tft_spi_write_reg
+ 603              	.LVL64:
+ 151:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x49, 0x3C);
+ 604              		.loc 1 151 5 view .LVU162
+ 605 016c 3C21     		movs	r1, #60
+ 606 016e 4920     		movs	r0, #73
+ 607 0170 FFF7FEFF 		bl	tft_spi_write_reg
+ 608              	.LVL65:
+ 152:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x91, 0x67);
+ 609              		.loc 1 152 5 view .LVU163
+ 610 0174 6721     		movs	r1, #103
+ 611 0176 9120     		movs	r0, #145
+ 612 0178 FFF7FEFF 		bl	tft_spi_write_reg
+ 613              	.LVL66:
+ 153:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x92, 0x67);
+ 614              		.loc 1 153 5 view .LVU164
+ 615 017c 6721     		movs	r1, #103
+ 616 017e 9220     		movs	r0, #146
+ 617 0180 FFF7FEFF 		bl	tft_spi_write_reg
+ 618              	.LVL67:
+ 154:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xA0, 0x55);
+ 619              		.loc 1 154 5 view .LVU165
+ 620 0184 5521     		movs	r1, #85
+ 621 0186 A020     		movs	r0, #160
+ 622 0188 FFF7FEFF 		bl	tft_spi_write_reg
+ 623              	.LVL68:
+ 155:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xA1, 0x50);
+ 624              		.loc 1 155 5 view .LVU166
+ 625 018c 5021     		movs	r1, #80
+ 626 018e A120     		movs	r0, #161
+ 627 0190 FFF7FEFF 		bl	tft_spi_write_reg
+ 628              	.LVL69:
+ 156:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xA4, 0x9C);
+ 629              		.loc 1 156 5 view .LVU167
+ 630 0194 9C21     		movs	r1, #156
+ 631 0196 A420     		movs	r0, #164
+ 632 0198 FFF7FEFF 		bl	tft_spi_write_reg
+ 633              	.LVL70:
+ 157:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xA7, 0x02);
+ 634              		.loc 1 157 5 view .LVU168
+ 635 019c 0221     		movs	r1, #2
+ 636 019e A720     		movs	r0, #167
+ 637 01a0 FFF7FEFF 		bl	tft_spi_write_reg
+ 638              	.LVL71:
+ 158:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xA8, 0x01);
+ 639              		.loc 1 158 5 view .LVU169
+ 640 01a4 2146     		mov	r1, r4
+ 641 01a6 A820     		movs	r0, #168
+ 642 01a8 FFF7FEFF 		bl	tft_spi_write_reg
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 15
+
+
+ 643              	.LVL72:
+ 159:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xA9, 0x01);
+ 644              		.loc 1 159 5 view .LVU170
+ 645 01ac 2146     		mov	r1, r4
+ 646 01ae A920     		movs	r0, #169
+ 647 01b0 FFF7FEFF 		bl	tft_spi_write_reg
+ 648              	.LVL73:
+ 160:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xAA, 0xFC);
+ 649              		.loc 1 160 5 view .LVU171
+ 650 01b4 FC21     		movs	r1, #252
+ 651 01b6 AA20     		movs	r0, #170
+ 652 01b8 FFF7FEFF 		bl	tft_spi_write_reg
+ 653              	.LVL74:
+ 161:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xAB, 0x28);
+ 654              		.loc 1 161 5 view .LVU172
+ 655 01bc 2821     		movs	r1, #40
+ 656 01be AB20     		movs	r0, #171
+ 657 01c0 FFF7FEFF 		bl	tft_spi_write_reg
+ 658              	.LVL75:
+ 162:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xAC, 0x06);
+ 659              		.loc 1 162 5 view .LVU173
+ 660 01c4 0621     		movs	r1, #6
+ 661 01c6 AC20     		movs	r0, #172
+ 662 01c8 FFF7FEFF 		bl	tft_spi_write_reg
+ 663              	.LVL76:
+ 163:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xAD, 0x06);
+ 664              		.loc 1 163 5 view .LVU174
+ 665 01cc 0621     		movs	r1, #6
+ 666 01ce AD20     		movs	r0, #173
+ 667 01d0 FFF7FEFF 		bl	tft_spi_write_reg
+ 668              	.LVL77:
+ 164:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xAE, 0x06);
+ 669              		.loc 1 164 5 view .LVU175
+ 670 01d4 0621     		movs	r1, #6
+ 671 01d6 AE20     		movs	r0, #174
+ 672 01d8 FFF7FEFF 		bl	tft_spi_write_reg
+ 673              	.LVL78:
+ 165:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xAF, 0x03);
+ 674              		.loc 1 165 5 view .LVU176
+ 675 01dc 2946     		mov	r1, r5
+ 676 01de AF20     		movs	r0, #175
+ 677 01e0 FFF7FEFF 		bl	tft_spi_write_reg
+ 678              	.LVL79:
+ 166:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB0, 0x08);
+ 679              		.loc 1 166 5 view .LVU177
+ 680 01e4 0821     		movs	r1, #8
+ 681 01e6 B020     		movs	r0, #176
+ 682 01e8 FFF7FEFF 		bl	tft_spi_write_reg
+ 683              	.LVL80:
+ 167:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB1, 0x26);
+ 684              		.loc 1 167 5 view .LVU178
+ 685 01ec 2621     		movs	r1, #38
+ 686 01ee B120     		movs	r0, #177
+ 687 01f0 FFF7FEFF 		bl	tft_spi_write_reg
+ 688              	.LVL81:
+ 168:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB2, 0x28);
+ 689              		.loc 1 168 5 view .LVU179
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 16
+
+
+ 690 01f4 2821     		movs	r1, #40
+ 691 01f6 B220     		movs	r0, #178
+ 692 01f8 FFF7FEFF 		bl	tft_spi_write_reg
+ 693              	.LVL82:
+ 169:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB3, 0x28);
+ 694              		.loc 1 169 5 view .LVU180
+ 695 01fc 2821     		movs	r1, #40
+ 696 01fe B320     		movs	r0, #179
+ 697 0200 FFF7FEFF 		bl	tft_spi_write_reg
+ 698              	.LVL83:
+ 170:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB4, 0x03);
+ 699              		.loc 1 170 5 view .LVU181
+ 700 0204 2946     		mov	r1, r5
+ 701 0206 B420     		movs	r0, #180
+ 702 0208 FFF7FEFF 		bl	tft_spi_write_reg
+ 703              	.LVL84:
+ 171:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB5, 0x08);
+ 704              		.loc 1 171 5 view .LVU182
+ 705 020c 0821     		movs	r1, #8
+ 706 020e B520     		movs	r0, #181
+ 707 0210 FFF7FEFF 		bl	tft_spi_write_reg
+ 708              	.LVL85:
+ 172:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB6, 0x26);
+ 709              		.loc 1 172 5 view .LVU183
+ 710 0214 2621     		movs	r1, #38
+ 711 0216 B620     		movs	r0, #182
+ 712 0218 FFF7FEFF 		bl	tft_spi_write_reg
+ 713              	.LVL86:
+ 173:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB7, 0x08);
+ 714              		.loc 1 173 5 view .LVU184
+ 715 021c 0821     		movs	r1, #8
+ 716 021e B720     		movs	r0, #183
+ 717 0220 FFF7FEFF 		bl	tft_spi_write_reg
+ 718              	.LVL87:
+ 174:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB8, 0x26);
+ 719              		.loc 1 174 5 view .LVU185
+ 720 0224 2621     		movs	r1, #38
+ 721 0226 B820     		movs	r0, #184
+ 722 0228 FFF7FEFF 		bl	tft_spi_write_reg
+ 723              	.LVL88:
+ 175:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x30);
+ 724              		.loc 1 175 5 view .LVU186
+ 725 022c 3021     		movs	r1, #48
+ 726 022e FF20     		movs	r0, #255
+ 727 0230 FFF7FEFF 		bl	tft_spi_write_reg
+ 728              	.LVL89:
+ 176:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x52);
+ 729              		.loc 1 176 5 view .LVU187
+ 730 0234 5221     		movs	r1, #82
+ 731 0236 FF20     		movs	r0, #255
+ 732 0238 FFF7FEFF 		bl	tft_spi_write_reg
+ 733              	.LVL90:
+ 177:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x02);
+ 734              		.loc 1 177 5 view .LVU188
+ 735 023c 0221     		movs	r1, #2
+ 736 023e FF20     		movs	r0, #255
+ 737 0240 FFF7FEFF 		bl	tft_spi_write_reg
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 17
+
+
+ 738              	.LVL91:
+ 178:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB1, 0x11);
+ 739              		.loc 1 178 5 view .LVU189
+ 740 0244 1121     		movs	r1, #17
+ 741 0246 B120     		movs	r0, #177
+ 742 0248 FFF7FEFF 		bl	tft_spi_write_reg
+ 743              	.LVL92:
+ 179:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD1, 0x15);
+ 744              		.loc 1 179 5 view .LVU190
+ 745 024c 1521     		movs	r1, #21
+ 746 024e D120     		movs	r0, #209
+ 747 0250 FFF7FEFF 		bl	tft_spi_write_reg
+ 748              	.LVL93:
+ 180:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB4, 0x2F);
+ 749              		.loc 1 180 5 view .LVU191
+ 750 0254 2F21     		movs	r1, #47
+ 751 0256 B420     		movs	r0, #180
+ 752 0258 FFF7FEFF 		bl	tft_spi_write_reg
+ 753              	.LVL94:
+ 181:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD4, 0x31);
+ 754              		.loc 1 181 5 view .LVU192
+ 755 025c 3121     		movs	r1, #49
+ 756 025e D420     		movs	r0, #212
+ 757 0260 FFF7FEFF 		bl	tft_spi_write_reg
+ 758              	.LVL95:
+ 182:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB2, 0x13);
+ 759              		.loc 1 182 5 view .LVU193
+ 760 0264 1321     		movs	r1, #19
+ 761 0266 B220     		movs	r0, #178
+ 762 0268 FFF7FEFF 		bl	tft_spi_write_reg
+ 763              	.LVL96:
+ 183:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD2, 0x15);
+ 764              		.loc 1 183 5 view .LVU194
+ 765 026c 1521     		movs	r1, #21
+ 766 026e D220     		movs	r0, #210
+ 767 0270 FFF7FEFF 		bl	tft_spi_write_reg
+ 768              	.LVL97:
+ 184:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB3, 0x2D);
+ 769              		.loc 1 184 5 view .LVU195
+ 770 0274 2D21     		movs	r1, #45
+ 771 0276 B320     		movs	r0, #179
+ 772 0278 FFF7FEFF 		bl	tft_spi_write_reg
+ 773              	.LVL98:
+ 185:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD3, 0x33);  
+ 774              		.loc 1 185 5 view .LVU196
+ 775 027c 3321     		movs	r1, #51
+ 776 027e D320     		movs	r0, #211
+ 777 0280 FFF7FEFF 		bl	tft_spi_write_reg
+ 778              	.LVL99:
+ 186:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB6, 0x22);    
+ 779              		.loc 1 186 5 view .LVU197
+ 780 0284 2221     		movs	r1, #34
+ 781 0286 B620     		movs	r0, #182
+ 782 0288 FFF7FEFF 		bl	tft_spi_write_reg
+ 783              	.LVL100:
+ 187:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD6, 0x24);    
+ 784              		.loc 1 187 5 view .LVU198
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 18
+
+
+ 785 028c 2421     		movs	r1, #36
+ 786 028e D620     		movs	r0, #214
+ 787 0290 FFF7FEFF 		bl	tft_spi_write_reg
+ 788              	.LVL101:
+ 188:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB7, 0x3D);    
+ 789              		.loc 1 188 5 view .LVU199
+ 790 0294 3D21     		movs	r1, #61
+ 791 0296 B720     		movs	r0, #183
+ 792 0298 FFF7FEFF 		bl	tft_spi_write_reg
+ 793              	.LVL102:
+ 189:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD7, 0x41);    
+ 794              		.loc 1 189 5 view .LVU200
+ 795 029c 4121     		movs	r1, #65
+ 796 029e D720     		movs	r0, #215
+ 797 02a0 FFF7FEFF 		bl	tft_spi_write_reg
+ 798              	.LVL103:
+ 190:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xC1, 0x08);    
+ 799              		.loc 1 190 5 view .LVU201
+ 800 02a4 0821     		movs	r1, #8
+ 801 02a6 C120     		movs	r0, #193
+ 802 02a8 FFF7FEFF 		bl	tft_spi_write_reg
+ 803              	.LVL104:
+ 191:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xE1, 0x08);    
+ 804              		.loc 1 191 5 view .LVU202
+ 805 02ac 0821     		movs	r1, #8
+ 806 02ae E120     		movs	r0, #225
+ 807 02b0 FFF7FEFF 		bl	tft_spi_write_reg
+ 808              	.LVL105:
+ 192:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB8, 0x0D);    
+ 809              		.loc 1 192 5 view .LVU203
+ 810 02b4 0D21     		movs	r1, #13
+ 811 02b6 B820     		movs	r0, #184
+ 812 02b8 FFF7FEFF 		bl	tft_spi_write_reg
+ 813              	.LVL106:
+ 193:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD8, 0x0D);    
+ 814              		.loc 1 193 5 view .LVU204
+ 815 02bc 0D21     		movs	r1, #13
+ 816 02be D820     		movs	r0, #216
+ 817 02c0 FFF7FEFF 		bl	tft_spi_write_reg
+ 818              	.LVL107:
+ 194:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB9, 0x04);    
+ 819              		.loc 1 194 5 view .LVU205
+ 820 02c4 0421     		movs	r1, #4
+ 821 02c6 B920     		movs	r0, #185
+ 822 02c8 FFF7FEFF 		bl	tft_spi_write_reg
+ 823              	.LVL108:
+ 195:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD9, 0x04);    
+ 824              		.loc 1 195 5 view .LVU206
+ 825 02cc 0421     		movs	r1, #4
+ 826 02ce D920     		movs	r0, #217
+ 827 02d0 FFF7FEFF 		bl	tft_spi_write_reg
+ 828              	.LVL109:
+ 196:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xBD, 0x15);    
+ 829              		.loc 1 196 5 view .LVU207
+ 830 02d4 1521     		movs	r1, #21
+ 831 02d6 BD20     		movs	r0, #189
+ 832 02d8 FFF7FEFF 		bl	tft_spi_write_reg
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 19
+
+
+ 833              	.LVL110:
+ 197:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xDD, 0x15);    
+ 834              		.loc 1 197 5 view .LVU208
+ 835 02dc 1521     		movs	r1, #21
+ 836 02de DD20     		movs	r0, #221
+ 837 02e0 FFF7FEFF 		bl	tft_spi_write_reg
+ 838              	.LVL111:
+ 198:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xBC, 0x13);    
+ 839              		.loc 1 198 5 view .LVU209
+ 840 02e4 1321     		movs	r1, #19
+ 841 02e6 BC20     		movs	r0, #188
+ 842 02e8 FFF7FEFF 		bl	tft_spi_write_reg
+ 843              	.LVL112:
+ 199:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xDC, 0x13);    
+ 844              		.loc 1 199 5 view .LVU210
+ 845 02ec 1321     		movs	r1, #19
+ 846 02ee DC20     		movs	r0, #220
+ 847 02f0 FFF7FEFF 		bl	tft_spi_write_reg
+ 848              	.LVL113:
+ 200:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xBB, 0x11);    
+ 849              		.loc 1 200 5 view .LVU211
+ 850 02f4 1121     		movs	r1, #17
+ 851 02f6 BB20     		movs	r0, #187
+ 852 02f8 FFF7FEFF 		bl	tft_spi_write_reg
+ 853              	.LVL114:
+ 201:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xDB, 0x11);    
+ 854              		.loc 1 201 5 view .LVU212
+ 855 02fc 1121     		movs	r1, #17
+ 856 02fe DB20     		movs	r0, #219
+ 857 0300 FFF7FEFF 		bl	tft_spi_write_reg
+ 858              	.LVL115:
+ 202:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xBA, 0x11);    
+ 859              		.loc 1 202 5 view .LVU213
+ 860 0304 1121     		movs	r1, #17
+ 861 0306 BA20     		movs	r0, #186
+ 862 0308 FFF7FEFF 		bl	tft_spi_write_reg
+ 863              	.LVL116:
+ 203:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xDA, 0x11);    
+ 864              		.loc 1 203 5 view .LVU214
+ 865 030c 1121     		movs	r1, #17
+ 866 030e DA20     		movs	r0, #218
+ 867 0310 FFF7FEFF 		bl	tft_spi_write_reg
+ 868              	.LVL117:
+ 204:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xBE, 0x17);    
+ 869              		.loc 1 204 5 view .LVU215
+ 870 0314 1721     		movs	r1, #23
+ 871 0316 BE20     		movs	r0, #190
+ 872 0318 FFF7FEFF 		bl	tft_spi_write_reg
+ 873              	.LVL118:
+ 205:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xDE, 0x19);    
+ 874              		.loc 1 205 5 view .LVU216
+ 875 031c 1921     		movs	r1, #25
+ 876 031e DE20     		movs	r0, #222
+ 877 0320 FFF7FEFF 		bl	tft_spi_write_reg
+ 878              	.LVL119:
+ 206:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xBF, 0x0F);    
+ 879              		.loc 1 206 5 view .LVU217
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 20
+
+
+ 880 0324 0F21     		movs	r1, #15
+ 881 0326 BF20     		movs	r0, #191
+ 882 0328 FFF7FEFF 		bl	tft_spi_write_reg
+ 883              	.LVL120:
+ 207:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xDF, 0x11);    
+ 884              		.loc 1 207 5 view .LVU218
+ 885 032c 1121     		movs	r1, #17
+ 886 032e DF20     		movs	r0, #223
+ 887 0330 FFF7FEFF 		bl	tft_spi_write_reg
+ 888              	.LVL121:
+ 208:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xC0, 0x16);    
+ 889              		.loc 1 208 5 view .LVU219
+ 890 0334 1621     		movs	r1, #22
+ 891 0336 C020     		movs	r0, #192
+ 892 0338 FFF7FEFF 		bl	tft_spi_write_reg
+ 893              	.LVL122:
+ 209:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xE0, 0x18);    
+ 894              		.loc 1 209 5 view .LVU220
+ 895 033c 1821     		movs	r1, #24
+ 896 033e E020     		movs	r0, #224
+ 897 0340 FFF7FEFF 		bl	tft_spi_write_reg
+ 898              	.LVL123:
+ 210:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB5, 0x37);    
+ 899              		.loc 1 210 5 view .LVU221
+ 900 0344 3721     		movs	r1, #55
+ 901 0346 B520     		movs	r0, #181
+ 902 0348 FFF7FEFF 		bl	tft_spi_write_reg
+ 903              	.LVL124:
+ 211:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD5, 0x34);    
+ 904              		.loc 1 211 5 view .LVU222
+ 905 034c 3421     		movs	r1, #52
+ 906 034e D520     		movs	r0, #213
+ 907 0350 FFF7FEFF 		bl	tft_spi_write_reg
+ 908              	.LVL125:
+ 212:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB0, 0x02);    
+ 909              		.loc 1 212 5 view .LVU223
+ 910 0354 0221     		movs	r1, #2
+ 911 0356 B020     		movs	r0, #176
+ 912 0358 FFF7FEFF 		bl	tft_spi_write_reg
+ 913              	.LVL126:
+ 213:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD0, 0x05);    
+ 914              		.loc 1 213 5 view .LVU224
+ 915 035c 0521     		movs	r1, #5
+ 916 035e D020     		movs	r0, #208
+ 917 0360 FFF7FEFF 		bl	tft_spi_write_reg
+ 918              	.LVL127:
+ 214:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x30); 
+ 919              		.loc 1 214 5 view .LVU225
+ 920 0364 3021     		movs	r1, #48
+ 921 0366 FF20     		movs	r0, #255
+ 922 0368 FFF7FEFF 		bl	tft_spi_write_reg
+ 923              	.LVL128:
+ 215:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x52);   
+ 924              		.loc 1 215 5 view .LVU226
+ 925 036c 5221     		movs	r1, #82
+ 926 036e FF20     		movs	r0, #255
+ 927 0370 FFF7FEFF 		bl	tft_spi_write_reg
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 21
+
+
+ 928              	.LVL129:
+ 216:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x03);   
+ 929              		.loc 1 216 5 view .LVU227
+ 930 0374 2946     		mov	r1, r5
+ 931 0376 FF20     		movs	r0, #255
+ 932 0378 FFF7FEFF 		bl	tft_spi_write_reg
+ 933              	.LVL130:
+ 217:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x05, 0x00);   
+ 934              		.loc 1 217 5 view .LVU228
+ 935 037c 0021     		movs	r1, #0
+ 936 037e 0520     		movs	r0, #5
+ 937 0380 FFF7FEFF 		bl	tft_spi_write_reg
+ 938              	.LVL131:
+ 218:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x06, 0x00);   
+ 939              		.loc 1 218 5 view .LVU229
+ 940 0384 0021     		movs	r1, #0
+ 941 0386 0620     		movs	r0, #6
+ 942 0388 FFF7FEFF 		bl	tft_spi_write_reg
+ 943              	.LVL132:
+ 219:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x08, 0x06);   
+ 944              		.loc 1 219 5 view .LVU230
+ 945 038c 0621     		movs	r1, #6
+ 946 038e 0820     		movs	r0, #8
+ 947 0390 FFF7FEFF 		bl	tft_spi_write_reg
+ 948              	.LVL133:
+ 220:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x09, 0x07);   
+ 949              		.loc 1 220 5 view .LVU231
+ 950 0394 0721     		movs	r1, #7
+ 951 0396 0920     		movs	r0, #9
+ 952 0398 FFF7FEFF 		bl	tft_spi_write_reg
+ 953              	.LVL134:
+ 221:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x25, 0x32);   
+ 954              		.loc 1 221 5 view .LVU232
+ 955 039c 3221     		movs	r1, #50
+ 956 039e 2520     		movs	r0, #37
+ 957 03a0 FFF7FEFF 		bl	tft_spi_write_reg
+ 958              	.LVL135:
+ 222:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x2A, 0x0a);   
+ 959              		.loc 1 222 5 view .LVU233
+ 960 03a4 0A21     		movs	r1, #10
+ 961 03a6 2A20     		movs	r0, #42
+ 962 03a8 FFF7FEFF 		bl	tft_spi_write_reg
+ 963              	.LVL136:
+ 223:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x2B, 0x0b);   
+ 964              		.loc 1 223 5 view .LVU234
+ 965 03ac 0B21     		movs	r1, #11
+ 966 03ae 2B20     		movs	r0, #43
+ 967 03b0 FFF7FEFF 		bl	tft_spi_write_reg
+ 968              	.LVL137:
+ 224:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x70, 0x0f);   
+ 969              		.loc 1 224 5 view .LVU235
+ 970 03b4 0F21     		movs	r1, #15
+ 971 03b6 7020     		movs	r0, #112
+ 972 03b8 FFF7FEFF 		bl	tft_spi_write_reg
+ 973              	.LVL138:
+ 225:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x71, 0xc0);   
+ 974              		.loc 1 225 5 view .LVU236
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 22
+
+
+ 975 03bc C021     		movs	r1, #192
+ 976 03be 7120     		movs	r0, #113
+ 977 03c0 FFF7FEFF 		bl	tft_spi_write_reg
+ 978              	.LVL139:
+ 226:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x30, 0x2A);   
+ 979              		.loc 1 226 5 view .LVU237
+ 980 03c4 2A21     		movs	r1, #42
+ 981 03c6 3020     		movs	r0, #48
+ 982 03c8 FFF7FEFF 		bl	tft_spi_write_reg
+ 983              	.LVL140:
+ 227:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x31, 0x2A);   
+ 984              		.loc 1 227 5 view .LVU238
+ 985 03cc 2A21     		movs	r1, #42
+ 986 03ce 3120     		movs	r0, #49
+ 987 03d0 FFF7FEFF 		bl	tft_spi_write_reg
+ 988              	.LVL141:
+ 228:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x32, 0x2A);   
+ 989              		.loc 1 228 5 view .LVU239
+ 990 03d4 2A21     		movs	r1, #42
+ 991 03d6 3220     		movs	r0, #50
+ 992 03d8 06E0     		b	.L24
+ 993              	.L25:
+ 994 03da 00BF     		.align	2
+ 995              	.L23:
+ 996 03dc 00440258 		.word	1476543488
+ 997 03e0 00040258 		.word	1476527104
+ 998 03e4 00200258 		.word	1476534272
+ 999              	.L24:
+ 1000 03e8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1001              	.LVL142:
+ 229:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x33, 0x2A);   
+ 1002              		.loc 1 229 5 view .LVU240
+ 1003 03ec 2A21     		movs	r1, #42
+ 1004 03ee 3320     		movs	r0, #51
+ 1005 03f0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1006              	.LVL143:
+ 230:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x34, 0xb1);   
+ 1007              		.loc 1 230 5 view .LVU241
+ 1008 03f4 B121     		movs	r1, #177
+ 1009 03f6 3420     		movs	r0, #52
+ 1010 03f8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1011              	.LVL144:
+ 231:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x35, 0x76);   
+ 1012              		.loc 1 231 5 view .LVU242
+ 1013 03fc 7621     		movs	r1, #118
+ 1014 03fe 3520     		movs	r0, #53
+ 1015 0400 FFF7FEFF 		bl	tft_spi_write_reg
+ 1016              	.LVL145:
+ 232:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x36, 0x08);   
+ 1017              		.loc 1 232 5 view .LVU243
+ 1018 0404 0821     		movs	r1, #8
+ 1019 0406 3620     		movs	r0, #54
+ 1020 0408 FFF7FEFF 		bl	tft_spi_write_reg
+ 1021              	.LVL146:
+ 233:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x40, 0x07);   
+ 1022              		.loc 1 233 5 view .LVU244
+ 1023 040c 0721     		movs	r1, #7
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 23
+
+
+ 1024 040e 4020     		movs	r0, #64
+ 1025 0410 FFF7FEFF 		bl	tft_spi_write_reg
+ 1026              	.LVL147:
+ 234:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x41, 0x08);   
+ 1027              		.loc 1 234 5 view .LVU245
+ 1028 0414 0821     		movs	r1, #8
+ 1029 0416 4120     		movs	r0, #65
+ 1030 0418 FFF7FEFF 		bl	tft_spi_write_reg
+ 1031              	.LVL148:
+ 235:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x42, 0x09);   
+ 1032              		.loc 1 235 5 view .LVU246
+ 1033 041c 0921     		movs	r1, #9
+ 1034 041e 4220     		movs	r0, #66
+ 1035 0420 FFF7FEFF 		bl	tft_spi_write_reg
+ 1036              	.LVL149:
+ 236:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x43, 0x0a);   
+ 1037              		.loc 1 236 5 view .LVU247
+ 1038 0424 0A21     		movs	r1, #10
+ 1039 0426 4320     		movs	r0, #67
+ 1040 0428 FFF7FEFF 		bl	tft_spi_write_reg
+ 1041              	.LVL150:
+ 237:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x45, 0x04);   
+ 1042              		.loc 1 237 5 view .LVU248
+ 1043 042c 0421     		movs	r1, #4
+ 1044 042e 4520     		movs	r0, #69
+ 1045 0430 FFF7FEFF 		bl	tft_spi_write_reg
+ 1046              	.LVL151:
+ 238:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x46, 0x05);   
+ 1047              		.loc 1 238 5 view .LVU249
+ 1048 0434 0521     		movs	r1, #5
+ 1049 0436 4620     		movs	r0, #70
+ 1050 0438 FFF7FEFF 		bl	tft_spi_write_reg
+ 1051              	.LVL152:
+ 239:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x48, 0x06);   
+ 1052              		.loc 1 239 5 view .LVU250
+ 1053 043c 0621     		movs	r1, #6
+ 1054 043e 4820     		movs	r0, #72
+ 1055 0440 FFF7FEFF 		bl	tft_spi_write_reg
+ 1056              	.LVL153:
+ 240:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x49, 0x07);   
+ 1057              		.loc 1 240 5 view .LVU251
+ 1058 0444 0721     		movs	r1, #7
+ 1059 0446 4920     		movs	r0, #73
+ 1060 0448 FFF7FEFF 		bl	tft_spi_write_reg
+ 1061              	.LVL154:
+ 241:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x50, 0x0b);   
+ 1062              		.loc 1 241 5 view .LVU252
+ 1063 044c 0B21     		movs	r1, #11
+ 1064 044e 5020     		movs	r0, #80
+ 1065 0450 FFF7FEFF 		bl	tft_spi_write_reg
+ 1066              	.LVL155:
+ 242:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x51, 0x0c);   
+ 1067              		.loc 1 242 5 view .LVU253
+ 1068 0454 0C21     		movs	r1, #12
+ 1069 0456 5120     		movs	r0, #81
+ 1070 0458 FFF7FEFF 		bl	tft_spi_write_reg
+ 1071              	.LVL156:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 24
+
+
+ 243:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x52, 0x0d);   
+ 1072              		.loc 1 243 5 view .LVU254
+ 1073 045c 0D21     		movs	r1, #13
+ 1074 045e 5220     		movs	r0, #82
+ 1075 0460 FFF7FEFF 		bl	tft_spi_write_reg
+ 1076              	.LVL157:
+ 244:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x53, 0x0e);   
+ 1077              		.loc 1 244 5 view .LVU255
+ 1078 0464 0E21     		movs	r1, #14
+ 1079 0466 5320     		movs	r0, #83
+ 1080 0468 FFF7FEFF 		bl	tft_spi_write_reg
+ 1081              	.LVL158:
+ 245:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x55, 0x08);   
+ 1082              		.loc 1 245 5 view .LVU256
+ 1083 046c 0821     		movs	r1, #8
+ 1084 046e 5520     		movs	r0, #85
+ 1085 0470 FFF7FEFF 		bl	tft_spi_write_reg
+ 1086              	.LVL159:
+ 246:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x56, 0x09);   
+ 1087              		.loc 1 246 5 view .LVU257
+ 1088 0474 0921     		movs	r1, #9
+ 1089 0476 5620     		movs	r0, #86
+ 1090 0478 FFF7FEFF 		bl	tft_spi_write_reg
+ 1091              	.LVL160:
+ 247:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x58, 0x0a);   
+ 1092              		.loc 1 247 5 view .LVU258
+ 1093 047c 0A21     		movs	r1, #10
+ 1094 047e 5820     		movs	r0, #88
+ 1095 0480 FFF7FEFF 		bl	tft_spi_write_reg
+ 1096              	.LVL161:
+ 248:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x59, 0x0b);   
+ 1097              		.loc 1 248 5 view .LVU259
+ 1098 0484 0B21     		movs	r1, #11
+ 1099 0486 5920     		movs	r0, #89
+ 1100 0488 FFF7FEFF 		bl	tft_spi_write_reg
+ 1101              	.LVL162:
+ 249:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x80, 0x1f);   
+ 1102              		.loc 1 249 5 view .LVU260
+ 1103 048c 1F21     		movs	r1, #31
+ 1104 048e 8020     		movs	r0, #128
+ 1105 0490 FFF7FEFF 		bl	tft_spi_write_reg
+ 1106              	.LVL163:
+ 250:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x81, 0x00);   
+ 1107              		.loc 1 250 5 view .LVU261
+ 1108 0494 0021     		movs	r1, #0
+ 1109 0496 8120     		movs	r0, #129
+ 1110 0498 FFF7FEFF 		bl	tft_spi_write_reg
+ 1111              	.LVL164:
+ 251:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x82, 0x16);   
+ 1112              		.loc 1 251 5 view .LVU262
+ 1113 049c 1621     		movs	r1, #22
+ 1114 049e 8220     		movs	r0, #130
+ 1115 04a0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1116              	.LVL165:
+ 252:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x83, 0x15);   
+ 1117              		.loc 1 252 5 view .LVU263
+ 1118 04a4 1521     		movs	r1, #21
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 25
+
+
+ 1119 04a6 8320     		movs	r0, #131
+ 1120 04a8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1121              	.LVL166:
+ 253:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x84, 0x0a);   
+ 1122              		.loc 1 253 5 view .LVU264
+ 1123 04ac 0A21     		movs	r1, #10
+ 1124 04ae 8420     		movs	r0, #132
+ 1125 04b0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1126              	.LVL167:
+ 254:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x85, 0x0c);   
+ 1127              		.loc 1 254 5 view .LVU265
+ 1128 04b4 0C21     		movs	r1, #12
+ 1129 04b6 8520     		movs	r0, #133
+ 1130 04b8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1131              	.LVL168:
+ 255:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x86, 0x0e);   
+ 1132              		.loc 1 255 5 view .LVU266
+ 1133 04bc 0E21     		movs	r1, #14
+ 1134 04be 8620     		movs	r0, #134
+ 1135 04c0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1136              	.LVL169:
+ 256:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x87, 0x10);   
+ 1137              		.loc 1 256 5 view .LVU267
+ 1138 04c4 1021     		movs	r1, #16
+ 1139 04c6 8720     		movs	r0, #135
+ 1140 04c8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1141              	.LVL170:
+ 257:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x88, 0x02);   
+ 1142              		.loc 1 257 5 view .LVU268
+ 1143 04cc 0221     		movs	r1, #2
+ 1144 04ce 8820     		movs	r0, #136
+ 1145 04d0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1146              	.LVL171:
+ 258:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x8F, 0x06);   
+ 1147              		.loc 1 258 5 view .LVU269
+ 1148 04d4 0621     		movs	r1, #6
+ 1149 04d6 8F20     		movs	r0, #143
+ 1150 04d8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1151              	.LVL172:
+ 259:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x96, 0x1f);   
+ 1152              		.loc 1 259 5 view .LVU270
+ 1153 04dc 1F21     		movs	r1, #31
+ 1154 04de 9620     		movs	r0, #150
+ 1155 04e0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1156              	.LVL173:
+ 260:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x97, 0x00);   
+ 1157              		.loc 1 260 5 view .LVU271
+ 1158 04e4 0021     		movs	r1, #0
+ 1159 04e6 9720     		movs	r0, #151
+ 1160 04e8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1161              	.LVL174:
+ 261:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x98, 0x18);   
+ 1162              		.loc 1 261 5 view .LVU272
+ 1163 04ec 1821     		movs	r1, #24
+ 1164 04ee 9820     		movs	r0, #152
+ 1165 04f0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1166              	.LVL175:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 26
+
+
+ 262:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x99, 0x17);   
+ 1167              		.loc 1 262 5 view .LVU273
+ 1168 04f4 1721     		movs	r1, #23
+ 1169 04f6 9920     		movs	r0, #153
+ 1170 04f8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1171              	.LVL176:
+ 263:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x9A, 0x09);   
+ 1172              		.loc 1 263 5 view .LVU274
+ 1173 04fc 0921     		movs	r1, #9
+ 1174 04fe 9A20     		movs	r0, #154
+ 1175 0500 FFF7FEFF 		bl	tft_spi_write_reg
+ 1176              	.LVL177:
+ 264:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x9B, 0x0b);   
+ 1177              		.loc 1 264 5 view .LVU275
+ 1178 0504 0B21     		movs	r1, #11
+ 1179 0506 9B20     		movs	r0, #155
+ 1180 0508 FFF7FEFF 		bl	tft_spi_write_reg
+ 1181              	.LVL178:
+ 265:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x9C, 0x0d);   
+ 1182              		.loc 1 265 5 view .LVU276
+ 1183 050c 0D21     		movs	r1, #13
+ 1184 050e 9C20     		movs	r0, #156
+ 1185 0510 FFF7FEFF 		bl	tft_spi_write_reg
+ 1186              	.LVL179:
+ 266:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x9D, 0x0f);   
+ 1187              		.loc 1 266 5 view .LVU277
+ 1188 0514 0F21     		movs	r1, #15
+ 1189 0516 9D20     		movs	r0, #157
+ 1190 0518 FFF7FEFF 		bl	tft_spi_write_reg
+ 1191              	.LVL180:
+ 267:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x9E, 0x01);   
+ 1192              		.loc 1 267 5 view .LVU278
+ 1193 051c 2146     		mov	r1, r4
+ 1194 051e 9E20     		movs	r0, #158
+ 1195 0520 FFF7FEFF 		bl	tft_spi_write_reg
+ 1196              	.LVL181:
+ 268:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xA5, 0x05);   
+ 1197              		.loc 1 268 5 view .LVU279
+ 1198 0524 0521     		movs	r1, #5
+ 1199 0526 A520     		movs	r0, #165
+ 1200 0528 FFF7FEFF 		bl	tft_spi_write_reg
+ 1201              	.LVL182:
+ 269:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB0, 0x00);   
+ 1202              		.loc 1 269 5 view .LVU280
+ 1203 052c 0021     		movs	r1, #0
+ 1204 052e B020     		movs	r0, #176
+ 1205 0530 FFF7FEFF 		bl	tft_spi_write_reg
+ 1206              	.LVL183:
+ 270:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB1, 0x1f);   
+ 1207              		.loc 1 270 5 view .LVU281
+ 1208 0534 1F21     		movs	r1, #31
+ 1209 0536 B120     		movs	r0, #177
+ 1210 0538 FFF7FEFF 		bl	tft_spi_write_reg
+ 1211              	.LVL184:
+ 271:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB2, 0x16);   
+ 1212              		.loc 1 271 5 view .LVU282
+ 1213 053c 1621     		movs	r1, #22
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 27
+
+
+ 1214 053e B220     		movs	r0, #178
+ 1215 0540 FFF7FEFF 		bl	tft_spi_write_reg
+ 1216              	.LVL185:
+ 272:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB3, 0x15);   
+ 1217              		.loc 1 272 5 view .LVU283
+ 1218 0544 1521     		movs	r1, #21
+ 1219 0546 B320     		movs	r0, #179
+ 1220 0548 FFF7FEFF 		bl	tft_spi_write_reg
+ 1221              	.LVL186:
+ 273:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB4, 0x0f);   
+ 1222              		.loc 1 273 5 view .LVU284
+ 1223 054c 0F21     		movs	r1, #15
+ 1224 054e B420     		movs	r0, #180
+ 1225 0550 FFF7FEFF 		bl	tft_spi_write_reg
+ 1226              	.LVL187:
+ 274:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB5, 0x0d);   
+ 1227              		.loc 1 274 5 view .LVU285
+ 1228 0554 0D21     		movs	r1, #13
+ 1229 0556 B520     		movs	r0, #181
+ 1230 0558 FFF7FEFF 		bl	tft_spi_write_reg
+ 1231              	.LVL188:
+ 275:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB6, 0x0b);   
+ 1232              		.loc 1 275 5 view .LVU286
+ 1233 055c 0B21     		movs	r1, #11
+ 1234 055e B620     		movs	r0, #182
+ 1235 0560 FFF7FEFF 		bl	tft_spi_write_reg
+ 1236              	.LVL189:
+ 276:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB7, 0x09);   
+ 1237              		.loc 1 276 5 view .LVU287
+ 1238 0564 0921     		movs	r1, #9
+ 1239 0566 B720     		movs	r0, #183
+ 1240 0568 FFF7FEFF 		bl	tft_spi_write_reg
+ 1241              	.LVL190:
+ 277:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xB8, 0x05);   
+ 1242              		.loc 1 277 5 view .LVU288
+ 1243 056c 0521     		movs	r1, #5
+ 1244 056e B820     		movs	r0, #184
+ 1245 0570 FFF7FEFF 		bl	tft_spi_write_reg
+ 1246              	.LVL191:
+ 278:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xBF, 0x01);   
+ 1247              		.loc 1 278 5 view .LVU289
+ 1248 0574 2146     		mov	r1, r4
+ 1249 0576 BF20     		movs	r0, #191
+ 1250 0578 FFF7FEFF 		bl	tft_spi_write_reg
+ 1251              	.LVL192:
+ 279:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xC6, 0x00);   
+ 1252              		.loc 1 279 5 view .LVU290
+ 1253 057c 0021     		movs	r1, #0
+ 1254 057e C620     		movs	r0, #198
+ 1255 0580 FFF7FEFF 		bl	tft_spi_write_reg
+ 1256              	.LVL193:
+ 280:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xC7, 0x1f);   
+ 1257              		.loc 1 280 5 view .LVU291
+ 1258 0584 1F21     		movs	r1, #31
+ 1259 0586 C720     		movs	r0, #199
+ 1260 0588 FFF7FEFF 		bl	tft_spi_write_reg
+ 1261              	.LVL194:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 28
+
+
+ 281:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xC8, 0x18);   
+ 1262              		.loc 1 281 5 view .LVU292
+ 1263 058c 1821     		movs	r1, #24
+ 1264 058e C820     		movs	r0, #200
+ 1265 0590 FFF7FEFF 		bl	tft_spi_write_reg
+ 1266              	.LVL195:
+ 282:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xC9, 0x17);   
+ 1267              		.loc 1 282 5 view .LVU293
+ 1268 0594 1721     		movs	r1, #23
+ 1269 0596 C920     		movs	r0, #201
+ 1270 0598 FFF7FEFF 		bl	tft_spi_write_reg
+ 1271              	.LVL196:
+ 283:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xCA, 0x10);   
+ 1272              		.loc 1 283 5 view .LVU294
+ 1273 059c 1021     		movs	r1, #16
+ 1274 059e CA20     		movs	r0, #202
+ 1275 05a0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1276              	.LVL197:
+ 284:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xCB, 0x0e);   
+ 1277              		.loc 1 284 5 view .LVU295
+ 1278 05a4 0E21     		movs	r1, #14
+ 1279 05a6 CB20     		movs	r0, #203
+ 1280 05a8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1281              	.LVL198:
+ 285:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xCC, 0x0c);   
+ 1282              		.loc 1 285 5 view .LVU296
+ 1283 05ac 0C21     		movs	r1, #12
+ 1284 05ae CC20     		movs	r0, #204
+ 1285 05b0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1286              	.LVL199:
+ 286:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xCD, 0x0a);   
+ 1287              		.loc 1 286 5 view .LVU297
+ 1288 05b4 0A21     		movs	r1, #10
+ 1289 05b6 CD20     		movs	r0, #205
+ 1290 05b8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1291              	.LVL200:
+ 287:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xCE, 0x06);   
+ 1292              		.loc 1 287 5 view .LVU298
+ 1293 05bc 0621     		movs	r1, #6
+ 1294 05be CE20     		movs	r0, #206
+ 1295 05c0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1296              	.LVL201:
+ 288:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xD5, 0x02);   
+ 1297              		.loc 1 288 5 view .LVU299
+ 1298 05c4 0221     		movs	r1, #2
+ 1299 05c6 D520     		movs	r0, #213
+ 1300 05c8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1301              	.LVL202:
+ 289:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x30);   
+ 1302              		.loc 1 289 5 view .LVU300
+ 1303 05cc 3021     		movs	r1, #48
+ 1304 05ce FF20     		movs	r0, #255
+ 1305 05d0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1306              	.LVL203:
+ 290:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x52);   
+ 1307              		.loc 1 290 5 view .LVU301
+ 1308 05d4 5221     		movs	r1, #82
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 29
+
+
+ 1309 05d6 FF20     		movs	r0, #255
+ 1310 05d8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1311              	.LVL204:
+ 291:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0xFF, 0x00);   
+ 1312              		.loc 1 291 5 view .LVU302
+ 1313 05dc 0021     		movs	r1, #0
+ 1314 05de FF20     		movs	r0, #255
+ 1315 05e0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1316              	.LVL205:
+ 292:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x36, 0x0a);   
+ 1317              		.loc 1 292 5 view .LVU303
+ 1318 05e4 0A21     		movs	r1, #10
+ 1319 05e6 3620     		movs	r0, #54
+ 1320 05e8 FFF7FEFF 		bl	tft_spi_write_reg
+ 1321              	.LVL206:
+ 293:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x11, 0x00);   
+ 1322              		.loc 1 293 5 view .LVU304
+ 1323 05ec 0021     		movs	r1, #0
+ 1324 05ee 1120     		movs	r0, #17
+ 1325 05f0 FFF7FEFF 		bl	tft_spi_write_reg
+ 1326              	.LVL207:
+ 294:../../BSP/LCD/tft_spi.c ****     delay_ms(200); 
+ 1327              		.loc 1 294 5 view .LVU305
+ 1328 05f4 C820     		movs	r0, #200
+ 1329 05f6 FFF7FEFF 		bl	delay_ms
+ 1330              	.LVL208:
+ 295:../../BSP/LCD/tft_spi.c ****     tft_spi_write_reg(0x29, 0x00);      
+ 1331              		.loc 1 295 5 view .LVU306
+ 1332 05fa 0021     		movs	r1, #0
+ 1333 05fc 2920     		movs	r0, #41
+ 1334 05fe FFF7FEFF 		bl	tft_spi_write_reg
+ 1335              	.LVL209:
+ 296:../../BSP/LCD/tft_spi.c ****     delay_ms(100);    
+ 1336              		.loc 1 296 5 view .LVU307
+ 1337 0602 6420     		movs	r0, #100
+ 1338 0604 FFF7FEFF 		bl	delay_ms
+ 1339              	.LVL210:
+ 297:../../BSP/LCD/tft_spi.c **** }
+ 1340              		.loc 1 297 1 is_stmt 0 view .LVU308
+ 1341 0608 0AB0     		add	sp, sp, #40
+ 1342              	.LCFI6:
+ 1343              		.cfi_def_cfa_offset 24
+ 1344              		@ sp needed
+ 1345 060a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1346              		.cfi_endproc
+ 1347              	.LFE148:
+ 1349 060e 00BF     		.text
+ 1350              	.Letext0:
+ 1351              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1352              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1353              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 1354              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 1355              		.file 6 "../../BSP/bsp_delay.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccSMgn32.s 			page 30
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tft_spi.c
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:20     .text.tft_spi_write_byte:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:26     .text.tft_spi_write_byte:00000000 tft_spi_write_byte
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:123    .text.tft_spi_write_byte:0000005c $d
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:128    .text.tft_spi_write_cmd:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:134    .text.tft_spi_write_cmd:00000000 tft_spi_write_cmd
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:209    .text.tft_spi_write_cmd:00000054 $d
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:215    .text.tft_spi_write_data:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:221    .text.tft_spi_write_data:00000000 tft_spi_write_data
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:296    .text.tft_spi_write_data:00000054 $d
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:302    .text.tft_spi_write_reg:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:308    .text.tft_spi_write_reg:00000000 tft_spi_write_reg
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:336    .text.tft_spi_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:342    .text.tft_spi_init:00000000 tft_spi_init
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:996    .text.tft_spi_init:000003dc $d
+C:\Users\28576\AppData\Local\Temp\ccSMgn32.s:1000   .text.tft_spi_init:000003e8 $t
+
+UNDEFINED SYMBOLS
+HAL_GPIO_WritePin
+delay_us
+HAL_GPIO_Init
+delay_ms
