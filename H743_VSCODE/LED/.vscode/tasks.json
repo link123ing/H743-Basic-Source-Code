@@ -1,0 +1,46 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build CM7",
+            "type": "shell",
+            "command": "make",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+        },
+        {
+            "label": "flash CM7",
+            "type": "shell",
+            "command": "D:/TOOLS/xpack-openocd-0.12.0-7/bin/openocd.exe",
+            "args": [
+                "-s",
+                "D:/TOOLS/xpack-openocd-0.12.0-7/openocd/scripts",
+                "-f",
+                "interface/stlink-v2-1.cfg",
+                "-f",
+                "target/stm32h7x.cfg",
+                "-c",
+                "init",
+                "-c",
+                "reset halt",
+                "-c",
+                "program C:/Users/27655/Desktop/H743/H743_VSCODE/LED/build/LED.elf verify reset",
+                "-c",
+                "reset run",
+                "-c",
+                "shutdown"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+        },
+    ]
+}

@@ -1,0 +1,50 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "STM32H743 在线调试 (F5)",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/LED.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "serverpath": "D:/TOOLS/xpack-openocd-0.12.0-7/bin/openocd.exe",
+            "device": "STM32H743XIHx",
+            "interface": "swd",
+            "configFiles": [
+                "interface/stlink-v2-1.cfg",
+                "target/stm32h7x.cfg"
+            ],
+            "searchDir": "D:/TOOLS/xpack-openocd-0.12.0-7/openocd/scripts",
+            "runToEntryPoint": "main",
+            "preLaunchTask": "build CM7",
+            "showDevDebugOutput": "raw",
+            "preLaunchCommands": [
+                "monitor reset halt"
+            ]
+        },
+        {
+            "name": "STM32H743 仅下载 (无调试)",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/LED.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "serverpath": "D:/TOOLS/xpack-openocd-0.12.0-7/bin/openocd.exe", 
+            "device": "STM32H743XIHx",
+            "interface": "swd",
+            "configFiles": [
+                "interface/stlink-v2-1.cfg",
+                "target/stm32h7x.cfg"
+            ],
+            "searchDir": "D:/TOOLS/xpack-openocd-0.12.0-7/openocd/scripts",
+            "preLaunchTask": "flash CM7",
+            "showDevDebugOutput": "raw",
+            "runToEntryPoint": "main",
+            "overrideLaunchCommands": [
+                "monitor reset halt",
+                "disconnect"
+            ],
+        }
+    ]
+}
