@@ -1,0 +1,23 @@
+SourceCode 这些代码均基于STM32CUBEMX + KEIL V5.32版本，使用AC6编译器（重要 重要 重要）。
+这些代码在小底板上运行，开源地址：https://oshwhub.com/miss233/stm32h750x_mb
+
+1.使用CubeMX打开时，请不要出现中文路径。
+
+2.代码使用MDK AC6编译器，编译速度快，生成文件小。
+
+3.0_gpio_test用于测试IO扩展板引出的GPIO（注：使用开源IO扩展板测试，A0C,A1C,A2C,A3C四个引脚是ADC直连引脚，未设置输出）。
+
+4.7_fmc_sdram有几个速度的例程,H750/743 sdram最大速度133m，可以略微超频，但为了保证使用过程中稳定，默认用的133M的驱动进行屏幕测试。大家根据手头板子测试，如果需要更高频率，可在cubemx中自行配置。
+
+5.屏幕使用的正点原子4.3寸800*480分辨率的屏幕，使用外部SDRAM做缓存，SDRAM时钟频率133M，LTDC时钟50M。
+
+6.led_io 简易扩展底板的led；led_mb 小底板的rgb_led。
+
+7.fdcan2_dm4310 用于达妙科技的4310关节电机测试，视频【大喵（达妙）科技 J4310 关节电机速度跟随测试】 https://www.bilibili.com/video/BV1KSkRYLENe/?share_source=copy_web&vd_source=5442d7b4a0763d92ecc90a20c86d3ed1
+
+8.新增正点原子7寸rgb（1024*600）屏幕支持，触摸芯片，CST340，兼容ft5206。
+
+9.新增rgb屏幕的ARGB8888格式显示，显示细腻，效果最好。
+
+10.新增AD格式的底板接口封装。
+
