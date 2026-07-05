@@ -1,0 +1,1137 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_palette.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c"
+  19              		.section	.text.lv_palette_main,"ax",%progbits
+  20              		.align	1
+  21              		.global	lv_palette_main
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_palette_main:
+  27              	.LVL0:
+  28              	.LFB4:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  * @file lv_palette.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** #include "lv_palette.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  11:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** /*********************
+  12:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  *      DEFINES
+  13:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  *********************/
+  14:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  15:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** /**********************
+  16:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  *      TYPEDEFS
+  17:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  **********************/
+  18:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  19:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** /**********************
+  20:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  *  STATIC PROTOTYPES
+  21:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  **********************/
+  22:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  23:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** /**********************
+  24:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  *  STATIC VARIABLES
+  25:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  **********************/
+  26:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  27:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** /**********************
+  28:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  *      MACROS
+  29:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  **********************/
+  30:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 2
+
+
+  31:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** /**********************
+  32:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  *   GLOBAL FUNCTIONS
+  33:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****  **********************/
+  34:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  35:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** lv_color_t lv_palette_main(lv_palette_t p)
+  36:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** {
+  29              		.loc 1 36 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 36 1 is_stmt 0 view .LVU1
+  34 0000 00B5     		push	{lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 14, -4
+  38 0002 83B0     		sub	sp, sp, #12
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 16
+  37:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     static const lv_color_t colors[] = {
+  41              		.loc 1 37 5 is_stmt 1 view .LVU2
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_COLOR_MAKE(0xF4, 0x43, 0x36), LV_COLOR_MAKE(0xE9, 0x1E, 0x63), LV_COLOR_MAKE(0x9C, 0x27,
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_COLOR_MAKE(0x3F, 0x51, 0xB5), LV_COLOR_MAKE(0x21, 0x96, 0xF3), LV_COLOR_MAKE(0x03, 0xA9,
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_COLOR_MAKE(0x00, 0x96, 0x88), LV_COLOR_MAKE(0x4C, 0xAF, 0x50), LV_COLOR_MAKE(0x8B, 0xC3,
+  41:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_COLOR_MAKE(0xFF, 0xEB, 0x3B), LV_COLOR_MAKE(0xFF, 0xC1, 0x07), LV_COLOR_MAKE(0xFF, 0x98,
+  42:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_COLOR_MAKE(0x79, 0x55, 0x48), LV_COLOR_MAKE(0x60, 0x7D, 0x8B), LV_COLOR_MAKE(0x9E, 0x9E,
+  43:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     };
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     if(p >= LV_PALETTE_LAST) {
+  42              		.loc 1 45 5 view .LVU3
+  43              		.loc 1 45 7 is_stmt 0 view .LVU4
+  44 0004 1228     		cmp	r0, #18
+  45 0006 18D8     		bhi	.L5
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_LOG_WARN("Invalid palette: %d", p);
+  47:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+  48:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+  49:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     return colors[p];
+  46              		.loc 1 50 5 is_stmt 1 view .LVU5
+  47              		.loc 1 50 18 is_stmt 0 view .LVU6
+  48 0008 124B     		ldr	r3, .L6
+  49 000a 00EB4000 		add	r0, r0, r0, lsl #1
+  50              	.LVL1:
+  51              		.loc 1 50 18 view .LVU7
+  52 000e 1918     		adds	r1, r3, r0
+  53 0010 1A5A     		ldrh	r2, [r3, r0]	@ unaligned
+  54 0012 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
+  55 0014 ADF80420 		strh	r2, [sp, #4]	@ unaligned
+  56 0018 8DF80630 		strb	r3, [sp, #6]
+  57              	.L3:
+  51:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** }
+  58              		.loc 1 52 1 view .LVU8
+  59 001c 0020     		movs	r0, #0
+  60 001e 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+  61 0022 63F30700 		bfi	r0, r3, #0, #8
+  62 0026 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+  63 002a 63F30F20 		bfi	r0, r3, #8, #8
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 3
+
+
+  64 002e 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+  65 0032 63F31740 		bfi	r0, r3, #16, #8
+  66 0036 03B0     		add	sp, sp, #12
+  67              	.LCFI2:
+  68              		.cfi_remember_state
+  69              		.cfi_def_cfa_offset 4
+  70              		@ sp needed
+  71 0038 00BD     		pop	{pc}
+  72              	.LVL2:
+  73              	.L5:
+  74              	.LCFI3:
+  75              		.cfi_restore_state
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_LOG_WARN("Invalid palette: %d", p);
+  76              		.loc 1 46 9 is_stmt 1 view .LVU9
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_LOG_WARN("Invalid palette: %d", p);
+  77              		.loc 1 46 9 view .LVU10
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_LOG_WARN("Invalid palette: %d", p);
+  78              		.loc 1 46 9 view .LVU11
+  47:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+  79              		.loc 1 47 9 view .LVU12
+  47:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+  80              		.loc 1 47 16 is_stmt 0 view .LVU13
+  81 003a FFF7FEFF 		bl	lv_color_black
+  82              	.LVL3:
+  47:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+  83              		.loc 1 47 16 view .LVU14
+  84 003e 8DF80400 		strb	r0, [sp, #4]
+  85 0042 C0F30723 		ubfx	r3, r0, #8, #8
+  86 0046 8DF80530 		strb	r3, [sp, #5]
+  87 004a C0F30740 		ubfx	r0, r0, #16, #8
+  88 004e 8DF80600 		strb	r0, [sp, #6]
+  89 0052 E3E7     		b	.L3
+  90              	.L7:
+  91              		.align	2
+  92              	.L6:
+  93 0054 00000000 		.word	colors.2
+  94              		.cfi_endproc
+  95              	.LFE4:
+  97              		.section	.text.lv_palette_lighten,"ax",%progbits
+  98              		.align	1
+  99              		.global	lv_palette_lighten
+ 100              		.syntax unified
+ 101              		.thumb
+ 102              		.thumb_func
+ 104              	lv_palette_lighten:
+ 105              	.LVL4:
+ 106              	.LFB5:
+  53:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** lv_color_t lv_palette_lighten(lv_palette_t p, uint8_t lvl)
+  55:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** {
+ 107              		.loc 1 55 1 is_stmt 1 view -0
+ 108              		.cfi_startproc
+ 109              		@ args = 0, pretend = 0, frame = 8
+ 110              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111              		.loc 1 55 1 is_stmt 0 view .LVU16
+ 112 0000 00B5     		push	{lr}
+ 113              	.LCFI4:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 4
+
+
+ 114              		.cfi_def_cfa_offset 4
+ 115              		.cfi_offset 14, -4
+ 116 0002 83B0     		sub	sp, sp, #12
+ 117              	.LCFI5:
+ 118              		.cfi_def_cfa_offset 16
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     static const lv_color_t colors[][5] = {
+ 119              		.loc 1 56 5 is_stmt 1 view .LVU17
+  57:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xEF, 0x53, 0x50), LV_COLOR_MAKE(0xE5, 0x73, 0x73), LV_COLOR_MAKE(0xEF, 0x9A
+  58:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xEC, 0x40, 0x7A), LV_COLOR_MAKE(0xF0, 0x62, 0x92), LV_COLOR_MAKE(0xF4, 0x8F
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xAB, 0x47, 0xBC), LV_COLOR_MAKE(0xBA, 0x68, 0xC8), LV_COLOR_MAKE(0xCE, 0x93
+  60:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x7E, 0x57, 0xC2), LV_COLOR_MAKE(0x95, 0x75, 0xCD), LV_COLOR_MAKE(0xB3, 0x9D
+  61:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x5C, 0x6B, 0xC0), LV_COLOR_MAKE(0x79, 0x86, 0xCB), LV_COLOR_MAKE(0x9F, 0xA8
+  62:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x42, 0xA5, 0xF5), LV_COLOR_MAKE(0x64, 0xB5, 0xF6), LV_COLOR_MAKE(0x90, 0xCA
+  63:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x29, 0xB6, 0xF6), LV_COLOR_MAKE(0x4F, 0xC3, 0xF7), LV_COLOR_MAKE(0x81, 0xD4
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x26, 0xC6, 0xDA), LV_COLOR_MAKE(0x4D, 0xD0, 0xE1), LV_COLOR_MAKE(0x80, 0xDE
+  65:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x26, 0xA6, 0x9A), LV_COLOR_MAKE(0x4D, 0xB6, 0xAC), LV_COLOR_MAKE(0x80, 0xCB
+  66:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x66, 0xBB, 0x6A), LV_COLOR_MAKE(0x81, 0xC7, 0x84), LV_COLOR_MAKE(0xA5, 0xD6
+  67:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x9C, 0xCC, 0x65), LV_COLOR_MAKE(0xAE, 0xD5, 0x81), LV_COLOR_MAKE(0xC5, 0xE1
+  68:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xD4, 0xE1, 0x57), LV_COLOR_MAKE(0xDC, 0xE7, 0x75), LV_COLOR_MAKE(0xE6, 0xEE
+  69:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xFF, 0xEE, 0x58), LV_COLOR_MAKE(0xFF, 0xF1, 0x76), LV_COLOR_MAKE(0xFF, 0xF5
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xFF, 0xCA, 0x28), LV_COLOR_MAKE(0xFF, 0xD5, 0x4F), LV_COLOR_MAKE(0xFF, 0xE0
+  71:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xFF, 0xA7, 0x26), LV_COLOR_MAKE(0xFF, 0xB7, 0x4D), LV_COLOR_MAKE(0xFF, 0xCC
+  72:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xFF, 0x70, 0x43), LV_COLOR_MAKE(0xFF, 0x8A, 0x65), LV_COLOR_MAKE(0xFF, 0xAB
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x8D, 0x6E, 0x63), LV_COLOR_MAKE(0xA1, 0x88, 0x7F), LV_COLOR_MAKE(0xBC, 0xAA
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x78, 0x90, 0x9C), LV_COLOR_MAKE(0x90, 0xA4, 0xAE), LV_COLOR_MAKE(0xB0, 0xBE
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xBD, 0xBD, 0xBD), LV_COLOR_MAKE(0xE0, 0xE0, 0xE0), LV_COLOR_MAKE(0xEE, 0xEE
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     };
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     if(p >= LV_PALETTE_LAST) {
+ 120              		.loc 1 78 5 view .LVU18
+ 121              		.loc 1 78 7 is_stmt 0 view .LVU19
+ 122 0004 1228     		cmp	r0, #18
+ 123 0006 1FD8     		bhi	.L13
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_LOG_WARN("Invalid palette: %d", p);
+  80:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+  81:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     if(lvl == 0 || lvl > 5) {
+ 124              		.loc 1 83 5 is_stmt 1 view .LVU20
+ 125              		.loc 1 83 17 is_stmt 0 view .LVU21
+ 126 0008 0139     		subs	r1, r1, #1
+ 127              	.LVL5:
+ 128              		.loc 1 83 17 view .LVU22
+ 129 000a C9B2     		uxtb	r1, r1
+ 130              	.LVL6:
+ 131              		.loc 1 83 7 view .LVU23
+ 132 000c 0429     		cmp	r1, #4
+ 133 000e 28D8     		bhi	.L14
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_LOG_WARN("Invalid level: %d. Must be 1..5", lvl);
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+  86:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+  87:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     lvl--;
+ 134              		.loc 1 88 5 is_stmt 1 view .LVU24
+ 135              	.LVL7:
+  89:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  90:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     return colors[p][lvl];
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 5
+
+
+ 136              		.loc 1 90 5 view .LVU25
+ 137              		.loc 1 90 21 is_stmt 0 view .LVU26
+ 138 0010 1A4B     		ldr	r3, .L15
+ 139 0012 01EB4101 		add	r1, r1, r1, lsl #1
+ 140              	.LVL8:
+ 141              		.loc 1 90 21 view .LVU27
+ 142 0016 C0EB0010 		rsb	r0, r0, r0, lsl #4
+ 143              	.LVL9:
+ 144              		.loc 1 90 21 view .LVU28
+ 145 001a 0144     		add	r1, r1, r0
+ 146 001c 5818     		adds	r0, r3, r1
+ 147 001e 5A5A     		ldrh	r2, [r3, r1]	@ unaligned
+ 148 0020 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 149 0022 ADF80420 		strh	r2, [sp, #4]	@ unaligned
+ 150 0026 8DF80630 		strb	r3, [sp, #6]
+ 151              	.LVL10:
+ 152              	.L10:
+  91:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** }
+ 153              		.loc 1 91 1 view .LVU29
+ 154 002a 0020     		movs	r0, #0
+ 155 002c 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 156 0030 63F30700 		bfi	r0, r3, #0, #8
+ 157 0034 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 158 0038 63F30F20 		bfi	r0, r3, #8, #8
+ 159 003c 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 160 0040 63F31740 		bfi	r0, r3, #16, #8
+ 161 0044 03B0     		add	sp, sp, #12
+ 162              	.LCFI6:
+ 163              		.cfi_remember_state
+ 164              		.cfi_def_cfa_offset 4
+ 165              		@ sp needed
+ 166 0046 00BD     		pop	{pc}
+ 167              	.LVL11:
+ 168              	.L13:
+ 169              	.LCFI7:
+ 170              		.cfi_restore_state
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 171              		.loc 1 79 9 is_stmt 1 view .LVU30
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 172              		.loc 1 79 9 view .LVU31
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 173              		.loc 1 79 9 view .LVU32
+  80:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 174              		.loc 1 80 9 view .LVU33
+  80:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 175              		.loc 1 80 16 is_stmt 0 view .LVU34
+ 176 0048 FFF7FEFF 		bl	lv_color_black
+ 177              	.LVL12:
+  80:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 178              		.loc 1 80 16 view .LVU35
+ 179 004c 8DF80400 		strb	r0, [sp, #4]
+ 180 0050 C0F30723 		ubfx	r3, r0, #8, #8
+ 181 0054 8DF80530 		strb	r3, [sp, #5]
+ 182 0058 C0F30740 		ubfx	r0, r0, #16, #8
+ 183 005c 8DF80600 		strb	r0, [sp, #6]
+ 184 0060 E3E7     		b	.L10
+ 185              	.LVL13:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 6
+
+
+ 186              	.L14:
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 187              		.loc 1 84 9 is_stmt 1 view .LVU36
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 188              		.loc 1 84 9 view .LVU37
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 189              		.loc 1 84 9 view .LVU38
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 190              		.loc 1 85 9 view .LVU39
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 191              		.loc 1 85 16 is_stmt 0 view .LVU40
+ 192 0062 FFF7FEFF 		bl	lv_color_black
+ 193              	.LVL14:
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 194              		.loc 1 85 16 view .LVU41
+ 195 0066 8DF80400 		strb	r0, [sp, #4]
+ 196 006a C0F30723 		ubfx	r3, r0, #8, #8
+ 197 006e 8DF80530 		strb	r3, [sp, #5]
+ 198 0072 C0F30740 		ubfx	r0, r0, #16, #8
+ 199 0076 8DF80600 		strb	r0, [sp, #6]
+ 200 007a D6E7     		b	.L10
+ 201              	.L16:
+ 202              		.align	2
+ 203              	.L15:
+ 204 007c 00000000 		.word	colors.1
+ 205              		.cfi_endproc
+ 206              	.LFE5:
+ 208              		.section	.text.lv_palette_darken,"ax",%progbits
+ 209              		.align	1
+ 210              		.global	lv_palette_darken
+ 211              		.syntax unified
+ 212              		.thumb
+ 213              		.thumb_func
+ 215              	lv_palette_darken:
+ 216              	.LVL15:
+ 217              	.LFB6:
+  92:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+  93:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** lv_color_t lv_palette_darken(lv_palette_t p, uint8_t lvl)
+  94:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** {
+ 218              		.loc 1 94 1 is_stmt 1 view -0
+ 219              		.cfi_startproc
+ 220              		@ args = 0, pretend = 0, frame = 8
+ 221              		@ frame_needed = 0, uses_anonymous_args = 0
+ 222              		.loc 1 94 1 is_stmt 0 view .LVU43
+ 223 0000 00B5     		push	{lr}
+ 224              	.LCFI8:
+ 225              		.cfi_def_cfa_offset 4
+ 226              		.cfi_offset 14, -4
+ 227 0002 83B0     		sub	sp, sp, #12
+ 228              	.LCFI9:
+ 229              		.cfi_def_cfa_offset 16
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     static const lv_color_t colors[][4] = {
+ 230              		.loc 1 95 5 is_stmt 1 view .LVU44
+  96:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xE5, 0x39, 0x35), LV_COLOR_MAKE(0xD3, 0x2F, 0x2F), LV_COLOR_MAKE(0xC6, 0x28
+  97:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xD8, 0x1B, 0x60), LV_COLOR_MAKE(0xC2, 0x18, 0x5B), LV_COLOR_MAKE(0xAD, 0x14
+  98:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x8E, 0x24, 0xAA), LV_COLOR_MAKE(0x7B, 0x1F, 0xA2), LV_COLOR_MAKE(0x6A, 0x1B
+  99:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x5E, 0x35, 0xB1), LV_COLOR_MAKE(0x51, 0x2D, 0xA8), LV_COLOR_MAKE(0x45, 0x27
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 7
+
+
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x39, 0x49, 0xAB), LV_COLOR_MAKE(0x30, 0x3F, 0x9F), LV_COLOR_MAKE(0x28, 0x35
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x1E, 0x88, 0xE5), LV_COLOR_MAKE(0x19, 0x76, 0xD2), LV_COLOR_MAKE(0x15, 0x65
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x03, 0x9B, 0xE5), LV_COLOR_MAKE(0x02, 0x88, 0xD1), LV_COLOR_MAKE(0x02, 0x77
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x00, 0xAC, 0xC1), LV_COLOR_MAKE(0x00, 0x97, 0xA7), LV_COLOR_MAKE(0x00, 0x83
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x00, 0x89, 0x7B), LV_COLOR_MAKE(0x00, 0x79, 0x6B), LV_COLOR_MAKE(0x00, 0x69
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x43, 0xA0, 0x47), LV_COLOR_MAKE(0x38, 0x8E, 0x3C), LV_COLOR_MAKE(0x2E, 0x7D
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x7C, 0xB3, 0x42), LV_COLOR_MAKE(0x68, 0x9F, 0x38), LV_COLOR_MAKE(0x55, 0x8B
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xC0, 0xCA, 0x33), LV_COLOR_MAKE(0xAF, 0xB4, 0x2B), LV_COLOR_MAKE(0x9E, 0x9D
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xFD, 0xD8, 0x35), LV_COLOR_MAKE(0xFB, 0xC0, 0x2D), LV_COLOR_MAKE(0xF9, 0xA8
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xFF, 0xB3, 0x00), LV_COLOR_MAKE(0xFF, 0xA0, 0x00), LV_COLOR_MAKE(0xFF, 0x8F
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xFB, 0x8C, 0x00), LV_COLOR_MAKE(0xF5, 0x7C, 0x00), LV_COLOR_MAKE(0xEF, 0x6C
+ 111:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0xF4, 0x51, 0x1E), LV_COLOR_MAKE(0xE6, 0x4A, 0x19), LV_COLOR_MAKE(0xD8, 0x43
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x6D, 0x4C, 0x41), LV_COLOR_MAKE(0x5D, 0x40, 0x37), LV_COLOR_MAKE(0x4E, 0x34
+ 113:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x54, 0x6E, 0x7A), LV_COLOR_MAKE(0x45, 0x5A, 0x64), LV_COLOR_MAKE(0x37, 0x47
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         {LV_COLOR_MAKE(0x75, 0x75, 0x75), LV_COLOR_MAKE(0x61, 0x61, 0x61), LV_COLOR_MAKE(0x42, 0x42
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     };
+ 116:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     if(p >= LV_PALETTE_LAST) {
+ 231              		.loc 1 117 5 view .LVU45
+ 232              		.loc 1 117 7 is_stmt 0 view .LVU46
+ 233 0004 1228     		cmp	r0, #18
+ 234 0006 20D8     		bhi	.L22
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_LOG_WARN("Invalid palette: %d", p);
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 120:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     if(lvl == 0 || lvl > 4) {
+ 235              		.loc 1 122 5 is_stmt 1 view .LVU47
+ 236              		.loc 1 122 17 is_stmt 0 view .LVU48
+ 237 0008 0139     		subs	r1, r1, #1
+ 238              	.LVL16:
+ 239              		.loc 1 122 17 view .LVU49
+ 240 000a C9B2     		uxtb	r1, r1
+ 241              	.LVL17:
+ 242              		.loc 1 122 7 view .LVU50
+ 243 000c 0329     		cmp	r1, #3
+ 244 000e 29D8     		bhi	.L23
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         LV_LOG_WARN("Invalid level: %d. Must be 1..4", lvl);
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+ 127:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     lvl--;
+ 245              		.loc 1 127 5 is_stmt 1 view .LVU51
+ 246              	.LVL18:
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** 
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     return colors[p][lvl];
+ 247              		.loc 1 129 5 view .LVU52
+ 248              		.loc 1 129 21 is_stmt 0 view .LVU53
+ 249 0010 1B4B     		ldr	r3, .L24
+ 250 0012 01EB4101 		add	r1, r1, r1, lsl #1
+ 251              	.LVL19:
+ 252              		.loc 1 129 21 view .LVU54
+ 253 0016 00EB4000 		add	r0, r0, r0, lsl #1
+ 254              	.LVL20:
+ 255              		.loc 1 129 21 view .LVU55
+ 256 001a 01EB8001 		add	r1, r1, r0, lsl #2
+ 257 001e 5818     		adds	r0, r3, r1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 8
+
+
+ 258 0020 5A5A     		ldrh	r2, [r3, r1]	@ unaligned
+ 259 0022 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 260 0024 ADF80420 		strh	r2, [sp, #4]	@ unaligned
+ 261 0028 8DF80630 		strb	r3, [sp, #6]
+ 262              	.LVL21:
+ 263              	.L19:
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c **** }
+ 264              		.loc 1 130 1 view .LVU56
+ 265 002c 0020     		movs	r0, #0
+ 266 002e 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 267 0032 63F30700 		bfi	r0, r3, #0, #8
+ 268 0036 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 269 003a 63F30F20 		bfi	r0, r3, #8, #8
+ 270 003e 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 271 0042 63F31740 		bfi	r0, r3, #16, #8
+ 272 0046 03B0     		add	sp, sp, #12
+ 273              	.LCFI10:
+ 274              		.cfi_remember_state
+ 275              		.cfi_def_cfa_offset 4
+ 276              		@ sp needed
+ 277 0048 00BD     		pop	{pc}
+ 278              	.LVL22:
+ 279              	.L22:
+ 280              	.LCFI11:
+ 281              		.cfi_restore_state
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 282              		.loc 1 118 9 is_stmt 1 view .LVU57
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 283              		.loc 1 118 9 view .LVU58
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 284              		.loc 1 118 9 view .LVU59
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 285              		.loc 1 119 9 view .LVU60
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 286              		.loc 1 119 16 is_stmt 0 view .LVU61
+ 287 004a FFF7FEFF 		bl	lv_color_black
+ 288              	.LVL23:
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 289              		.loc 1 119 16 view .LVU62
+ 290 004e 8DF80400 		strb	r0, [sp, #4]
+ 291 0052 C0F30723 		ubfx	r3, r0, #8, #8
+ 292 0056 8DF80530 		strb	r3, [sp, #5]
+ 293 005a C0F30740 		ubfx	r0, r0, #16, #8
+ 294 005e 8DF80600 		strb	r0, [sp, #6]
+ 295 0062 E3E7     		b	.L19
+ 296              	.LVL24:
+ 297              	.L23:
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 298              		.loc 1 123 9 is_stmt 1 view .LVU63
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 299              		.loc 1 123 9 view .LVU64
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****         return lv_color_black();
+ 300              		.loc 1 123 9 view .LVU65
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 301              		.loc 1 124 9 view .LVU66
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 302              		.loc 1 124 16 is_stmt 0 view .LVU67
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 9
+
+
+ 303 0064 FFF7FEFF 		bl	lv_color_black
+ 304              	.LVL25:
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.c ****     }
+ 305              		.loc 1 124 16 view .LVU68
+ 306 0068 8DF80400 		strb	r0, [sp, #4]
+ 307 006c C0F30723 		ubfx	r3, r0, #8, #8
+ 308 0070 8DF80530 		strb	r3, [sp, #5]
+ 309 0074 C0F30740 		ubfx	r0, r0, #16, #8
+ 310 0078 8DF80600 		strb	r0, [sp, #6]
+ 311 007c D6E7     		b	.L19
+ 312              	.L25:
+ 313 007e 00BF     		.align	2
+ 314              	.L24:
+ 315 0080 00000000 		.word	colors.0
+ 316              		.cfi_endproc
+ 317              	.LFE6:
+ 319              		.section	.rodata.colors.0,"a"
+ 320              		.align	2
+ 323              	colors.0:
+ 324 0000 35       		.byte	53
+ 325 0001 39       		.byte	57
+ 326 0002 E5       		.byte	-27
+ 327 0003 2F       		.byte	47
+ 328 0004 2F       		.byte	47
+ 329 0005 D3       		.byte	-45
+ 330 0006 28       		.byte	40
+ 331 0007 28       		.byte	40
+ 332 0008 C6       		.byte	-58
+ 333 0009 1C       		.byte	28
+ 334 000a 1C       		.byte	28
+ 335 000b B7       		.byte	-73
+ 336 000c 60       		.byte	96
+ 337 000d 1B       		.byte	27
+ 338 000e D8       		.byte	-40
+ 339 000f 5B       		.byte	91
+ 340 0010 18       		.byte	24
+ 341 0011 C2       		.byte	-62
+ 342 0012 57       		.byte	87
+ 343 0013 14       		.byte	20
+ 344 0014 AD       		.byte	-83
+ 345 0015 4F       		.byte	79
+ 346 0016 0E       		.byte	14
+ 347 0017 88       		.byte	-120
+ 348 0018 AA       		.byte	-86
+ 349 0019 24       		.byte	36
+ 350 001a 8E       		.byte	-114
+ 351 001b A2       		.byte	-94
+ 352 001c 1F       		.byte	31
+ 353 001d 7B       		.byte	123
+ 354 001e 9A       		.byte	-102
+ 355 001f 1B       		.byte	27
+ 356 0020 6A       		.byte	106
+ 357 0021 8C       		.byte	-116
+ 358 0022 14       		.byte	20
+ 359 0023 4A       		.byte	74
+ 360 0024 B1       		.byte	-79
+ 361 0025 35       		.byte	53
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 10
+
+
+ 362 0026 5E       		.byte	94
+ 363 0027 A8       		.byte	-88
+ 364 0028 2D       		.byte	45
+ 365 0029 51       		.byte	81
+ 366 002a A0       		.byte	-96
+ 367 002b 27       		.byte	39
+ 368 002c 45       		.byte	69
+ 369 002d 92       		.byte	-110
+ 370 002e 1B       		.byte	27
+ 371 002f 31       		.byte	49
+ 372 0030 AB       		.byte	-85
+ 373 0031 49       		.byte	73
+ 374 0032 39       		.byte	57
+ 375 0033 9F       		.byte	-97
+ 376 0034 3F       		.byte	63
+ 377 0035 30       		.byte	48
+ 378 0036 93       		.byte	-109
+ 379 0037 35       		.byte	53
+ 380 0038 28       		.byte	40
+ 381 0039 7E       		.byte	126
+ 382 003a 23       		.byte	35
+ 383 003b 1A       		.byte	26
+ 384 003c E5       		.byte	-27
+ 385 003d 88       		.byte	-120
+ 386 003e 1E       		.byte	30
+ 387 003f D2       		.byte	-46
+ 388 0040 76       		.byte	118
+ 389 0041 19       		.byte	25
+ 390 0042 C0       		.byte	-64
+ 391 0043 65       		.byte	101
+ 392 0044 15       		.byte	21
+ 393 0045 A1       		.byte	-95
+ 394 0046 47       		.byte	71
+ 395 0047 0D       		.byte	13
+ 396 0048 E5       		.byte	-27
+ 397 0049 9B       		.byte	-101
+ 398 004a 03       		.byte	3
+ 399 004b D1       		.byte	-47
+ 400 004c 88       		.byte	-120
+ 401 004d 02       		.byte	2
+ 402 004e BD       		.byte	-67
+ 403 004f 77       		.byte	119
+ 404 0050 02       		.byte	2
+ 405 0051 9B       		.byte	-101
+ 406 0052 57       		.byte	87
+ 407 0053 01       		.byte	1
+ 408 0054 C1       		.byte	-63
+ 409 0055 AC       		.byte	-84
+ 410 0056 00       		.byte	0
+ 411 0057 A7       		.byte	-89
+ 412 0058 97       		.byte	-105
+ 413 0059 00       		.byte	0
+ 414 005a 8F       		.byte	-113
+ 415 005b 83       		.byte	-125
+ 416 005c 00       		.byte	0
+ 417 005d 64       		.byte	100
+ 418 005e 60       		.byte	96
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 11
+
+
+ 419 005f 00       		.byte	0
+ 420 0060 7B       		.byte	123
+ 421 0061 89       		.byte	-119
+ 422 0062 00       		.byte	0
+ 423 0063 6B       		.byte	107
+ 424 0064 79       		.byte	121
+ 425 0065 00       		.byte	0
+ 426 0066 5C       		.byte	92
+ 427 0067 69       		.byte	105
+ 428 0068 00       		.byte	0
+ 429 0069 40       		.byte	64
+ 430 006a 4D       		.byte	77
+ 431 006b 00       		.byte	0
+ 432 006c 47       		.byte	71
+ 433 006d A0       		.byte	-96
+ 434 006e 43       		.byte	67
+ 435 006f 3C       		.byte	60
+ 436 0070 8E       		.byte	-114
+ 437 0071 38       		.byte	56
+ 438 0072 32       		.byte	50
+ 439 0073 7D       		.byte	125
+ 440 0074 2E       		.byte	46
+ 441 0075 20       		.byte	32
+ 442 0076 5E       		.byte	94
+ 443 0077 1B       		.byte	27
+ 444 0078 42       		.byte	66
+ 445 0079 B3       		.byte	-77
+ 446 007a 7C       		.byte	124
+ 447 007b 38       		.byte	56
+ 448 007c 9F       		.byte	-97
+ 449 007d 68       		.byte	104
+ 450 007e 2F       		.byte	47
+ 451 007f 8B       		.byte	-117
+ 452 0080 55       		.byte	85
+ 453 0081 1E       		.byte	30
+ 454 0082 69       		.byte	105
+ 455 0083 33       		.byte	51
+ 456 0084 33       		.byte	51
+ 457 0085 CA       		.byte	-54
+ 458 0086 C0       		.byte	-64
+ 459 0087 2B       		.byte	43
+ 460 0088 B4       		.byte	-76
+ 461 0089 AF       		.byte	-81
+ 462 008a 24       		.byte	36
+ 463 008b 9D       		.byte	-99
+ 464 008c 9E       		.byte	-98
+ 465 008d 17       		.byte	23
+ 466 008e 77       		.byte	119
+ 467 008f 82       		.byte	-126
+ 468 0090 35       		.byte	53
+ 469 0091 D8       		.byte	-40
+ 470 0092 FD       		.byte	-3
+ 471 0093 2D       		.byte	45
+ 472 0094 C0       		.byte	-64
+ 473 0095 FB       		.byte	-5
+ 474 0096 25       		.byte	37
+ 475 0097 A8       		.byte	-88
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 12
+
+
+ 476 0098 F9       		.byte	-7
+ 477 0099 17       		.byte	23
+ 478 009a 7F       		.byte	127
+ 479 009b F5       		.byte	-11
+ 480 009c 00       		.byte	0
+ 481 009d B3       		.byte	-77
+ 482 009e FF       		.byte	-1
+ 483 009f 00       		.byte	0
+ 484 00a0 A0       		.byte	-96
+ 485 00a1 FF       		.byte	-1
+ 486 00a2 00       		.byte	0
+ 487 00a3 8F       		.byte	-113
+ 488 00a4 FF       		.byte	-1
+ 489 00a5 00       		.byte	0
+ 490 00a6 6F       		.byte	111
+ 491 00a7 FF       		.byte	-1
+ 492 00a8 00       		.byte	0
+ 493 00a9 8C       		.byte	-116
+ 494 00aa FB       		.byte	-5
+ 495 00ab 00       		.byte	0
+ 496 00ac 7C       		.byte	124
+ 497 00ad F5       		.byte	-11
+ 498 00ae 00       		.byte	0
+ 499 00af 6C       		.byte	108
+ 500 00b0 EF       		.byte	-17
+ 501 00b1 00       		.byte	0
+ 502 00b2 51       		.byte	81
+ 503 00b3 E6       		.byte	-26
+ 504 00b4 1E       		.byte	30
+ 505 00b5 51       		.byte	81
+ 506 00b6 F4       		.byte	-12
+ 507 00b7 19       		.byte	25
+ 508 00b8 4A       		.byte	74
+ 509 00b9 E6       		.byte	-26
+ 510 00ba 15       		.byte	21
+ 511 00bb 43       		.byte	67
+ 512 00bc D8       		.byte	-40
+ 513 00bd 0C       		.byte	12
+ 514 00be 36       		.byte	54
+ 515 00bf BF       		.byte	-65
+ 516 00c0 41       		.byte	65
+ 517 00c1 4C       		.byte	76
+ 518 00c2 6D       		.byte	109
+ 519 00c3 37       		.byte	55
+ 520 00c4 40       		.byte	64
+ 521 00c5 5D       		.byte	93
+ 522 00c6 2E       		.byte	46
+ 523 00c7 34       		.byte	52
+ 524 00c8 4E       		.byte	78
+ 525 00c9 23       		.byte	35
+ 526 00ca 27       		.byte	39
+ 527 00cb 3E       		.byte	62
+ 528 00cc 7A       		.byte	122
+ 529 00cd 6E       		.byte	110
+ 530 00ce 54       		.byte	84
+ 531 00cf 64       		.byte	100
+ 532 00d0 5A       		.byte	90
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 13
+
+
+ 533 00d1 45       		.byte	69
+ 534 00d2 4F       		.byte	79
+ 535 00d3 47       		.byte	71
+ 536 00d4 37       		.byte	55
+ 537 00d5 38       		.byte	56
+ 538 00d6 32       		.byte	50
+ 539 00d7 26       		.byte	38
+ 540 00d8 75       		.byte	117
+ 541 00d9 75       		.byte	117
+ 542 00da 75       		.byte	117
+ 543 00db 61       		.byte	97
+ 544 00dc 61       		.byte	97
+ 545 00dd 61       		.byte	97
+ 546 00de 42       		.byte	66
+ 547 00df 42       		.byte	66
+ 548 00e0 42       		.byte	66
+ 549 00e1 21       		.byte	33
+ 550 00e2 21       		.byte	33
+ 551 00e3 21       		.byte	33
+ 552              		.section	.rodata.colors.1,"a"
+ 553              		.align	2
+ 556              	colors.1:
+ 557 0000 50       		.byte	80
+ 558 0001 53       		.byte	83
+ 559 0002 EF       		.byte	-17
+ 560 0003 73       		.byte	115
+ 561 0004 73       		.byte	115
+ 562 0005 E5       		.byte	-27
+ 563 0006 9A       		.byte	-102
+ 564 0007 9A       		.byte	-102
+ 565 0008 EF       		.byte	-17
+ 566 0009 D2       		.byte	-46
+ 567 000a CD       		.byte	-51
+ 568 000b FF       		.byte	-1
+ 569 000c EE       		.byte	-18
+ 570 000d EB       		.byte	-21
+ 571 000e FF       		.byte	-1
+ 572 000f 7A       		.byte	122
+ 573 0010 40       		.byte	64
+ 574 0011 EC       		.byte	-20
+ 575 0012 92       		.byte	-110
+ 576 0013 62       		.byte	98
+ 577 0014 F0       		.byte	-16
+ 578 0015 B1       		.byte	-79
+ 579 0016 8F       		.byte	-113
+ 580 0017 F4       		.byte	-12
+ 581 0018 D0       		.byte	-48
+ 582 0019 BB       		.byte	-69
+ 583 001a F8       		.byte	-8
+ 584 001b EC       		.byte	-20
+ 585 001c E4       		.byte	-28
+ 586 001d FC       		.byte	-4
+ 587 001e BC       		.byte	-68
+ 588 001f 47       		.byte	71
+ 589 0020 AB       		.byte	-85
+ 590 0021 C8       		.byte	-56
+ 591 0022 68       		.byte	104
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 14
+
+
+ 592 0023 BA       		.byte	-70
+ 593 0024 D8       		.byte	-40
+ 594 0025 93       		.byte	-109
+ 595 0026 CE       		.byte	-50
+ 596 0027 E7       		.byte	-25
+ 597 0028 BE       		.byte	-66
+ 598 0029 E1       		.byte	-31
+ 599 002a F5       		.byte	-11
+ 600 002b E5       		.byte	-27
+ 601 002c F3       		.byte	-13
+ 602 002d C2       		.byte	-62
+ 603 002e 57       		.byte	87
+ 604 002f 7E       		.byte	126
+ 605 0030 CD       		.byte	-51
+ 606 0031 75       		.byte	117
+ 607 0032 95       		.byte	-107
+ 608 0033 DB       		.byte	-37
+ 609 0034 9D       		.byte	-99
+ 610 0035 B3       		.byte	-77
+ 611 0036 E9       		.byte	-23
+ 612 0037 C4       		.byte	-60
+ 613 0038 D1       		.byte	-47
+ 614 0039 F6       		.byte	-10
+ 615 003a E7       		.byte	-25
+ 616 003b ED       		.byte	-19
+ 617 003c C0       		.byte	-64
+ 618 003d 6B       		.byte	107
+ 619 003e 5C       		.byte	92
+ 620 003f CB       		.byte	-53
+ 621 0040 86       		.byte	-122
+ 622 0041 79       		.byte	121
+ 623 0042 DA       		.byte	-38
+ 624 0043 A8       		.byte	-88
+ 625 0044 9F       		.byte	-97
+ 626 0045 E9       		.byte	-23
+ 627 0046 CA       		.byte	-54
+ 628 0047 C5       		.byte	-59
+ 629 0048 F6       		.byte	-10
+ 630 0049 EA       		.byte	-22
+ 631 004a E8       		.byte	-24
+ 632 004b F5       		.byte	-11
+ 633 004c A5       		.byte	-91
+ 634 004d 42       		.byte	66
+ 635 004e F6       		.byte	-10
+ 636 004f B5       		.byte	-75
+ 637 0050 64       		.byte	100
+ 638 0051 F9       		.byte	-7
+ 639 0052 CA       		.byte	-54
+ 640 0053 90       		.byte	-112
+ 641 0054 FB       		.byte	-5
+ 642 0055 DE       		.byte	-34
+ 643 0056 BB       		.byte	-69
+ 644 0057 FD       		.byte	-3
+ 645 0058 F2       		.byte	-14
+ 646 0059 E3       		.byte	-29
+ 647 005a F6       		.byte	-10
+ 648 005b B6       		.byte	-74
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 15
+
+
+ 649 005c 29       		.byte	41
+ 650 005d F7       		.byte	-9
+ 651 005e C3       		.byte	-61
+ 652 005f 4F       		.byte	79
+ 653 0060 FA       		.byte	-6
+ 654 0061 D4       		.byte	-44
+ 655 0062 81       		.byte	-127
+ 656 0063 FC       		.byte	-4
+ 657 0064 E5       		.byte	-27
+ 658 0065 B3       		.byte	-77
+ 659 0066 FE       		.byte	-2
+ 660 0067 F5       		.byte	-11
+ 661 0068 E1       		.byte	-31
+ 662 0069 DA       		.byte	-38
+ 663 006a C6       		.byte	-58
+ 664 006b 26       		.byte	38
+ 665 006c E1       		.byte	-31
+ 666 006d D0       		.byte	-48
+ 667 006e 4D       		.byte	77
+ 668 006f EA       		.byte	-22
+ 669 0070 DE       		.byte	-34
+ 670 0071 80       		.byte	-128
+ 671 0072 F2       		.byte	-14
+ 672 0073 EB       		.byte	-21
+ 673 0074 B2       		.byte	-78
+ 674 0075 FA       		.byte	-6
+ 675 0076 F7       		.byte	-9
+ 676 0077 E0       		.byte	-32
+ 677 0078 9A       		.byte	-102
+ 678 0079 A6       		.byte	-90
+ 679 007a 26       		.byte	38
+ 680 007b AC       		.byte	-84
+ 681 007c B6       		.byte	-74
+ 682 007d 4D       		.byte	77
+ 683 007e C4       		.byte	-60
+ 684 007f CB       		.byte	-53
+ 685 0080 80       		.byte	-128
+ 686 0081 DB       		.byte	-37
+ 687 0082 DF       		.byte	-33
+ 688 0083 B2       		.byte	-78
+ 689 0084 F1       		.byte	-15
+ 690 0085 F2       		.byte	-14
+ 691 0086 E0       		.byte	-32
+ 692 0087 6A       		.byte	106
+ 693 0088 BB       		.byte	-69
+ 694 0089 66       		.byte	102
+ 695 008a 84       		.byte	-124
+ 696 008b C7       		.byte	-57
+ 697 008c 81       		.byte	-127
+ 698 008d A7       		.byte	-89
+ 699 008e D6       		.byte	-42
+ 700 008f A5       		.byte	-91
+ 701 0090 C9       		.byte	-55
+ 702 0091 E6       		.byte	-26
+ 703 0092 C8       		.byte	-56
+ 704 0093 E9       		.byte	-23
+ 705 0094 F5       		.byte	-11
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 16
+
+
+ 706 0095 E8       		.byte	-24
+ 707 0096 65       		.byte	101
+ 708 0097 CC       		.byte	-52
+ 709 0098 9C       		.byte	-100
+ 710 0099 81       		.byte	-127
+ 711 009a D5       		.byte	-43
+ 712 009b AE       		.byte	-82
+ 713 009c A5       		.byte	-91
+ 714 009d E1       		.byte	-31
+ 715 009e C5       		.byte	-59
+ 716 009f C8       		.byte	-56
+ 717 00a0 ED       		.byte	-19
+ 718 00a1 DC       		.byte	-36
+ 719 00a2 E9       		.byte	-23
+ 720 00a3 F8       		.byte	-8
+ 721 00a4 F1       		.byte	-15
+ 722 00a5 57       		.byte	87
+ 723 00a6 E1       		.byte	-31
+ 724 00a7 D4       		.byte	-44
+ 725 00a8 75       		.byte	117
+ 726 00a9 E7       		.byte	-25
+ 727 00aa DC       		.byte	-36
+ 728 00ab 9C       		.byte	-100
+ 729 00ac EE       		.byte	-18
+ 730 00ad E6       		.byte	-26
+ 731 00ae C3       		.byte	-61
+ 732 00af F4       		.byte	-12
+ 733 00b0 F0       		.byte	-16
+ 734 00b1 E7       		.byte	-25
+ 735 00b2 FB       		.byte	-5
+ 736 00b3 F9       		.byte	-7
+ 737 00b4 58       		.byte	88
+ 738 00b5 EE       		.byte	-18
+ 739 00b6 FF       		.byte	-1
+ 740 00b7 76       		.byte	118
+ 741 00b8 F1       		.byte	-15
+ 742 00b9 FF       		.byte	-1
+ 743 00ba 9D       		.byte	-99
+ 744 00bb F5       		.byte	-11
+ 745 00bc FF       		.byte	-1
+ 746 00bd C4       		.byte	-60
+ 747 00be F9       		.byte	-7
+ 748 00bf FF       		.byte	-1
+ 749 00c0 E7       		.byte	-25
+ 750 00c1 FD       		.byte	-3
+ 751 00c2 FF       		.byte	-1
+ 752 00c3 28       		.byte	40
+ 753 00c4 CA       		.byte	-54
+ 754 00c5 FF       		.byte	-1
+ 755 00c6 4F       		.byte	79
+ 756 00c7 D5       		.byte	-43
+ 757 00c8 FF       		.byte	-1
+ 758 00c9 82       		.byte	-126
+ 759 00ca E0       		.byte	-32
+ 760 00cb FF       		.byte	-1
+ 761 00cc B3       		.byte	-77
+ 762 00cd EC       		.byte	-20
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 17
+
+
+ 763 00ce FF       		.byte	-1
+ 764 00cf E1       		.byte	-31
+ 765 00d0 F8       		.byte	-8
+ 766 00d1 FF       		.byte	-1
+ 767 00d2 26       		.byte	38
+ 768 00d3 A7       		.byte	-89
+ 769 00d4 FF       		.byte	-1
+ 770 00d5 4D       		.byte	77
+ 771 00d6 B7       		.byte	-73
+ 772 00d7 FF       		.byte	-1
+ 773 00d8 80       		.byte	-128
+ 774 00d9 CC       		.byte	-52
+ 775 00da FF       		.byte	-1
+ 776 00db B2       		.byte	-78
+ 777 00dc E0       		.byte	-32
+ 778 00dd FF       		.byte	-1
+ 779 00de E0       		.byte	-32
+ 780 00df F3       		.byte	-13
+ 781 00e0 FF       		.byte	-1
+ 782 00e1 43       		.byte	67
+ 783 00e2 70       		.byte	112
+ 784 00e3 FF       		.byte	-1
+ 785 00e4 65       		.byte	101
+ 786 00e5 8A       		.byte	-118
+ 787 00e6 FF       		.byte	-1
+ 788 00e7 91       		.byte	-111
+ 789 00e8 AB       		.byte	-85
+ 790 00e9 FF       		.byte	-1
+ 791 00ea BC       		.byte	-68
+ 792 00eb CC       		.byte	-52
+ 793 00ec FF       		.byte	-1
+ 794 00ed E7       		.byte	-25
+ 795 00ee E9       		.byte	-23
+ 796 00ef FB       		.byte	-5
+ 797 00f0 63       		.byte	99
+ 798 00f1 6E       		.byte	110
+ 799 00f2 8D       		.byte	-115
+ 800 00f3 7F       		.byte	127
+ 801 00f4 88       		.byte	-120
+ 802 00f5 A1       		.byte	-95
+ 803 00f6 A4       		.byte	-92
+ 804 00f7 AA       		.byte	-86
+ 805 00f8 BC       		.byte	-68
+ 806 00f9 C8       		.byte	-56
+ 807 00fa CC       		.byte	-52
+ 808 00fb D7       		.byte	-41
+ 809 00fc E9       		.byte	-23
+ 810 00fd EB       		.byte	-21
+ 811 00fe EF       		.byte	-17
+ 812 00ff 9C       		.byte	-100
+ 813 0100 90       		.byte	-112
+ 814 0101 78       		.byte	120
+ 815 0102 AE       		.byte	-82
+ 816 0103 A4       		.byte	-92
+ 817 0104 90       		.byte	-112
+ 818 0105 C5       		.byte	-59
+ 819 0106 BE       		.byte	-66
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 18
+
+
+ 820 0107 B0       		.byte	-80
+ 821 0108 DC       		.byte	-36
+ 822 0109 D8       		.byte	-40
+ 823 010a CF       		.byte	-49
+ 824 010b F1       		.byte	-15
+ 825 010c EF       		.byte	-17
+ 826 010d EC       		.byte	-20
+ 827 010e BD       		.byte	-67
+ 828 010f BD       		.byte	-67
+ 829 0110 BD       		.byte	-67
+ 830 0111 E0       		.byte	-32
+ 831 0112 E0       		.byte	-32
+ 832 0113 E0       		.byte	-32
+ 833 0114 EE       		.byte	-18
+ 834 0115 EE       		.byte	-18
+ 835 0116 EE       		.byte	-18
+ 836 0117 F5       		.byte	-11
+ 837 0118 F5       		.byte	-11
+ 838 0119 F5       		.byte	-11
+ 839 011a FA       		.byte	-6
+ 840 011b FA       		.byte	-6
+ 841 011c FA       		.byte	-6
+ 842              		.section	.rodata.colors.2,"a"
+ 843              		.align	2
+ 846              	colors.2:
+ 847 0000 36       		.byte	54
+ 848 0001 43       		.byte	67
+ 849 0002 F4       		.byte	-12
+ 850 0003 63       		.byte	99
+ 851 0004 1E       		.byte	30
+ 852 0005 E9       		.byte	-23
+ 853 0006 B0       		.byte	-80
+ 854 0007 27       		.byte	39
+ 855 0008 9C       		.byte	-100
+ 856 0009 B7       		.byte	-73
+ 857 000a 3A       		.byte	58
+ 858 000b 67       		.byte	103
+ 859 000c B5       		.byte	-75
+ 860 000d 51       		.byte	81
+ 861 000e 3F       		.byte	63
+ 862 000f F3       		.byte	-13
+ 863 0010 96       		.byte	-106
+ 864 0011 21       		.byte	33
+ 865 0012 F4       		.byte	-12
+ 866 0013 A9       		.byte	-87
+ 867 0014 03       		.byte	3
+ 868 0015 D4       		.byte	-44
+ 869 0016 BC       		.byte	-68
+ 870 0017 00       		.byte	0
+ 871 0018 88       		.byte	-120
+ 872 0019 96       		.byte	-106
+ 873 001a 00       		.byte	0
+ 874 001b 50       		.byte	80
+ 875 001c AF       		.byte	-81
+ 876 001d 4C       		.byte	76
+ 877 001e 4A       		.byte	74
+ 878 001f C3       		.byte	-61
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 19
+
+
+ 879 0020 8B       		.byte	-117
+ 880 0021 39       		.byte	57
+ 881 0022 DC       		.byte	-36
+ 882 0023 CD       		.byte	-51
+ 883 0024 3B       		.byte	59
+ 884 0025 EB       		.byte	-21
+ 885 0026 FF       		.byte	-1
+ 886 0027 07       		.byte	7
+ 887 0028 C1       		.byte	-63
+ 888 0029 FF       		.byte	-1
+ 889 002a 00       		.byte	0
+ 890 002b 98       		.byte	-104
+ 891 002c FF       		.byte	-1
+ 892 002d 22       		.byte	34
+ 893 002e 57       		.byte	87
+ 894 002f FF       		.byte	-1
+ 895 0030 48       		.byte	72
+ 896 0031 55       		.byte	85
+ 897 0032 79       		.byte	121
+ 898 0033 8B       		.byte	-117
+ 899 0034 7D       		.byte	125
+ 900 0035 60       		.byte	96
+ 901 0036 9E       		.byte	-98
+ 902 0037 9E       		.byte	-98
+ 903 0038 9E       		.byte	-98
+ 904              		.text
+ 905              	.Letext0:
+ 906              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 907              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 908              		.file 4 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color.h"
+ 909              		.file 5 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_palette.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_palette.c
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:20     .text.lv_palette_main:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:26     .text.lv_palette_main:00000000 lv_palette_main
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:93     .text.lv_palette_main:00000054 $d
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:846    .rodata.colors.2:00000000 colors.2
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:98     .text.lv_palette_lighten:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:104    .text.lv_palette_lighten:00000000 lv_palette_lighten
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:204    .text.lv_palette_lighten:0000007c $d
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:556    .rodata.colors.1:00000000 colors.1
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:209    .text.lv_palette_darken:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:215    .text.lv_palette_darken:00000000 lv_palette_darken
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:315    .text.lv_palette_darken:00000080 $d
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:323    .rodata.colors.0:00000000 colors.0
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:320    .rodata.colors.0:00000000 $d
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:553    .rodata.colors.1:00000000 $d
+C:\Users\28576\AppData\Local\Temp\ccnLlf9P.s:843    .rodata.colors.2:00000000 $d
+
+UNDEFINED SYMBOLS
+lv_color_black

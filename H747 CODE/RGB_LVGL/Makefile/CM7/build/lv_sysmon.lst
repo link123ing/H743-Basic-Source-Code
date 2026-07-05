@@ -1,0 +1,605 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_sysmon.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c"
+  19              		.section	.text.lv_obj_set_style_pad_all,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	lv_obj_set_style_pad_all:
+  26              	.LVL0:
+  27              	.LFB157:
+  28              		.file 2 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style.h"
+   1:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+   2:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @file lv_obj_style.h
+   3:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *
+   4:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+   5:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+   6:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** #ifndef LV_OBJ_STYLE_H
+   7:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** #define LV_OBJ_STYLE_H
+   8:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+   9:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** #ifdef __cplusplus
+  10:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** extern "C" {
+  11:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** #endif
+  12:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  13:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /*********************
+  14:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *      INCLUDES
+  15:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *********************/
+  16:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** #include "../misc/lv_bidi.h"
+  17:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** #include "../misc/lv_style.h"
+  18:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** #include "../misc/lv_types.h"
+  19:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  20:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /*********************
+  21:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *      DEFINES
+  22:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *********************/
+  23:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  24:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**********************
+  25:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *      TYPEDEFS
+  26:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  **********************/
+  27:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  28:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** typedef enum {
+  29:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****     LV_STYLE_STATE_CMP_SAME,           /**< The style properties in the 2 states are identical */
+  30:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****     LV_STYLE_STATE_CMP_DIFF_REDRAW,    /**< The differences can be shown with a simple redraw */
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 2
+
+
+  31:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****     LV_STYLE_STATE_CMP_DIFF_DRAW_PAD,  /**< The differences can be shown with a simple redraw */
+  32:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****     LV_STYLE_STATE_CMP_DIFF_LAYOUT,    /**< The differences can be shown with a simple redraw */
+  33:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** } lv_style_state_cmp_t;
+  34:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  35:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** typedef uint32_t lv_style_selector_t;
+  36:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  37:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**********************
+  38:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * GLOBAL PROTOTYPES
+  39:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  **********************/
+  40:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  41:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+  42:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Add a style to an object.
+  43:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj       pointer to an object
+  44:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param style     pointer to a style to add
+  45:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param selector  OR-ed value of parts and state to which the style should be added
+  46:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *
+  47:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Examples:
+  48:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @code
+  49:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * lv_obj_add_style(btn, &style_btn, 0); //Default button style
+  50:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *
+  51:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * lv_obj_add_style(btn, &btn_red, LV_STATE_PRESSED); //Overwrite only some colors to red when pres
+  52:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @endcode
+  53:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+  54:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** void lv_obj_add_style(lv_obj_t * obj, const lv_style_t * style, lv_style_selector_t selector);
+  55:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  56:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+  57:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Replaces a style of an object, preserving the order of the style stack (local styles and transit
+  58:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj           pointer to an object
+  59:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param old_style     pointer to a style to replace.
+  60:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param new_style     pointer to a style to replace the old style with.
+  61:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param selector      OR-ed values of states and a part to replace only styles with matching sele
+  62:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *
+  63:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Examples:
+  64:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @code
+  65:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * lv_obj_replace_style(obj, &yellow_style, &blue_style, LV_PART_ANY | LV_STATE_ANY); //Replace a s
+  66:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *
+  67:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * lv_obj_replace_style(obj, &yellow_style, &blue_style, LV_PART_MAIN | LV_STATE_PRESSED); //Replac
+  68:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @endcode
+  69:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+  70:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** bool lv_obj_replace_style(lv_obj_t * obj, const lv_style_t * old_style, const lv_style_t * new_styl
+  71:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****                           lv_style_selector_t selector);
+  72:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  73:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+  74:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Remove a style from an object.
+  75:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj       pointer to an object
+  76:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param style     pointer to a style to remove. Can be NULL to check only the selector
+  77:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param selector  OR-ed values of states and a part to remove only styles with matching selectors
+  78:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *
+  79:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Examples:
+  80:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @code
+  81:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * lv_obj_remove_style(obj, &style, LV_PART_ANY | LV_STATE_ANY); //Remove a specific style
+  82:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *
+  83:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * lv_obj_remove_style(obj, NULL, LV_PART_MAIN | LV_STATE_ANY); //Remove all styles from the main p
+  84:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *
+  85:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * lv_obj_remove_style(obj, NULL, LV_PART_ANY | LV_STATE_ANY); //Remove all styles
+  86:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @endcode
+  87:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 3
+
+
+  88:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** void lv_obj_remove_style(lv_obj_t * obj, const lv_style_t * style, lv_style_selector_t selector);
+  89:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  90:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+  91:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Remove all styles from an object
+  92:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj       pointer to an object
+  93:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+  94:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** void lv_obj_remove_style_all(lv_obj_t * obj);
+  95:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+  96:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+  97:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Notify all object if a style is modified
+  98:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param style     pointer to a style. Only the objects with this style will be notified
+  99:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *                  (NULL to notify all objects)
+ 100:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ 101:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** void lv_obj_report_style_change(lv_style_t * style);
+ 102:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 103:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+ 104:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Notify an object and its children about its style is modified.
+ 105:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj       pointer to an object
+ 106:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param part      the part whose style was changed. E.g. `LV_PART_ANY`, `LV_PART_MAIN`
+ 107:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param prop      `LV_STYLE_PROP_ANY` or an `LV_STYLE_...` property.
+ 108:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *                  It is used to optimize what needs to be refreshed.
+ 109:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *                  `LV_STYLE_PROP_INV` to perform only a style cache update
+ 110:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ 111:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** void lv_obj_refresh_style(lv_obj_t * obj, lv_part_t part, lv_style_prop_t prop);
+ 112:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 113:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+ 114:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Enable or disable automatic style refreshing when a new style is added/removed to/from an object
+ 115:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * or any other style change happens.
+ 116:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param en        true: enable refreshing; false: disable refreshing
+ 117:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ 118:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** void lv_obj_enable_style_refresh(bool en);
+ 119:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 120:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+ 121:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Get the value of a style property. The current state of the object will be considered.
+ 122:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Inherited properties will be inherited.
+ 123:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * If a property is not set a default value will be returned.
+ 124:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj       pointer to an object
+ 125:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param part      a part from which the property should be get
+ 126:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param prop      the property to get
+ 127:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @return          the value of the property.
+ 128:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  *                  Should be read from the correct field of the `lv_style_value_t` according to th
+ 129:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ 130:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** lv_style_value_t lv_obj_get_style_prop(const lv_obj_t * obj, lv_part_t part, lv_style_prop_t prop);
+ 131:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 132:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+ 133:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Check if an object has a specified style property for a given style selector.
+ 134:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj       pointer to an object
+ 135:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param selector  the style selector to be checked, defining the scope of the style to be examine
+ 136:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param prop      the property to be checked.
+ 137:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @return          true if the object has the specified selector and property, false otherwise.
+ 138:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ 139:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** bool lv_obj_has_style_prop(const lv_obj_t * obj, lv_style_selector_t selector, lv_style_prop_t prop
+ 140:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 141:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+ 142:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Set local style property on an object's part and state.
+ 143:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj       pointer to an object
+ 144:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param prop      the property
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 4
+
+
+ 145:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param value     value of the property. The correct element should be set according to the type 
+ 146:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param selector  OR-ed value of parts and state for which the style should be set
+ 147:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ 148:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** void lv_obj_set_local_style_prop(lv_obj_t * obj, lv_style_prop_t prop, lv_style_value_t value,
+ 149:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****                                  lv_style_selector_t selector);
+ 150:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 151:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** lv_style_res_t lv_obj_get_local_style_prop(lv_obj_t * obj, lv_style_prop_t prop, lv_style_value_t *
+ 152:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****                                            lv_style_selector_t selector);
+ 153:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 154:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+ 155:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Remove a local style property from a part of an object with a given state.
+ 156:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj       pointer to an object
+ 157:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param prop      a style property to remove.
+ 158:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param selector  OR-ed value of parts and state for which the style should be removed
+ 159:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @return true     the property was found and removed; false: the property was not found
+ 160:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ 161:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** bool lv_obj_remove_local_style_prop(lv_obj_t * obj, lv_style_prop_t prop, lv_style_selector_t selec
+ 162:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 163:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+ 164:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Used internally for color filtering
+ 165:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ 166:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** lv_style_value_t lv_obj_style_apply_color_filter(const lv_obj_t * obj, lv_part_t part, lv_style_val
+ 167:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 168:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+ 169:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Fade in an an object and all its children.
+ 170:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj       the object to fade in
+ 171:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param time      time of fade
+ 172:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param delay     delay to start the animation
+ 173:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ 174:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** void lv_obj_fade_in(lv_obj_t * obj, uint32_t time, uint32_t delay);
+ 175:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 176:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** /**
+ 177:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * Fade out an an object and all its children.
+ 178:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param obj       the object to fade out
+ 179:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param time      time of fade
+ 180:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  * @param delay     delay to start the animation
+ 181:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****  */
+ 182:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** void lv_obj_fade_out(lv_obj_t * obj, uint32_t time, uint32_t delay);
+ 183:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 184:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** static inline lv_state_t lv_obj_style_get_selector_state(lv_style_selector_t selector)
+ 185:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** {
+ 186:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****     return selector & 0xFFFF;
+ 187:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** }
+ 188:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 189:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** static inline lv_part_t lv_obj_style_get_selector_part(lv_style_selector_t selector)
+ 190:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** {
+ 191:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****     return selector & 0xFF0000;
+ 192:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** }
+ 193:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 194:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** #include "lv_obj_style_gen.h"
+ 195:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** 
+ 196:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** static inline void lv_obj_set_style_pad_all(lv_obj_t * obj, int32_t value, lv_style_selector_t sele
+ 197:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** {
+  29              		.loc 2 197 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 5
+
+
+  33              		.loc 2 197 1 is_stmt 0 view .LVU1
+  34 0000 70B5     		push	{r4, r5, r6, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 4, -16
+  38              		.cfi_offset 5, -12
+  39              		.cfi_offset 6, -8
+  40              		.cfi_offset 14, -4
+  41 0002 0446     		mov	r4, r0
+  42 0004 0D46     		mov	r5, r1
+  43 0006 1646     		mov	r6, r2
+ 198:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****     lv_obj_set_style_pad_left(obj, value, selector);
+  44              		.loc 2 198 5 is_stmt 1 view .LVU2
+  45 0008 FFF7FEFF 		bl	lv_obj_set_style_pad_left
+  46              	.LVL1:
+ 199:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****     lv_obj_set_style_pad_right(obj, value, selector);
+  47              		.loc 2 199 5 view .LVU3
+  48 000c 3246     		mov	r2, r6
+  49 000e 2946     		mov	r1, r5
+  50 0010 2046     		mov	r0, r4
+  51 0012 FFF7FEFF 		bl	lv_obj_set_style_pad_right
+  52              	.LVL2:
+ 200:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****     lv_obj_set_style_pad_top(obj, value, selector);
+  53              		.loc 2 200 5 view .LVU4
+  54 0016 3246     		mov	r2, r6
+  55 0018 2946     		mov	r1, r5
+  56 001a 2046     		mov	r0, r4
+  57 001c FFF7FEFF 		bl	lv_obj_set_style_pad_top
+  58              	.LVL3:
+ 201:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h ****     lv_obj_set_style_pad_bottom(obj, value, selector);
+  59              		.loc 2 201 5 view .LVU5
+  60 0020 3246     		mov	r2, r6
+  61 0022 2946     		mov	r1, r5
+  62 0024 2046     		mov	r0, r4
+  63 0026 FFF7FEFF 		bl	lv_obj_set_style_pad_bottom
+  64              	.LVL4:
+ 202:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style.h **** }
+  65              		.loc 2 202 1 is_stmt 0 view .LVU6
+  66 002a 70BD     		pop	{r4, r5, r6, pc}
+  67              		.loc 2 202 1 view .LVU7
+  68              		.cfi_endproc
+  69              	.LFE157:
+  71              		.section	.text.lv_sysmon_builtin_init,"ax",%progbits
+  72              		.align	1
+  73              		.global	lv_sysmon_builtin_init
+  74              		.syntax unified
+  75              		.thumb
+  76              		.thumb_func
+  78              	lv_sysmon_builtin_init:
+  79              	.LFB187:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  * @file lv_sysmon.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  *      INCLUDES
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 6
+
+
+   8:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  10:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #include "lv_sysmon_private.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #include "../../misc/lv_timer_private.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  13:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #if LV_USE_SYSMON
+  14:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  15:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #include "../../core/lv_global.h"
+  16:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #include "../../misc/lv_async.h"
+  17:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #include "../../stdlib/lv_string.h"
+  18:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #include "../../widgets/label/lv_label.h"
+  19:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #include "../../display/lv_display_private.h"
+  20:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  21:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** /*********************
+  22:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  *      DEFINES
+  23:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  *********************/
+  24:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #ifndef LV_SYSMON_REFR_PERIOD_DEF
+  25:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     #define LV_SYSMON_REFR_PERIOD_DEF 300 /* ms */
+  26:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #endif
+  27:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  28:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #if LV_USE_MEM_MONITOR
+  29:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     #define sysmon_mem LV_GLOBAL_DEFAULT()->sysmon_mem
+  30:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #endif
+  31:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  32:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** /**********************
+  33:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  *      TYPEDEFS
+  34:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  **********************/
+  35:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  36:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** /**********************
+  37:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  *  STATIC PROTOTYPES
+  38:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  **********************/
+  39:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  40:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #if LV_USE_PERF_MONITOR
+  41:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     static void perf_update_timer_cb(lv_timer_t * t);
+  42:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     static void perf_observer_cb(lv_observer_t * observer, lv_subject_t * subject);
+  43:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     static void perf_monitor_disp_event_cb(lv_event_t * e);
+  44:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #endif
+  45:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  46:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #if LV_USE_MEM_MONITOR
+  47:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     static void mem_update_timer_cb(lv_timer_t * t);
+  48:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     static void mem_observer_cb(lv_observer_t * observer, lv_subject_t * subject);
+  49:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #endif
+  50:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  51:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** /**********************
+  52:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  *  STATIC VARIABLES
+  53:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  **********************/
+  54:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  55:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** /**********************
+  56:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  *      MACROS
+  57:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  **********************/
+  58:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  59:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** /**********************
+  60:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  *   GLOBAL FUNCTIONS
+  61:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****  **********************/
+  62:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  63:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** void lv_sysmon_builtin_init(void)
+  64:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 7
+
+
+  80              		.loc 1 64 1 is_stmt 1 view -0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84              		@ link register save eliminated.
+  65:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  66:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #if LV_USE_MEM_MONITOR
+  67:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     static lv_mem_monitor_t mem_info;
+  68:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     lv_subject_init_pointer(&sysmon_mem.subject, &mem_info);
+  69:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     sysmon_mem.timer = lv_timer_create(mem_update_timer_cb, LV_SYSMON_REFR_PERIOD_DEF, &mem_info);
+  70:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #endif
+  71:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** }
+  85              		.loc 1 71 1 view .LVU9
+  86 0000 7047     		bx	lr
+  87              		.cfi_endproc
+  88              	.LFE187:
+  90              		.section	.text.lv_sysmon_builtin_deinit,"ax",%progbits
+  91              		.align	1
+  92              		.global	lv_sysmon_builtin_deinit
+  93              		.syntax unified
+  94              		.thumb
+  95              		.thumb_func
+  97              	lv_sysmon_builtin_deinit:
+  98              	.LFB188:
+  72:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  73:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** void lv_sysmon_builtin_deinit(void)
+  74:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** {
+  99              		.loc 1 74 1 view -0
+ 100              		.cfi_startproc
+ 101              		@ args = 0, pretend = 0, frame = 0
+ 102              		@ frame_needed = 0, uses_anonymous_args = 0
+ 103              		@ link register save eliminated.
+  75:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #if LV_USE_MEM_MONITOR
+  76:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     lv_timer_delete(sysmon_mem.timer);
+  77:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** #endif
+  78:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** }
+ 104              		.loc 1 78 1 view .LVU11
+ 105 0000 7047     		bx	lr
+ 106              		.cfi_endproc
+ 107              	.LFE188:
+ 109              		.section	.rodata.lv_sysmon_create.str1.4,"aMS",%progbits,1
+ 110              		.align	2
+ 111              	.LC0:
+ 112 0000 3F00     		.ascii	"?\000"
+ 113              		.section	.text.lv_sysmon_create,"ax",%progbits
+ 114              		.align	1
+ 115              		.global	lv_sysmon_create
+ 116              		.syntax unified
+ 117              		.thumb
+ 118              		.thumb_func
+ 120              	lv_sysmon_create:
+ 121              	.LVL5:
+ 122              	.LFB189:
+  79:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  80:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** lv_obj_t * lv_sysmon_create(lv_display_t * disp)
+  81:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** {
+ 123              		.loc 1 81 1 view -0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 8
+
+
+ 124              		.cfi_startproc
+ 125              		@ args = 0, pretend = 0, frame = 8
+ 126              		@ frame_needed = 0, uses_anonymous_args = 0
+ 127              		.loc 1 81 1 is_stmt 0 view .LVU13
+ 128 0000 10B5     		push	{r4, lr}
+ 129              	.LCFI1:
+ 130              		.cfi_def_cfa_offset 8
+ 131              		.cfi_offset 4, -8
+ 132              		.cfi_offset 14, -4
+ 133 0002 82B0     		sub	sp, sp, #8
+ 134              	.LCFI2:
+ 135              		.cfi_def_cfa_offset 16
+  82:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     LV_LOG_INFO("begin");
+ 136              		.loc 1 82 5 is_stmt 1 view .LVU14
+ 137              		.loc 1 82 5 view .LVU15
+ 138              		.loc 1 82 5 view .LVU16
+  83:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     if(disp == NULL) disp = lv_display_get_default();
+ 139              		.loc 1 83 5 view .LVU17
+ 140              		.loc 1 83 7 is_stmt 0 view .LVU18
+ 141 0004 0446     		mov	r4, r0
+ 142 0006 B8B3     		cbz	r0, .L10
+ 143              	.L6:
+ 144              	.LVL6:
+  84:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     if(disp == NULL) {
+  85:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****         LV_LOG_WARN("There is no default display");
+  86:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****         return NULL;
+  87:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     }
+  88:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** 
+  89:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     lv_obj_t * label = lv_label_create(lv_display_get_layer_sys(disp));
+ 145              		.loc 1 89 5 is_stmt 1 view .LVU19
+ 146              		.loc 1 89 24 is_stmt 0 view .LVU20
+ 147 0008 2046     		mov	r0, r4
+ 148 000a FFF7FEFF 		bl	lv_display_get_layer_sys
+ 149              	.LVL7:
+ 150              		.loc 1 89 24 discriminator 1 view .LVU21
+ 151 000e FFF7FEFF 		bl	lv_label_create
+ 152              	.LVL8:
+ 153 0012 0446     		mov	r4, r0
+ 154              	.LVL9:
+  90:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     lv_obj_set_style_bg_opa(label, LV_OPA_50, 0);
+ 155              		.loc 1 90 5 is_stmt 1 view .LVU22
+ 156 0014 0022     		movs	r2, #0
+ 157 0016 7F21     		movs	r1, #127
+ 158 0018 FFF7FEFF 		bl	lv_obj_set_style_bg_opa
+ 159              	.LVL10:
+  91:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     lv_obj_set_style_bg_color(label, lv_color_black(), 0);
+ 160              		.loc 1 91 5 view .LVU23
+ 161 001c FFF7FEFF 		bl	lv_color_black
+ 162              	.LVL11:
+ 163 0020 8DF80000 		strb	r0, [sp]
+ 164 0024 C0F30723 		ubfx	r3, r0, #8, #8
+ 165 0028 8DF80130 		strb	r3, [sp, #1]
+ 166 002c C0F30740 		ubfx	r0, r0, #16, #8
+ 167 0030 8DF80200 		strb	r0, [sp, #2]
+ 168              		.loc 1 91 5 is_stmt 0 discriminator 1 view .LVU24
+ 169 0034 0022     		movs	r2, #0
+ 170 0036 0099     		ldr	r1, [sp]
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 9
+
+
+ 171 0038 2046     		mov	r0, r4
+ 172 003a FFF7FEFF 		bl	lv_obj_set_style_bg_color
+ 173              	.LVL12:
+  92:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     lv_obj_set_style_text_color(label, lv_color_white(), 0);
+ 174              		.loc 1 92 5 is_stmt 1 view .LVU25
+ 175 003e FFF7FEFF 		bl	lv_color_white
+ 176              	.LVL13:
+ 177 0042 8DF80400 		strb	r0, [sp, #4]
+ 178 0046 C0F30723 		ubfx	r3, r0, #8, #8
+ 179 004a 8DF80530 		strb	r3, [sp, #5]
+ 180 004e C0F30740 		ubfx	r0, r0, #16, #8
+ 181 0052 8DF80600 		strb	r0, [sp, #6]
+ 182              		.loc 1 92 5 is_stmt 0 discriminator 1 view .LVU26
+ 183 0056 0022     		movs	r2, #0
+ 184 0058 0199     		ldr	r1, [sp, #4]
+ 185 005a 2046     		mov	r0, r4
+ 186 005c FFF7FEFF 		bl	lv_obj_set_style_text_color
+ 187              	.LVL14:
+  93:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     lv_obj_set_style_pad_all(label, 3, 0);
+ 188              		.loc 1 93 5 is_stmt 1 view .LVU27
+ 189 0060 0022     		movs	r2, #0
+ 190 0062 0321     		movs	r1, #3
+ 191 0064 2046     		mov	r0, r4
+ 192 0066 FFF7FEFF 		bl	lv_obj_set_style_pad_all
+ 193              	.LVL15:
+  94:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     lv_label_set_text(label, "?");
+ 194              		.loc 1 94 5 view .LVU28
+ 195 006a 0649     		ldr	r1, .L11
+ 196 006c 2046     		mov	r0, r4
+ 197 006e FFF7FEFF 		bl	lv_label_set_text
+ 198              	.LVL16:
+  95:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     return label;
+ 199              		.loc 1 95 5 view .LVU29
+ 200              	.L5:
+  96:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c **** }
+ 201              		.loc 1 96 1 is_stmt 0 view .LVU30
+ 202 0072 2046     		mov	r0, r4
+ 203 0074 02B0     		add	sp, sp, #8
+ 204              	.LCFI3:
+ 205              		.cfi_remember_state
+ 206              		.cfi_def_cfa_offset 8
+ 207              		@ sp needed
+ 208 0076 10BD     		pop	{r4, pc}
+ 209              	.LVL17:
+ 210              	.L10:
+ 211              	.LCFI4:
+ 212              		.cfi_restore_state
+  83:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     if(disp == NULL) {
+ 213              		.loc 1 83 22 is_stmt 1 discriminator 1 view .LVU31
+  83:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****     if(disp == NULL) {
+ 214              		.loc 1 83 29 is_stmt 0 discriminator 1 view .LVU32
+ 215 0078 FFF7FEFF 		bl	lv_display_get_default
+ 216              	.LVL18:
+  84:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****         LV_LOG_WARN("There is no default display");
+ 217              		.loc 1 84 5 is_stmt 1 view .LVU33
+  84:../../Middlewares/LVGL/GUI/lvgl/src/others/sysmon/lv_sysmon.c ****         LV_LOG_WARN("There is no default display");
+ 218              		.loc 1 84 7 is_stmt 0 view .LVU34
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 10
+
+
+ 219 007c 0446     		mov	r4, r0
+ 220 007e 0028     		cmp	r0, #0
+ 221 0080 C2D1     		bne	.L6
+ 222 0082 F6E7     		b	.L5
+ 223              	.L12:
+ 224              		.align	2
+ 225              	.L11:
+ 226 0084 00000000 		.word	.LC0
+ 227              		.cfi_endproc
+ 228              	.LFE189:
+ 230              		.text
+ 231              	.Letext0:
+ 232              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 233              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 234              		.file 5 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 235              		.file 6 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ 236              		.file 7 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/display/lv_display_private.h"
+ 237              		.file 8 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw.h"
+ 238              		.file 9 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_private.h"
+ 239              		.file 10 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer_private.h"
+ 240              		.file 11 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf_private.h"
+ 241              		.file 12 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h"
+ 242              		.file 13 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf.h"
+ 243              		.file 14 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_ll.h"
+ 244              		.file 15 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer.h"
+ 245              		.file 16 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_area.h"
+ 246              		.file 17 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_color.h"
+ 247              		.file 18 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_image_dsc.h"
+ 248              		.file 19 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_event.h"
+ 249              		.file 20 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/display/lv_display.h"
+ 250              		.file 21 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h"
+ 251              		.file 22 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/widgets/label/lv_label.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccsS58F5.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_sysmon.c
+C:\Users\28576\AppData\Local\Temp\ccsS58F5.s:20     .text.lv_obj_set_style_pad_all:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccsS58F5.s:25     .text.lv_obj_set_style_pad_all:00000000 lv_obj_set_style_pad_all
+C:\Users\28576\AppData\Local\Temp\ccsS58F5.s:72     .text.lv_sysmon_builtin_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccsS58F5.s:78     .text.lv_sysmon_builtin_init:00000000 lv_sysmon_builtin_init
+C:\Users\28576\AppData\Local\Temp\ccsS58F5.s:91     .text.lv_sysmon_builtin_deinit:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccsS58F5.s:97     .text.lv_sysmon_builtin_deinit:00000000 lv_sysmon_builtin_deinit
+C:\Users\28576\AppData\Local\Temp\ccsS58F5.s:110    .rodata.lv_sysmon_create.str1.4:00000000 $d
+C:\Users\28576\AppData\Local\Temp\ccsS58F5.s:114    .text.lv_sysmon_create:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccsS58F5.s:120    .text.lv_sysmon_create:00000000 lv_sysmon_create
+C:\Users\28576\AppData\Local\Temp\ccsS58F5.s:226    .text.lv_sysmon_create:00000084 $d
+
+UNDEFINED SYMBOLS
+lv_obj_set_style_pad_left
+lv_obj_set_style_pad_right
+lv_obj_set_style_pad_top
+lv_obj_set_style_pad_bottom
+lv_display_get_layer_sys
+lv_label_create
+lv_obj_set_style_bg_opa
+lv_color_black
+lv_obj_set_style_bg_color
+lv_color_white
+lv_obj_set_style_text_color
+lv_label_set_text
+lv_display_get_default

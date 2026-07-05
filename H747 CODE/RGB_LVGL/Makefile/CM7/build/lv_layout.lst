@@ -1,0 +1,1144 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_layout.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c"
+  19              		.section	.text.lv_layout_init,"ax",%progbits
+  20              		.align	1
+  21              		.global	lv_layout_init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_layout_init:
+  27              	.LFB187:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  * @file lv_layout.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** #include "lv_layout_private.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** #include "../core/lv_global.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** #include "../core/lv_obj.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  13:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** /*********************
+  14:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  *      DEFINES
+  15:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  *********************/
+  16:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** #define layout_cnt LV_GLOBAL_DEFAULT()->layout_count
+  17:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** #define layout_list_def LV_GLOBAL_DEFAULT()->layout_list
+  18:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  19:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** /**********************
+  20:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  *      TYPEDEFS
+  21:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  **********************/
+  22:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  23:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** /**********************
+  24:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  *  STATIC PROTOTYPES
+  25:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  **********************/
+  26:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  27:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** /**********************
+  28:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  *  STATIC VARIABLES
+  29:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  **********************/
+  30:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  31:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** /**********************
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 2
+
+
+  32:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  *      MACROS
+  33:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  **********************/
+  34:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  35:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** /**********************
+  36:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  *   GLOBAL FUNCTIONS
+  37:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****  **********************/
+  38:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  39:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** void lv_layout_init(void)
+  40:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** {
+  28              		.loc 1 40 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  41:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     /*Malloc a list for the built in layouts*/
+  42:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     layout_list_def = lv_malloc(layout_cnt * sizeof(lv_layout_dsc_t));
+  37              		.loc 1 42 5 view .LVU1
+  38              		.loc 1 42 33 is_stmt 0 view .LVU2
+  39 0002 054C     		ldr	r4, .L3
+  40 0004 A06D     		ldr	r0, [r4, #88]
+  41              		.loc 1 42 23 view .LVU3
+  42 0006 C000     		lsls	r0, r0, #3
+  43 0008 FFF7FEFF 		bl	lv_malloc
+  44              	.LVL0:
+  45              		.loc 1 42 21 discriminator 1 view .LVU4
+  46 000c E065     		str	r0, [r4, #92]
+  43:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  44:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** #if LV_USE_FLEX
+  45:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     lv_flex_init();
+  47              		.loc 1 45 5 is_stmt 1 view .LVU5
+  48 000e FFF7FEFF 		bl	lv_flex_init
+  49              	.LVL1:
+  46:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** #endif
+  47:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  48:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** #if LV_USE_GRID
+  49:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     lv_grid_init();
+  50              		.loc 1 49 5 view .LVU6
+  51 0012 FFF7FEFF 		bl	lv_grid_init
+  52              	.LVL2:
+  50:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** #endif
+  51:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** }
+  53              		.loc 1 51 1 is_stmt 0 view .LVU7
+  54 0016 10BD     		pop	{r4, pc}
+  55              	.L4:
+  56              		.align	2
+  57              	.L3:
+  58 0018 00000000 		.word	lv_global
+  59              		.cfi_endproc
+  60              	.LFE187:
+  62              		.section	.text.lv_layout_deinit,"ax",%progbits
+  63              		.align	1
+  64              		.global	lv_layout_deinit
+  65              		.syntax unified
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 3
+
+
+  66              		.thumb
+  67              		.thumb_func
+  69              	lv_layout_deinit:
+  70              	.LFB188:
+  52:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  53:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** void lv_layout_deinit(void)
+  54:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** {
+  71              		.loc 1 54 1 is_stmt 1 view -0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75 0000 08B5     		push	{r3, lr}
+  76              	.LCFI1:
+  77              		.cfi_def_cfa_offset 8
+  78              		.cfi_offset 3, -8
+  79              		.cfi_offset 14, -4
+  55:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     lv_free(layout_list_def);
+  80              		.loc 1 55 5 view .LVU9
+  81 0002 024B     		ldr	r3, .L7
+  82 0004 D86D     		ldr	r0, [r3, #92]
+  83 0006 FFF7FEFF 		bl	lv_free
+  84              	.LVL3:
+  56:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** }
+  85              		.loc 1 56 1 is_stmt 0 view .LVU10
+  86 000a 08BD     		pop	{r3, pc}
+  87              	.L8:
+  88              		.align	2
+  89              	.L7:
+  90 000c 00000000 		.word	lv_global
+  91              		.cfi_endproc
+  92              	.LFE188:
+  94              		.section	.text.lv_layout_register,"ax",%progbits
+  95              		.align	1
+  96              		.global	lv_layout_register
+  97              		.syntax unified
+  98              		.thumb
+  99              		.thumb_func
+ 101              	lv_layout_register:
+ 102              	.LVL4:
+ 103              	.LFB189:
+  57:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  58:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** uint32_t lv_layout_register(lv_layout_update_cb_t cb, void * user_data)
+  59:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** {
+ 104              		.loc 1 59 1 is_stmt 1 view -0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108              		.loc 1 59 1 is_stmt 0 view .LVU12
+ 109 0000 70B5     		push	{r4, r5, r6, lr}
+ 110              	.LCFI2:
+ 111              		.cfi_def_cfa_offset 16
+ 112              		.cfi_offset 4, -16
+ 113              		.cfi_offset 5, -12
+ 114              		.cfi_offset 6, -8
+ 115              		.cfi_offset 14, -4
+ 116 0002 0546     		mov	r5, r0
+ 117 0004 0E46     		mov	r6, r1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 4
+
+
+  60:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     layout_list_def = lv_realloc(layout_list_def, (layout_cnt + 1) * sizeof(lv_layout_dsc_t));
+ 118              		.loc 1 60 5 is_stmt 1 view .LVU13
+ 119              		.loc 1 60 34 is_stmt 0 view .LVU14
+ 120 0006 0B4C     		ldr	r4, .L13
+ 121              		.loc 1 60 52 view .LVU15
+ 122 0008 A36D     		ldr	r3, [r4, #88]
+ 123              		.loc 1 60 63 view .LVU16
+ 124 000a 0133     		adds	r3, r3, #1
+ 125              		.loc 1 60 23 view .LVU17
+ 126 000c D900     		lsls	r1, r3, #3
+ 127              	.LVL5:
+ 128              		.loc 1 60 23 view .LVU18
+ 129 000e E06D     		ldr	r0, [r4, #92]
+ 130              	.LVL6:
+ 131              		.loc 1 60 23 view .LVU19
+ 132 0010 FFF7FEFF 		bl	lv_realloc
+ 133              	.LVL7:
+ 134              		.loc 1 60 21 discriminator 1 view .LVU20
+ 135 0014 E065     		str	r0, [r4, #92]
+  61:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     LV_ASSERT_MALLOC(layout_list_def);
+ 136              		.loc 1 61 5 is_stmt 1 view .LVU21
+ 137              		.loc 1 61 5 view .LVU22
+ 138 0016 60B1     		cbz	r0, .L11
+ 139              		.loc 1 61 5 view .LVU23
+ 140              		.loc 1 61 38 view .LVU24
+  62:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  63:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     layout_list_def[layout_cnt].cb = cb;
+ 141              		.loc 1 63 5 view .LVU25
+ 142              		.loc 1 63 21 is_stmt 0 view .LVU26
+ 143 0018 064B     		ldr	r3, .L13
+ 144 001a 9A6D     		ldr	r2, [r3, #88]
+ 145              		.loc 1 63 36 view .LVU27
+ 146 001c 40F83250 		str	r5, [r0, r2, lsl #3]
+  64:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     layout_list_def[layout_cnt].user_data = user_data;
+ 147              		.loc 1 64 5 is_stmt 1 view .LVU28
+ 148 0020 DA6D     		ldr	r2, [r3, #92]
+ 149              		.loc 1 64 21 is_stmt 0 view .LVU29
+ 150 0022 996D     		ldr	r1, [r3, #88]
+ 151              		.loc 1 64 20 view .LVU30
+ 152 0024 02EBC102 		add	r2, r2, r1, lsl #3
+ 153              		.loc 1 64 43 view .LVU31
+ 154 0028 5660     		str	r6, [r2, #4]
+  65:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     return layout_cnt++;
+ 155              		.loc 1 65 5 is_stmt 1 view .LVU32
+ 156              		.loc 1 65 12 is_stmt 0 view .LVU33
+ 157 002a 986D     		ldr	r0, [r3, #88]
+ 158              		.loc 1 65 22 view .LVU34
+ 159 002c 421C     		adds	r2, r0, #1
+ 160 002e 9A65     		str	r2, [r3, #88]
+  66:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** }
+ 161              		.loc 1 66 1 view .LVU35
+ 162 0030 70BD     		pop	{r4, r5, r6, pc}
+ 163              	.LVL8:
+ 164              	.L11:
+  61:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+ 165              		.loc 1 61 5 is_stmt 1 view .LVU36
+  61:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 5
+
+
+ 166              		.loc 1 61 5 view .LVU37
+  61:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+ 167              		.loc 1 61 5 view .LVU38
+  61:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+ 168              		.loc 1 61 5 view .LVU39
+  61:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+ 169              		.loc 1 61 5 view .LVU40
+ 170 0032 FEE7     		b	.L11
+ 171              	.L14:
+ 172              		.align	2
+ 173              	.L13:
+ 174 0034 00000000 		.word	lv_global
+ 175              		.cfi_endproc
+ 176              	.LFE189:
+ 178              		.section	.text.lv_layout_apply,"ax",%progbits
+ 179              		.align	1
+ 180              		.global	lv_layout_apply
+ 181              		.syntax unified
+ 182              		.thumb
+ 183              		.thumb_func
+ 185              	lv_layout_apply:
+ 186              	.LVL9:
+ 187              	.LFB190:
+  67:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** 
+  68:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** void lv_layout_apply(lv_obj_t * obj)
+  69:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** {
+ 188              		.loc 1 69 1 view -0
+ 189              		.cfi_startproc
+ 190              		@ args = 0, pretend = 0, frame = 8
+ 191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192              		.loc 1 69 1 is_stmt 0 view .LVU42
+ 193 0000 10B5     		push	{r4, lr}
+ 194              	.LCFI3:
+ 195              		.cfi_def_cfa_offset 8
+ 196              		.cfi_offset 4, -8
+ 197              		.cfi_offset 14, -4
+ 198 0002 82B0     		sub	sp, sp, #8
+ 199              	.LCFI4:
+ 200              		.cfi_def_cfa_offset 16
+ 201 0004 0446     		mov	r4, r0
+  70:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     lv_layout_t layout_id = lv_obj_get_style_layout(obj, LV_PART_MAIN);
+ 202              		.loc 1 70 5 is_stmt 1 view .LVU43
+ 203              	.LVL10:
+ 204              	.LBB5:
+ 205              	.LBI5:
+ 206              		.file 2 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style_gen.h"
+   1:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+   2:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** /*
+   3:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****  **********************************************************************
+   4:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****  *                            DO NOT EDIT
+   5:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****  * This file is automatically generated by "style_api_gen.py"
+   6:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****  **********************************************************************
+   7:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****  */
+   8:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+   9:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  10:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** #ifndef LV_OBJ_STYLE_GEN_H
+  11:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** #define LV_OBJ_STYLE_GEN_H
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 6
+
+
+  12:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  13:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** #ifdef __cplusplus
+  14:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** extern "C" {
+  15:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** #endif
+  16:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  17:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** #include "../misc/lv_area.h"
+  18:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** #include "../misc/lv_style.h"
+  19:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** #include "../core/lv_obj_style.h"
+  20:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** #include "../misc/lv_types.h"
+  21:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  22:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_width(const lv_obj_t * obj, lv_part_t part)
+  23:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  24:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_WIDTH);
+  25:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  26:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  27:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  28:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_min_width(const lv_obj_t * obj, lv_part_t part)
+  29:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  30:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MIN_WIDTH);
+  31:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  32:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  33:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  34:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_max_width(const lv_obj_t * obj, lv_part_t part)
+  35:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  36:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MAX_WIDTH);
+  37:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  38:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  39:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  40:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_height(const lv_obj_t * obj, lv_part_t part)
+  41:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  42:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_HEIGHT);
+  43:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  44:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  45:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  46:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_min_height(const lv_obj_t * obj, lv_part_t part)
+  47:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  48:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MIN_HEIGHT);
+  49:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  50:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  51:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  52:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_max_height(const lv_obj_t * obj, lv_part_t part)
+  53:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  54:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MAX_HEIGHT);
+  55:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  56:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  57:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  58:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_length(const lv_obj_t * obj, lv_part_t part)
+  59:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  60:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LENGTH);
+  61:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  62:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  63:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  64:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_x(const lv_obj_t * obj, lv_part_t part)
+  65:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  66:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_X);
+  67:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  68:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 7
+
+
+  69:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  70:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_y(const lv_obj_t * obj, lv_part_t part)
+  71:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  72:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_Y);
+  73:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  74:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  75:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  76:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_align_t lv_obj_get_style_align(const lv_obj_t * obj, lv_part_t part)
+  77:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  78:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ALIGN);
+  79:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_align_t)v.num;
+  80:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  81:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  82:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_transform_width(const lv_obj_t * obj, lv_part_t part)
+  83:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  84:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_WIDTH);
+  85:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  86:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  87:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  88:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_transform_height(const lv_obj_t * obj, lv_part_t part)
+  89:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  90:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_HEIGHT);
+  91:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  92:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  93:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+  94:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_translate_x(const lv_obj_t * obj, lv_part_t part)
+  95:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+  96:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSLATE_X);
+  97:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+  98:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+  99:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 100:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_translate_y(const lv_obj_t * obj, lv_part_t part)
+ 101:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 102:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSLATE_Y);
+ 103:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 104:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 105:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 106:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_translate_radial(const lv_obj_t * obj, lv_part_t part)
+ 107:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 108:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSLATE_RADIAL);
+ 109:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 110:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 111:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 112:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_transform_scale_x(const lv_obj_t * obj, lv_part_t part)
+ 113:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 114:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_SCALE_X);
+ 115:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 116:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 117:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 118:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_transform_scale_y(const lv_obj_t * obj, lv_part_t part)
+ 119:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 120:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_SCALE_Y);
+ 121:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 122:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 123:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 124:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_transform_rotation(const lv_obj_t * obj, lv_part_t part)
+ 125:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 8
+
+
+ 126:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_ROTATION);
+ 127:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 128:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 129:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 130:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_transform_pivot_x(const lv_obj_t * obj, lv_part_t part)
+ 131:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 132:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_PIVOT_X);
+ 133:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 134:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 135:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 136:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_transform_pivot_y(const lv_obj_t * obj, lv_part_t part)
+ 137:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 138:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_PIVOT_Y);
+ 139:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 140:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 141:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 142:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_transform_skew_x(const lv_obj_t * obj, lv_part_t part)
+ 143:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 144:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_SKEW_X);
+ 145:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 146:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 147:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 148:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_transform_skew_y(const lv_obj_t * obj, lv_part_t part)
+ 149:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 150:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSFORM_SKEW_Y);
+ 151:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 152:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 153:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 154:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_pad_top(const lv_obj_t * obj, lv_part_t part)
+ 155:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 156:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_TOP);
+ 157:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 158:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 159:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 160:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_pad_bottom(const lv_obj_t * obj, lv_part_t part)
+ 161:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 162:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_BOTTOM);
+ 163:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 164:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 165:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 166:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_pad_left(const lv_obj_t * obj, lv_part_t part)
+ 167:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 168:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_LEFT);
+ 169:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 170:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 171:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 172:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_pad_right(const lv_obj_t * obj, lv_part_t part)
+ 173:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 174:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_RIGHT);
+ 175:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 176:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 177:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 178:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_pad_row(const lv_obj_t * obj, lv_part_t part)
+ 179:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 180:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_ROW);
+ 181:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 182:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 9
+
+
+ 183:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 184:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_pad_column(const lv_obj_t * obj, lv_part_t part)
+ 185:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 186:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_COLUMN);
+ 187:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 188:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 189:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 190:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_pad_radial(const lv_obj_t * obj, lv_part_t part)
+ 191:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 192:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_PAD_RADIAL);
+ 193:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 194:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 195:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 196:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_margin_top(const lv_obj_t * obj, lv_part_t part)
+ 197:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 198:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MARGIN_TOP);
+ 199:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 200:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 201:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 202:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_margin_bottom(const lv_obj_t * obj, lv_part_t part)
+ 203:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 204:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MARGIN_BOTTOM);
+ 205:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 206:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 207:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 208:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_margin_left(const lv_obj_t * obj, lv_part_t part)
+ 209:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 210:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MARGIN_LEFT);
+ 211:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 212:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 213:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 214:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_margin_right(const lv_obj_t * obj, lv_part_t part)
+ 215:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 216:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_MARGIN_RIGHT);
+ 217:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 218:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 219:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 220:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_color(const lv_obj_t * obj, lv_part_t part)
+ 221:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 222:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_COLOR);
+ 223:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 224:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 225:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 226:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_color_filtered(const lv_obj_t * obj, lv_part_t part)
+ 227:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 228:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 229:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 230:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 231:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 232:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_bg_opa(const lv_obj_t * obj, lv_part_t part)
+ 233:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 234:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_OPA);
+ 235:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 236:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 237:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 238:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_grad_color(const lv_obj_t * obj, lv_part_t part)
+ 239:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 10
+
+
+ 240:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_COLOR);
+ 241:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 242:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 243:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 244:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_grad_color_filtered(const lv_obj_t * obj, lv_part_t pa
+ 245:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 246:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 247:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 248:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 249:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 250:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_grad_dir_t lv_obj_get_style_bg_grad_dir(const lv_obj_t * obj, lv_part_t part)
+ 251:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 252:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_DIR);
+ 253:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_grad_dir_t)v.num;
+ 254:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 255:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 256:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_bg_main_stop(const lv_obj_t * obj, lv_part_t part)
+ 257:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 258:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_MAIN_STOP);
+ 259:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 260:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 261:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 262:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_bg_grad_stop(const lv_obj_t * obj, lv_part_t part)
+ 263:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 264:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_STOP);
+ 265:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 266:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 267:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 268:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_bg_main_opa(const lv_obj_t * obj, lv_part_t part)
+ 269:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 270:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_MAIN_OPA);
+ 271:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 272:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 273:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 274:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_bg_grad_opa(const lv_obj_t * obj, lv_part_t part)
+ 275:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 276:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD_OPA);
+ 277:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 278:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 279:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 280:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline const lv_grad_dsc_t * lv_obj_get_style_bg_grad(const lv_obj_t * obj, lv_part_t part)
+ 281:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 282:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_GRAD);
+ 283:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (const lv_grad_dsc_t *)v.ptr;
+ 284:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 285:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 286:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline const void * lv_obj_get_style_bg_image_src(const lv_obj_t * obj, lv_part_t part)
+ 287:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 288:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_SRC);
+ 289:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (const void *)v.ptr;
+ 290:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 291:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 292:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_bg_image_opa(const lv_obj_t * obj, lv_part_t part)
+ 293:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 294:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_OPA);
+ 295:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 296:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 11
+
+
+ 297:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 298:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_image_recolor(const lv_obj_t * obj, lv_part_t part)
+ 299:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 300:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_RECOLOR);
+ 301:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 302:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 303:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 304:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_bg_image_recolor_filtered(const lv_obj_t * obj, lv_part_t
+ 305:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 306:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 307:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 308:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 309:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 310:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_bg_image_recolor_opa(const lv_obj_t * obj, lv_part_t part)
+ 311:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 312:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_RECOLOR_OPA);
+ 313:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 314:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 315:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 316:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline bool lv_obj_get_style_bg_image_tiled(const lv_obj_t * obj, lv_part_t part)
+ 317:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 318:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BG_IMAGE_TILED);
+ 319:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (bool)v.num;
+ 320:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 321:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 322:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_border_color(const lv_obj_t * obj, lv_part_t part)
+ 323:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 324:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_COLOR);
+ 325:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 326:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 327:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 328:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_border_color_filtered(const lv_obj_t * obj, lv_part_t par
+ 329:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 330:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 331:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 332:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 333:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 334:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_border_opa(const lv_obj_t * obj, lv_part_t part)
+ 335:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 336:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_OPA);
+ 337:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 338:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 339:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 340:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_border_width(const lv_obj_t * obj, lv_part_t part)
+ 341:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 342:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_WIDTH);
+ 343:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 344:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 345:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 346:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_border_side_t lv_obj_get_style_border_side(const lv_obj_t * obj, lv_part_t part)
+ 347:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 348:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_SIDE);
+ 349:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_border_side_t)v.num;
+ 350:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 351:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 352:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline bool lv_obj_get_style_border_post(const lv_obj_t * obj, lv_part_t part)
+ 353:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 12
+
+
+ 354:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BORDER_POST);
+ 355:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (bool)v.num;
+ 356:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 357:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 358:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_outline_width(const lv_obj_t * obj, lv_part_t part)
+ 359:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 360:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_WIDTH);
+ 361:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 362:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 363:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 364:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_outline_color(const lv_obj_t * obj, lv_part_t part)
+ 365:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 366:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_COLOR);
+ 367:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 368:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 369:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 370:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_outline_color_filtered(const lv_obj_t * obj, lv_part_t pa
+ 371:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 372:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 373:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 374:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 375:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 376:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_outline_opa(const lv_obj_t * obj, lv_part_t part)
+ 377:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 378:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_OPA);
+ 379:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 380:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 381:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 382:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_outline_pad(const lv_obj_t * obj, lv_part_t part)
+ 383:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 384:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OUTLINE_PAD);
+ 385:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 386:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 387:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 388:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_shadow_width(const lv_obj_t * obj, lv_part_t part)
+ 389:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 390:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_WIDTH);
+ 391:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 392:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 393:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 394:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_shadow_offset_x(const lv_obj_t * obj, lv_part_t part)
+ 395:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 396:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_OFFSET_X);
+ 397:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 398:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 399:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 400:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_shadow_offset_y(const lv_obj_t * obj, lv_part_t part)
+ 401:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 402:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_OFFSET_Y);
+ 403:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 404:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 405:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 406:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_shadow_spread(const lv_obj_t * obj, lv_part_t part)
+ 407:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 408:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_SPREAD);
+ 409:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 410:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 13
+
+
+ 411:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 412:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_shadow_color(const lv_obj_t * obj, lv_part_t part)
+ 413:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 414:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_COLOR);
+ 415:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 416:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 417:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 418:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_shadow_color_filtered(const lv_obj_t * obj, lv_part_t par
+ 419:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 420:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 421:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 422:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 423:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 424:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_shadow_opa(const lv_obj_t * obj, lv_part_t part)
+ 425:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 426:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_SHADOW_OPA);
+ 427:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 428:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 429:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 430:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_image_opa(const lv_obj_t * obj, lv_part_t part)
+ 431:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 432:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMAGE_OPA);
+ 433:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 434:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 435:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 436:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_image_recolor(const lv_obj_t * obj, lv_part_t part)
+ 437:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 438:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMAGE_RECOLOR);
+ 439:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 440:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 441:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 442:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_image_recolor_filtered(const lv_obj_t * obj, lv_part_t pa
+ 443:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 444:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 445:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 446:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 447:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 448:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_image_recolor_opa(const lv_obj_t * obj, lv_part_t part)
+ 449:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 450:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_IMAGE_RECOLOR_OPA);
+ 451:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 452:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 453:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 454:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_line_width(const lv_obj_t * obj, lv_part_t part)
+ 455:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 456:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_WIDTH);
+ 457:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 458:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 459:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 460:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_line_dash_width(const lv_obj_t * obj, lv_part_t part)
+ 461:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 462:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_DASH_WIDTH);
+ 463:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 464:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 465:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 466:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_line_dash_gap(const lv_obj_t * obj, lv_part_t part)
+ 467:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 14
+
+
+ 468:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_DASH_GAP);
+ 469:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 470:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 471:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 472:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline bool lv_obj_get_style_line_rounded(const lv_obj_t * obj, lv_part_t part)
+ 473:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 474:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_ROUNDED);
+ 475:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (bool)v.num;
+ 476:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 477:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 478:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_line_color(const lv_obj_t * obj, lv_part_t part)
+ 479:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 480:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_COLOR);
+ 481:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 482:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 483:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 484:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_line_color_filtered(const lv_obj_t * obj, lv_part_t part)
+ 485:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 486:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 487:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 488:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 489:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 490:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_line_opa(const lv_obj_t * obj, lv_part_t part)
+ 491:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 492:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LINE_OPA);
+ 493:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 494:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 495:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 496:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_arc_width(const lv_obj_t * obj, lv_part_t part)
+ 497:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 498:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_WIDTH);
+ 499:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 500:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 501:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 502:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline bool lv_obj_get_style_arc_rounded(const lv_obj_t * obj, lv_part_t part)
+ 503:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 504:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_ROUNDED);
+ 505:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (bool)v.num;
+ 506:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 507:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 508:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_arc_color(const lv_obj_t * obj, lv_part_t part)
+ 509:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 510:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_COLOR);
+ 511:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 512:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 513:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 514:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_arc_color_filtered(const lv_obj_t * obj, lv_part_t part)
+ 515:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 516:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 517:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 518:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 519:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 520:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_arc_opa(const lv_obj_t * obj, lv_part_t part)
+ 521:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 522:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_OPA);
+ 523:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 524:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 15
+
+
+ 525:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 526:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline const void * lv_obj_get_style_arc_image_src(const lv_obj_t * obj, lv_part_t part)
+ 527:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 528:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ARC_IMAGE_SRC);
+ 529:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (const void *)v.ptr;
+ 530:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 531:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 532:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_text_color(const lv_obj_t * obj, lv_part_t part)
+ 533:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 534:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_COLOR);
+ 535:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 536:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 537:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 538:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_text_color_filtered(const lv_obj_t * obj, lv_part_t part)
+ 539:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 540:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 541:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 542:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 543:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 544:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_text_opa(const lv_obj_t * obj, lv_part_t part)
+ 545:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 546:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OPA);
+ 547:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 548:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 549:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 550:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline const lv_font_t * lv_obj_get_style_text_font(const lv_obj_t * obj, lv_part_t part)
+ 551:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 552:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_FONT);
+ 553:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (const lv_font_t *)v.ptr;
+ 554:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 555:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 556:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_text_letter_space(const lv_obj_t * obj, lv_part_t part)
+ 557:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 558:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_LETTER_SPACE);
+ 559:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 560:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 561:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 562:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_text_line_space(const lv_obj_t * obj, lv_part_t part)
+ 563:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 564:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_LINE_SPACE);
+ 565:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 566:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 567:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 568:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_text_decor_t lv_obj_get_style_text_decor(const lv_obj_t * obj, lv_part_t part)
+ 569:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 570:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_DECOR);
+ 571:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_text_decor_t)v.num;
+ 572:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 573:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 574:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_text_align_t lv_obj_get_style_text_align(const lv_obj_t * obj, lv_part_t part)
+ 575:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 576:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_ALIGN);
+ 577:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_text_align_t)v.num;
+ 578:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 579:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 580:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_text_outline_stroke_color(const lv_obj_t * obj, lv_part_t
+ 581:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 16
+
+
+ 582:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OUTLINE_STROKE_COLOR);
+ 583:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 584:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 585:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 586:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_text_outline_stroke_color_filtered(const lv_obj_t * obj, 
+ 587:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 588:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_style_apply_color_filter(obj, part, lv_obj_get_style_prop(obj, part
+ 589:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 590:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 591:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 592:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_text_outline_stroke_width(const lv_obj_t * obj, lv_part_t pa
+ 593:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 594:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OUTLINE_STROKE_WIDTH);
+ 595:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 596:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 597:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 598:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_text_outline_stroke_opa(const lv_obj_t * obj, lv_part_t par
+ 599:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 600:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TEXT_OUTLINE_STROKE_OPA);
+ 601:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 602:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 603:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 604:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_radius(const lv_obj_t * obj, lv_part_t part)
+ 605:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 606:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_RADIUS);
+ 607:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 608:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 609:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 610:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline int32_t lv_obj_get_style_radial_offset(const lv_obj_t * obj, lv_part_t part)
+ 611:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 612:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_RADIAL_OFFSET);
+ 613:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (int32_t)v.num;
+ 614:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 615:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 616:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline bool lv_obj_get_style_clip_corner(const lv_obj_t * obj, lv_part_t part)
+ 617:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 618:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_CLIP_CORNER);
+ 619:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (bool)v.num;
+ 620:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 621:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 622:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_opa(const lv_obj_t * obj, lv_part_t part)
+ 623:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 624:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OPA);
+ 625:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 626:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 627:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 628:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_opa_layered(const lv_obj_t * obj, lv_part_t part)
+ 629:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 630:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_OPA_LAYERED);
+ 631:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 632:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 633:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 634:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline const lv_color_filter_dsc_t * lv_obj_get_style_color_filter_dsc(const lv_obj_t * obj,
+ 635:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 636:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_COLOR_FILTER_DSC);
+ 637:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (const lv_color_filter_dsc_t *)v.ptr;
+ 638:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 17
+
+
+ 639:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 640:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_color_filter_opa(const lv_obj_t * obj, lv_part_t part)
+ 641:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 642:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_COLOR_FILTER_OPA);
+ 643:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 644:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 645:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 646:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_color_t lv_obj_get_style_recolor(const lv_obj_t * obj, lv_part_t part)
+ 647:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 648:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_RECOLOR);
+ 649:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return v.color;
+ 650:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 651:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 652:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_opa_t lv_obj_get_style_recolor_opa(const lv_obj_t * obj, lv_part_t part)
+ 653:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 654:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_RECOLOR_OPA);
+ 655:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_opa_t)v.num;
+ 656:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 657:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 658:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline const lv_anim_t * lv_obj_get_style_anim(const lv_obj_t * obj, lv_part_t part)
+ 659:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 660:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ANIM);
+ 661:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (const lv_anim_t *)v.ptr;
+ 662:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 663:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 664:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline uint32_t lv_obj_get_style_anim_duration(const lv_obj_t * obj, lv_part_t part)
+ 665:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 666:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_ANIM_DURATION);
+ 667:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (uint32_t)v.num;
+ 668:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 669:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 670:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline const lv_style_transition_dsc_t * lv_obj_get_style_transition(const lv_obj_t * obj, l
+ 671:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 672:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_TRANSITION);
+ 673:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (const lv_style_transition_dsc_t *)v.ptr;
+ 674:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 675:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 676:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline lv_blend_mode_t lv_obj_get_style_blend_mode(const lv_obj_t * obj, lv_part_t part)
+ 677:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 678:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_BLEND_MODE);
+ 679:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (lv_blend_mode_t)v.num;
+ 680:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** }
+ 681:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** 
+ 682:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** static inline uint16_t lv_obj_get_style_layout(const lv_obj_t * obj, lv_part_t part)
+ 207              		.loc 2 682 24 view .LVU44
+ 208              	.LBB6:
+ 683:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h **** {
+ 684:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     lv_style_value_t v = lv_obj_get_style_prop(obj, part, LV_STYLE_LAYOUT);
+ 209              		.loc 2 684 5 view .LVU45
+ 210              		.loc 2 684 26 is_stmt 0 view .LVU46
+ 211 0006 1622     		movs	r2, #22
+ 212 0008 0021     		movs	r1, #0
+ 213 000a FFF7FEFF 		bl	lv_obj_get_style_prop
+ 214              	.LVL11:
+ 215              		.loc 2 684 26 view .LVU47
+ 216 000e 0190     		str	r0, [sp, #4]
+ 685:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core\lv_obj_style_gen.h ****     return (uint16_t)v.num;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 18
+
+
+ 217              		.loc 2 685 5 is_stmt 1 view .LVU48
+ 218              	.LVL12:
+ 219              		.loc 2 685 5 is_stmt 0 view .LVU49
+ 220              	.LBE6:
+ 221              	.LBE5:
+  71:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     if(layout_id > 0 && layout_id <= layout_cnt) {
+ 222              		.loc 1 71 5 is_stmt 1 view .LVU50
+ 223              		.loc 1 71 7 is_stmt 0 view .LVU51
+ 224 0010 10F0FF0F 		tst	r0, #255
+ 225 0014 0DD0     		beq	.L15
+ 226              		.loc 1 71 35 discriminator 1 view .LVU52
+ 227 0016 C3B2     		uxtb	r3, r0
+ 228              		.loc 1 71 38 discriminator 1 view .LVU53
+ 229 0018 074A     		ldr	r2, .L18
+ 230 001a 926D     		ldr	r2, [r2, #88]
+ 231              		.loc 1 71 22 discriminator 1 view .LVU54
+ 232 001c 9342     		cmp	r3, r2
+ 233 001e 08D8     		bhi	.L15
+ 234              	.LBB7:
+  72:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****         void  * user_data = layout_list_def[layout_id].user_data;
+ 235              		.loc 1 72 9 is_stmt 1 view .LVU55
+ 236              		.loc 1 72 29 is_stmt 0 view .LVU56
+ 237 0020 054A     		ldr	r2, .L18
+ 238 0022 D26D     		ldr	r2, [r2, #92]
+ 239              		.loc 1 72 44 view .LVU57
+ 240 0024 02EBC301 		add	r1, r2, r3, lsl #3
+ 241              	.LVL13:
+  73:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****         layout_list_def[layout_id].cb(obj, user_data);
+ 242              		.loc 1 73 9 is_stmt 1 view .LVU58
+ 243              		.loc 1 73 35 is_stmt 0 view .LVU59
+ 244 0028 52F83330 		ldr	r3, [r2, r3, lsl #3]
+ 245              		.loc 1 73 9 view .LVU60
+ 246 002c 4968     		ldr	r1, [r1, #4]
+ 247              	.LVL14:
+ 248              		.loc 1 73 9 view .LVU61
+ 249 002e 2046     		mov	r0, r4
+ 250              	.LVL15:
+ 251              		.loc 1 73 9 view .LVU62
+ 252 0030 9847     		blx	r3
+ 253              	.LVL16:
+ 254              	.L15:
+ 255              		.loc 1 73 9 view .LVU63
+ 256              	.LBE7:
+  74:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c ****     }
+  75:../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.c **** }
+ 257              		.loc 1 75 1 view .LVU64
+ 258 0032 02B0     		add	sp, sp, #8
+ 259              	.LCFI5:
+ 260              		.cfi_def_cfa_offset 8
+ 261              		@ sp needed
+ 262 0034 10BD     		pop	{r4, pc}
+ 263              	.LVL17:
+ 264              	.L19:
+ 265              		.loc 1 75 1 view .LVU65
+ 266 0036 00BF     		.align	2
+ 267              	.L18:
+ 268 0038 00000000 		.word	lv_global
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 19
+
+
+ 269              		.cfi_endproc
+ 270              	.LFE190:
+ 272              		.text
+ 273              	.Letext0:
+ 274              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 275              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 276              		.file 5 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 277              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/layouts/../misc/lv_types.h"
+ 278              		.file 7 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw.h"
+ 279              		.file 8 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_private.h"
+ 280              		.file 9 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer_private.h"
+ 281              		.file 10 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/cache/lv_cache_private.h"
+ 282              		.file 11 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf_private.h"
+ 283              		.file 12 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf.h"
+ 284              		.file 13 "../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.h"
+ 285              		.file 14 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_area.h"
+ 286              		.file 15 "../../Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout_private.h"
+ 287              		.file 16 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_color.h"
+ 288              		.file 17 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_image_dsc.h"
+ 289              		.file 18 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.h"
+ 290              		.file 19 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_ll.h"
+ 291              		.file 20 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer.h"
+ 292              		.file 21 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_style.h"
+ 293              		.file 22 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.h"
+ 294              		.file 23 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 295              		.file 24 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib/builtin/lv_tlsf.h"
+ 296              		.file 25 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim_private.h"
+ 297              		.file 26 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick_private.h"
+ 298              		.file 27 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_mask_private.h"
+ 299              		.file 28 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib/builtin/lv_tlsf_private.h"
+ 300              		.file 29 "../../Middlewares/LVGL/GUI/lvgl/src/layouts/../core/lv_global.h"
+ 301              		.file 30 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_style.h"
+ 302              		.file 31 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib/lv_mem.h"
+ 303              		.file 32 "../../Middlewares/LVGL/GUI/lvgl/src/layouts/grid/lv_grid.h"
+ 304              		.file 33 "../../Middlewares/LVGL/GUI/lvgl/src/layouts/flex/lv_flex.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_layout.c
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:20     .text.lv_layout_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:26     .text.lv_layout_init:00000000 lv_layout_init
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:58     .text.lv_layout_init:00000018 $d
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:63     .text.lv_layout_deinit:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:69     .text.lv_layout_deinit:00000000 lv_layout_deinit
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:90     .text.lv_layout_deinit:0000000c $d
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:95     .text.lv_layout_register:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:101    .text.lv_layout_register:00000000 lv_layout_register
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:174    .text.lv_layout_register:00000034 $d
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:179    .text.lv_layout_apply:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:185    .text.lv_layout_apply:00000000 lv_layout_apply
+C:\Users\28576\AppData\Local\Temp\ccX0XhuG.s:268    .text.lv_layout_apply:00000038 $d
+
+UNDEFINED SYMBOLS
+lv_malloc
+lv_flex_init
+lv_grid_init
+lv_global
+lv_free
+lv_realloc
+lv_obj_get_style_prop

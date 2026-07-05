@@ -1,0 +1,322 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cciXZEV9.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"mpu.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../BSP/MPU/mpu.c"
+  19              		.section	.text.mpu_set_protection,"ax",%progbits
+  20              		.align	1
+  21              		.global	mpu_set_protection
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	mpu_set_protection:
+  27              	.LVL0:
+  28              	.LFB144:
+   1:../../BSP/MPU/mpu.c **** /**
+   2:../../BSP/MPU/mpu.c ****  **************************************************************************************************
+   3:../../BSP/MPU/mpu.c ****  * @file        mpu.c
+   4:../../BSP/MPU/mpu.c ****  * @brief       MPU memory protection
+   5:../../BSP/MPU/mpu.c ****  **************************************************************************************************
+   6:../../BSP/MPU/mpu.c ****  */
+   7:../../BSP/MPU/mpu.c **** 
+   8:../../BSP/MPU/mpu.c **** #include "mpu.h"
+   9:../../BSP/MPU/mpu.c **** 
+  10:../../BSP/MPU/mpu.c **** uint8_t mpu_set_protection(uint32_t baseaddr, uint32_t size, uint32_t rnum,
+  11:../../BSP/MPU/mpu.c ****                            uint8_t de, uint8_t ap, uint8_t sen, uint8_t cen, uint8_t ben)
+  12:../../BSP/MPU/mpu.c **** {
+  29              		.loc 1 12 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 16, pretend = 0, frame = 16
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 12 1 is_stmt 0 view .LVU1
+  34 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 20
+  37              		.cfi_offset 4, -20
+  38              		.cfi_offset 5, -16
+  39              		.cfi_offset 6, -12
+  40              		.cfi_offset 7, -8
+  41              		.cfi_offset 14, -4
+  42 0002 85B0     		sub	sp, sp, #20
+  43              	.LCFI1:
+  44              		.cfi_def_cfa_offset 40
+  45 0004 0746     		mov	r7, r0
+  46 0006 0C46     		mov	r4, r1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cciXZEV9.s 			page 2
+
+
+  47 0008 1646     		mov	r6, r2
+  48 000a 1D46     		mov	r5, r3
+  13:../../BSP/MPU/mpu.c ****     MPU_Region_InitTypeDef mpu_region_init_handle;
+  49              		.loc 1 13 5 is_stmt 1 view .LVU2
+  14:../../BSP/MPU/mpu.c **** 
+  15:../../BSP/MPU/mpu.c ****     HAL_MPU_Disable();
+  50              		.loc 1 15 5 view .LVU3
+  51 000c FFF7FEFF 		bl	HAL_MPU_Disable
+  52              	.LVL1:
+  16:../../BSP/MPU/mpu.c **** 
+  17:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.Enable = MPU_REGION_ENABLE;
+  53              		.loc 1 17 5 view .LVU4
+  54              		.loc 1 17 35 is_stmt 0 view .LVU5
+  55 0010 0123     		movs	r3, #1
+  56 0012 8DF80030 		strb	r3, [sp]
+  18:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.Number = rnum;
+  57              		.loc 1 18 5 is_stmt 1 view .LVU6
+  58              		.loc 1 18 35 is_stmt 0 view .LVU7
+  59 0016 8DF80160 		strb	r6, [sp, #1]
+  19:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.BaseAddress = baseaddr;
+  60              		.loc 1 19 5 is_stmt 1 view .LVU8
+  61              		.loc 1 19 40 is_stmt 0 view .LVU9
+  62 001a 0197     		str	r7, [sp, #4]
+  20:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.Size = size;
+  63              		.loc 1 20 5 is_stmt 1 view .LVU10
+  64              		.loc 1 20 33 is_stmt 0 view .LVU11
+  65 001c 8DF80840 		strb	r4, [sp, #8]
+  21:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.SubRegionDisable = 0x00U;
+  66              		.loc 1 21 5 is_stmt 1 view .LVU12
+  67              		.loc 1 21 45 is_stmt 0 view .LVU13
+  68 0020 0024     		movs	r4, #0
+  69              	.LVL2:
+  70              		.loc 1 21 45 view .LVU14
+  71 0022 8DF80940 		strb	r4, [sp, #9]
+  22:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.TypeExtField = MPU_TEX_LEVEL0;
+  72              		.loc 1 22 5 is_stmt 1 view .LVU15
+  73              		.loc 1 22 41 is_stmt 0 view .LVU16
+  74 0026 8DF80A40 		strb	r4, [sp, #10]
+  23:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.AccessPermission = ap;
+  75              		.loc 1 23 5 is_stmt 1 view .LVU17
+  76              		.loc 1 23 45 is_stmt 0 view .LVU18
+  77 002a 9DF82830 		ldrb	r3, [sp, #40]	@ zero_extendqisi2
+  78 002e 8DF80B30 		strb	r3, [sp, #11]
+  24:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.DisableExec = de;
+  79              		.loc 1 24 5 is_stmt 1 view .LVU19
+  80              		.loc 1 24 40 is_stmt 0 view .LVU20
+  81 0032 8DF80C50 		strb	r5, [sp, #12]
+  25:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.IsShareable = sen;
+  82              		.loc 1 25 5 is_stmt 1 view .LVU21
+  83              		.loc 1 25 40 is_stmt 0 view .LVU22
+  84 0036 9DF82C30 		ldrb	r3, [sp, #44]	@ zero_extendqisi2
+  85 003a 8DF80D30 		strb	r3, [sp, #13]
+  26:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.IsCacheable = cen;
+  86              		.loc 1 26 5 is_stmt 1 view .LVU23
+  87              		.loc 1 26 40 is_stmt 0 view .LVU24
+  88 003e 9DF83030 		ldrb	r3, [sp, #48]	@ zero_extendqisi2
+  89 0042 8DF80E30 		strb	r3, [sp, #14]
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cciXZEV9.s 			page 3
+
+
+  27:../../BSP/MPU/mpu.c ****     mpu_region_init_handle.IsBufferable = ben;
+  90              		.loc 1 27 5 is_stmt 1 view .LVU25
+  91              		.loc 1 27 41 is_stmt 0 view .LVU26
+  92 0046 9DF83430 		ldrb	r3, [sp, #52]	@ zero_extendqisi2
+  93 004a 8DF80F30 		strb	r3, [sp, #15]
+  28:../../BSP/MPU/mpu.c **** 
+  29:../../BSP/MPU/mpu.c ****     HAL_MPU_ConfigRegion(&mpu_region_init_handle);
+  94              		.loc 1 29 5 is_stmt 1 view .LVU27
+  95 004e 6846     		mov	r0, sp
+  96 0050 FFF7FEFF 		bl	HAL_MPU_ConfigRegion
+  97              	.LVL3:
+  30:../../BSP/MPU/mpu.c ****     HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
+  98              		.loc 1 30 5 view .LVU28
+  99 0054 0420     		movs	r0, #4
+ 100 0056 FFF7FEFF 		bl	HAL_MPU_Enable
+ 101              	.LVL4:
+  31:../../BSP/MPU/mpu.c **** 
+  32:../../BSP/MPU/mpu.c ****     return 0;
+ 102              		.loc 1 32 5 view .LVU29
+  33:../../BSP/MPU/mpu.c **** }
+ 103              		.loc 1 33 1 is_stmt 0 view .LVU30
+ 104 005a 2046     		mov	r0, r4
+ 105 005c 05B0     		add	sp, sp, #20
+ 106              	.LCFI2:
+ 107              		.cfi_def_cfa_offset 20
+ 108              		@ sp needed
+ 109 005e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 110              		.loc 1 33 1 view .LVU31
+ 111              		.cfi_endproc
+ 112              	.LFE144:
+ 114              		.section	.text.mpu_memory_protection,"ax",%progbits
+ 115              		.align	1
+ 116              		.global	mpu_memory_protection
+ 117              		.syntax unified
+ 118              		.thumb
+ 119              		.thumb_func
+ 121              	mpu_memory_protection:
+ 122              	.LFB145:
+  34:../../BSP/MPU/mpu.c **** 
+  35:../../BSP/MPU/mpu.c **** void mpu_memory_protection(void)
+  36:../../BSP/MPU/mpu.c **** {
+ 123              		.loc 1 36 1 is_stmt 1 view -0
+ 124              		.cfi_startproc
+ 125              		@ args = 0, pretend = 0, frame = 0
+ 126              		@ frame_needed = 0, uses_anonymous_args = 0
+ 127 0000 70B5     		push	{r4, r5, r6, lr}
+ 128              	.LCFI3:
+ 129              		.cfi_def_cfa_offset 16
+ 130              		.cfi_offset 4, -16
+ 131              		.cfi_offset 5, -12
+ 132              		.cfi_offset 6, -8
+ 133              		.cfi_offset 14, -4
+ 134 0002 84B0     		sub	sp, sp, #16
+ 135              	.LCFI4:
+ 136              		.cfi_def_cfa_offset 32
+  37:../../BSP/MPU/mpu.c ****     mpu_set_protection(0x20000000U, MPU_REGION_SIZE_128KB, MPU_REGION_NUMBER1, 0,
+ 137              		.loc 1 37 5 view .LVU33
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cciXZEV9.s 			page 4
+
+
+ 138 0004 0125     		movs	r5, #1
+ 139 0006 0395     		str	r5, [sp, #12]
+ 140 0008 0295     		str	r5, [sp, #8]
+ 141 000a 0024     		movs	r4, #0
+ 142 000c 0194     		str	r4, [sp, #4]
+ 143 000e 0326     		movs	r6, #3
+ 144 0010 0096     		str	r6, [sp]
+ 145 0012 2346     		mov	r3, r4
+ 146 0014 2A46     		mov	r2, r5
+ 147 0016 1021     		movs	r1, #16
+ 148 0018 4FF00050 		mov	r0, #536870912
+ 149 001c FFF7FEFF 		bl	mpu_set_protection
+ 150              	.LVL5:
+  38:../../BSP/MPU/mpu.c ****                        MPU_REGION_FULL_ACCESS, MPU_ACCESS_NOT_SHAREABLE,
+  39:../../BSP/MPU/mpu.c ****                        MPU_ACCESS_CACHEABLE, MPU_ACCESS_BUFFERABLE);
+  40:../../BSP/MPU/mpu.c **** 
+  41:../../BSP/MPU/mpu.c ****     mpu_set_protection(0x24000000U, MPU_REGION_SIZE_512KB, MPU_REGION_NUMBER2, 0,
+ 151              		.loc 1 41 5 view .LVU34
+ 152 0020 0395     		str	r5, [sp, #12]
+ 153 0022 0295     		str	r5, [sp, #8]
+ 154 0024 0194     		str	r4, [sp, #4]
+ 155 0026 0096     		str	r6, [sp]
+ 156 0028 2346     		mov	r3, r4
+ 157 002a 0222     		movs	r2, #2
+ 158 002c 1221     		movs	r1, #18
+ 159 002e 4FF01050 		mov	r0, #603979776
+ 160 0032 FFF7FEFF 		bl	mpu_set_protection
+ 161              	.LVL6:
+  42:../../BSP/MPU/mpu.c ****                        MPU_REGION_FULL_ACCESS, MPU_ACCESS_NOT_SHAREABLE,
+  43:../../BSP/MPU/mpu.c ****                        MPU_ACCESS_CACHEABLE, MPU_ACCESS_BUFFERABLE);
+  44:../../BSP/MPU/mpu.c **** 
+  45:../../BSP/MPU/mpu.c ****     mpu_set_protection(0x30000000U, MPU_REGION_SIZE_512KB, MPU_REGION_NUMBER3, 0,
+ 162              		.loc 1 45 5 view .LVU35
+ 163 0036 0395     		str	r5, [sp, #12]
+ 164 0038 0295     		str	r5, [sp, #8]
+ 165 003a 0194     		str	r4, [sp, #4]
+ 166 003c 0096     		str	r6, [sp]
+ 167 003e 2346     		mov	r3, r4
+ 168 0040 3246     		mov	r2, r6
+ 169 0042 1221     		movs	r1, #18
+ 170 0044 4FF04050 		mov	r0, #805306368
+ 171 0048 FFF7FEFF 		bl	mpu_set_protection
+ 172              	.LVL7:
+  46:../../BSP/MPU/mpu.c ****                        MPU_REGION_FULL_ACCESS, MPU_ACCESS_NOT_SHAREABLE,
+  47:../../BSP/MPU/mpu.c ****                        MPU_ACCESS_CACHEABLE, MPU_ACCESS_BUFFERABLE);
+  48:../../BSP/MPU/mpu.c **** 
+  49:../../BSP/MPU/mpu.c ****     mpu_set_protection(0x38000000U, MPU_REGION_SIZE_64KB, MPU_REGION_NUMBER4, 0,
+ 173              		.loc 1 49 5 view .LVU36
+ 174 004c 0395     		str	r5, [sp, #12]
+ 175 004e 0295     		str	r5, [sp, #8]
+ 176 0050 0194     		str	r4, [sp, #4]
+ 177 0052 0096     		str	r6, [sp]
+ 178 0054 2346     		mov	r3, r4
+ 179 0056 0422     		movs	r2, #4
+ 180 0058 0F21     		movs	r1, #15
+ 181 005a 4FF06050 		mov	r0, #939524096
+ 182 005e FFF7FEFF 		bl	mpu_set_protection
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cciXZEV9.s 			page 5
+
+
+ 183              	.LVL8:
+  50:../../BSP/MPU/mpu.c ****                        MPU_REGION_FULL_ACCESS, MPU_ACCESS_NOT_SHAREABLE,
+  51:../../BSP/MPU/mpu.c ****                        MPU_ACCESS_CACHEABLE, MPU_ACCESS_BUFFERABLE);
+  52:../../BSP/MPU/mpu.c **** 
+  53:../../BSP/MPU/mpu.c ****     mpu_set_protection(0x60000000U, MPU_REGION_SIZE_64MB, MPU_REGION_NUMBER5, 0,
+ 184              		.loc 1 53 5 view .LVU37
+ 185 0062 0394     		str	r4, [sp, #12]
+ 186 0064 0294     		str	r4, [sp, #8]
+ 187 0066 0194     		str	r4, [sp, #4]
+ 188 0068 0096     		str	r6, [sp]
+ 189 006a 2346     		mov	r3, r4
+ 190 006c 0522     		movs	r2, #5
+ 191 006e 1921     		movs	r1, #25
+ 192 0070 4FF0C040 		mov	r0, #1610612736
+ 193 0074 FFF7FEFF 		bl	mpu_set_protection
+ 194              	.LVL9:
+  54:../../BSP/MPU/mpu.c ****                        MPU_REGION_FULL_ACCESS, MPU_ACCESS_NOT_SHAREABLE,
+  55:../../BSP/MPU/mpu.c ****                        MPU_ACCESS_NOT_CACHEABLE, MPU_ACCESS_NOT_BUFFERABLE);
+  56:../../BSP/MPU/mpu.c **** 
+  57:../../BSP/MPU/mpu.c ****     mpu_set_protection(0xD0000000U, MPU_REGION_SIZE_32MB, MPU_REGION_NUMBER6, 0,
+ 195              		.loc 1 57 5 view .LVU38
+ 196 0078 0395     		str	r5, [sp, #12]
+ 197 007a 0295     		str	r5, [sp, #8]
+ 198 007c 0194     		str	r4, [sp, #4]
+ 199 007e 0096     		str	r6, [sp]
+ 200 0080 2346     		mov	r3, r4
+ 201 0082 0622     		movs	r2, #6
+ 202 0084 1821     		movs	r1, #24
+ 203 0086 4FF05040 		mov	r0, #-805306368
+ 204 008a FFF7FEFF 		bl	mpu_set_protection
+ 205              	.LVL10:
+  58:../../BSP/MPU/mpu.c ****                        MPU_REGION_FULL_ACCESS, MPU_ACCESS_NOT_SHAREABLE,
+  59:../../BSP/MPU/mpu.c ****                        MPU_ACCESS_CACHEABLE, MPU_ACCESS_BUFFERABLE);
+  60:../../BSP/MPU/mpu.c **** 
+  61:../../BSP/MPU/mpu.c ****     mpu_set_protection(0x80000000U, MPU_REGION_SIZE_256MB, MPU_REGION_NUMBER7, 1,
+ 206              		.loc 1 61 5 view .LVU39
+ 207 008e 0394     		str	r4, [sp, #12]
+ 208 0090 0294     		str	r4, [sp, #8]
+ 209 0092 0194     		str	r4, [sp, #4]
+ 210 0094 0096     		str	r6, [sp]
+ 211 0096 2B46     		mov	r3, r5
+ 212 0098 0722     		movs	r2, #7
+ 213 009a 1B21     		movs	r1, #27
+ 214 009c 4FF00040 		mov	r0, #-2147483648
+ 215 00a0 FFF7FEFF 		bl	mpu_set_protection
+ 216              	.LVL11:
+  62:../../BSP/MPU/mpu.c ****                        MPU_REGION_FULL_ACCESS, MPU_ACCESS_NOT_SHAREABLE,
+  63:../../BSP/MPU/mpu.c ****                        MPU_ACCESS_NOT_CACHEABLE, MPU_ACCESS_NOT_BUFFERABLE);
+  64:../../BSP/MPU/mpu.c **** }
+ 217              		.loc 1 64 1 is_stmt 0 view .LVU40
+ 218 00a4 04B0     		add	sp, sp, #16
+ 219              	.LCFI5:
+ 220              		.cfi_def_cfa_offset 16
+ 221              		@ sp needed
+ 222 00a6 70BD     		pop	{r4, r5, r6, pc}
+ 223              		.cfi_endproc
+ 224              	.LFE145:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cciXZEV9.s 			page 6
+
+
+ 226              		.text
+ 227              	.Letext0:
+ 228              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 229              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 230              		.file 4 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cciXZEV9.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mpu.c
+C:\Users\28576\AppData\Local\Temp\cciXZEV9.s:20     .text.mpu_set_protection:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cciXZEV9.s:26     .text.mpu_set_protection:00000000 mpu_set_protection
+C:\Users\28576\AppData\Local\Temp\cciXZEV9.s:115    .text.mpu_memory_protection:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cciXZEV9.s:121    .text.mpu_memory_protection:00000000 mpu_memory_protection
+
+UNDEFINED SYMBOLS
+HAL_MPU_Disable
+HAL_MPU_ConfigRegion
+HAL_MPU_Enable

@@ -1,0 +1,447 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccke7qsM.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_utils.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c"
+  19              		.section	.text.lv_utils_bsearch,"ax",%progbits
+  20              		.align	1
+  21              		.global	lv_utils_bsearch
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_utils_bsearch:
+  27              	.LVL0:
+  28              	.LFB22:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  * @file lv_utils.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** #include "lv_utils.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** #include "lv_fs.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** #include "lv_types.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** #include "cache/lv_cache.h"
+  13:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  14:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** /*********************
+  15:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  *      DEFINES
+  16:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  *********************/
+  17:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  18:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** /**********************
+  19:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  *      TYPEDEFS
+  20:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  **********************/
+  21:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  22:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** /**********************
+  23:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  *  STATIC PROTOTYPES
+  24:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  **********************/
+  25:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  26:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** /**********************
+  27:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  *  STATIC VARIABLES
+  28:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  **********************/
+  29:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  30:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** /**********************
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccke7qsM.s 			page 2
+
+
+  31:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  *      MACROS
+  32:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  **********************/
+  33:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  34:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** /**********************
+  35:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  *   GLOBAL FUNCTIONS
+  36:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****  **********************/
+  37:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** void * lv_utils_bsearch(const void * key, const void * base, size_t n, size_t size,
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****                         int (*cmp)(const void * pRef, const void * pElement))
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** {
+  29              		.loc 1 40 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 4, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 40 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 32
+  37              		.cfi_offset 4, -32
+  38              		.cfi_offset 5, -28
+  39              		.cfi_offset 6, -24
+  40              		.cfi_offset 7, -20
+  41              		.cfi_offset 8, -16
+  42              		.cfi_offset 9, -12
+  43              		.cfi_offset 10, -8
+  44              		.cfi_offset 14, -4
+  45 0004 8146     		mov	r9, r0
+  46 0006 8846     		mov	r8, r1
+  47 0008 1446     		mov	r4, r2
+  48 000a 1F46     		mov	r7, r3
+  49 000c DDF820A0 		ldr	r10, [sp, #32]
+  41:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     const char * middle;
+  50              		.loc 1 41 5 is_stmt 1 view .LVU2
+  42:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     int32_t c;
+  51              		.loc 1 42 5 view .LVU3
+  43:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     for(middle = base; n != 0;) {
+  52              		.loc 1 44 5 view .LVU4
+  53              	.LVL1:
+  54              		.loc 1 44 5 is_stmt 0 view .LVU5
+  55 0010 05E0     		b	.L2
+  56              	.LVL2:
+  57              	.L9:
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         middle += (n / 2) * size;
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         if((c = (*cmp)(key, middle)) > 0) {
+  47:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****             n    = (n / 2) - ((n & 1) == 0);
+  58              		.loc 1 47 13 is_stmt 1 view .LVU6
+  59              		.loc 1 47 39 is_stmt 0 view .LVU7
+  60 0012 E443     		mvns	r4, r4
+  61              	.LVL3:
+  62              		.loc 1 47 39 view .LVU8
+  63 0014 04F00104 		and	r4, r4, #1
+  64              	.LVL4:
+  65              		.loc 1 47 18 view .LVU9
+  66 0018 2C1B     		subs	r4, r5, r4
+  67              	.LVL5:
+  48:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****             base = (middle += size);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccke7qsM.s 			page 3
+
+
+  68              		.loc 1 48 13 is_stmt 1 view .LVU10
+  69              		.loc 1 48 28 is_stmt 0 view .LVU11
+  70 001a 06EB0708 		add	r8, r6, r7
+  71              	.LVL6:
+  72              	.L2:
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         middle += (n / 2) * size;
+  73              		.loc 1 44 26 is_stmt 1 discriminator 1 view .LVU12
+  74 001e 5CB1     		cbz	r4, .L8
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         middle += (n / 2) * size;
+  75              		.loc 1 45 9 view .LVU13
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         middle += (n / 2) * size;
+  76              		.loc 1 45 22 is_stmt 0 view .LVU14
+  77 0020 6508     		lsrs	r5, r4, #1
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         middle += (n / 2) * size;
+  78              		.loc 1 45 16 view .LVU15
+  79 0022 07FB0586 		mla	r6, r7, r5, r8
+  80              	.LVL7:
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****             n    = (n / 2) - ((n & 1) == 0);
+  81              		.loc 1 46 9 is_stmt 1 view .LVU16
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****             n    = (n / 2) - ((n & 1) == 0);
+  82              		.loc 1 46 18 is_stmt 0 view .LVU17
+  83 0026 3146     		mov	r1, r6
+  84 0028 4846     		mov	r0, r9
+  85 002a D047     		blx	r10
+  86              	.LVL8:
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****             n    = (n / 2) - ((n & 1) == 0);
+  87              		.loc 1 46 11 discriminator 1 view .LVU18
+  88 002c 0028     		cmp	r0, #0
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****             n    = (n / 2) - ((n & 1) == 0);
+  89              		.loc 1 46 11 discriminator 1 view .LVU19
+  90 002e F0DC     		bgt	.L9
+  49:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         }
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         else if(c < 0) {
+  91              		.loc 1 50 14 is_stmt 1 view .LVU20
+  92              		.loc 1 50 16 is_stmt 0 view .LVU21
+  93 0030 0028     		cmp	r0, #0
+  94 0032 02DA     		bge	.L1
+  51:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****             n /= 2;
+  95              		.loc 1 51 15 view .LVU22
+  96 0034 2C46     		mov	r4, r5
+  97              	.LVL9:
+  98              		.loc 1 51 15 view .LVU23
+  99 0036 F2E7     		b	.L2
+ 100              	.LVL10:
+ 101              	.L8:
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****             middle = base;
+  53:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         }
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         else {
+  55:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****             return (char *)middle;
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         }
+  57:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     }
+  58:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     return NULL;
+ 102              		.loc 1 58 12 view .LVU24
+ 103 0038 2646     		mov	r6, r4
+ 104              	.LVL11:
+ 105              	.L1:
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccke7qsM.s 			page 4
+
+
+ 106              		.loc 1 59 1 view .LVU25
+ 107 003a 3046     		mov	r0, r6
+ 108 003c BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 109              		.loc 1 59 1 view .LVU26
+ 110              		.cfi_endproc
+ 111              	.LFE22:
+ 113              		.section	.text.lv_draw_buf_save_to_file,"ax",%progbits
+ 114              		.align	1
+ 115              		.global	lv_draw_buf_save_to_file
+ 116              		.syntax unified
+ 117              		.thumb
+ 118              		.thumb_func
+ 120              	lv_draw_buf_save_to_file:
+ 121              	.LVL12:
+ 122              	.LFB23:
+  60:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  61:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** lv_result_t lv_draw_buf_save_to_file(const lv_draw_buf_t * draw_buf, const char * path)
+  62:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** {
+ 123              		.loc 1 62 1 is_stmt 1 view -0
+ 124              		.cfi_startproc
+ 125              		@ args = 0, pretend = 0, frame = 16
+ 126              		@ frame_needed = 0, uses_anonymous_args = 0
+ 127              		.loc 1 62 1 is_stmt 0 view .LVU28
+ 128 0000 70B5     		push	{r4, r5, r6, lr}
+ 129              	.LCFI1:
+ 130              		.cfi_def_cfa_offset 16
+ 131              		.cfi_offset 4, -16
+ 132              		.cfi_offset 5, -12
+ 133              		.cfi_offset 6, -8
+ 134              		.cfi_offset 14, -4
+ 135 0002 84B0     		sub	sp, sp, #16
+ 136              	.LCFI2:
+ 137              		.cfi_def_cfa_offset 32
+ 138 0004 0446     		mov	r4, r0
+ 139 0006 0D46     		mov	r5, r1
+  63:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     lv_fs_file_t file;
+ 140              		.loc 1 63 5 is_stmt 1 view .LVU29
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     lv_fs_res_t res = lv_fs_open(&file, path, LV_FS_MODE_WR);
+ 141              		.loc 1 64 5 view .LVU30
+ 142              		.loc 1 64 23 is_stmt 0 view .LVU31
+ 143 0008 0122     		movs	r2, #1
+ 144 000a 01A8     		add	r0, sp, #4
+ 145              	.LVL13:
+ 146              		.loc 1 64 23 view .LVU32
+ 147 000c FFF7FEFF 		bl	lv_fs_open
+ 148              	.LVL14:
+  65:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     if(res != LV_FS_RES_OK) {
+ 149              		.loc 1 65 5 is_stmt 1 view .LVU33
+ 150              		.loc 1 65 7 is_stmt 0 view .LVU34
+ 151 0010 20B1     		cbz	r0, .L18
+  66:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("create file %s failed", path);
+  67:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         return LV_RESULT_INVALID;
+ 152              		.loc 1 67 16 view .LVU35
+ 153 0012 0023     		movs	r3, #0
+ 154 0014 1E46     		mov	r6, r3
+ 155              	.LVL15:
+ 156              	.L11:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccke7qsM.s 			page 5
+
+
+  68:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     }
+  69:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     /*Image content modified, invalidate image cache.*/
+  71:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     lv_image_cache_drop(path);
+  72:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     uint32_t bw;
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     res = lv_fs_write(&file, &draw_buf->header, sizeof(draw_buf->header), &bw);
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     if(res != LV_FS_RES_OK || bw != sizeof(draw_buf->header)) {
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->header failed");
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         lv_fs_close(&file);
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         return LV_RESULT_INVALID;
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     }
+  80:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  81:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     res = lv_fs_write(&file, draw_buf->data, draw_buf->data_size, &bw);
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     if(res != LV_FS_RES_OK || bw != draw_buf->data_size) {
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->data failed");
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         lv_fs_close(&file);
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         return LV_RESULT_INVALID;
+  86:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     }
+  87:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     lv_fs_close(&file);
+  89:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     LV_LOG_TRACE("saved draw_buf to %s", path);
+  90:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     return LV_RESULT_OK;
+  91:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** }
+ 157              		.loc 1 91 1 view .LVU36
+ 158 0016 3046     		mov	r0, r6
+ 159 0018 04B0     		add	sp, sp, #16
+ 160              	.LCFI3:
+ 161              		.cfi_remember_state
+ 162              		.cfi_def_cfa_offset 16
+ 163              		@ sp needed
+ 164 001a 70BD     		pop	{r4, r5, r6, pc}
+ 165              	.LVL16:
+ 166              	.L18:
+ 167              	.LCFI4:
+ 168              		.cfi_restore_state
+ 169              		.loc 1 91 1 view .LVU37
+ 170 001c 0646     		mov	r6, r0
+  71:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+ 171              		.loc 1 71 5 is_stmt 1 view .LVU38
+ 172 001e 2846     		mov	r0, r5
+ 173              	.LVL17:
+  71:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** 
+ 174              		.loc 1 71 5 is_stmt 0 view .LVU39
+ 175 0020 FFF7FEFF 		bl	lv_image_cache_drop
+ 176              	.LVL18:
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     res = lv_fs_write(&file, &draw_buf->header, sizeof(draw_buf->header), &bw);
+ 177              		.loc 1 73 5 is_stmt 1 view .LVU40
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     if(res != LV_FS_RES_OK || bw != sizeof(draw_buf->header)) {
+ 178              		.loc 1 74 5 view .LVU41
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     if(res != LV_FS_RES_OK || bw != sizeof(draw_buf->header)) {
+ 179              		.loc 1 74 11 is_stmt 0 view .LVU42
+ 180 0024 6B46     		mov	r3, sp
+ 181 0026 0C22     		movs	r2, #12
+ 182 0028 2146     		mov	r1, r4
+ 183 002a 01A8     		add	r0, sp, #4
+ 184 002c FFF7FEFF 		bl	lv_fs_write
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccke7qsM.s 			page 6
+
+
+ 185              	.LVL19:
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->header failed");
+ 186              		.loc 1 75 5 is_stmt 1 view .LVU43
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->header failed");
+ 187              		.loc 1 75 7 is_stmt 0 view .LVU44
+ 188 0030 0546     		mov	r5, r0
+ 189              	.LVL20:
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->header failed");
+ 190              		.loc 1 75 7 view .LVU45
+ 191 0032 10B9     		cbnz	r0, .L12
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->header failed");
+ 192              		.loc 1 75 34 discriminator 1 view .LVU46
+ 193 0034 009B     		ldr	r3, [sp]
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->header failed");
+ 194              		.loc 1 75 28 discriminator 1 view .LVU47
+ 195 0036 0C2B     		cmp	r3, #12
+ 196 0038 03D0     		beq	.L13
+ 197              	.L12:
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         lv_fs_close(&file);
+ 198              		.loc 1 76 9 is_stmt 1 view .LVU48
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         lv_fs_close(&file);
+ 199              		.loc 1 76 9 view .LVU49
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         lv_fs_close(&file);
+ 200              		.loc 1 76 9 view .LVU50
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         return LV_RESULT_INVALID;
+ 201              		.loc 1 77 9 view .LVU51
+ 202 003a 01A8     		add	r0, sp, #4
+ 203              	.LVL21:
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         return LV_RESULT_INVALID;
+ 204              		.loc 1 77 9 is_stmt 0 view .LVU52
+ 205 003c FFF7FEFF 		bl	lv_fs_close
+ 206              	.LVL22:
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     }
+ 207              		.loc 1 78 9 is_stmt 1 view .LVU53
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     }
+ 208              		.loc 1 78 16 is_stmt 0 view .LVU54
+ 209 0040 E9E7     		b	.L11
+ 210              	.LVL23:
+ 211              	.L13:
+  81:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     if(res != LV_FS_RES_OK || bw != draw_buf->data_size) {
+ 212              		.loc 1 81 5 is_stmt 1 view .LVU55
+  81:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     if(res != LV_FS_RES_OK || bw != draw_buf->data_size) {
+ 213              		.loc 1 81 11 is_stmt 0 view .LVU56
+ 214 0042 6B46     		mov	r3, sp
+ 215 0044 E268     		ldr	r2, [r4, #12]
+ 216 0046 2169     		ldr	r1, [r4, #16]
+ 217 0048 01A8     		add	r0, sp, #4
+ 218              	.LVL24:
+  81:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     if(res != LV_FS_RES_OK || bw != draw_buf->data_size) {
+ 219              		.loc 1 81 11 view .LVU57
+ 220 004a FFF7FEFF 		bl	lv_fs_write
+ 221              	.LVL25:
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->data failed");
+ 222              		.loc 1 82 5 is_stmt 1 view .LVU58
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->data failed");
+ 223              		.loc 1 82 7 is_stmt 0 view .LVU59
+ 224 004e 18B9     		cbnz	r0, .L14
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccke7qsM.s 			page 7
+
+
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->data failed");
+ 225              		.loc 1 82 45 discriminator 1 view .LVU60
+ 226 0050 E268     		ldr	r2, [r4, #12]
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->data failed");
+ 227              		.loc 1 82 34 discriminator 1 view .LVU61
+ 228 0052 009B     		ldr	r3, [sp]
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         LV_LOG_ERROR("write draw_buf->data failed");
+ 229              		.loc 1 82 28 discriminator 1 view .LVU62
+ 230 0054 9A42     		cmp	r2, r3
+ 231 0056 04D0     		beq	.L15
+ 232              	.L14:
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         lv_fs_close(&file);
+ 233              		.loc 1 83 9 is_stmt 1 view .LVU63
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         lv_fs_close(&file);
+ 234              		.loc 1 83 9 view .LVU64
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         lv_fs_close(&file);
+ 235              		.loc 1 83 9 view .LVU65
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         return LV_RESULT_INVALID;
+ 236              		.loc 1 84 9 view .LVU66
+ 237 0058 01A8     		add	r0, sp, #4
+ 238              	.LVL26:
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****         return LV_RESULT_INVALID;
+ 239              		.loc 1 84 9 is_stmt 0 view .LVU67
+ 240 005a FFF7FEFF 		bl	lv_fs_close
+ 241              	.LVL27:
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     }
+ 242              		.loc 1 85 9 is_stmt 1 view .LVU68
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     }
+ 243              		.loc 1 85 16 is_stmt 0 view .LVU69
+ 244 005e 2E46     		mov	r6, r5
+ 245 0060 D9E7     		b	.L11
+ 246              	.LVL28:
+ 247              	.L15:
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     LV_LOG_TRACE("saved draw_buf to %s", path);
+ 248              		.loc 1 88 5 is_stmt 1 view .LVU70
+ 249 0062 01A8     		add	r0, sp, #4
+ 250              	.LVL29:
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     LV_LOG_TRACE("saved draw_buf to %s", path);
+ 251              		.loc 1 88 5 is_stmt 0 view .LVU71
+ 252 0064 FFF7FEFF 		bl	lv_fs_close
+ 253              	.LVL30:
+  89:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     return LV_RESULT_OK;
+ 254              		.loc 1 89 5 is_stmt 1 view .LVU72
+  89:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     return LV_RESULT_OK;
+ 255              		.loc 1 89 5 view .LVU73
+  89:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c ****     return LV_RESULT_OK;
+ 256              		.loc 1 89 5 view .LVU74
+  90:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** }
+ 257              		.loc 1 90 5 view .LVU75
+  90:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_utils.c **** }
+ 258              		.loc 1 90 12 is_stmt 0 view .LVU76
+ 259 0068 0123     		movs	r3, #1
+ 260 006a 1E46     		mov	r6, r3
+ 261 006c D3E7     		b	.L11
+ 262              		.cfi_endproc
+ 263              	.LFE23:
+ 265              		.text
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccke7qsM.s 			page 8
+
+
+ 266              	.Letext0:
+ 267              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 268              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 269              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 270              		.file 5 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ 271              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/misc/../draw/lv_draw_buf.h"
+ 272              		.file 7 "../../Middlewares/LVGL/GUI/lvgl/src/misc/../draw/lv_image_dsc.h"
+ 273              		.file 8 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_fs.h"
+ 274              		.file 9 "../../Middlewares/LVGL/GUI/lvgl/src/misc/cache/instance/lv_image_cache.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccke7qsM.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_utils.c
+C:\Users\28576\AppData\Local\Temp\ccke7qsM.s:20     .text.lv_utils_bsearch:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccke7qsM.s:26     .text.lv_utils_bsearch:00000000 lv_utils_bsearch
+C:\Users\28576\AppData\Local\Temp\ccke7qsM.s:114    .text.lv_draw_buf_save_to_file:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccke7qsM.s:120    .text.lv_draw_buf_save_to_file:00000000 lv_draw_buf_save_to_file
+
+UNDEFINED SYMBOLS
+lv_fs_open
+lv_image_cache_drop
+lv_fs_write
+lv_fs_close

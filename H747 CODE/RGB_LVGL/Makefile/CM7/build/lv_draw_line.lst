@@ -1,0 +1,470 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cchyJMtI.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_draw_line.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c"
+  19              		.section	.text.lv_draw_line_dsc_init,"ax",%progbits
+  20              		.align	1
+  21              		.global	lv_draw_line_dsc_init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_draw_line_dsc_init:
+  27              	.LVL0:
+  28              	.LFB187:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  * @file lv_draw_line.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** #include "lv_draw_private.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** #include "../core/lv_refr.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** #include "../misc/lv_math.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** #include "../misc/lv_types.h"
+  13:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** #include "../stdlib/lv_string.h"
+  14:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  15:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** /*********************
+  16:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  *      DEFINES
+  17:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  *********************/
+  18:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  19:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** /**********************
+  20:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  *      TYPEDEFS
+  21:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  **********************/
+  22:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  23:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** /**********************
+  24:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  *  STATIC PROTOTYPES
+  25:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  **********************/
+  26:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  27:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** /**********************
+  28:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  *  STATIC VARIABLES
+  29:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  **********************/
+  30:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cchyJMtI.s 			page 2
+
+
+  31:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** /**********************
+  32:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  *      MACROS
+  33:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  **********************/
+  34:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  35:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** /**********************
+  36:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  *   GLOBAL FUNCTIONS
+  37:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****  **********************/
+  38:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  39:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** void LV_ATTRIBUTE_FAST_MEM lv_draw_line_dsc_init(lv_draw_line_dsc_t * dsc)
+  40:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** {
+  29              		.loc 1 40 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 40 1 is_stmt 0 view .LVU1
+  34 0000 10B5     		push	{r4, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+  39 0002 0446     		mov	r4, r0
+  41:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     lv_memzero(dsc, sizeof(lv_draw_line_dsc_t));
+  40              		.loc 1 41 5 is_stmt 1 view .LVU2
+  41              	.LVL1:
+  42              	.LBB4:
+  43              	.LBI4:
+  44              		.file 2 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib/lv_string.h"
+   1:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+   2:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @file lv_string.h
+   3:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *
+   4:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+   5:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+   6:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #ifndef LV_STRING_H
+   7:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #define LV_STRING_H
+   8:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+   9:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #ifdef __cplusplus
+  10:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** extern "C" {
+  11:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #endif
+  12:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  13:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /*********************
+  14:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *      INCLUDES
+  15:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *********************/
+  16:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #include "../lv_conf_internal.h"
+  17:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #include "../misc/lv_types.h"
+  18:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  19:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /*********************
+  20:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *      DEFINES
+  21:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *********************/
+  22:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  23:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**********************
+  24:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *      TYPEDEFS
+  25:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  **********************/
+  26:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  27:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**********************
+  28:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * GLOBAL PROTOTYPES
+  29:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  **********************/
+  30:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cchyJMtI.s 			page 3
+
+
+  31:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  32:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief Copies a block of memory from a source address to a destination address.
+  33:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst Pointer to the destination array where the content is to be copied.
+  34:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param src Pointer to the source of data to be copied.
+  35:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to copy.
+  36:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @return Pointer to the destination array.
+  37:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @note The function does not check for any overlapping of the source and destination memory block
+  38:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  39:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** void * lv_memcpy(void * dst, const void * src, size_t len);
+  40:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  41:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  42:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief Fills a block of memory with a specified value.
+  43:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst Pointer to the destination array to fill with the specified value.
+  44:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param v Value to be set. The value is passed as an int, but the function fills
+  45:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *          the block of memory using the unsigned char conversion of this value.
+  46:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to be set to the value.
+  47:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  48:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** void lv_memset(void * dst, uint8_t v, size_t len);
+  49:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  50:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  51:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief Move a block of memory from source to destination
+  52:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst Pointer to the destination array where the content is to be copied.
+  53:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param src Pointer to the source of data to be copied.
+  54:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to copy
+  55:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @return Pointer to the destination array.
+  56:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  57:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** void * lv_memmove(void * dst, const void * src, size_t len);
+  58:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  59:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  60:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief This function will compare two memory blocks
+  61:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param p1 Pointer to the first memory block
+  62:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param p2 Pointer to the second memory block
+  63:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to compare
+  64:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @return The difference between the value of the first unmatching byte.
+  65:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  66:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** int lv_memcmp(const void * p1, const void * p2, size_t len);
+  67:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  68:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  69:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * Same as `memset(dst, 0x00, len)`.
+  70:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst pointer to the destination buffer
+  71:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len number of byte to set
+  72:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  73:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** static inline void lv_memzero(void * dst, size_t len)
+  45              		.loc 2 73 20 view .LVU3
+  46              	.LBB5:
+  74:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** {
+  75:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****     lv_memset(dst, 0x00, len);
+  47              		.loc 2 75 5 view .LVU4
+  48 0004 4022     		movs	r2, #64
+  49 0006 0021     		movs	r1, #0
+  50 0008 FFF7FEFF 		bl	lv_memset
+  51              	.LVL2:
+  52              		.loc 2 75 5 is_stmt 0 view .LVU5
+  53              	.LBE5:
+  54              	.LBE4:
+  42:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     dsc->width = 1;
+  55              		.loc 1 42 5 is_stmt 1 view .LVU6
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cchyJMtI.s 			page 4
+
+
+  56              		.loc 1 42 16 is_stmt 0 view .LVU7
+  57 000c 0123     		movs	r3, #1
+  58 000e 2363     		str	r3, [r4, #48]
+  43:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     dsc->opa = LV_OPA_COVER;
+  59              		.loc 1 43 5 is_stmt 1 view .LVU8
+  60              		.loc 1 43 14 is_stmt 0 view .LVU9
+  61 0010 FF23     		movs	r3, #255
+  62 0012 84F83C30 		strb	r3, [r4, #60]
+  44:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     dsc->color = lv_color_black();
+  63              		.loc 1 44 5 is_stmt 1 view .LVU10
+  64              		.loc 1 44 18 is_stmt 0 view .LVU11
+  65 0016 FFF7FEFF 		bl	lv_color_black
+  66              	.LVL3:
+  67 001a 84F82C00 		strb	r0, [r4, #44]
+  68 001e C0F30723 		ubfx	r3, r0, #8, #8
+  69 0022 84F82D30 		strb	r3, [r4, #45]
+  70 0026 C0F30740 		ubfx	r0, r0, #16, #8
+  71 002a 84F82E00 		strb	r0, [r4, #46]
+  45:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     dsc->base.dsc_size = sizeof(lv_draw_line_dsc_t);
+  72              		.loc 1 45 5 is_stmt 1 view .LVU12
+  73              		.loc 1 45 24 is_stmt 0 view .LVU13
+  74 002e 4023     		movs	r3, #64
+  75 0030 6361     		str	r3, [r4, #20]
+  46:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** }
+  76              		.loc 1 46 1 view .LVU14
+  77 0032 10BD     		pop	{r4, pc}
+  78              		.loc 1 46 1 view .LVU15
+  79              		.cfi_endproc
+  80              	.LFE187:
+  82              		.section	.text.lv_draw_task_get_line_dsc,"ax",%progbits
+  83              		.align	1
+  84              		.global	lv_draw_task_get_line_dsc
+  85              		.syntax unified
+  86              		.thumb
+  87              		.thumb_func
+  89              	lv_draw_task_get_line_dsc:
+  90              	.LVL4:
+  91              	.LFB188:
+  47:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  48:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** lv_draw_line_dsc_t * lv_draw_task_get_line_dsc(lv_draw_task_t * task)
+  49:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** {
+  92              		.loc 1 49 1 is_stmt 1 view -0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96              		@ link register save eliminated.
+  50:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     return task->type == LV_DRAW_TASK_TYPE_LINE ? (lv_draw_line_dsc_t *)task->draw_dsc : NULL;
+  97              		.loc 1 50 5 view .LVU17
+  98              		.loc 1 50 16 is_stmt 0 view .LVU18
+  99 0000 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 100              		.loc 1 50 88 view .LVU19
+ 101 0002 082B     		cmp	r3, #8
+ 102 0004 01D1     		bne	.L5
+ 103              		.loc 1 50 88 discriminator 1 view .LVU20
+ 104 0006 406D     		ldr	r0, [r0, #84]
+ 105              	.LVL5:
+ 106              		.loc 1 50 88 discriminator 1 view .LVU21
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cchyJMtI.s 			page 5
+
+
+ 107 0008 7047     		bx	lr
+ 108              	.LVL6:
+ 109              	.L5:
+ 110              		.loc 1 50 88 discriminator 2 view .LVU22
+ 111 000a 0020     		movs	r0, #0
+ 112              	.LVL7:
+  51:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** }
+ 113              		.loc 1 51 1 view .LVU23
+ 114 000c 7047     		bx	lr
+ 115              		.cfi_endproc
+ 116              	.LFE188:
+ 118              		.section	.text.lv_draw_line,"ax",%progbits
+ 119              		.align	1
+ 120              		.global	lv_draw_line
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 125              	lv_draw_line:
+ 126              	.LVL8:
+ 127              	.LFB189:
+  52:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  53:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** void LV_ATTRIBUTE_FAST_MEM lv_draw_line(lv_layer_t * layer, const lv_draw_line_dsc_t * dsc)
+  54:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** {
+ 128              		.loc 1 54 1 is_stmt 1 view -0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 16
+ 131              		@ frame_needed = 0, uses_anonymous_args = 0
+  55:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     if(dsc->width == 0) return;
+ 132              		.loc 1 55 5 view .LVU25
+ 133              		.loc 1 55 11 is_stmt 0 view .LVU26
+ 134 0000 0B6B     		ldr	r3, [r1, #48]
+ 135              		.loc 1 55 7 view .LVU27
+ 136 0002 002B     		cmp	r3, #0
+ 137 0004 35D0     		beq	.L10
+  54:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     if(dsc->width == 0) return;
+ 138              		.loc 1 54 1 view .LVU28
+ 139 0006 30B5     		push	{r4, r5, lr}
+ 140              	.LCFI1:
+ 141              		.cfi_def_cfa_offset 12
+ 142              		.cfi_offset 4, -12
+ 143              		.cfi_offset 5, -8
+ 144              		.cfi_offset 14, -4
+ 145 0008 85B0     		sub	sp, sp, #20
+ 146              	.LCFI2:
+ 147              		.cfi_def_cfa_offset 32
+ 148 000a 0546     		mov	r5, r0
+ 149 000c 0C46     		mov	r4, r1
+  56:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     if(dsc->opa <= LV_OPA_MIN) return;
+ 150              		.loc 1 56 5 is_stmt 1 view .LVU29
+ 151              		.loc 1 56 11 is_stmt 0 view .LVU30
+ 152 000e 91F83C20 		ldrb	r2, [r1, #60]	@ zero_extendqisi2
+ 153              		.loc 1 56 7 view .LVU31
+ 154 0012 022A     		cmp	r2, #2
+ 155 0014 01D8     		bhi	.L13
+ 156              	.LVL9:
+ 157              	.L6:
+  57:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cchyJMtI.s 			page 6
+
+
+  58:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     LV_PROFILER_DRAW_BEGIN;
+  59:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     lv_area_t a;
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.x1 = (int32_t)LV_MIN(dsc->p1.x, dsc->p2.x) - dsc->width;
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.x2 = (int32_t)LV_MAX(dsc->p1.x, dsc->p2.x) + dsc->width;
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.y1 = (int32_t)LV_MIN(dsc->p1.y, dsc->p2.y) - dsc->width;
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.y2 = (int32_t)LV_MAX(dsc->p1.y, dsc->p2.y) + dsc->width;
+  65:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  66:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     lv_draw_task_t * t = lv_draw_add_task(layer, &a, LV_DRAW_TASK_TYPE_LINE);
+  67:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  68:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     lv_memcpy(t->draw_dsc, dsc, sizeof(*dsc));
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     lv_draw_finalize_task_creation(layer, t);
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     LV_PROFILER_DRAW_END;
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** }
+ 158              		.loc 1 72 1 view .LVU32
+ 159 0016 05B0     		add	sp, sp, #20
+ 160              	.LCFI3:
+ 161              		.cfi_remember_state
+ 162              		.cfi_def_cfa_offset 12
+ 163              		@ sp needed
+ 164 0018 30BD     		pop	{r4, r5, pc}
+ 165              	.LVL10:
+ 166              	.L13:
+ 167              	.LCFI4:
+ 168              		.cfi_restore_state
+  58:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ 169              		.loc 1 58 27 is_stmt 1 view .LVU33
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.x1 = (int32_t)LV_MIN(dsc->p1.x, dsc->p2.x) - dsc->width;
+ 170              		.loc 1 60 5 view .LVU34
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.x2 = (int32_t)LV_MAX(dsc->p1.x, dsc->p2.x) + dsc->width;
+ 171              		.loc 1 61 5 view .LVU35
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.x2 = (int32_t)LV_MAX(dsc->p1.x, dsc->p2.x) + dsc->width;
+ 172              		.loc 1 61 21 is_stmt 0 view .LVU36
+ 173 001a 496A     		ldr	r1, [r1, #36]
+ 174              	.LVL11:
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.x2 = (int32_t)LV_MAX(dsc->p1.x, dsc->p2.x) + dsc->width;
+ 175              		.loc 1 61 21 view .LVU37
+ 176 001c E269     		ldr	r2, [r4, #28]
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.x2 = (int32_t)LV_MAX(dsc->p1.x, dsc->p2.x) + dsc->width;
+ 177              		.loc 1 61 50 view .LVU38
+ 178 001e 9142     		cmp	r1, r2
+ 179 0020 D4BF     		ite	le
+ 180 0022 C3EB0100 		rsble	r0, r3, r1
+ 181 0026 C3EB0200 		rsbgt	r0, r3, r2
+ 182              	.LVL12:
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.x2 = (int32_t)LV_MAX(dsc->p1.x, dsc->p2.x) + dsc->width;
+ 183              		.loc 1 61 10 view .LVU39
+ 184 002a 0090     		str	r0, [sp]
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.y1 = (int32_t)LV_MIN(dsc->p1.y, dsc->p2.y) - dsc->width;
+ 185              		.loc 1 62 5 is_stmt 1 view .LVU40
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.y1 = (int32_t)LV_MIN(dsc->p1.y, dsc->p2.y) - dsc->width;
+ 186              		.loc 1 62 50 is_stmt 0 view .LVU41
+ 187 002c 9142     		cmp	r1, r2
+ 188 002e ACBF     		ite	ge
+ 189 0030 5818     		addge	r0, r3, r1
+ 190 0032 9818     		addlt	r0, r3, r2
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cchyJMtI.s 			page 7
+
+
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.y1 = (int32_t)LV_MIN(dsc->p1.y, dsc->p2.y) - dsc->width;
+ 191              		.loc 1 62 10 view .LVU42
+ 192 0034 0290     		str	r0, [sp, #8]
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.y2 = (int32_t)LV_MAX(dsc->p1.y, dsc->p2.y) + dsc->width;
+ 193              		.loc 1 63 5 is_stmt 1 view .LVU43
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.y2 = (int32_t)LV_MAX(dsc->p1.y, dsc->p2.y) + dsc->width;
+ 194              		.loc 1 63 21 is_stmt 0 view .LVU44
+ 195 0036 A16A     		ldr	r1, [r4, #40]
+ 196 0038 226A     		ldr	r2, [r4, #32]
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.y2 = (int32_t)LV_MAX(dsc->p1.y, dsc->p2.y) + dsc->width;
+ 197              		.loc 1 63 50 view .LVU45
+ 198 003a 9142     		cmp	r1, r2
+ 199 003c D4BF     		ite	le
+ 200 003e C3EB0100 		rsble	r0, r3, r1
+ 201 0042 C3EB0200 		rsbgt	r0, r3, r2
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     a.y2 = (int32_t)LV_MAX(dsc->p1.y, dsc->p2.y) + dsc->width;
+ 202              		.loc 1 63 10 view .LVU46
+ 203 0046 0190     		str	r0, [sp, #4]
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ 204              		.loc 1 64 5 is_stmt 1 view .LVU47
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ 205              		.loc 1 64 50 is_stmt 0 view .LVU48
+ 206 0048 9142     		cmp	r1, r2
+ 207 004a ACBF     		ite	ge
+ 208 004c 5B18     		addge	r3, r3, r1
+ 209 004e 9B18     		addlt	r3, r3, r2
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ 210              		.loc 1 64 10 view .LVU49
+ 211 0050 0393     		str	r3, [sp, #12]
+  66:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ 212              		.loc 1 66 5 is_stmt 1 view .LVU50
+  66:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ 213              		.loc 1 66 26 is_stmt 0 view .LVU51
+ 214 0052 0822     		movs	r2, #8
+ 215 0054 6946     		mov	r1, sp
+ 216 0056 2846     		mov	r0, r5
+ 217 0058 FFF7FEFF 		bl	lv_draw_add_task
+ 218              	.LVL13:
+  68:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ 219              		.loc 1 68 5 is_stmt 1 view .LVU52
+ 220 005c 4022     		movs	r2, #64
+ 221 005e 2146     		mov	r1, r4
+ 222 0060 0446     		mov	r4, r0
+ 223              	.LVL14:
+  68:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ 224              		.loc 1 68 5 is_stmt 0 view .LVU53
+ 225 0062 406D     		ldr	r0, [r0, #84]
+ 226              	.LVL15:
+  68:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** 
+ 227              		.loc 1 68 5 view .LVU54
+ 228 0064 FFF7FEFF 		bl	lv_memcpy
+ 229              	.LVL16:
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c ****     LV_PROFILER_DRAW_END;
+ 230              		.loc 1 70 5 is_stmt 1 view .LVU55
+ 231 0068 2146     		mov	r1, r4
+ 232 006a 2846     		mov	r0, r5
+ 233 006c FFF7FEFF 		bl	lv_draw_finalize_task_creation
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cchyJMtI.s 			page 8
+
+
+ 234              	.LVL17:
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** }
+ 235              		.loc 1 71 25 view .LVU56
+ 236 0070 D1E7     		b	.L6
+ 237              	.LVL18:
+ 238              	.L10:
+ 239              	.LCFI5:
+ 240              		.cfi_def_cfa_offset 0
+ 241              		.cfi_restore 4
+ 242              		.cfi_restore 5
+ 243              		.cfi_restore 14
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.c **** }
+ 244              		.loc 1 71 25 is_stmt 0 view .LVU57
+ 245 0072 7047     		bx	lr
+ 246              		.cfi_endproc
+ 247              	.LFE189:
+ 249              		.text
+ 250              	.Letext0:
+ 251              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 252              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 253              		.file 5 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 254              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/draw/../misc/lv_types.h"
+ 255              		.file 7 "../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw.h"
+ 256              		.file 8 "../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_private.h"
+ 257              		.file 9 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf.h"
+ 258              		.file 10 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_area.h"
+ 259              		.file 11 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_color.h"
+ 260              		.file 12 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_image_dsc.h"
+ 261              		.file 13 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_line.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cchyJMtI.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_draw_line.c
+C:\Users\28576\AppData\Local\Temp\cchyJMtI.s:20     .text.lv_draw_line_dsc_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cchyJMtI.s:26     .text.lv_draw_line_dsc_init:00000000 lv_draw_line_dsc_init
+C:\Users\28576\AppData\Local\Temp\cchyJMtI.s:83     .text.lv_draw_task_get_line_dsc:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cchyJMtI.s:89     .text.lv_draw_task_get_line_dsc:00000000 lv_draw_task_get_line_dsc
+C:\Users\28576\AppData\Local\Temp\cchyJMtI.s:119    .text.lv_draw_line:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cchyJMtI.s:125    .text.lv_draw_line:00000000 lv_draw_line
+
+UNDEFINED SYMBOLS
+lv_memset
+lv_color_black
+lv_draw_add_task
+lv_memcpy
+lv_draw_finalize_task_creation

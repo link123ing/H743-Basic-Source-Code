@@ -1,0 +1,532 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZcenhK.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_tick.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c"
+  19              		.section	.text.lv_tick_inc,"ax",%progbits
+  20              		.align	1
+  21              		.global	lv_tick_inc
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_tick_inc:
+  27              	.LVL0:
+  28              	.LFB187:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  * @file lv_tick.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  * Provide access to the system tick with 1 millisecond resolution
+   4:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** #include "lv_tick_private.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** #include "../misc/lv_types.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** #include "../core/lv_global.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  13:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** /*********************
+  14:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  *      DEFINES
+  15:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  *********************/
+  16:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** #define state LV_GLOBAL_DEFAULT()->tick_state
+  17:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  18:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** /**********************
+  19:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  *      TYPEDEFS
+  20:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  **********************/
+  21:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  22:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** /**********************
+  23:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  *  STATIC PROTOTYPES
+  24:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  **********************/
+  25:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  26:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** /**********************
+  27:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  *  STATIC VARIABLES
+  28:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  **********************/
+  29:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  30:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** /**********************
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZcenhK.s 			page 2
+
+
+  31:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  *      MACROS
+  32:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  **********************/
+  33:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  34:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** /**********************
+  35:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  *   GLOBAL FUNCTIONS
+  36:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****  **********************/
+  37:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  38:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** LV_ATTRIBUTE_TICK_INC void lv_tick_inc(uint32_t tick_period)
+  39:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** {
+  29              		.loc 1 39 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  40:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     lv_tick_state_t * state_p = &state;
+  34              		.loc 1 40 5 view .LVU1
+  41:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  42:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     state_p->sys_irq_flag = 0;
+  35              		.loc 1 42 5 view .LVU2
+  36              		.loc 1 42 27 is_stmt 0 view .LVU3
+  37 0000 044B     		ldr	r3, .L2
+  38 0002 0022     		movs	r2, #0
+  39 0004 83F8BC20 		strb	r2, [r3, #188]
+  43:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     state_p->sys_time += tick_period;
+  40              		.loc 1 43 5 is_stmt 1 view .LVU4
+  41              		.loc 1 43 12 is_stmt 0 view .LVU5
+  42 0008 D3F8B820 		ldr	r2, [r3, #184]
+  43              		.loc 1 43 23 view .LVU6
+  44 000c 0244     		add	r2, r2, r0
+  45 000e C3F8B820 		str	r2, [r3, #184]
+  44:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** }
+  46              		.loc 1 44 1 view .LVU7
+  47 0012 7047     		bx	lr
+  48              	.L3:
+  49              		.align	2
+  50              	.L2:
+  51 0014 00000000 		.word	lv_global
+  52              		.cfi_endproc
+  53              	.LFE187:
+  55              		.section	.text.lv_tick_get,"ax",%progbits
+  56              		.align	1
+  57              		.global	lv_tick_get
+  58              		.syntax unified
+  59              		.thumb
+  60              		.thumb_func
+  62              	lv_tick_get:
+  63              	.LFB188:
+  45:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  46:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** uint32_t lv_tick_get(void)
+  47:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** {
+  64              		.loc 1 47 1 is_stmt 1 view -0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68 0000 08B5     		push	{r3, lr}
+  69              	.LCFI0:
+  70              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZcenhK.s 			page 3
+
+
+  71              		.cfi_offset 3, -8
+  72              		.cfi_offset 14, -4
+  48:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     lv_tick_state_t * state_p = &state;
+  73              		.loc 1 48 5 view .LVU9
+  74              	.LVL1:
+  49:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  50:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     if(state_p->tick_get_cb)
+  75              		.loc 1 50 5 view .LVU10
+  76              		.loc 1 50 15 is_stmt 0 view .LVU11
+  77 0002 084B     		ldr	r3, .L8
+  78 0004 D3F8C030 		ldr	r3, [r3, #192]
+  79              		.loc 1 50 7 view .LVU12
+  80 0008 0BB1     		cbz	r3, .L5
+  51:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         return state_p->tick_get_cb();
+  81              		.loc 1 51 9 is_stmt 1 view .LVU13
+  82              		.loc 1 51 16 is_stmt 0 view .LVU14
+  83 000a 9847     		blx	r3
+  84              	.LVL2:
+  85              	.L4:
+  52:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  53:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     /*If `lv_tick_inc` is called from an interrupt while `sys_time` is read
+  54:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****      *the result might be corrupted.
+  55:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****      *This loop detects if `lv_tick_inc` was called while reading `sys_time`.
+  56:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****      *If `tick_irq_flag` was cleared in `lv_tick_inc` try to read again
+  57:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****      *until `tick_irq_flag` remains `1`.*/
+  58:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     uint32_t result;
+  59:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     do {
+  60:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         state_p->sys_irq_flag = 1;
+  61:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         result        = state_p->sys_time;
+  62:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     } while(!state_p->sys_irq_flag); /*Continue until see a non interrupted cycle*/
+  63:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  64:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     return result;
+  65:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** }
+  86              		.loc 1 65 1 view .LVU15
+  87 000c 08BD     		pop	{r3, pc}
+  88              	.L5:
+  58:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     do {
+  89              		.loc 1 58 5 is_stmt 1 view .LVU16
+  59:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         state_p->sys_irq_flag = 1;
+  90              		.loc 1 59 5 view .LVU17
+  60:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         result        = state_p->sys_time;
+  91              		.loc 1 60 9 view .LVU18
+  60:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         result        = state_p->sys_time;
+  92              		.loc 1 60 31 is_stmt 0 view .LVU19
+  93 000e 054B     		ldr	r3, .L8
+  94 0010 0122     		movs	r2, #1
+  95 0012 83F8BC20 		strb	r2, [r3, #188]
+  61:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     } while(!state_p->sys_irq_flag); /*Continue until see a non interrupted cycle*/
+  96              		.loc 1 61 9 is_stmt 1 view .LVU20
+  61:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     } while(!state_p->sys_irq_flag); /*Continue until see a non interrupted cycle*/
+  97              		.loc 1 61 23 is_stmt 0 view .LVU21
+  98 0016 D3F8B800 		ldr	r0, [r3, #184]
+  99              	.LVL3:
+  62:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+ 100              		.loc 1 62 13 is_stmt 1 discriminator 1 view .LVU22
+  62:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+ 101              		.loc 1 62 21 is_stmt 0 discriminator 1 view .LVU23
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZcenhK.s 			page 4
+
+
+ 102 001a 93F8BC30 		ldrb	r3, [r3, #188]	@ zero_extendqisi2
+  62:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+ 103              		.loc 1 62 13 discriminator 1 view .LVU24
+ 104 001e 002B     		cmp	r3, #0
+ 105 0020 F5D0     		beq	.L5
+ 106 0022 F3E7     		b	.L4
+ 107              	.L9:
+ 108              		.align	2
+ 109              	.L8:
+ 110 0024 00000000 		.word	lv_global
+ 111              		.cfi_endproc
+ 112              	.LFE188:
+ 114              		.section	.text.lv_tick_elaps,"ax",%progbits
+ 115              		.align	1
+ 116              		.global	lv_tick_elaps
+ 117              		.syntax unified
+ 118              		.thumb
+ 119              		.thumb_func
+ 121              	lv_tick_elaps:
+ 122              	.LVL4:
+ 123              	.LFB189:
+  66:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  67:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** uint32_t lv_tick_elaps(uint32_t prev_tick)
+  68:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** {
+ 124              		.loc 1 68 1 is_stmt 1 view -0
+ 125              		.cfi_startproc
+ 126              		@ args = 0, pretend = 0, frame = 0
+ 127              		@ frame_needed = 0, uses_anonymous_args = 0
+ 128              		.loc 1 68 1 is_stmt 0 view .LVU26
+ 129 0000 10B5     		push	{r4, lr}
+ 130              	.LCFI1:
+ 131              		.cfi_def_cfa_offset 8
+ 132              		.cfi_offset 4, -8
+ 133              		.cfi_offset 14, -4
+ 134 0002 0446     		mov	r4, r0
+  69:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     uint32_t act_time = lv_tick_get();
+ 135              		.loc 1 69 5 is_stmt 1 view .LVU27
+ 136              		.loc 1 69 25 is_stmt 0 view .LVU28
+ 137 0004 FFF7FEFF 		bl	lv_tick_get
+ 138              	.LVL5:
+  70:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  71:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     /*If there is no overflow in sys_time simple subtract*/
+  72:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     if(act_time >= prev_tick) {
+ 139              		.loc 1 72 5 is_stmt 1 view .LVU29
+ 140              		.loc 1 72 7 is_stmt 0 view .LVU30
+ 141 0008 A042     		cmp	r0, r4
+ 142 000a 01D3     		bcc	.L11
+  73:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         prev_tick = act_time - prev_tick;
+ 143              		.loc 1 73 9 is_stmt 1 view .LVU31
+ 144              		.loc 1 73 19 is_stmt 0 view .LVU32
+ 145 000c 001B     		subs	r0, r0, r4
+ 146              	.LVL6:
+ 147              	.L10:
+  74:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     }
+  75:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     else {
+  76:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         prev_tick = UINT32_MAX - prev_tick + 1;
+  77:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         prev_tick += act_time;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZcenhK.s 			page 5
+
+
+  78:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     }
+  79:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  80:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     return prev_tick;
+  81:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** }
+ 148              		.loc 1 81 1 view .LVU33
+ 149 000e 10BD     		pop	{r4, pc}
+ 150              	.LVL7:
+ 151              	.L11:
+  76:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         prev_tick += act_time;
+ 152              		.loc 1 76 9 is_stmt 1 view .LVU34
+  77:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     }
+ 153              		.loc 1 77 9 view .LVU35
+ 154 0010 001B     		subs	r0, r0, r4
+ 155              	.LVL8:
+  80:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** }
+ 156              		.loc 1 80 5 view .LVU36
+  80:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** }
+ 157              		.loc 1 80 12 is_stmt 0 view .LVU37
+ 158 0012 FCE7     		b	.L10
+ 159              		.cfi_endproc
+ 160              	.LFE189:
+ 162              		.section	.text.lv_delay_ms,"ax",%progbits
+ 163              		.align	1
+ 164              		.global	lv_delay_ms
+ 165              		.syntax unified
+ 166              		.thumb
+ 167              		.thumb_func
+ 169              	lv_delay_ms:
+ 170              	.LVL9:
+ 171              	.LFB190:
+  82:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+  83:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** void lv_delay_ms(uint32_t ms)
+  84:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** {
+ 172              		.loc 1 84 1 is_stmt 1 view -0
+ 173              		.cfi_startproc
+ 174              		@ args = 0, pretend = 0, frame = 8
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176              		.loc 1 84 1 is_stmt 0 view .LVU39
+ 177 0000 30B5     		push	{r4, r5, lr}
+ 178              	.LCFI2:
+ 179              		.cfi_def_cfa_offset 12
+ 180              		.cfi_offset 4, -12
+ 181              		.cfi_offset 5, -8
+ 182              		.cfi_offset 14, -4
+ 183 0002 83B0     		sub	sp, sp, #12
+ 184              	.LCFI3:
+ 185              		.cfi_def_cfa_offset 24
+ 186 0004 0446     		mov	r4, r0
+  85:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     if(state.delay_cb) {
+ 187              		.loc 1 85 5 is_stmt 1 view .LVU40
+ 188              		.loc 1 85 13 is_stmt 0 view .LVU41
+ 189 0006 0F4B     		ldr	r3, .L22
+ 190 0008 D3F8C430 		ldr	r3, [r3, #196]
+ 191              		.loc 1 85 7 view .LVU42
+ 192 000c 13B1     		cbz	r3, .L15
+  86:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         state.delay_cb(ms);
+ 193              		.loc 1 86 9 is_stmt 1 view .LVU43
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZcenhK.s 			page 6
+
+
+ 194 000e 9847     		blx	r3
+ 195              	.LVL10:
+ 196              	.L14:
+  87:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     }
+  88:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     else {
+  89:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         uint32_t t = lv_tick_get();
+  90:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         while(lv_tick_elaps(t) < ms) {
+  91:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             /*Do something to no call `lv_tick_elaps` too often as it might interfere with interrup
+  92:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             volatile uint32_t i;
+  93:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             volatile uint32_t x = ms;
+  94:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             for(i = 0; i < 100; i++) {
+  95:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****                 x = x * 3;
+  96:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             }
+  97:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         }
+  98:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     }
+  99:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** }
+ 197              		.loc 1 99 1 is_stmt 0 view .LVU44
+ 198 0010 03B0     		add	sp, sp, #12
+ 199              	.LCFI4:
+ 200              		.cfi_remember_state
+ 201              		.cfi_def_cfa_offset 12
+ 202              		@ sp needed
+ 203 0012 30BD     		pop	{r4, r5, pc}
+ 204              	.LVL11:
+ 205              	.L15:
+ 206              	.LCFI5:
+ 207              		.cfi_restore_state
+ 208              	.LBB2:
+  89:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         while(lv_tick_elaps(t) < ms) {
+ 209              		.loc 1 89 9 is_stmt 1 view .LVU45
+  89:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         while(lv_tick_elaps(t) < ms) {
+ 210              		.loc 1 89 22 is_stmt 0 view .LVU46
+ 211 0014 FFF7FEFF 		bl	lv_tick_get
+ 212              	.LVL12:
+  89:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****         while(lv_tick_elaps(t) < ms) {
+ 213              		.loc 1 89 22 view .LVU47
+ 214 0018 0546     		mov	r5, r0
+ 215              	.LVL13:
+  90:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             /*Do something to no call `lv_tick_elaps` too often as it might interfere with interrup
+ 216              		.loc 1 90 9 is_stmt 1 view .LVU48
+  90:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             /*Do something to no call `lv_tick_elaps` too often as it might interfere with interrup
+ 217              		.loc 1 90 14 is_stmt 0 view .LVU49
+ 218 001a 09E0     		b	.L17
+ 219              	.LVL14:
+ 220              	.L19:
+ 221              	.LBB3:
+  95:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             }
+ 222              		.loc 1 95 17 is_stmt 1 view .LVU50
+  95:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             }
+ 223              		.loc 1 95 23 is_stmt 0 view .LVU51
+ 224 001c 019B     		ldr	r3, [sp, #4]
+ 225 001e 03EB4303 		add	r3, r3, r3, lsl #1
+  95:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             }
+ 226              		.loc 1 95 19 view .LVU52
+ 227 0022 0193     		str	r3, [sp, #4]
+  94:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****                 x = x * 3;
+ 228              		.loc 1 94 34 is_stmt 1 discriminator 3 view .LVU53
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZcenhK.s 			page 7
+
+
+ 229 0024 009B     		ldr	r3, [sp]
+ 230 0026 0133     		adds	r3, r3, #1
+ 231 0028 0093     		str	r3, [sp]
+ 232              	.L18:
+  94:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****                 x = x * 3;
+ 233              		.loc 1 94 26 discriminator 1 view .LVU54
+ 234 002a 009B     		ldr	r3, [sp]
+ 235 002c 632B     		cmp	r3, #99
+ 236 002e F5D9     		bls	.L19
+ 237              	.L17:
+  94:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****                 x = x * 3;
+ 238              		.loc 1 94 26 is_stmt 0 discriminator 1 view .LVU55
+ 239              	.LBE3:
+  90:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             /*Do something to no call `lv_tick_elaps` too often as it might interfere with interrup
+ 240              		.loc 1 90 32 is_stmt 1 view .LVU56
+  90:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             /*Do something to no call `lv_tick_elaps` too often as it might interfere with interrup
+ 241              		.loc 1 90 15 is_stmt 0 view .LVU57
+ 242 0030 2846     		mov	r0, r5
+ 243 0032 FFF7FEFF 		bl	lv_tick_elaps
+ 244              	.LVL15:
+  90:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             /*Do something to no call `lv_tick_elaps` too often as it might interfere with interrup
+ 245              		.loc 1 90 32 discriminator 1 view .LVU58
+ 246 0036 A042     		cmp	r0, r4
+ 247 0038 EAD2     		bcs	.L14
+ 248              	.LBB4:
+  92:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             volatile uint32_t x = ms;
+ 249              		.loc 1 92 13 is_stmt 1 view .LVU59
+  93:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             for(i = 0; i < 100; i++) {
+ 250              		.loc 1 93 13 view .LVU60
+  93:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****             for(i = 0; i < 100; i++) {
+ 251              		.loc 1 93 31 is_stmt 0 view .LVU61
+ 252 003a 0194     		str	r4, [sp, #4]
+  94:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****                 x = x * 3;
+ 253              		.loc 1 94 13 is_stmt 1 view .LVU62
+  94:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****                 x = x * 3;
+ 254              		.loc 1 94 19 is_stmt 0 view .LVU63
+ 255 003c 0023     		movs	r3, #0
+ 256 003e 0093     		str	r3, [sp]
+  94:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****                 x = x * 3;
+ 257              		.loc 1 94 13 view .LVU64
+ 258 0040 F3E7     		b	.L18
+ 259              	.L23:
+ 260 0042 00BF     		.align	2
+ 261              	.L22:
+ 262 0044 00000000 		.word	lv_global
+ 263              	.LBE4:
+ 264              	.LBE2:
+ 265              		.cfi_endproc
+ 266              	.LFE190:
+ 268              		.section	.text.lv_tick_set_cb,"ax",%progbits
+ 269              		.align	1
+ 270              		.global	lv_tick_set_cb
+ 271              		.syntax unified
+ 272              		.thumb
+ 273              		.thumb_func
+ 275              	lv_tick_set_cb:
+ 276              	.LVL16:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZcenhK.s 			page 8
+
+
+ 277              	.LFB191:
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** void lv_tick_set_cb(lv_tick_get_cb_t cb)
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** {
+ 278              		.loc 1 102 1 is_stmt 1 view -0
+ 279              		.cfi_startproc
+ 280              		@ args = 0, pretend = 0, frame = 0
+ 281              		@ frame_needed = 0, uses_anonymous_args = 0
+ 282              		@ link register save eliminated.
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     state.tick_get_cb = cb;
+ 283              		.loc 1 103 5 view .LVU66
+ 284              		.loc 1 103 23 is_stmt 0 view .LVU67
+ 285 0000 014B     		ldr	r3, .L25
+ 286 0002 C3F8C000 		str	r0, [r3, #192]
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** }
+ 287              		.loc 1 104 1 view .LVU68
+ 288 0006 7047     		bx	lr
+ 289              	.L26:
+ 290              		.align	2
+ 291              	.L25:
+ 292 0008 00000000 		.word	lv_global
+ 293              		.cfi_endproc
+ 294              	.LFE191:
+ 296              		.section	.text.lv_delay_set_cb,"ax",%progbits
+ 297              		.align	1
+ 298              		.global	lv_delay_set_cb
+ 299              		.syntax unified
+ 300              		.thumb
+ 301              		.thumb_func
+ 303              	lv_delay_set_cb:
+ 304              	.LVL17:
+ 305              	.LFB192:
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** 
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** void lv_delay_set_cb(lv_delay_cb_t cb)
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** {
+ 306              		.loc 1 107 1 is_stmt 1 view -0
+ 307              		.cfi_startproc
+ 308              		@ args = 0, pretend = 0, frame = 0
+ 309              		@ frame_needed = 0, uses_anonymous_args = 0
+ 310              		@ link register save eliminated.
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c ****     state.delay_cb = cb;
+ 311              		.loc 1 108 5 view .LVU70
+ 312              		.loc 1 108 20 is_stmt 0 view .LVU71
+ 313 0000 014B     		ldr	r3, .L28
+ 314 0002 C3F8C400 		str	r0, [r3, #196]
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.c **** }
+ 315              		.loc 1 109 1 view .LVU72
+ 316 0006 7047     		bx	lr
+ 317              	.L29:
+ 318              		.align	2
+ 319              	.L28:
+ 320 0008 00000000 		.word	lv_global
+ 321              		.cfi_endproc
+ 322              	.LFE192:
+ 324              		.text
+ 325              	.Letext0:
+ 326              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZcenhK.s 			page 9
+
+
+ 327              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 328              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 329              		.file 5 "../../Middlewares/LVGL/GUI/lvgl/src/tick/../misc/lv_types.h"
+ 330              		.file 6 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw.h"
+ 331              		.file 7 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_private.h"
+ 332              		.file 8 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer_private.h"
+ 333              		.file 9 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/cache/lv_cache_private.h"
+ 334              		.file 10 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf_private.h"
+ 335              		.file 11 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf.h"
+ 336              		.file 12 "../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick.h"
+ 337              		.file 13 "../../Middlewares/LVGL/GUI/lvgl/src/tick/lv_tick_private.h"
+ 338              		.file 14 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_area.h"
+ 339              		.file 15 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_color.h"
+ 340              		.file 16 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_image_dsc.h"
+ 341              		.file 17 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_ll.h"
+ 342              		.file 18 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer.h"
+ 343              		.file 19 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout.h"
+ 344              		.file 20 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.h"
+ 345              		.file 21 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib/builtin/lv_tlsf.h"
+ 346              		.file 22 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim_private.h"
+ 347              		.file 23 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_mask_private.h"
+ 348              		.file 24 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib/builtin/lv_tlsf_private.h"
+ 349              		.file 25 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/layouts/lv_layout_private.h"
+ 350              		.file 26 "../../Middlewares/LVGL/GUI/lvgl/src/tick/../core/lv_global.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZcenhK.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_tick.c
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:20     .text.lv_tick_inc:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:26     .text.lv_tick_inc:00000000 lv_tick_inc
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:51     .text.lv_tick_inc:00000014 $d
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:56     .text.lv_tick_get:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:62     .text.lv_tick_get:00000000 lv_tick_get
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:110    .text.lv_tick_get:00000024 $d
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:115    .text.lv_tick_elaps:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:121    .text.lv_tick_elaps:00000000 lv_tick_elaps
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:163    .text.lv_delay_ms:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:169    .text.lv_delay_ms:00000000 lv_delay_ms
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:262    .text.lv_delay_ms:00000044 $d
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:269    .text.lv_tick_set_cb:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:275    .text.lv_tick_set_cb:00000000 lv_tick_set_cb
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:292    .text.lv_tick_set_cb:00000008 $d
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:297    .text.lv_delay_set_cb:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:303    .text.lv_delay_set_cb:00000000 lv_delay_set_cb
+C:\Users\28576\AppData\Local\Temp\ccZcenhK.s:320    .text.lv_delay_set_cb:00000008 $d
+
+UNDEFINED SYMBOLS
+lv_global

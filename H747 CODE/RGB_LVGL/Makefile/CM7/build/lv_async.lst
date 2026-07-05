@@ -1,0 +1,495 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_async.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c"
+  19              		.section	.text.lv_async_timer_cb,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	lv_async_timer_cb:
+  26              	.LVL0:
+  27              	.LFB4:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  * @file lv_async.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  10:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** #include "lv_async.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** #include "lv_timer_private.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** #include "../stdlib/lv_mem.h"
+  13:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  14:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** /*********************
+  15:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *      DEFINES
+  16:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *********************/
+  17:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  18:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** /**********************
+  19:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *      TYPEDEFS
+  20:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  **********************/
+  21:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  22:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** typedef struct _lv_async_info_t {
+  23:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_async_cb_t cb;
+  24:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     void * user_data;
+  25:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** } lv_async_info_t;
+  26:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  27:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** /**********************
+  28:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *  STATIC PROTOTYPES
+  29:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  **********************/
+  30:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  31:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** static void lv_async_timer_cb(lv_timer_t * timer);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s 			page 2
+
+
+  32:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  33:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** /**********************
+  34:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *  STATIC VARIABLES
+  35:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  **********************/
+  36:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  37:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** /**********************
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *      MACROS
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  **********************/
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  41:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** /**********************
+  42:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *   GLOBAL FUNCTIONS
+  43:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  **********************/
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** lv_result_t lv_async_call(lv_async_cb_t async_xcb, void * user_data)
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** {
+  47:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     /*Allocate an info structure*/
+  48:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_async_info_t * info = lv_malloc(sizeof(lv_async_info_t));
+  49:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     if(info == NULL)
+  51:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         return LV_RESULT_INVALID;
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  53:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     /*Create a new timer*/
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_timer_t * timer = lv_timer_create(lv_async_timer_cb, 0, info);
+  55:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     if(timer == NULL) {
+  57:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         lv_free(info);
+  58:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         return LV_RESULT_INVALID;
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     }
+  60:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  61:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     info->cb = async_xcb;
+  62:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     info->user_data = user_data;
+  63:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_timer_set_repeat_count(timer, 1);
+  65:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     return LV_RESULT_OK;
+  66:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** }
+  67:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  68:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** lv_result_t lv_async_call_cancel(lv_async_cb_t async_xcb, void * user_data)
+  69:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** {
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_timer_t * timer = lv_timer_get_next(NULL);
+  71:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_result_t res = LV_RESULT_INVALID;
+  72:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     while(timer != NULL) {
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         /*Find the next timer node*/
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         lv_timer_t * timer_next = lv_timer_get_next(timer);
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         /*Find async timer callback*/
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         if(timer->timer_cb == lv_async_timer_cb) {
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             lv_async_info_t * info = (lv_async_info_t *)timer->user_data;
+  80:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  81:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             /*Match user function callback and user data*/
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             if(info->cb == async_xcb && info->user_data == user_data) {
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 lv_timer_delete(timer);
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 lv_free(info);
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 res = LV_RESULT_OK;
+  86:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             }
+  87:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         }
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s 			page 3
+
+
+  89:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         timer = timer_next;
+  90:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     }
+  91:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  92:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     return res;
+  93:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** }
+  94:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** /**********************
+  96:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  *   STATIC FUNCTIONS
+  97:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****  **********************/
+  98:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+  99:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** static void lv_async_timer_cb(lv_timer_t * timer)
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** {
+  28              		.loc 1 100 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 100 1 is_stmt 0 view .LVU1
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 82B0     		sub	sp, sp, #8
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 16
+  41 0004 0346     		mov	r3, r0
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     /*Save the info because an lv_async_call_cancel might delete it in the callback*/
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_async_info_t * info = (lv_async_info_t *)timer->user_data;
+  42              		.loc 1 102 5 is_stmt 1 view .LVU2
+  43              		.loc 1 102 23 is_stmt 0 view .LVU3
+  44 0006 C468     		ldr	r4, [r0, #12]
+  45              	.LVL1:
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_async_info_t info_save = *info;
+  46              		.loc 1 103 5 is_stmt 1 view .LVU4
+  47              		.loc 1 103 21 is_stmt 0 view .LVU5
+  48 0008 94E80300 		ldm	r4, {r0, r1}
+  49              	.LVL2:
+  50              		.loc 1 103 21 view .LVU6
+  51 000c 02AA     		add	r2, sp, #8
+  52 000e 02E90300 		stmdb	r2, {r0, r1}
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_timer_delete(timer);
+  53              		.loc 1 104 5 is_stmt 1 view .LVU7
+  54 0012 1846     		mov	r0, r3
+  55 0014 FFF7FEFF 		bl	lv_timer_delete
+  56              	.LVL3:
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_free(info);
+  57              		.loc 1 105 5 view .LVU8
+  58 0018 2046     		mov	r0, r4
+  59 001a FFF7FEFF 		bl	lv_free
+  60              	.LVL4:
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     info_save.cb(info_save.user_data);
+  61              		.loc 1 107 5 view .LVU9
+  62 001e 0198     		ldr	r0, [sp, #4]
+  63 0020 009B     		ldr	r3, [sp]
+  64 0022 9847     		blx	r3
+  65              	.LVL5:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s 			page 4
+
+
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** }
+  66              		.loc 1 108 1 is_stmt 0 view .LVU10
+  67 0024 02B0     		add	sp, sp, #8
+  68              	.LCFI2:
+  69              		.cfi_def_cfa_offset 8
+  70              		@ sp needed
+  71 0026 10BD     		pop	{r4, pc}
+  72              		.loc 1 108 1 view .LVU11
+  73              		.cfi_endproc
+  74              	.LFE4:
+  76              		.section	.text.lv_async_call,"ax",%progbits
+  77              		.align	1
+  78              		.global	lv_async_call
+  79              		.syntax unified
+  80              		.thumb
+  81              		.thumb_func
+  83              	lv_async_call:
+  84              	.LVL6:
+  85              	.LFB2:
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     /*Allocate an info structure*/
+  86              		.loc 1 46 1 is_stmt 1 view -0
+  87              		.cfi_startproc
+  88              		@ args = 0, pretend = 0, frame = 0
+  89              		@ frame_needed = 0, uses_anonymous_args = 0
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     /*Allocate an info structure*/
+  90              		.loc 1 46 1 is_stmt 0 view .LVU13
+  91 0000 70B5     		push	{r4, r5, r6, lr}
+  92              	.LCFI3:
+  93              		.cfi_def_cfa_offset 16
+  94              		.cfi_offset 4, -16
+  95              		.cfi_offset 5, -12
+  96              		.cfi_offset 6, -8
+  97              		.cfi_offset 14, -4
+  98 0002 0546     		mov	r5, r0
+  99 0004 0E46     		mov	r6, r1
+  48:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 100              		.loc 1 48 5 is_stmt 1 view .LVU14
+  48:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 101              		.loc 1 48 30 is_stmt 0 view .LVU15
+ 102 0006 0820     		movs	r0, #8
+ 103              	.LVL7:
+  48:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 104              		.loc 1 48 30 view .LVU16
+ 105 0008 FFF7FEFF 		bl	lv_malloc
+ 106              	.LVL8:
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         return LV_RESULT_INVALID;
+ 107              		.loc 1 50 5 is_stmt 1 view .LVU17
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         return LV_RESULT_INVALID;
+ 108              		.loc 1 50 7 is_stmt 0 view .LVU18
+ 109 000c 60B1     		cbz	r0, .L4
+ 110 000e 0246     		mov	r2, r0
+ 111 0010 0446     		mov	r4, r0
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 112              		.loc 1 54 5 is_stmt 1 view .LVU19
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 113              		.loc 1 54 26 is_stmt 0 view .LVU20
+ 114 0012 0021     		movs	r1, #0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s 			page 5
+
+
+ 115 0014 0748     		ldr	r0, .L9
+ 116              	.LVL9:
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 117              		.loc 1 54 26 view .LVU21
+ 118 0016 FFF7FEFF 		bl	lv_timer_create
+ 119              	.LVL10:
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         lv_free(info);
+ 120              		.loc 1 56 5 is_stmt 1 view .LVU22
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         lv_free(info);
+ 121              		.loc 1 56 7 is_stmt 0 view .LVU23
+ 122 001a 30B1     		cbz	r0, .L8
+  61:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     info->user_data = user_data;
+ 123              		.loc 1 61 5 is_stmt 1 view .LVU24
+  61:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     info->user_data = user_data;
+ 124              		.loc 1 61 14 is_stmt 0 view .LVU25
+ 125 001c 2560     		str	r5, [r4]
+  62:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 126              		.loc 1 62 5 is_stmt 1 view .LVU26
+  62:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 127              		.loc 1 62 21 is_stmt 0 view .LVU27
+ 128 001e 6660     		str	r6, [r4, #4]
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     return LV_RESULT_OK;
+ 129              		.loc 1 64 5 is_stmt 1 view .LVU28
+ 130 0020 0121     		movs	r1, #1
+ 131 0022 FFF7FEFF 		bl	lv_timer_set_repeat_count
+ 132              	.LVL11:
+  65:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** }
+ 133              		.loc 1 65 5 view .LVU29
+  65:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** }
+ 134              		.loc 1 65 12 is_stmt 0 view .LVU30
+ 135 0026 0120     		movs	r0, #1
+ 136              	.LVL12:
+ 137              	.L4:
+  66:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 138              		.loc 1 66 1 view .LVU31
+ 139 0028 70BD     		pop	{r4, r5, r6, pc}
+ 140              	.LVL13:
+ 141              	.L8:
+  57:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         return LV_RESULT_INVALID;
+ 142              		.loc 1 57 9 is_stmt 1 view .LVU32
+ 143 002a 2046     		mov	r0, r4
+ 144              	.LVL14:
+  57:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         return LV_RESULT_INVALID;
+ 145              		.loc 1 57 9 is_stmt 0 view .LVU33
+ 146 002c FFF7FEFF 		bl	lv_free
+ 147              	.LVL15:
+  58:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     }
+ 148              		.loc 1 58 9 is_stmt 1 view .LVU34
+  58:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     }
+ 149              		.loc 1 58 16 is_stmt 0 view .LVU35
+ 150 0030 0020     		movs	r0, #0
+ 151 0032 F9E7     		b	.L4
+ 152              	.L10:
+ 153              		.align	2
+ 154              	.L9:
+ 155 0034 00000000 		.word	lv_async_timer_cb
+ 156              		.cfi_endproc
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s 			page 6
+
+
+ 157              	.LFE2:
+ 159              		.section	.text.lv_async_call_cancel,"ax",%progbits
+ 160              		.align	1
+ 161              		.global	lv_async_call_cancel
+ 162              		.syntax unified
+ 163              		.thumb
+ 164              		.thumb_func
+ 166              	lv_async_call_cancel:
+ 167              	.LVL16:
+ 168              	.LFB3:
+  69:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_timer_t * timer = lv_timer_get_next(NULL);
+ 169              		.loc 1 69 1 is_stmt 1 view -0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+  69:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_timer_t * timer = lv_timer_get_next(NULL);
+ 173              		.loc 1 69 1 is_stmt 0 view .LVU37
+ 174 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 175              	.LCFI4:
+ 176              		.cfi_def_cfa_offset 32
+ 177              		.cfi_offset 3, -32
+ 178              		.cfi_offset 4, -28
+ 179              		.cfi_offset 5, -24
+ 180              		.cfi_offset 6, -20
+ 181              		.cfi_offset 7, -16
+ 182              		.cfi_offset 8, -12
+ 183              		.cfi_offset 9, -8
+ 184              		.cfi_offset 14, -4
+ 185 0004 0546     		mov	r5, r0
+ 186 0006 8946     		mov	r9, r1
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_result_t res = LV_RESULT_INVALID;
+ 187              		.loc 1 70 5 is_stmt 1 view .LVU38
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_result_t res = LV_RESULT_INVALID;
+ 188              		.loc 1 70 26 is_stmt 0 view .LVU39
+ 189 0008 0020     		movs	r0, #0
+ 190              	.LVL17:
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_result_t res = LV_RESULT_INVALID;
+ 191              		.loc 1 70 26 view .LVU40
+ 192 000a FFF7FEFF 		bl	lv_timer_get_next
+ 193              	.LVL18:
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****     lv_result_t res = LV_RESULT_INVALID;
+ 194              		.loc 1 70 26 view .LVU41
+ 195 000e 0446     		mov	r4, r0
+ 196              	.LVL19:
+  71:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 197              		.loc 1 71 5 is_stmt 1 view .LVU42
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         /*Find the next timer node*/
+ 198              		.loc 1 73 5 view .LVU43
+  71:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 199              		.loc 1 71 17 is_stmt 0 view .LVU44
+ 200 0010 0023     		movs	r3, #0
+ 201 0012 9846     		mov	r8, r3
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         /*Find the next timer node*/
+ 202              		.loc 1 73 10 view .LVU45
+ 203 0014 00E0     		b	.L12
+ 204              	.LVL20:
+ 205              	.L13:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s 			page 7
+
+
+ 206              	.LBB2:
+ 207              	.LBB3:
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             }
+ 208              		.loc 1 85 21 view .LVU46
+ 209 0016 3C46     		mov	r4, r7
+ 210              	.LVL21:
+ 211              	.L12:
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             }
+ 212              		.loc 1 85 21 view .LVU47
+ 213              	.LBE3:
+ 214              	.LBE2:
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****         /*Find the next timer node*/
+ 215              		.loc 1 73 17 is_stmt 1 view .LVU48
+ 216 0018 BCB1     		cbz	r4, .L16
+ 217              	.LBB5:
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 218              		.loc 1 75 9 view .LVU49
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 219              		.loc 1 75 35 is_stmt 0 view .LVU50
+ 220 001a 2046     		mov	r0, r4
+ 221 001c FFF7FEFF 		bl	lv_timer_get_next
+ 222              	.LVL22:
+ 223 0020 0746     		mov	r7, r0
+ 224              	.LVL23:
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             lv_async_info_t * info = (lv_async_info_t *)timer->user_data;
+ 225              		.loc 1 78 9 is_stmt 1 view .LVU51
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             lv_async_info_t * info = (lv_async_info_t *)timer->user_data;
+ 226              		.loc 1 78 17 is_stmt 0 view .LVU52
+ 227 0022 A268     		ldr	r2, [r4, #8]
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             lv_async_info_t * info = (lv_async_info_t *)timer->user_data;
+ 228              		.loc 1 78 11 view .LVU53
+ 229 0024 0A4B     		ldr	r3, .L17
+ 230 0026 9A42     		cmp	r2, r3
+ 231 0028 F5D1     		bne	.L13
+ 232              	.LBB4:
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 233              		.loc 1 79 13 is_stmt 1 view .LVU54
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 234              		.loc 1 79 31 is_stmt 0 view .LVU55
+ 235 002a E668     		ldr	r6, [r4, #12]
+ 236              	.LVL24:
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 lv_timer_delete(timer);
+ 237              		.loc 1 82 13 is_stmt 1 view .LVU56
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 lv_timer_delete(timer);
+ 238              		.loc 1 82 20 is_stmt 0 view .LVU57
+ 239 002c 3368     		ldr	r3, [r6]
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 lv_timer_delete(timer);
+ 240              		.loc 1 82 15 view .LVU58
+ 241 002e AB42     		cmp	r3, r5
+ 242 0030 F1D1     		bne	.L13
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 lv_timer_delete(timer);
+ 243              		.loc 1 82 45 discriminator 1 view .LVU59
+ 244 0032 7368     		ldr	r3, [r6, #4]
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 lv_timer_delete(timer);
+ 245              		.loc 1 82 38 discriminator 1 view .LVU60
+ 246 0034 4B45     		cmp	r3, r9
+ 247 0036 EED1     		bne	.L13
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s 			page 8
+
+
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 lv_free(info);
+ 248              		.loc 1 83 17 is_stmt 1 view .LVU61
+ 249 0038 2046     		mov	r0, r4
+ 250              	.LVL25:
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 lv_free(info);
+ 251              		.loc 1 83 17 is_stmt 0 view .LVU62
+ 252 003a FFF7FEFF 		bl	lv_timer_delete
+ 253              	.LVL26:
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****                 res = LV_RESULT_OK;
+ 254              		.loc 1 84 17 is_stmt 1 view .LVU63
+ 255 003e 3046     		mov	r0, r6
+ 256 0040 FFF7FEFF 		bl	lv_free
+ 257              	.LVL27:
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             }
+ 258              		.loc 1 85 17 view .LVU64
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             }
+ 259              		.loc 1 85 21 is_stmt 0 view .LVU65
+ 260 0044 0123     		movs	r3, #1
+ 261 0046 9846     		mov	r8, r3
+ 262 0048 E5E7     		b	.L13
+ 263              	.LVL28:
+ 264              	.L16:
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c ****             }
+ 265              		.loc 1 85 21 view .LVU66
+ 266              	.LBE4:
+ 267              	.LBE5:
+  92:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** }
+ 268              		.loc 1 92 5 is_stmt 1 view .LVU67
+  93:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 269              		.loc 1 93 1 is_stmt 0 view .LVU68
+ 270 004a 4046     		mov	r0, r8
+ 271 004c BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 272              	.LVL29:
+ 273              	.L18:
+  93:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.c **** 
+ 274              		.loc 1 93 1 view .LVU69
+ 275              		.align	2
+ 276              	.L17:
+ 277 0050 00000000 		.word	lv_async_timer_cb
+ 278              		.cfi_endproc
+ 279              	.LFE3:
+ 281              		.text
+ 282              	.Letext0:
+ 283              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 284              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 285              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 286              		.file 5 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ 287              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer_private.h"
+ 288              		.file 7 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_async.h"
+ 289              		.file 8 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer.h"
+ 290              		.file 9 "../../Middlewares/LVGL/GUI/lvgl/src/misc/../stdlib/lv_mem.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_async.c
+C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s:20     .text.lv_async_timer_cb:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s:25     .text.lv_async_timer_cb:00000000 lv_async_timer_cb
+C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s:77     .text.lv_async_call:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s:83     .text.lv_async_call:00000000 lv_async_call
+C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s:155    .text.lv_async_call:00000034 $d
+C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s:160    .text.lv_async_call_cancel:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s:166    .text.lv_async_call_cancel:00000000 lv_async_call_cancel
+C:\Users\28576\AppData\Local\Temp\ccZ2mQ6e.s:277    .text.lv_async_call_cancel:00000050 $d
+
+UNDEFINED SYMBOLS
+lv_timer_delete
+lv_free
+lv_malloc
+lv_timer_create
+lv_timer_set_repeat_count
+lv_timer_get_next

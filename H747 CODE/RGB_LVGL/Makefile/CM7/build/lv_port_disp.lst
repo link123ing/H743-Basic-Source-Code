@@ -1,0 +1,468 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_port_disp.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../BSP/LVGL/lv_port_disp.c"
+  19              		.section	.text.disp_flush,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	disp_flush:
+  26              	.LVL0:
+  27              	.LFB342:
+   1:../../BSP/LVGL/lv_port_disp.c **** /**
+   2:../../BSP/LVGL/lv_port_disp.c **** 
+   3:../../BSP/LVGL/lv_port_disp.c ****  * @file lv_port_disp.c
+   4:../../BSP/LVGL/lv_port_disp.c **** 
+   5:../../BSP/LVGL/lv_port_disp.c ****  * @brief LVGL display port (aligned with 例程39 lv_port_disp_template.c)
+   6:../../BSP/LVGL/lv_port_disp.c **** 
+   7:../../BSP/LVGL/lv_port_disp.c ****  */
+   8:../../BSP/LVGL/lv_port_disp.c **** 
+   9:../../BSP/LVGL/lv_port_disp.c **** #include "lv_port_disp.h"
+  10:../../BSP/LVGL/lv_port_disp.c **** 
+  11:../../BSP/LVGL/lv_port_disp.c **** #include "lvgl.h"
+  12:../../BSP/LVGL/lv_port_disp.c **** 
+  13:../../BSP/LVGL/lv_port_disp.c **** #include "lcd.h"
+  14:../../BSP/LVGL/lv_port_disp.c **** 
+  15:../../BSP/LVGL/lv_port_disp.c **** #include "lcd_ltdc.h"
+  16:../../BSP/LVGL/lv_port_disp.c **** 
+  17:../../BSP/LVGL/lv_port_disp.c **** #include <stdbool.h>
+  18:../../BSP/LVGL/lv_port_disp.c **** 
+  19:../../BSP/LVGL/lv_port_disp.c **** #include <stdint.h>
+  20:../../BSP/LVGL/lv_port_disp.c **** 
+  21:../../BSP/LVGL/lv_port_disp.c **** 
+  22:../../BSP/LVGL/lv_port_disp.c **** 
+  23:../../BSP/LVGL/lv_port_disp.c **** #define MY_DISP_HOR_RES    800
+  24:../../BSP/LVGL/lv_port_disp.c **** 
+  25:../../BSP/LVGL/lv_port_disp.c **** #define MY_DISP_VER_RES    480
+  26:../../BSP/LVGL/lv_port_disp.c **** 
+  27:../../BSP/LVGL/lv_port_disp.c **** 
+  28:../../BSP/LVGL/lv_port_disp.c **** 
+  29:../../BSP/LVGL/lv_port_disp.c **** static void disp_init(void);
+  30:../../BSP/LVGL/lv_port_disp.c **** 
+  31:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s 			page 2
+
+
+  32:../../BSP/LVGL/lv_port_disp.c **** 
+  33:../../BSP/LVGL/lv_port_disp.c **** 
+  34:../../BSP/LVGL/lv_port_disp.c **** 
+  35:../../BSP/LVGL/lv_port_disp.c **** void lv_port_disp_init(void)
+  36:../../BSP/LVGL/lv_port_disp.c **** 
+  37:../../BSP/LVGL/lv_port_disp.c **** {
+  38:../../BSP/LVGL/lv_port_disp.c **** 
+  39:../../BSP/LVGL/lv_port_disp.c ****     disp_init();
+  40:../../BSP/LVGL/lv_port_disp.c **** 
+  41:../../BSP/LVGL/lv_port_disp.c **** 
+  42:../../BSP/LVGL/lv_port_disp.c **** 
+  43:../../BSP/LVGL/lv_port_disp.c ****     lv_display_t *disp = lv_display_create(lcddev.width, lcddev.height);
+  44:../../BSP/LVGL/lv_port_disp.c **** 
+  45:../../BSP/LVGL/lv_port_disp.c ****     lv_display_set_flush_cb(disp, disp_flush);
+  46:../../BSP/LVGL/lv_port_disp.c **** 
+  47:../../BSP/LVGL/lv_port_disp.c **** 
+  48:../../BSP/LVGL/lv_port_disp.c **** 
+  49:../../BSP/LVGL/lv_port_disp.c ****     static LV_ATTRIBUTE_MEM_ALIGN uint8_t buf_1[MY_DISP_HOR_RES * 400];
+  50:../../BSP/LVGL/lv_port_disp.c **** 
+  51:../../BSP/LVGL/lv_port_disp.c ****     lv_display_set_buffers(disp, buf_1, NULL, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
+  52:../../BSP/LVGL/lv_port_disp.c **** 
+  53:../../BSP/LVGL/lv_port_disp.c **** }
+  54:../../BSP/LVGL/lv_port_disp.c **** 
+  55:../../BSP/LVGL/lv_port_disp.c **** 
+  56:../../BSP/LVGL/lv_port_disp.c **** 
+  57:../../BSP/LVGL/lv_port_disp.c **** static void disp_init(void)
+  58:../../BSP/LVGL/lv_port_disp.c **** 
+  59:../../BSP/LVGL/lv_port_disp.c **** {
+  60:../../BSP/LVGL/lv_port_disp.c **** 
+  61:../../BSP/LVGL/lv_port_disp.c ****     /* Reference: lcd_init() is called here; main may call it earlier — both are OK */
+  62:../../BSP/LVGL/lv_port_disp.c **** 
+  63:../../BSP/LVGL/lv_port_disp.c ****     lcd_display_dir(1);
+  64:../../BSP/LVGL/lv_port_disp.c **** 
+  65:../../BSP/LVGL/lv_port_disp.c **** }
+  66:../../BSP/LVGL/lv_port_disp.c **** 
+  67:../../BSP/LVGL/lv_port_disp.c **** 
+  68:../../BSP/LVGL/lv_port_disp.c **** 
+  69:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *px_map)
+  70:../../BSP/LVGL/lv_port_disp.c **** 
+  71:../../BSP/LVGL/lv_port_disp.c **** {
+  28              		.loc 1 71 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 71 1 is_stmt 0 view .LVU1
+  33 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 4, -24
+  37              		.cfi_offset 5, -20
+  38              		.cfi_offset 6, -16
+  39              		.cfi_offset 7, -12
+  40              		.cfi_offset 8, -8
+  41              		.cfi_offset 14, -4
+  42 0004 82B0     		sub	sp, sp, #8
+  43              	.LCFI1:
+  44              		.cfi_def_cfa_offset 32
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s 			page 3
+
+
+  45 0006 8046     		mov	r8, r0
+  46 0008 0E46     		mov	r6, r1
+  47 000a 1446     		mov	r4, r2
+  72:../../BSP/LVGL/lv_port_disp.c **** 
+  73:../../BSP/LVGL/lv_port_disp.c ****     if (lcddev.dir)
+  48              		.loc 1 73 5 is_stmt 1 view .LVU2
+  49              		.loc 1 73 15 is_stmt 0 view .LVU3
+  50 000c 104B     		ldr	r3, .L10
+  51 000e 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+  52              		.loc 1 73 8 view .LVU4
+  53 0010 0BB9     		cbnz	r3, .L9
+  54              	.LBB2:
+  74:../../BSP/LVGL/lv_port_disp.c **** 
+  75:../../BSP/LVGL/lv_port_disp.c ****     {
+  76:../../BSP/LVGL/lv_port_disp.c **** 
+  77:../../BSP/LVGL/lv_port_disp.c ****         lcd_color_fill(area->x1, area->y1, area->x2, area->y2, (uint16_t *)px_map);
+  78:../../BSP/LVGL/lv_port_disp.c **** 
+  79:../../BSP/LVGL/lv_port_disp.c ****     }
+  80:../../BSP/LVGL/lv_port_disp.c **** 
+  81:../../BSP/LVGL/lv_port_disp.c ****     else
+  82:../../BSP/LVGL/lv_port_disp.c **** 
+  83:../../BSP/LVGL/lv_port_disp.c ****     {
+  84:../../BSP/LVGL/lv_port_disp.c **** 
+  85:../../BSP/LVGL/lv_port_disp.c **** #if LTDC_PIXFORMAT == LTDC_PIXFORMAT_ARGB8888
+  86:../../BSP/LVGL/lv_port_disp.c **** 
+  87:../../BSP/LVGL/lv_port_disp.c ****         uint32_t *buf = (uint32_t *)px_map;
+  88:../../BSP/LVGL/lv_port_disp.c **** 
+  89:../../BSP/LVGL/lv_port_disp.c **** #else
+  90:../../BSP/LVGL/lv_port_disp.c **** 
+  91:../../BSP/LVGL/lv_port_disp.c ****         uint16_t *buf = (uint16_t *)px_map;
+  55              		.loc 1 91 9 is_stmt 1 view .LVU5
+  56              	.LVL1:
+  92:../../BSP/LVGL/lv_port_disp.c **** 
+  93:../../BSP/LVGL/lv_port_disp.c **** #endif
+  94:../../BSP/LVGL/lv_port_disp.c **** 
+  95:../../BSP/LVGL/lv_port_disp.c ****         for (int y = area->y1; y <= area->y2; y++)
+  57              		.loc 1 95 9 view .LVU6
+  58              	.LBB3:
+  59              		.loc 1 95 14 view .LVU7
+  60              		.loc 1 95 18 is_stmt 0 view .LVU8
+  61 0012 4F68     		ldr	r7, [r1, #4]
+  62              	.LVL2:
+  63              		.loc 1 95 9 view .LVU9
+  64 0014 17E0     		b	.L4
+  65              	.LVL3:
+  66              	.L9:
+  67              		.loc 1 95 9 view .LVU10
+  68              	.LBE3:
+  69              	.LBE2:
+  77:../../BSP/LVGL/lv_port_disp.c **** {
+  70              		.loc 1 77 9 is_stmt 1 view .LVU11
+  71 0016 0092     		str	r2, [sp]
+  72 0018 8B89     		ldrh	r3, [r1, #12]
+  73 001a 0A89     		ldrh	r2, [r1, #8]
+  74              	.LVL4:
+  77:../../BSP/LVGL/lv_port_disp.c **** {
+  75              		.loc 1 77 9 is_stmt 0 view .LVU12
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s 			page 4
+
+
+  76 001c 8988     		ldrh	r1, [r1, #4]
+  77              	.LVL5:
+  77:../../BSP/LVGL/lv_port_disp.c **** {
+  78              		.loc 1 77 9 view .LVU13
+  79 001e 3088     		ldrh	r0, [r6]
+  80              	.LVL6:
+  77:../../BSP/LVGL/lv_port_disp.c **** {
+  81              		.loc 1 77 9 view .LVU14
+  82 0020 FFF7FEFF 		bl	lcd_color_fill
+  83              	.LVL7:
+  84              	.L3:
+  96:../../BSP/LVGL/lv_port_disp.c **** 
+  97:../../BSP/LVGL/lv_port_disp.c ****         {
+  98:../../BSP/LVGL/lv_port_disp.c **** 
+  99:../../BSP/LVGL/lv_port_disp.c ****             for (int x = area->x1; x <= area->x2; x++)
+ 100:../../BSP/LVGL/lv_port_disp.c **** 
+ 101:../../BSP/LVGL/lv_port_disp.c ****             {
+ 102:../../BSP/LVGL/lv_port_disp.c **** 
+ 103:../../BSP/LVGL/lv_port_disp.c **** #if LTDC_PIXFORMAT == LTDC_PIXFORMAT_ARGB8888
+ 104:../../BSP/LVGL/lv_port_disp.c **** 
+ 105:../../BSP/LVGL/lv_port_disp.c ****                 uint32_t color = *buf++;
+ 106:../../BSP/LVGL/lv_port_disp.c **** 
+ 107:../../BSP/LVGL/lv_port_disp.c **** #elif LTDC_PIXFORMAT == LTDC_PIXFORMAT_RGB565
+ 108:../../BSP/LVGL/lv_port_disp.c **** 
+ 109:../../BSP/LVGL/lv_port_disp.c ****                 uint16_t color = *buf++;
+ 110:../../BSP/LVGL/lv_port_disp.c **** 
+ 111:../../BSP/LVGL/lv_port_disp.c **** #else
+ 112:../../BSP/LVGL/lv_port_disp.c **** 
+ 113:../../BSP/LVGL/lv_port_disp.c ****                 uint16_t color = *buf++;
+ 114:../../BSP/LVGL/lv_port_disp.c **** 
+ 115:../../BSP/LVGL/lv_port_disp.c **** #endif
+ 116:../../BSP/LVGL/lv_port_disp.c **** 
+ 117:../../BSP/LVGL/lv_port_disp.c ****                 ltdc_draw_point((uint16_t)x, (uint16_t)y, color);
+ 118:../../BSP/LVGL/lv_port_disp.c **** 
+ 119:../../BSP/LVGL/lv_port_disp.c ****             }
+ 120:../../BSP/LVGL/lv_port_disp.c **** 
+ 121:../../BSP/LVGL/lv_port_disp.c ****         }
+ 122:../../BSP/LVGL/lv_port_disp.c **** 
+ 123:../../BSP/LVGL/lv_port_disp.c ****     }
+ 124:../../BSP/LVGL/lv_port_disp.c **** 
+ 125:../../BSP/LVGL/lv_port_disp.c **** 
+ 126:../../BSP/LVGL/lv_port_disp.c **** 
+ 127:../../BSP/LVGL/lv_port_disp.c ****     lv_display_flush_ready(disp_drv);
+  85              		.loc 1 127 5 is_stmt 1 view .LVU15
+  86 0024 4046     		mov	r0, r8
+  87 0026 FFF7FEFF 		bl	lv_display_flush_ready
+  88              	.LVL8:
+ 128:../../BSP/LVGL/lv_port_disp.c **** 
+ 129:../../BSP/LVGL/lv_port_disp.c **** }
+  89              		.loc 1 129 1 is_stmt 0 view .LVU16
+  90 002a 02B0     		add	sp, sp, #8
+  91              	.LCFI2:
+  92              		.cfi_remember_state
+  93              		.cfi_def_cfa_offset 24
+  94              		@ sp needed
+  95 002c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+  96              	.LVL9:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s 			page 5
+
+
+  97              	.L6:
+  98              	.LCFI3:
+  99              		.cfi_restore_state
+ 100              	.LBB8:
+ 101              	.LBB7:
+ 102              	.LBB4:
+ 103              	.LBB5:
+ 109:../../BSP/LVGL/lv_port_disp.c **** #else
+ 104              		.loc 1 109 17 is_stmt 1 view .LVU17
+ 117:../../BSP/LVGL/lv_port_disp.c ****                 uint32_t color = *buf++;
+ 105              		.loc 1 117 17 view .LVU18
+ 106 0030 34F8022B 		ldrh	r2, [r4], #2
+ 107              	.LVL10:
+ 117:../../BSP/LVGL/lv_port_disp.c ****                 uint32_t color = *buf++;
+ 108              		.loc 1 117 17 is_stmt 0 view .LVU19
+ 109 0034 B9B2     		uxth	r1, r7
+ 110 0036 A8B2     		uxth	r0, r5
+ 111 0038 FFF7FEFF 		bl	ltdc_draw_point
+ 112              	.LVL11:
+ 117:../../BSP/LVGL/lv_port_disp.c ****                 uint32_t color = *buf++;
+ 113              		.loc 1 117 17 view .LVU20
+ 114              	.LBE5:
+  99:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *px_map)
+ 115              		.loc 1 99 52 is_stmt 1 discriminator 3 view .LVU21
+ 116 003c 0135     		adds	r5, r5, #1
+ 117              	.LVL12:
+ 118              	.L5:
+  99:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *px_map)
+ 119              		.loc 1 99 38 discriminator 1 view .LVU22
+  99:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *px_map)
+ 120              		.loc 1 99 45 is_stmt 0 discriminator 1 view .LVU23
+ 121 003e B368     		ldr	r3, [r6, #8]
+  99:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *px_map)
+ 122              		.loc 1 99 38 discriminator 1 view .LVU24
+ 123 0040 AB42     		cmp	r3, r5
+ 124 0042 F5DA     		bge	.L6
+  99:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *px_map)
+ 125              		.loc 1 99 38 discriminator 1 view .LVU25
+ 126              	.LBE4:
+  95:../../BSP/LVGL/lv_port_disp.c ****     /* Reference: lcd_init() is called here; main may call it earlier — both are OK */
+ 127              		.loc 1 95 48 is_stmt 1 discriminator 2 view .LVU26
+ 128 0044 0137     		adds	r7, r7, #1
+ 129              	.LVL13:
+ 130              	.L4:
+  95:../../BSP/LVGL/lv_port_disp.c ****     /* Reference: lcd_init() is called here; main may call it earlier — both are OK */
+ 131              		.loc 1 95 34 discriminator 1 view .LVU27
+  95:../../BSP/LVGL/lv_port_disp.c ****     /* Reference: lcd_init() is called here; main may call it earlier — both are OK */
+ 132              		.loc 1 95 41 is_stmt 0 discriminator 1 view .LVU28
+ 133 0046 F368     		ldr	r3, [r6, #12]
+  95:../../BSP/LVGL/lv_port_disp.c ****     /* Reference: lcd_init() is called here; main may call it earlier — both are OK */
+ 134              		.loc 1 95 34 discriminator 1 view .LVU29
+ 135 0048 BB42     		cmp	r3, r7
+ 136 004a EBDB     		blt	.L3
+  99:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *px_map)
+ 137              		.loc 1 99 13 is_stmt 1 view .LVU30
+ 138              	.LBB6:
+  99:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *px_map)
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s 			page 6
+
+
+ 139              		.loc 1 99 18 view .LVU31
+  99:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *px_map)
+ 140              		.loc 1 99 22 is_stmt 0 view .LVU32
+ 141 004c 3568     		ldr	r5, [r6]
+ 142              	.LVL14:
+  99:../../BSP/LVGL/lv_port_disp.c **** static void disp_flush(lv_display_t *disp_drv, const lv_area_t *area, uint8_t *px_map)
+ 143              		.loc 1 99 13 view .LVU33
+ 144 004e F6E7     		b	.L5
+ 145              	.L11:
+ 146              		.align	2
+ 147              	.L10:
+ 148 0050 00000000 		.word	lcddev
+ 149              	.LBE6:
+ 150              	.LBE7:
+ 151              	.LBE8:
+ 152              		.cfi_endproc
+ 153              	.LFE342:
+ 155              		.section	.text.disp_init,"ax",%progbits
+ 156              		.align	1
+ 157              		.syntax unified
+ 158              		.thumb
+ 159              		.thumb_func
+ 161              	disp_init:
+ 162              	.LFB341:
+  59:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 163              		.loc 1 59 1 is_stmt 1 view -0
+ 164              		.cfi_startproc
+ 165              		@ args = 0, pretend = 0, frame = 0
+ 166              		@ frame_needed = 0, uses_anonymous_args = 0
+ 167 0000 08B5     		push	{r3, lr}
+ 168              	.LCFI4:
+ 169              		.cfi_def_cfa_offset 8
+ 170              		.cfi_offset 3, -8
+ 171              		.cfi_offset 14, -4
+  63:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 172              		.loc 1 63 5 view .LVU35
+ 173 0002 0120     		movs	r0, #1
+ 174 0004 FFF7FEFF 		bl	lcd_display_dir
+ 175              	.LVL15:
+  65:../../BSP/LVGL/lv_port_disp.c ****  * @brief LVGL display port (aligned with 例程39 lv_port_disp_template.c)
+ 176              		.loc 1 65 1 is_stmt 0 view .LVU36
+ 177 0008 08BD     		pop	{r3, pc}
+ 178              		.cfi_endproc
+ 179              	.LFE341:
+ 181              		.section	.text.lv_port_disp_init,"ax",%progbits
+ 182              		.align	1
+ 183              		.global	lv_port_disp_init
+ 184              		.syntax unified
+ 185              		.thumb
+ 186              		.thumb_func
+ 188              	lv_port_disp_init:
+ 189              	.LFB340:
+  37:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 190              		.loc 1 37 1 is_stmt 1 view -0
+ 191              		.cfi_startproc
+ 192              		@ args = 0, pretend = 0, frame = 0
+ 193              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s 			page 7
+
+
+ 194 0000 10B5     		push	{r4, lr}
+ 195              	.LCFI5:
+ 196              		.cfi_def_cfa_offset 8
+ 197              		.cfi_offset 4, -8
+ 198              		.cfi_offset 14, -4
+ 199 0002 82B0     		sub	sp, sp, #8
+ 200              	.LCFI6:
+ 201              		.cfi_def_cfa_offset 16
+  39:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 202              		.loc 1 39 5 view .LVU38
+ 203 0004 FFF7FEFF 		bl	disp_init
+ 204              	.LVL16:
+  43:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 205              		.loc 1 43 5 view .LVU39
+  43:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 206              		.loc 1 43 50 is_stmt 0 view .LVU40
+ 207 0008 084B     		ldr	r3, .L16
+  43:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 208              		.loc 1 43 26 view .LVU41
+ 209 000a 5988     		ldrh	r1, [r3, #2]
+ 210 000c 1888     		ldrh	r0, [r3]
+ 211 000e FFF7FEFF 		bl	lv_display_create
+ 212              	.LVL17:
+ 213 0012 0446     		mov	r4, r0
+ 214              	.LVL18:
+  45:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 215              		.loc 1 45 5 is_stmt 1 view .LVU42
+ 216 0014 0649     		ldr	r1, .L16+4
+ 217 0016 FFF7FEFF 		bl	lv_display_set_flush_cb
+ 218              	.LVL19:
+  49:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 219              		.loc 1 49 5 view .LVU43
+  51:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 220              		.loc 1 51 5 view .LVU44
+ 221 001a 0022     		movs	r2, #0
+ 222 001c 0092     		str	r2, [sp]
+ 223 001e 054B     		ldr	r3, .L16+8
+ 224 0020 0549     		ldr	r1, .L16+12
+ 225 0022 2046     		mov	r0, r4
+ 226 0024 FFF7FEFF 		bl	lv_display_set_buffers
+ 227              	.LVL20:
+  53:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 228              		.loc 1 53 1 is_stmt 0 view .LVU45
+ 229 0028 02B0     		add	sp, sp, #8
+ 230              	.LCFI7:
+ 231              		.cfi_def_cfa_offset 8
+ 232              		@ sp needed
+ 233 002a 10BD     		pop	{r4, pc}
+ 234              	.LVL21:
+ 235              	.L17:
+  53:../../BSP/LVGL/lv_port_disp.c **** plate.c)
+ 236              		.loc 1 53 1 view .LVU46
+ 237              		.align	2
+ 238              	.L16:
+ 239 002c 00000000 		.word	lcddev
+ 240 0030 00000000 		.word	disp_flush
+ 241 0034 00E20400 		.word	320000
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s 			page 8
+
+
+ 242 0038 00000000 		.word	buf_1.0
+ 243              		.cfi_endproc
+ 244              	.LFE340:
+ 246              		.section	.bss.buf_1.0,"aw",%nobits
+ 247              		.align	2
+ 250              	buf_1.0:
+ 251 0000 00000000 		.space	320000
+ 251      00000000 
+ 251      00000000 
+ 251      00000000 
+ 251      00000000 
+ 252              		.text
+ 253              	.Letext0:
+ 254              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 255              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 256              		.file 4 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ 257              		.file 5 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_area.h"
+ 258              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/core/../display/lv_display.h"
+ 259              		.file 7 "../../BSP/LCD/lcd.h"
+ 260              		.file 8 "../../BSP/LCD/lcd_ltdc.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_port_disp.c
+C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s:20     .text.disp_flush:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s:25     .text.disp_flush:00000000 disp_flush
+C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s:148    .text.disp_flush:00000050 $d
+C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s:156    .text.disp_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s:161    .text.disp_init:00000000 disp_init
+C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s:182    .text.lv_port_disp_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s:188    .text.lv_port_disp_init:00000000 lv_port_disp_init
+C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s:239    .text.lv_port_disp_init:0000002c $d
+C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s:250    .bss.buf_1.0:00000000 buf_1.0
+C:\Users\28576\AppData\Local\Temp\cc0FmNEb.s:247    .bss.buf_1.0:00000000 $d
+
+UNDEFINED SYMBOLS
+lcd_color_fill
+lv_display_flush_ready
+ltdc_draw_point
+lcddev
+lcd_display_dir
+lv_display_create
+lv_display_set_flush_cb
+lv_display_set_buffers

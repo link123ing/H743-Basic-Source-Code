@@ -1,0 +1,161 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccTNsfph.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"bsp_delay.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../BSP/bsp_delay.c"
+  19              		.section	.text.delay_ms,"ax",%progbits
+  20              		.align	1
+  21              		.global	delay_ms
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	delay_ms:
+  27              	.LVL0:
+  28              	.LFB144:
+   1:../../BSP/bsp_delay.c **** /**
+   2:../../BSP/bsp_delay.c ****  **************************************************************************************************
+   3:../../BSP/bsp_delay.c ****  * @file        bsp_delay.c
+   4:../../BSP/bsp_delay.c ****  * @brief       Simple delay helpers for BSP drivers
+   5:../../BSP/bsp_delay.c ****  **************************************************************************************************
+   6:../../BSP/bsp_delay.c ****  */
+   7:../../BSP/bsp_delay.c **** 
+   8:../../BSP/bsp_delay.c **** #include "bsp_delay.h"
+   9:../../BSP/bsp_delay.c **** 
+  10:../../BSP/bsp_delay.c **** void delay_ms(uint32_t ms)
+  11:../../BSP/bsp_delay.c **** {
+  29              		.loc 1 11 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 11 1 is_stmt 0 view .LVU1
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+  12:../../BSP/bsp_delay.c ****     HAL_Delay(ms);
+  39              		.loc 1 12 5 is_stmt 1 view .LVU2
+  40 0002 FFF7FEFF 		bl	HAL_Delay
+  41              	.LVL1:
+  13:../../BSP/bsp_delay.c **** }
+  42              		.loc 1 13 1 is_stmt 0 view .LVU3
+  43 0006 08BD     		pop	{r3, pc}
+  44              		.cfi_endproc
+  45              	.LFE144:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccTNsfph.s 			page 2
+
+
+  47              		.section	.text.delay_us,"ax",%progbits
+  48              		.align	1
+  49              		.global	delay_us
+  50              		.syntax unified
+  51              		.thumb
+  52              		.thumb_func
+  54              	delay_us:
+  55              	.LVL2:
+  56              	.LFB145:
+  14:../../BSP/bsp_delay.c **** 
+  15:../../BSP/bsp_delay.c **** void delay_us(uint32_t us)
+  16:../../BSP/bsp_delay.c **** {
+  57              		.loc 1 16 1 is_stmt 1 view -0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		@ link register save eliminated.
+  17:../../BSP/bsp_delay.c ****     uint32_t ticks = (SystemCoreClock / 1000000U) * us / 5U;
+  62              		.loc 1 17 5 view .LVU5
+  63              		.loc 1 17 39 is_stmt 0 view .LVU6
+  64 0000 094B     		ldr	r3, .L6
+  65 0002 1B68     		ldr	r3, [r3]
+  66 0004 094A     		ldr	r2, .L6+4
+  67 0006 A2FB0323 		umull	r2, r3, r2, r3
+  68 000a 9B0C     		lsrs	r3, r3, #18
+  69              		.loc 1 17 51 view .LVU7
+  70 000c 00FB03F3 		mul	r3, r0, r3
+  71              		.loc 1 17 14 view .LVU8
+  72 0010 074A     		ldr	r2, .L6+8
+  73 0012 A2FB0323 		umull	r2, r3, r2, r3
+  74 0016 9B08     		lsrs	r3, r3, #2
+  75              	.LVL3:
+  18:../../BSP/bsp_delay.c **** 
+  19:../../BSP/bsp_delay.c ****     while (ticks-- > 0U)
+  76              		.loc 1 19 5 is_stmt 1 view .LVU9
+  77              		.loc 1 19 11 is_stmt 0 view .LVU10
+  78 0018 01E0     		b	.L4
+  79              	.LVL4:
+  80              	.L5:
+  20:../../BSP/bsp_delay.c ****     {
+  21:../../BSP/bsp_delay.c ****         __NOP();
+  81              		.loc 1 21 9 is_stmt 1 view .LVU11
+  82              		.syntax unified
+  83              	@ 21 "../../BSP/bsp_delay.c" 1
+  84 001a 00BF     		nop
+  85              	@ 0 "" 2
+  19:../../BSP/bsp_delay.c ****     {
+  86              		.loc 1 19 17 is_stmt 0 view .LVU12
+  87              		.thumb
+  88              		.syntax unified
+  89 001c 1346     		mov	r3, r2
+  90              	.LVL5:
+  91              	.L4:
+  19:../../BSP/bsp_delay.c ****     {
+  92              		.loc 1 19 20 is_stmt 1 view .LVU13
+  19:../../BSP/bsp_delay.c ****     {
+  93              		.loc 1 19 17 is_stmt 0 view .LVU14
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccTNsfph.s 			page 3
+
+
+  94 001e 5A1E     		subs	r2, r3, #1
+  95              	.LVL6:
+  19:../../BSP/bsp_delay.c ****     {
+  96              		.loc 1 19 20 view .LVU15
+  97 0020 002B     		cmp	r3, #0
+  98 0022 FAD1     		bne	.L5
+  22:../../BSP/bsp_delay.c ****     }
+  23:../../BSP/bsp_delay.c **** }
+  99              		.loc 1 23 1 view .LVU16
+ 100 0024 7047     		bx	lr
+ 101              	.L7:
+ 102 0026 00BF     		.align	2
+ 103              	.L6:
+ 104 0028 00000000 		.word	SystemCoreClock
+ 105 002c 83DE1B43 		.word	1125899907
+ 106 0030 CDCCCCCC 		.word	-858993459
+ 107              		.cfi_endproc
+ 108              	.LFE145:
+ 110              		.text
+ 111              	.Letext0:
+ 112              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 113              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 114              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h"
+ 115              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccTNsfph.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bsp_delay.c
+C:\Users\28576\AppData\Local\Temp\ccTNsfph.s:20     .text.delay_ms:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccTNsfph.s:26     .text.delay_ms:00000000 delay_ms
+C:\Users\28576\AppData\Local\Temp\ccTNsfph.s:48     .text.delay_us:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccTNsfph.s:54     .text.delay_us:00000000 delay_us
+C:\Users\28576\AppData\Local\Temp\ccTNsfph.s:104    .text.delay_us:00000028 $d
+
+UNDEFINED SYMBOLS
+HAL_Delay
+SystemCoreClock

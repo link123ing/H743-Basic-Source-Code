@@ -1,0 +1,1429 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_draw_sw_blend.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c"
+  19              		.section	.text.lv_draw_sw_blend_color,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	lv_draw_sw_blend_color:
+  26              	.LVL0:
+  27              	.LFB42:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  * @file lv_draw_sw_blend.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #include "../../../misc/lv_area_private.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #include "lv_draw_sw_blend_private.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #include "../../lv_draw_private.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #include "../lv_draw_sw.h"
+  13:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_L8
+  14:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     #include "lv_draw_sw_blend_to_l8.h"
+  15:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  16:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_AL88
+  17:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     #include "lv_draw_sw_blend_to_al88.h"
+  18:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  19:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB565
+  20:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     #include "lv_draw_sw_blend_to_rgb565.h"
+  21:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  22:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB565_SWAPPED
+  23:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     #include "lv_draw_sw_blend_to_rgb565_swapped.h"
+  24:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  25:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_ARGB8888
+  26:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     #include "lv_draw_sw_blend_to_argb8888.h"
+  27:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  28:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_ARGB8888_PREMULTIPLIED
+  29:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     #include "lv_draw_sw_blend_to_argb8888_premultiplied.h"
+  30:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  31:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB888 || LV_DRAW_SW_SUPPORT_XRGB8888
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 2
+
+
+  32:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     #include "lv_draw_sw_blend_to_rgb888.h"
+  33:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  34:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_I1
+  35:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     #include "lv_draw_sw_blend_to_i1.h"
+  36:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  37:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_USE_DRAW_SW
+  38:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  39:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** /*********************
+  40:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *      DEFINES
+  41:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *********************/
+  42:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  43:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** /**********************
+  44:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *      TYPEDEFS
+  45:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  **********************/
+  46:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  47:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** /**********************
+  48:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *  STATIC PROTOTYPES
+  49:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  **********************/
+  50:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  51:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** static inline void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_sw_blend_color(lv_color_format_t layer_cf,
+  52:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                                       lv_draw_sw_blend_fill_dsc_t *
+  53:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  54:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** static inline void /* LV_ATTRIBUTE_FAST_MEM */ lv_draw_sw_blend_image(lv_color_format_t layer_cf,
+  55:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                                       lv_draw_sw_blend_image_dsc_t 
+  56:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  57:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  58:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** /**********************
+  59:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *  STATIC VARIABLES
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  **********************/
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** /**********************
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *      MACROS
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  **********************/
+  65:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  66:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** /**********************
+  67:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *   GLOBAL FUNCTIONS
+  68:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  **********************/
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** void lv_draw_sw_blend(lv_draw_task_t * t, const lv_draw_sw_blend_dsc_t * blend_dsc)
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** {
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     /*Do not draw transparent things*/
+  73:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(blend_dsc->opa <= LV_OPA_MIN) return;
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(blend_dsc->mask_buf && blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_TRANSP) return;
+  75:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  76:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     lv_area_t blend_area;
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(!lv_area_intersect(&blend_area, blend_dsc->blend_area, &t->clip_area)) return;
+  78:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  79:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     LV_PROFILER_DRAW_BEGIN;
+  80:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     lv_layer_t * layer = t->target_layer;
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     uint32_t layer_stride_byte = layer->draw_buf->header.stride;
+  82:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  83:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     lv_draw_sw_blend_handler_t handler = lv_draw_sw_get_blend_handler(layer->color_format);
+  84:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(handler) {
+  85:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         handler(t, blend_dsc);
+  86:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         LV_PROFILER_DRAW_END;
+  87:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         return;
+  88:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 3
+
+
+  89:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  90:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(blend_dsc->src_buf == NULL) {
+  91:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_draw_sw_blend_fill_dsc_t fill_dsc;
+  92:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_w = lv_area_get_width(&blend_area);
+  93:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_h = lv_area_get_height(&blend_area);
+  94:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_stride = layer_stride_byte;
+  95:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.opa = blend_dsc->opa;
+  96:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.color = blend_dsc->color;
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.mask_stride = 0;
+  98:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+  99:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         if(blend_dsc->mask_buf == NULL) fill_dsc.mask_buf = NULL;
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) fill_dsc.mask_buf = NULL;
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else fill_dsc.mask_buf = blend_dsc->mask_buf;
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.relative_area  = blend_area;
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&fill_dsc.relative_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_buf = lv_draw_layer_go_to_xy(layer, blend_area.x1 - layer->buf_area.x1,
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                    blend_area.y1 - layer->buf_area.y1);
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         if(fill_dsc.mask_buf) {
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_stride = blend_dsc->mask_stride == 0  ? lv_area_get_width(blend_dsc->mask
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_buf += fill_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1) 
+ 111:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                  (blend_area.x1 - blend_dsc->mask_area->x1);
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         }
+ 113:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_draw_sw_blend_color(layer->color_format, &fill_dsc);
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     }
+ 116:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     else {
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         if(!lv_area_intersect(&blend_area, &blend_area, blend_dsc->src_area)) {
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             return;
+ 120:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         }
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         if(blend_dsc->mask_area && !lv_area_intersect(&blend_area, &blend_area, blend_dsc->mask_are
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             return;
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         }
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 127:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_draw_sw_blend_image_dsc_t image_dsc;
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_w = lv_area_get_width(&blend_area);
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_h = lv_area_get_height(&blend_area);
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_stride = layer_stride_byte;
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.opa = blend_dsc->opa;
+ 133:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.blend_mode = blend_dsc->blend_mode;
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_stride = blend_dsc->src_stride;
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_color_format = blend_dsc->src_color_format;
+ 136:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 137:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         const uint8_t * src_buf = blend_dsc->src_buf;
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         uint32_t src_px_size = lv_color_format_get_bpp(blend_dsc->src_color_format);
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         src_buf += image_dsc.src_stride * (blend_area.y1 - blend_dsc->src_area->y1);
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         src_buf += ((blend_area.x1 - blend_dsc->src_area->x1) * src_px_size) >> 3;
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_buf = src_buf;
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.mask_stride = 0;
+ 143:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         if(blend_dsc->mask_buf == NULL) image_dsc.mask_buf = NULL;
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) image_dsc.mask_buf = NULL;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 4
+
+
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else image_dsc.mask_buf = blend_dsc->mask_buf;
+ 147:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         if(image_dsc.mask_buf) {
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_ASSERT_NULL(blend_dsc->mask_area);
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_stride = blend_dsc->mask_stride ? blend_dsc->mask_stride : lv_area_get_w
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf += image_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                   (blend_area.x1 - blend_dsc->mask_area->x1);
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         }
+ 155:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.relative_area  = blend_area;
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&image_dsc.relative_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_area  = *blend_dsc->src_area;
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&image_dsc.src_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_buf = lv_draw_layer_go_to_xy(layer, blend_area.x1 - layer->buf_area.x1,
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                     blend_area.y1 - layer->buf_area.y1);
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_draw_sw_blend_image(layer->color_format, &image_dsc);
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     }
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     LV_PROFILER_DRAW_END;
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** }
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** /**********************
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  *   STATIC FUNCTIONS
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****  **********************/
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** static inline void LV_ATTRIBUTE_FAST_MEM lv_draw_sw_blend_color(lv_color_format_t layer_cf,
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                                 lv_draw_sw_blend_fill_dsc_t * fill_
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** {
+  28              		.loc 1 176 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 176 1 is_stmt 0 view .LVU1
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  38 0002 0346     		mov	r3, r0
+  39 0004 0846     		mov	r0, r1
+  40              	.LVL1:
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     switch(layer_cf) {
+  41              		.loc 1 177 5 is_stmt 1 view .LVU2
+  42 0006 112B     		cmp	r3, #17
+  43 0008 25D0     		beq	.L2
+  44 000a 09D9     		bls	.L16
+  45 000c 1A2B     		cmp	r3, #26
+  46 000e 26D0     		beq	.L10
+  47 0010 15D8     		bhi	.L11
+  48 0012 122B     		cmp	r3, #18
+  49 0014 18D0     		beq	.L12
+  50 0016 152B     		cmp	r3, #21
+  51 0018 18D1     		bne	.L1
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB565
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 5
+
+
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_RGB565:
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_color_to_rgb565(fill_dsc);
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB565_SWAPPED
+ 184:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_RGB565_SWAPPED:
+ 185:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_color_to_rgb565_swapped(fill_dsc);
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_ARGB8888
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_ARGB8888:
+ 190:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_color_to_argb8888(fill_dsc);
+ 191:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 192:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 193:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB888
+ 194:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_RGB888:
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_color_to_rgb888(fill_dsc, 3);
+ 196:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_XRGB8888
+ 199:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_XRGB8888:
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_color_to_rgb888(fill_dsc, 4);
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_ARGB8888_PREMULTIPLIED
+ 204:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_ARGB8888_PREMULTIPLIED:
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_color_to_argb8888_premultiplied(fill_dsc);
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 207:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_L8
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_L8:
+ 210:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_color_to_l8(fill_dsc);
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 212:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 213:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_AL88
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_AL88:
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_color_to_al88(fill_dsc);
+  52              		.loc 1 215 13 view .LVU3
+  53 001a FFF7FEFF 		bl	lv_draw_sw_blend_color_to_al88
+  54              	.LVL2:
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+  55              		.loc 1 216 13 view .LVU4
+  56 001e 15E0     		b	.L1
+  57              	.LVL3:
+  58              	.L16:
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     switch(layer_cf) {
+  59              		.loc 1 177 5 is_stmt 0 view .LVU5
+  60 0020 0F2B     		cmp	r3, #15
+  61 0022 14D0     		beq	.L4
+  62 0024 06D8     		bhi	.L5
+  63 0026 062B     		cmp	r3, #6
+  64 0028 1CD0     		beq	.L6
+  65 002a 072B     		cmp	r3, #7
+  66 002c 0ED1     		bne	.L1
+ 217:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 218:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_I1
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_I1:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 6
+
+
+ 220:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_color_to_i1(fill_dsc);
+  67              		.loc 1 220 13 is_stmt 1 view .LVU6
+  68 002e FFF7FEFF 		bl	lv_draw_sw_blend_color_to_i1
+  69              	.LVL4:
+ 221:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+  70              		.loc 1 221 13 view .LVU7
+ 222:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 223:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         default:
+ 224:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 225:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     }
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** }
+  71              		.loc 1 226 1 is_stmt 0 view .LVU8
+  72 0032 0BE0     		b	.L1
+  73              	.LVL5:
+  74              	.L5:
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB565
+  75              		.loc 1 177 5 view .LVU9
+  76 0034 102B     		cmp	r3, #16
+  77 0036 09D1     		bne	.L1
+ 190:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+  78              		.loc 1 190 13 is_stmt 1 view .LVU10
+  79 0038 FFF7FEFF 		bl	lv_draw_sw_blend_color_to_argb8888
+  80              	.LVL6:
+ 191:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  81              		.loc 1 191 13 view .LVU11
+  82 003c 06E0     		b	.L1
+  83              	.LVL7:
+  84              	.L11:
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB565
+  85              		.loc 1 177 5 is_stmt 0 view .LVU12
+  86 003e 1B2B     		cmp	r3, #27
+  87 0040 04D1     		bne	.L1
+ 185:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+  88              		.loc 1 185 13 is_stmt 1 view .LVU13
+  89 0042 FFF7FEFF 		bl	lv_draw_sw_blend_color_to_rgb565_swapped
+  90              	.LVL8:
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  91              		.loc 1 186 13 view .LVU14
+  92 0046 01E0     		b	.L1
+  93              	.LVL9:
+  94              	.L12:
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+  95              		.loc 1 180 13 view .LVU15
+  96 0048 FFF7FEFF 		bl	lv_draw_sw_blend_color_to_rgb565
+  97              	.LVL10:
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+  98              		.loc 1 181 13 view .LVU16
+  99              	.L1:
+ 100              		.loc 1 226 1 is_stmt 0 view .LVU17
+ 101 004c 08BD     		pop	{r3, pc}
+ 102              	.LVL11:
+ 103              	.L4:
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 104              		.loc 1 195 13 is_stmt 1 view .LVU18
+ 105 004e 0321     		movs	r1, #3
+ 106 0050 FFF7FEFF 		bl	lv_draw_sw_blend_color_to_rgb888
+ 107              	.LVL12:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 7
+
+
+ 196:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 108              		.loc 1 196 13 view .LVU19
+ 109 0054 FAE7     		b	.L1
+ 110              	.LVL13:
+ 111              	.L2:
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 112              		.loc 1 200 13 view .LVU20
+ 113 0056 0421     		movs	r1, #4
+ 114 0058 FFF7FEFF 		bl	lv_draw_sw_blend_color_to_rgb888
+ 115              	.LVL14:
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 116              		.loc 1 201 13 view .LVU21
+ 117 005c F6E7     		b	.L1
+ 118              	.LVL15:
+ 119              	.L10:
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 120              		.loc 1 205 13 view .LVU22
+ 121 005e FFF7FEFF 		bl	lv_draw_sw_blend_color_to_argb8888_premultiplied
+ 122              	.LVL16:
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 123              		.loc 1 206 13 view .LVU23
+ 124 0062 F3E7     		b	.L1
+ 125              	.LVL17:
+ 126              	.L6:
+ 210:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 127              		.loc 1 210 13 view .LVU24
+ 128 0064 FFF7FEFF 		bl	lv_draw_sw_blend_color_to_l8
+ 129              	.LVL18:
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 130              		.loc 1 211 13 view .LVU25
+ 131 0068 F0E7     		b	.L1
+ 132              		.cfi_endproc
+ 133              	.LFE42:
+ 135              		.section	.text.lv_draw_sw_blend_image,"ax",%progbits
+ 136              		.align	1
+ 137              		.syntax unified
+ 138              		.thumb
+ 139              		.thumb_func
+ 141              	lv_draw_sw_blend_image:
+ 142              	.LVL19:
+ 143              	.LFB43:
+ 227:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** static inline void LV_ATTRIBUTE_FAST_MEM lv_draw_sw_blend_image(lv_color_format_t layer_cf,
+ 229:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                                 lv_draw_sw_blend_image_dsc_t * imag
+ 230:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** {
+ 144              		.loc 1 230 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              		.loc 1 230 1 is_stmt 0 view .LVU27
+ 149 0000 08B5     		push	{r3, lr}
+ 150              	.LCFI1:
+ 151              		.cfi_def_cfa_offset 8
+ 152              		.cfi_offset 3, -8
+ 153              		.cfi_offset 14, -4
+ 154 0002 0346     		mov	r3, r0
+ 155 0004 0846     		mov	r0, r1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 8
+
+
+ 156              	.LVL20:
+ 231:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     switch(layer_cf) {
+ 157              		.loc 1 231 5 is_stmt 1 view .LVU28
+ 158 0006 112B     		cmp	r3, #17
+ 159 0008 24D0     		beq	.L18
+ 160 000a 09D9     		bls	.L32
+ 161 000c 152B     		cmp	r3, #21
+ 162 000e 2BD0     		beq	.L26
+ 163 0010 15D9     		bls	.L33
+ 164 0012 1A2B     		cmp	r3, #26
+ 165 0014 22D0     		beq	.L29
+ 166 0016 1B2B     		cmp	r3, #27
+ 167 0018 17D1     		bne	.L17
+ 232:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB565
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_RGB565:
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_RGB565A8:
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_image_to_rgb565(image_dsc);
+ 236:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 237:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 238:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB565_SWAPPED
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_RGB565_SWAPPED:
+ 240:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_image_to_rgb565_swapped(image_dsc);
+ 168              		.loc 1 240 13 view .LVU29
+ 169 001a FFF7FEFF 		bl	lv_draw_sw_blend_image_to_rgb565_swapped
+ 170              	.LVL21:
+ 241:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 171              		.loc 1 241 13 view .LVU30
+ 172 001e 14E0     		b	.L17
+ 173              	.LVL22:
+ 174              	.L32:
+ 231:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     switch(layer_cf) {
+ 175              		.loc 1 231 5 is_stmt 0 view .LVU31
+ 176 0020 0F2B     		cmp	r3, #15
+ 177 0022 13D0     		beq	.L20
+ 178 0024 06D8     		bhi	.L21
+ 179 0026 062B     		cmp	r3, #6
+ 180 0028 1BD0     		beq	.L22
+ 181 002a 072B     		cmp	r3, #7
+ 182 002c 0DD1     		bne	.L17
+ 242:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 243:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_ARGB8888
+ 244:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_ARGB8888:
+ 245:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_image_to_argb8888(image_dsc);
+ 246:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 247:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 248:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB888
+ 249:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_RGB888:
+ 250:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_image_to_rgb888(image_dsc, 3);
+ 251:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 252:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_XRGB8888
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_XRGB8888:
+ 255:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_image_to_rgb888(image_dsc, 4);
+ 256:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 257:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 258:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_ARGB8888_PREMULTIPLIED
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_ARGB8888_PREMULTIPLIED:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 9
+
+
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_image_to_argb8888_premultiplied(image_dsc);
+ 261:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 262:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 263:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_L8
+ 264:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_L8:
+ 265:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_image_to_l8(image_dsc);
+ 266:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 267:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 268:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_AL88
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_AL88:
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_image_to_al88(image_dsc);
+ 271:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 272:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 273:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_I1
+ 274:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         case LV_COLOR_FORMAT_I1:
+ 275:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             lv_draw_sw_blend_image_to_i1(image_dsc);
+ 183              		.loc 1 275 13 is_stmt 1 view .LVU32
+ 184 002e FFF7FEFF 		bl	lv_draw_sw_blend_image_to_i1
+ 185              	.LVL23:
+ 276:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 186              		.loc 1 276 13 view .LVU33
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         default:
+ 279:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 280:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     }
+ 281:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** }
+ 187              		.loc 1 281 1 is_stmt 0 view .LVU34
+ 188 0032 0AE0     		b	.L17
+ 189              	.LVL24:
+ 190              	.L21:
+ 231:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB565
+ 191              		.loc 1 231 5 view .LVU35
+ 192 0034 102B     		cmp	r3, #16
+ 193 0036 08D1     		bne	.L17
+ 245:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 194              		.loc 1 245 13 is_stmt 1 view .LVU36
+ 195 0038 FFF7FEFF 		bl	lv_draw_sw_blend_image_to_argb8888
+ 196              	.LVL25:
+ 246:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 197              		.loc 1 246 13 view .LVU37
+ 198 003c 05E0     		b	.L17
+ 199              	.LVL26:
+ 200              	.L33:
+ 231:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #if LV_DRAW_SW_SUPPORT_RGB565
+ 201              		.loc 1 231 5 is_stmt 0 view .LVU38
+ 202 003e 122B     		cmp	r3, #18
+ 203 0040 01D0     		beq	.L28
+ 204 0042 142B     		cmp	r3, #20
+ 205 0044 01D1     		bne	.L17
+ 206              	.L28:
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 207              		.loc 1 235 13 is_stmt 1 view .LVU39
+ 208 0046 FFF7FEFF 		bl	lv_draw_sw_blend_image_to_rgb565
+ 209              	.LVL27:
+ 236:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 210              		.loc 1 236 13 view .LVU40
+ 211              	.L17:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 10
+
+
+ 212              		.loc 1 281 1 is_stmt 0 view .LVU41
+ 213 004a 08BD     		pop	{r3, pc}
+ 214              	.LVL28:
+ 215              	.L20:
+ 250:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 216              		.loc 1 250 13 is_stmt 1 view .LVU42
+ 217 004c 0321     		movs	r1, #3
+ 218 004e FFF7FEFF 		bl	lv_draw_sw_blend_image_to_rgb888
+ 219              	.LVL29:
+ 251:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 220              		.loc 1 251 13 view .LVU43
+ 221 0052 FAE7     		b	.L17
+ 222              	.LVL30:
+ 223              	.L18:
+ 255:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 224              		.loc 1 255 13 view .LVU44
+ 225 0054 0421     		movs	r1, #4
+ 226 0056 FFF7FEFF 		bl	lv_draw_sw_blend_image_to_rgb888
+ 227              	.LVL31:
+ 256:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 228              		.loc 1 256 13 view .LVU45
+ 229 005a F6E7     		b	.L17
+ 230              	.LVL32:
+ 231              	.L29:
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 232              		.loc 1 260 13 view .LVU46
+ 233 005c FFF7FEFF 		bl	lv_draw_sw_blend_image_to_argb8888_premultiplied
+ 234              	.LVL33:
+ 261:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 235              		.loc 1 261 13 view .LVU47
+ 236 0060 F3E7     		b	.L17
+ 237              	.LVL34:
+ 238              	.L22:
+ 265:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 239              		.loc 1 265 13 view .LVU48
+ 240 0062 FFF7FEFF 		bl	lv_draw_sw_blend_image_to_l8
+ 241              	.LVL35:
+ 266:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 242              		.loc 1 266 13 view .LVU49
+ 243 0066 F0E7     		b	.L17
+ 244              	.LVL36:
+ 245              	.L26:
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             break;
+ 246              		.loc 1 270 13 view .LVU50
+ 247 0068 FFF7FEFF 		bl	lv_draw_sw_blend_image_to_al88
+ 248              	.LVL37:
+ 271:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** #endif
+ 249              		.loc 1 271 13 view .LVU51
+ 250 006c EDE7     		b	.L17
+ 251              		.cfi_endproc
+ 252              	.LFE43:
+ 254              		.section	.text.lv_draw_sw_blend,"ax",%progbits
+ 255              		.align	1
+ 256              		.global	lv_draw_sw_blend
+ 257              		.syntax unified
+ 258              		.thumb
+ 259              		.thumb_func
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 11
+
+
+ 261              	lv_draw_sw_blend:
+ 262              	.LVL38:
+ 263              	.LFB41:
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     /*Do not draw transparent things*/
+ 264              		.loc 1 71 1 view -0
+ 265              		.cfi_startproc
+ 266              		@ args = 0, pretend = 0, frame = 88
+ 267              		@ frame_needed = 0, uses_anonymous_args = 0
+  73:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(blend_dsc->mask_buf && blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_TRANSP) return;
+ 268              		.loc 1 73 5 view .LVU53
+  73:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(blend_dsc->mask_buf && blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_TRANSP) return;
+ 269              		.loc 1 73 17 is_stmt 0 view .LVU54
+ 270 0000 0B7D     		ldrb	r3, [r1, #20]	@ zero_extendqisi2
+  73:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(blend_dsc->mask_buf && blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_TRANSP) return;
+ 271              		.loc 1 73 7 view .LVU55
+ 272 0002 022B     		cmp	r3, #2
+ 273 0004 40F20281 		bls	.L56
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     /*Do not draw transparent things*/
+ 274              		.loc 1 71 1 view .LVU56
+ 275 0008 F0B5     		push	{r4, r5, r6, r7, lr}
+ 276              	.LCFI2:
+ 277              		.cfi_def_cfa_offset 20
+ 278              		.cfi_offset 4, -20
+ 279              		.cfi_offset 5, -16
+ 280              		.cfi_offset 6, -12
+ 281              		.cfi_offset 7, -8
+ 282              		.cfi_offset 14, -4
+ 283 000a 97B0     		sub	sp, sp, #92
+ 284              	.LCFI3:
+ 285              		.cfi_def_cfa_offset 112
+ 286 000c 0246     		mov	r2, r0
+ 287 000e 0C46     		mov	r4, r1
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 288              		.loc 1 74 5 is_stmt 1 view .LVU57
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 289              		.loc 1 74 17 is_stmt 0 view .LVU58
+ 290 0010 8B69     		ldr	r3, [r1, #24]
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 291              		.loc 1 74 7 view .LVU59
+ 292 0012 0BB1     		cbz	r3, .L36
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 293              		.loc 1 74 40 discriminator 1 view .LVU60
+ 294 0014 0B7F     		ldrb	r3, [r1, #28]	@ zero_extendqisi2
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 295              		.loc 1 74 28 discriminator 1 view .LVU61
+ 296 0016 33B1     		cbz	r3, .L34
+ 297              	.L36:
+  76:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(!lv_area_intersect(&blend_area, blend_dsc->blend_area, &t->clip_area)) return;
+ 298              		.loc 1 76 5 is_stmt 1 view .LVU62
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 299              		.loc 1 77 5 view .LVU63
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 300              		.loc 1 77 9 is_stmt 0 view .LVU64
+ 301 0018 1546     		mov	r5, r2
+ 302 001a 3832     		adds	r2, r2, #56
+ 303 001c 2168     		ldr	r1, [r4]
+ 304              	.LVL39:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 12
+
+
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 305              		.loc 1 77 9 view .LVU65
+ 306 001e 12A8     		add	r0, sp, #72
+ 307              	.LVL40:
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 308              		.loc 1 77 9 view .LVU66
+ 309 0020 FFF7FEFF 		bl	lv_area_intersect
+ 310              	.LVL41:
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 311              		.loc 1 77 7 discriminator 1 view .LVU67
+ 312 0024 08B9     		cbnz	r0, .L59
+ 313              	.LVL42:
+ 314              	.L34:
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 315              		.loc 1 168 1 view .LVU68
+ 316 0026 17B0     		add	sp, sp, #92
+ 317              	.LCFI4:
+ 318              		.cfi_remember_state
+ 319              		.cfi_def_cfa_offset 20
+ 320              		@ sp needed
+ 321 0028 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 322              	.LVL43:
+ 323              	.L59:
+ 324              	.LCFI5:
+ 325              		.cfi_restore_state
+  79:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     lv_layer_t * layer = t->target_layer;
+ 326              		.loc 1 79 27 is_stmt 1 view .LVU69
+  80:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     uint32_t layer_stride_byte = layer->draw_buf->header.stride;
+ 327              		.loc 1 80 5 view .LVU70
+  80:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     uint32_t layer_stride_byte = layer->draw_buf->header.stride;
+ 328              		.loc 1 80 18 is_stmt 0 view .LVU71
+ 329 002a AA6C     		ldr	r2, [r5, #72]
+ 330 002c 1646     		mov	r6, r2
+ 331              	.LVL44:
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 332              		.loc 1 81 5 is_stmt 1 view .LVU72
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 333              		.loc 1 81 39 is_stmt 0 view .LVU73
+ 334 002e 1368     		ldr	r3, [r2]
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 335              		.loc 1 81 57 view .LVU74
+ 336 0030 1B89     		ldrh	r3, [r3, #8]
+ 337 0032 1F46     		mov	r7, r3
+ 338              	.LVL45:
+  83:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(handler) {
+ 339              		.loc 1 83 5 is_stmt 1 view .LVU75
+  83:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     if(handler) {
+ 340              		.loc 1 83 42 is_stmt 0 view .LVU76
+ 341 0034 107D     		ldrb	r0, [r2, #20]	@ zero_extendqisi2
+ 342 0036 FFF7FEFF 		bl	lv_draw_sw_get_blend_handler
+ 343              	.LVL46:
+  84:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         handler(t, blend_dsc);
+ 344              		.loc 1 84 5 is_stmt 1 view .LVU77
+  84:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         handler(t, blend_dsc);
+ 345              		.loc 1 84 7 is_stmt 0 view .LVU78
+ 346 003a 0346     		mov	r3, r0
+ 347 003c 18B1     		cbz	r0, .L37
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 13
+
+
+  85:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         LV_PROFILER_DRAW_END;
+ 348              		.loc 1 85 9 is_stmt 1 view .LVU79
+ 349 003e 2146     		mov	r1, r4
+ 350 0040 2846     		mov	r0, r5
+ 351              	.LVL47:
+  85:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         LV_PROFILER_DRAW_END;
+ 352              		.loc 1 85 9 is_stmt 0 view .LVU80
+ 353 0042 9847     		blx	r3
+ 354              	.LVL48:
+  86:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         return;
+ 355              		.loc 1 86 29 is_stmt 1 view .LVU81
+  87:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     }
+ 356              		.loc 1 87 9 view .LVU82
+ 357 0044 EFE7     		b	.L34
+ 358              	.LVL49:
+ 359              	.L37:
+  90:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_draw_sw_blend_fill_dsc_t fill_dsc;
+ 360              		.loc 1 90 5 view .LVU83
+  90:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_draw_sw_blend_fill_dsc_t fill_dsc;
+ 361              		.loc 1 90 17 is_stmt 0 view .LVU84
+ 362 0046 6368     		ldr	r3, [r4, #4]
+  90:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_draw_sw_blend_fill_dsc_t fill_dsc;
+ 363              		.loc 1 90 7 view .LVU85
+ 364 0048 002B     		cmp	r3, #0
+ 365 004a 00F08280 		beq	.L60
+ 366              	.LBB2:
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ 367              		.loc 1 117 9 is_stmt 1 view .LVU86
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ 368              		.loc 1 117 13 is_stmt 0 view .LVU87
+ 369 004e 12A8     		add	r0, sp, #72
+ 370              	.LVL50:
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ 371              		.loc 1 117 13 view .LVU88
+ 372 0050 2269     		ldr	r2, [r4, #16]
+ 373 0052 0146     		mov	r1, r0
+ 374 0054 FFF7FEFF 		bl	lv_area_intersect
+ 375              	.LVL51:
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ 376              		.loc 1 117 11 discriminator 1 view .LVU89
+ 377 0058 0028     		cmp	r0, #0
+ 378 005a E4D0     		beq	.L34
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ 379              		.loc 1 122 9 is_stmt 1 view .LVU90
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ 380              		.loc 1 122 21 is_stmt 0 view .LVU91
+ 381 005c 226A     		ldr	r2, [r4, #32]
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ 382              		.loc 1 122 11 view .LVU92
+ 383 005e 2AB1     		cbz	r2, .L46
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ 384              		.loc 1 122 37 discriminator 1 view .LVU93
+ 385 0060 12A8     		add	r0, sp, #72
+ 386 0062 0146     		mov	r1, r0
+ 387 0064 FFF7FEFF 		bl	lv_area_intersect
+ 388              	.LVL52:
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_PROFILER_DRAW_END;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 14
+
+
+ 389              		.loc 1 122 33 discriminator 2 view .LVU94
+ 390 0068 0028     		cmp	r0, #0
+ 391 006a DCD0     		beq	.L34
+ 392              	.L46:
+ 127:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_w = lv_area_get_width(&blend_area);
+ 393              		.loc 1 127 9 is_stmt 1 view .LVU95
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_h = lv_area_get_height(&blend_area);
+ 394              		.loc 1 128 9 view .LVU96
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_h = lv_area_get_height(&blend_area);
+ 395              		.loc 1 128 28 is_stmt 0 view .LVU97
+ 396 006c 12A8     		add	r0, sp, #72
+ 397 006e FFF7FEFF 		bl	lv_area_get_width
+ 398              	.LVL53:
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_h = lv_area_get_height(&blend_area);
+ 399              		.loc 1 128 26 discriminator 1 view .LVU98
+ 400 0072 0290     		str	r0, [sp, #8]
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_stride = layer_stride_byte;
+ 401              		.loc 1 129 9 is_stmt 1 view .LVU99
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_stride = layer_stride_byte;
+ 402              		.loc 1 129 28 is_stmt 0 view .LVU100
+ 403 0074 12A8     		add	r0, sp, #72
+ 404 0076 FFF7FEFF 		bl	lv_area_get_height
+ 405              	.LVL54:
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.dest_stride = layer_stride_byte;
+ 406              		.loc 1 129 26 discriminator 1 view .LVU101
+ 407 007a 0390     		str	r0, [sp, #12]
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 408              		.loc 1 130 9 is_stmt 1 view .LVU102
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 409              		.loc 1 130 31 is_stmt 0 view .LVU103
+ 410 007c 0497     		str	r7, [sp, #16]
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.blend_mode = blend_dsc->blend_mode;
+ 411              		.loc 1 132 9 is_stmt 1 view .LVU104
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.blend_mode = blend_dsc->blend_mode;
+ 412              		.loc 1 132 34 is_stmt 0 view .LVU105
+ 413 007e 237D     		ldrb	r3, [r4, #20]	@ zero_extendqisi2
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.blend_mode = blend_dsc->blend_mode;
+ 414              		.loc 1 132 23 view .LVU106
+ 415 0080 8DF82530 		strb	r3, [sp, #37]
+ 133:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_stride = blend_dsc->src_stride;
+ 416              		.loc 1 133 9 is_stmt 1 view .LVU107
+ 133:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_stride = blend_dsc->src_stride;
+ 417              		.loc 1 133 41 is_stmt 0 view .LVU108
+ 418 0084 94F82830 		ldrb	r3, [r4, #40]	@ zero_extendqisi2
+ 133:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_stride = blend_dsc->src_stride;
+ 419              		.loc 1 133 30 view .LVU109
+ 420 0088 8DF82630 		strb	r3, [sp, #38]
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_color_format = blend_dsc->src_color_format;
+ 421              		.loc 1 134 9 is_stmt 1 view .LVU110
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_color_format = blend_dsc->src_color_format;
+ 422              		.loc 1 134 41 is_stmt 0 view .LVU111
+ 423 008c A368     		ldr	r3, [r4, #8]
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_color_format = blend_dsc->src_color_format;
+ 424              		.loc 1 134 30 view .LVU112
+ 425 008e 0893     		str	r3, [sp, #32]
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 426              		.loc 1 135 9 is_stmt 1 view .LVU113
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 15
+
+
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 427              		.loc 1 135 47 is_stmt 0 view .LVU114
+ 428 0090 207B     		ldrb	r0, [r4, #12]	@ zero_extendqisi2
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 429              		.loc 1 135 36 view .LVU115
+ 430 0092 8DF82400 		strb	r0, [sp, #36]
+ 137:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         uint32_t src_px_size = lv_color_format_get_bpp(blend_dsc->src_color_format);
+ 431              		.loc 1 137 9 is_stmt 1 view .LVU116
+ 137:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         uint32_t src_px_size = lv_color_format_get_bpp(blend_dsc->src_color_format);
+ 432              		.loc 1 137 25 is_stmt 0 view .LVU117
+ 433 0096 6568     		ldr	r5, [r4, #4]
+ 434              	.LVL55:
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         src_buf += image_dsc.src_stride * (blend_area.y1 - blend_dsc->src_area->y1);
+ 435              		.loc 1 138 9 is_stmt 1 view .LVU118
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         src_buf += image_dsc.src_stride * (blend_area.y1 - blend_dsc->src_area->y1);
+ 436              		.loc 1 138 32 is_stmt 0 view .LVU119
+ 437 0098 FFF7FEFF 		bl	lv_color_format_get_bpp
+ 438              	.LVL56:
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         src_buf += ((blend_area.x1 - blend_dsc->src_area->x1) * src_px_size) >> 3;
+ 439              		.loc 1 139 9 is_stmt 1 view .LVU120
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         src_buf += ((blend_area.x1 - blend_dsc->src_area->x1) * src_px_size) >> 3;
+ 440              		.loc 1 139 69 is_stmt 0 view .LVU121
+ 441 009c 2169     		ldr	r1, [r4, #16]
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         src_buf += ((blend_area.x1 - blend_dsc->src_area->x1) * src_px_size) >> 3;
+ 442              		.loc 1 139 79 view .LVU122
+ 443 009e 4A68     		ldr	r2, [r1, #4]
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         src_buf += ((blend_area.x1 - blend_dsc->src_area->x1) * src_px_size) >> 3;
+ 444              		.loc 1 139 58 view .LVU123
+ 445 00a0 139B     		ldr	r3, [sp, #76]
+ 446 00a2 9A1A     		subs	r2, r3, r2
+ 447              	.LVL57:
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_buf = src_buf;
+ 448              		.loc 1 140 9 is_stmt 1 view .LVU124
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_buf = src_buf;
+ 449              		.loc 1 140 57 is_stmt 0 view .LVU125
+ 450 00a4 0968     		ldr	r1, [r1]
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_buf = src_buf;
+ 451              		.loc 1 140 36 view .LVU126
+ 452 00a6 129B     		ldr	r3, [sp, #72]
+ 453 00a8 5B1A     		subs	r3, r3, r1
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_buf = src_buf;
+ 454              		.loc 1 140 63 view .LVU127
+ 455 00aa 00FB03F3 		mul	r3, r0, r3
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_buf = src_buf;
+ 456              		.loc 1 140 78 view .LVU128
+ 457 00ae DB08     		lsrs	r3, r3, #3
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.src_buf = src_buf;
+ 458              		.loc 1 140 17 view .LVU129
+ 459 00b0 0899     		ldr	r1, [sp, #32]
+ 460 00b2 02FB0133 		mla	r3, r2, r1, r3
+ 461 00b6 2B44     		add	r3, r3, r5
+ 462              	.LVL58:
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.mask_stride = 0;
+ 463              		.loc 1 141 9 is_stmt 1 view .LVU130
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         image_dsc.mask_stride = 0;
+ 464              		.loc 1 141 27 is_stmt 0 view .LVU131
+ 465 00b8 0793     		str	r3, [sp, #28]
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 16
+
+
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 466              		.loc 1 142 9 is_stmt 1 view .LVU132
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 467              		.loc 1 142 31 is_stmt 0 view .LVU133
+ 468 00ba 0023     		movs	r3, #0
+ 469              	.LVL59:
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 470              		.loc 1 142 31 view .LVU134
+ 471 00bc 0693     		str	r3, [sp, #24]
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) image_dsc.mask_buf = NULL;
+ 472              		.loc 1 144 9 is_stmt 1 view .LVU135
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) image_dsc.mask_buf = NULL;
+ 473              		.loc 1 144 21 is_stmt 0 view .LVU136
+ 474 00be A369     		ldr	r3, [r4, #24]
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) image_dsc.mask_buf = NULL;
+ 475              		.loc 1 144 11 view .LVU137
+ 476 00c0 002B     		cmp	r3, #0
+ 477 00c2 00F09980 		beq	.L61
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else image_dsc.mask_buf = blend_dsc->mask_buf;
+ 478              		.loc 1 145 14 is_stmt 1 view .LVU138
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else image_dsc.mask_buf = blend_dsc->mask_buf;
+ 479              		.loc 1 145 26 is_stmt 0 view .LVU139
+ 480 00c6 227F     		ldrb	r2, [r4, #28]	@ zero_extendqisi2
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else image_dsc.mask_buf = blend_dsc->mask_buf;
+ 481              		.loc 1 145 16 view .LVU140
+ 482 00c8 012A     		cmp	r2, #1
+ 483 00ca 00F09780 		beq	.L62
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 484              		.loc 1 146 14 is_stmt 1 view .LVU141
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 485              		.loc 1 146 33 is_stmt 0 view .LVU142
+ 486 00ce 0593     		str	r3, [sp, #20]
+ 487              	.L48:
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_ASSERT_NULL(blend_dsc->mask_area);
+ 488              		.loc 1 148 9 is_stmt 1 view .LVU143
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_ASSERT_NULL(blend_dsc->mask_area);
+ 489              		.loc 1 148 21 is_stmt 0 view .LVU144
+ 490 00d0 059A     		ldr	r2, [sp, #20]
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             LV_ASSERT_NULL(blend_dsc->mask_area);
+ 491              		.loc 1 148 11 view .LVU145
+ 492 00d2 AAB1     		cbz	r2, .L50
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 493              		.loc 1 149 13 is_stmt 1 view .LVU146
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 494              		.loc 1 149 13 view .LVU147
+ 495 00d4 206A     		ldr	r0, [r4, #32]
+ 496              	.LVL60:
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 497              		.loc 1 149 13 is_stmt 0 view .LVU148
+ 498 00d6 0028     		cmp	r0, #0
+ 499 00d8 00F09380 		beq	.L52
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 500              		.loc 1 149 13 is_stmt 1 view .LVU149
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 501              		.loc 1 149 49 view .LVU150
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_stride = blend_dsc->mask_stride ? blend_dsc->mask_stride : lv_area_get_w
+ 502              		.loc 1 150 13 view .LVU151
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 17
+
+
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_stride = blend_dsc->mask_stride ? blend_dsc->mask_stride : lv_area_get_w
+ 503              		.loc 1 150 32 is_stmt 0 view .LVU152
+ 504 00dc 0593     		str	r3, [sp, #20]
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf += image_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1
+ 505              		.loc 1 151 13 is_stmt 1 view .LVU153
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf += image_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1
+ 506              		.loc 1 151 46 is_stmt 0 view .LVU154
+ 507 00de 626A     		ldr	r2, [r4, #36]
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf += image_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1
+ 508              		.loc 1 151 85 view .LVU155
+ 509 00e0 002A     		cmp	r2, #0
+ 510 00e2 00F08F80 		beq	.L63
+ 511              	.LVL61:
+ 512              	.L53:
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf += image_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1
+ 513              		.loc 1 151 35 discriminator 5 view .LVU156
+ 514 00e6 0692     		str	r2, [sp, #24]
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                   (blend_area.x1 - blend_dsc->mask_area->x1);
+ 515              		.loc 1 152 13 is_stmt 1 view .LVU157
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                   (blend_area.x1 - blend_dsc->mask_area->x1);
+ 516              		.loc 1 152 85 is_stmt 0 view .LVU158
+ 517 00e8 206A     		ldr	r0, [r4, #32]
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                   (blend_area.x1 - blend_dsc->mask_area->x1);
+ 518              		.loc 1 152 96 view .LVU159
+ 519 00ea 4168     		ldr	r1, [r0, #4]
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                   (blend_area.x1 - blend_dsc->mask_area->x1);
+ 520              		.loc 1 152 74 view .LVU160
+ 521 00ec 139B     		ldr	r3, [sp, #76]
+ 522 00ee 591A     		subs	r1, r3, r1
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         }
+ 523              		.loc 1 153 72 view .LVU161
+ 524 00f0 0068     		ldr	r0, [r0]
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         }
+ 525              		.loc 1 153 50 view .LVU162
+ 526 00f2 129B     		ldr	r3, [sp, #72]
+ 527 00f4 1B1A     		subs	r3, r3, r0
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                   (blend_area.x1 - blend_dsc->mask_area->x1);
+ 528              		.loc 1 152 102 view .LVU163
+ 529 00f6 02FB0133 		mla	r3, r2, r1, r3
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                   (blend_area.x1 - blend_dsc->mask_area->x1);
+ 530              		.loc 1 152 32 view .LVU164
+ 531 00fa 059A     		ldr	r2, [sp, #20]
+ 532 00fc 1A44     		add	r2, r2, r3
+ 533 00fe 0592     		str	r2, [sp, #20]
+ 534              	.L50:
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&image_dsc.relative_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 535              		.loc 1 156 9 is_stmt 1 view .LVU165
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&image_dsc.relative_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 536              		.loc 1 156 34 is_stmt 0 view .LVU166
+ 537 0100 0DF1280C 		add	ip, sp, #40
+ 538 0104 16AB     		add	r3, sp, #88
+ 539 0106 13E90F00 		ldmdb	r3, {r0, r1, r2, r3}
+ 540 010a 8CE80F00 		stm	ip, {r0, r1, r2, r3}
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 541              		.loc 1 157 9 is_stmt 1 view .LVU167
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 542              		.loc 1 157 64 is_stmt 0 view .LVU168
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 18
+
+
+ 543 010e 7168     		ldr	r1, [r6, #4]
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 544              		.loc 1 157 85 view .LVU169
+ 545 0110 B268     		ldr	r2, [r6, #8]
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 546              		.loc 1 157 9 view .LVU170
+ 547 0112 5242     		rsbs	r2, r2, #0
+ 548 0114 4942     		rsbs	r1, r1, #0
+ 549 0116 6046     		mov	r0, ip
+ 550 0118 FFF7FEFF 		bl	lv_area_move
+ 551              	.LVL62:
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&image_dsc.src_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 552              		.loc 1 159 9 is_stmt 1 view .LVU171
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&image_dsc.src_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 553              		.loc 1 159 41 is_stmt 0 view .LVU172
+ 554 011c 2369     		ldr	r3, [r4, #16]
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&image_dsc.src_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 555              		.loc 1 159 29 view .LVU173
+ 556 011e 0EAC     		add	r4, sp, #56
+ 557              	.LVL63:
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&image_dsc.src_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 558              		.loc 1 159 29 view .LVU174
+ 559 0120 0FCB     		ldm	r3, {r0, r1, r2, r3}
+ 560 0122 84E80F00 		stm	r4, {r0, r1, r2, r3}
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 561              		.loc 1 160 9 is_stmt 1 view .LVU175
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 562              		.loc 1 160 59 is_stmt 0 view .LVU176
+ 563 0126 7168     		ldr	r1, [r6, #4]
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 564              		.loc 1 160 80 view .LVU177
+ 565 0128 B268     		ldr	r2, [r6, #8]
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 566              		.loc 1 160 9 view .LVU178
+ 567 012a 5242     		rsbs	r2, r2, #0
+ 568 012c 4942     		rsbs	r1, r1, #0
+ 569 012e 2046     		mov	r0, r4
+ 570 0130 FFF7FEFF 		bl	lv_area_move
+ 571              	.LVL64:
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                     blend_area.y1 - layer->buf_area.y1);
+ 572              		.loc 1 162 9 is_stmt 1 view .LVU179
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                     blend_area.y1 - layer->buf_area.y1);
+ 573              		.loc 1 162 91 is_stmt 0 view .LVU180
+ 574 0134 3046     		mov	r0, r6
+ 575 0136 7368     		ldr	r3, [r6, #4]
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 576              		.loc 1 163 84 view .LVU181
+ 577 0138 B268     		ldr	r2, [r6, #8]
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                     blend_area.y1 - layer->buf_area.y1);
+ 578              		.loc 1 162 30 view .LVU182
+ 579 013a 1399     		ldr	r1, [sp, #76]
+ 580 013c 8A1A     		subs	r2, r1, r2
+ 581 013e 1299     		ldr	r1, [sp, #72]
+ 582 0140 C91A     		subs	r1, r1, r3
+ 583 0142 FFF7FEFF 		bl	lv_draw_layer_go_to_xy
+ 584              	.LVL65:
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                     blend_area.y1 - layer->buf_area.y1);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 19
+
+
+ 585              		.loc 1 162 28 discriminator 1 view .LVU183
+ 586 0146 0190     		str	r0, [sp, #4]
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     }
+ 587              		.loc 1 165 9 is_stmt 1 view .LVU184
+ 588 0148 01A9     		add	r1, sp, #4
+ 589 014a 307D     		ldrb	r0, [r6, #20]	@ zero_extendqisi2
+ 590 014c FFF7FEFF 		bl	lv_draw_sw_blend_image
+ 591              	.LVL66:
+ 592 0150 69E7     		b	.L34
+ 593              	.LVL67:
+ 594              	.L60:
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     }
+ 595              		.loc 1 165 9 is_stmt 0 view .LVU185
+ 596              	.LBE2:
+ 597              	.LBB3:
+  91:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_w = lv_area_get_width(&blend_area);
+ 598              		.loc 1 91 9 is_stmt 1 view .LVU186
+  92:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_h = lv_area_get_height(&blend_area);
+ 599              		.loc 1 92 9 view .LVU187
+  92:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_h = lv_area_get_height(&blend_area);
+ 600              		.loc 1 92 27 is_stmt 0 view .LVU188
+ 601 0152 12A8     		add	r0, sp, #72
+ 602              	.LVL68:
+  92:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_h = lv_area_get_height(&blend_area);
+ 603              		.loc 1 92 27 view .LVU189
+ 604 0154 FFF7FEFF 		bl	lv_area_get_width
+ 605              	.LVL69:
+  92:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_h = lv_area_get_height(&blend_area);
+ 606              		.loc 1 92 25 discriminator 1 view .LVU190
+ 607 0158 0290     		str	r0, [sp, #8]
+  93:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_stride = layer_stride_byte;
+ 608              		.loc 1 93 9 is_stmt 1 view .LVU191
+  93:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_stride = layer_stride_byte;
+ 609              		.loc 1 93 27 is_stmt 0 view .LVU192
+ 610 015a 12A8     		add	r0, sp, #72
+ 611 015c FFF7FEFF 		bl	lv_area_get_height
+ 612              	.LVL70:
+  93:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_stride = layer_stride_byte;
+ 613              		.loc 1 93 25 discriminator 1 view .LVU193
+ 614 0160 0390     		str	r0, [sp, #12]
+  94:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.opa = blend_dsc->opa;
+ 615              		.loc 1 94 9 is_stmt 1 view .LVU194
+  94:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.opa = blend_dsc->opa;
+ 616              		.loc 1 94 30 is_stmt 0 view .LVU195
+ 617 0162 0497     		str	r7, [sp, #16]
+  95:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.color = blend_dsc->color;
+ 618              		.loc 1 95 9 is_stmt 1 view .LVU196
+  95:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.color = blend_dsc->color;
+ 619              		.loc 1 95 33 is_stmt 0 view .LVU197
+ 620 0164 237D     		ldrb	r3, [r4, #20]	@ zero_extendqisi2
+  95:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.color = blend_dsc->color;
+ 621              		.loc 1 95 22 view .LVU198
+ 622 0166 8DF81F30 		strb	r3, [sp, #31]
+  96:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.mask_stride = 0;
+ 623              		.loc 1 96 9 is_stmt 1 view .LVU199
+  96:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.mask_stride = 0;
+ 624              		.loc 1 96 24 is_stmt 0 view .LVU200
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 20
+
+
+ 625 016a B4F81520 		ldrh	r2, [r4, #21]	@ unaligned
+ 626 016e E37D     		ldrb	r3, [r4, #23]	@ zero_extendqisi2
+ 627 0170 ADF81C20 		strh	r2, [sp, #28]	@ unaligned
+ 628 0174 8DF81E30 		strb	r3, [sp, #30]
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 629              		.loc 1 97 9 is_stmt 1 view .LVU201
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 630              		.loc 1 97 30 is_stmt 0 view .LVU202
+ 631 0178 0023     		movs	r3, #0
+ 632 017a 0693     		str	r3, [sp, #24]
+  99:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) fill_dsc.mask_buf = NULL;
+ 633              		.loc 1 99 9 is_stmt 1 view .LVU203
+  99:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) fill_dsc.mask_buf = NULL;
+ 634              		.loc 1 99 21 is_stmt 0 view .LVU204
+ 635 017c A369     		ldr	r3, [r4, #24]
+  99:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) fill_dsc.mask_buf = NULL;
+ 636              		.loc 1 99 11 view .LVU205
+ 637 017e 002B     		cmp	r3, #0
+ 638 0180 31D0     		beq	.L64
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else fill_dsc.mask_buf = blend_dsc->mask_buf;
+ 639              		.loc 1 100 14 is_stmt 1 view .LVU206
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else fill_dsc.mask_buf = blend_dsc->mask_buf;
+ 640              		.loc 1 100 26 is_stmt 0 view .LVU207
+ 641 0182 227F     		ldrb	r2, [r4, #28]	@ zero_extendqisi2
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else fill_dsc.mask_buf = blend_dsc->mask_buf;
+ 642              		.loc 1 100 16 view .LVU208
+ 643 0184 012A     		cmp	r2, #1
+ 644 0186 30D0     		beq	.L65
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 645              		.loc 1 101 14 is_stmt 1 view .LVU209
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c **** 
+ 646              		.loc 1 101 32 is_stmt 0 view .LVU210
+ 647 0188 0593     		str	r3, [sp, #20]
+ 648              	.L40:
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&fill_dsc.relative_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 649              		.loc 1 104 9 is_stmt 1 view .LVU211
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         lv_area_move(&fill_dsc.relative_area, -layer->buf_area.x1, -layer->buf_area.y1);
+ 650              		.loc 1 104 33 is_stmt 0 view .LVU212
+ 651 018a 0DF1200C 		add	ip, sp, #32
+ 652 018e 16AB     		add	r3, sp, #88
+ 653 0190 13E90F00 		ldmdb	r3, {r0, r1, r2, r3}
+ 654 0194 8CE80F00 		stm	ip, {r0, r1, r2, r3}
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_buf = lv_draw_layer_go_to_xy(layer, blend_area.x1 - layer->buf_area.x1,
+ 655              		.loc 1 105 9 is_stmt 1 view .LVU213
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_buf = lv_draw_layer_go_to_xy(layer, blend_area.x1 - layer->buf_area.x1,
+ 656              		.loc 1 105 63 is_stmt 0 view .LVU214
+ 657 0198 7168     		ldr	r1, [r6, #4]
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_buf = lv_draw_layer_go_to_xy(layer, blend_area.x1 - layer->buf_area.x1,
+ 658              		.loc 1 105 84 view .LVU215
+ 659 019a B268     		ldr	r2, [r6, #8]
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         fill_dsc.dest_buf = lv_draw_layer_go_to_xy(layer, blend_area.x1 - layer->buf_area.x1,
+ 660              		.loc 1 105 9 view .LVU216
+ 661 019c 5242     		rsbs	r2, r2, #0
+ 662 019e 4942     		rsbs	r1, r1, #0
+ 663 01a0 6046     		mov	r0, ip
+ 664 01a2 FFF7FEFF 		bl	lv_area_move
+ 665              	.LVL71:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 21
+
+
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                    blend_area.y1 - layer->buf_area.y1);
+ 666              		.loc 1 106 9 is_stmt 1 view .LVU217
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                    blend_area.y1 - layer->buf_area.y1);
+ 667              		.loc 1 106 90 is_stmt 0 view .LVU218
+ 668 01a6 3046     		mov	r0, r6
+ 669 01a8 7368     		ldr	r3, [r6, #4]
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         if(fill_dsc.mask_buf) {
+ 670              		.loc 1 107 83 view .LVU219
+ 671 01aa B268     		ldr	r2, [r6, #8]
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                    blend_area.y1 - layer->buf_area.y1);
+ 672              		.loc 1 106 29 view .LVU220
+ 673 01ac 1399     		ldr	r1, [sp, #76]
+ 674 01ae 8A1A     		subs	r2, r1, r2
+ 675 01b0 1299     		ldr	r1, [sp, #72]
+ 676 01b2 C91A     		subs	r1, r1, r3
+ 677 01b4 FFF7FEFF 		bl	lv_draw_layer_go_to_xy
+ 678              	.LVL72:
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                                    blend_area.y1 - layer->buf_area.y1);
+ 679              		.loc 1 106 27 discriminator 1 view .LVU221
+ 680 01b8 0190     		str	r0, [sp, #4]
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_stride = blend_dsc->mask_stride == 0  ? lv_area_get_width(blend_dsc->mask
+ 681              		.loc 1 108 9 is_stmt 1 view .LVU222
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_stride = blend_dsc->mask_stride == 0  ? lv_area_get_width(blend_dsc->mask
+ 682              		.loc 1 108 20 is_stmt 0 view .LVU223
+ 683 01ba 059B     		ldr	r3, [sp, #20]
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_stride = blend_dsc->mask_stride == 0  ? lv_area_get_width(blend_dsc->mask
+ 684              		.loc 1 108 11 view .LVU224
+ 685 01bc 73B1     		cbz	r3, .L42
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_buf += fill_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1) 
+ 686              		.loc 1 109 13 is_stmt 1 view .LVU225
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_buf += fill_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1) 
+ 687              		.loc 1 109 45 is_stmt 0 view .LVU226
+ 688 01be 606A     		ldr	r0, [r4, #36]
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_buf += fill_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1) 
+ 689              		.loc 1 109 107 view .LVU227
+ 690 01c0 B0B1     		cbz	r0, .L66
+ 691              	.L43:
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_buf += fill_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1) 
+ 692              		.loc 1 109 34 discriminator 5 view .LVU228
+ 693 01c2 0690     		str	r0, [sp, #24]
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                  (blend_area.x1 - blend_dsc->mask_area->x1);
+ 694              		.loc 1 110 13 is_stmt 1 view .LVU229
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                  (blend_area.x1 - blend_dsc->mask_area->x1);
+ 695              		.loc 1 110 83 is_stmt 0 view .LVU230
+ 696 01c4 216A     		ldr	r1, [r4, #32]
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                  (blend_area.x1 - blend_dsc->mask_area->x1);
+ 697              		.loc 1 110 94 view .LVU231
+ 698 01c6 4A68     		ldr	r2, [r1, #4]
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                  (blend_area.x1 - blend_dsc->mask_area->x1);
+ 699              		.loc 1 110 72 view .LVU232
+ 700 01c8 139B     		ldr	r3, [sp, #76]
+ 701 01ca 9A1A     		subs	r2, r3, r2
+ 111:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         }
+ 702              		.loc 1 111 71 view .LVU233
+ 703 01cc 0968     		ldr	r1, [r1]
+ 111:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         }
+ 704              		.loc 1 111 49 view .LVU234
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 22
+
+
+ 705 01ce 129B     		ldr	r3, [sp, #72]
+ 706 01d0 5B1A     		subs	r3, r3, r1
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                  (blend_area.x1 - blend_dsc->mask_area->x1);
+ 707              		.loc 1 110 100 view .LVU235
+ 708 01d2 00FB0233 		mla	r3, r0, r2, r3
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****                                  (blend_area.x1 - blend_dsc->mask_area->x1);
+ 709              		.loc 1 110 31 view .LVU236
+ 710 01d6 059A     		ldr	r2, [sp, #20]
+ 711 01d8 1A44     		add	r2, r2, r3
+ 712 01da 0592     		str	r2, [sp, #20]
+ 713              	.L42:
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****     }
+ 714              		.loc 1 114 9 is_stmt 1 view .LVU237
+ 715 01dc 01A9     		add	r1, sp, #4
+ 716 01de 307D     		ldrb	r0, [r6, #20]	@ zero_extendqisi2
+ 717 01e0 FFF7FEFF 		bl	lv_draw_sw_blend_color
+ 718              	.LVL73:
+ 719              	.LBE3:
+ 720 01e4 1FE7     		b	.L34
+ 721              	.L64:
+ 722              	.LBB4:
+  99:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) fill_dsc.mask_buf = NULL;
+ 723              		.loc 1 99 41 discriminator 1 view .LVU238
+  99:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) fill_dsc.mask_buf = NULL;
+ 724              		.loc 1 99 59 is_stmt 0 discriminator 1 view .LVU239
+ 725 01e6 0593     		str	r3, [sp, #20]
+ 726 01e8 CFE7     		b	.L40
+ 727              	.L65:
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else fill_dsc.mask_buf = blend_dsc->mask_buf;
+ 728              		.loc 1 100 72 is_stmt 1 discriminator 1 view .LVU240
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else fill_dsc.mask_buf = blend_dsc->mask_buf;
+ 729              		.loc 1 100 90 is_stmt 0 discriminator 1 view .LVU241
+ 730 01ea 0023     		movs	r3, #0
+ 731 01ec 0593     		str	r3, [sp, #20]
+ 732 01ee CCE7     		b	.L40
+ 733              	.L66:
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_buf += fill_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1) 
+ 734              		.loc 1 109 67 discriminator 1 view .LVU242
+ 735 01f0 206A     		ldr	r0, [r4, #32]
+ 736 01f2 FFF7FEFF 		bl	lv_area_get_width
+ 737              	.LVL74:
+ 738 01f6 E4E7     		b	.L43
+ 739              	.LVL75:
+ 740              	.L61:
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             fill_dsc.mask_buf += fill_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1) 
+ 741              		.loc 1 109 67 discriminator 1 view .LVU243
+ 742              	.LBE4:
+ 743              	.LBB5:
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) image_dsc.mask_buf = NULL;
+ 744              		.loc 1 144 41 is_stmt 1 discriminator 1 view .LVU244
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else if(blend_dsc->mask_res == LV_DRAW_SW_MASK_RES_FULL_COVER) image_dsc.mask_buf = NULL;
+ 745              		.loc 1 144 60 is_stmt 0 discriminator 1 view .LVU245
+ 746 01f8 0593     		str	r3, [sp, #20]
+ 747 01fa 69E7     		b	.L48
+ 748              	.L62:
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else image_dsc.mask_buf = blend_dsc->mask_buf;
+ 749              		.loc 1 145 72 is_stmt 1 discriminator 1 view .LVU246
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 23
+
+
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****         else image_dsc.mask_buf = blend_dsc->mask_buf;
+ 750              		.loc 1 145 91 is_stmt 0 discriminator 1 view .LVU247
+ 751 01fc 0022     		movs	r2, #0
+ 752 01fe 0592     		str	r2, [sp, #20]
+ 753 0200 66E7     		b	.L48
+ 754              	.LVL76:
+ 755              	.L52:
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 756              		.loc 1 149 13 is_stmt 1 view .LVU248
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 757              		.loc 1 149 13 view .LVU249
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 758              		.loc 1 149 13 view .LVU250
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 759              		.loc 1 149 13 view .LVU251
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf = blend_dsc->mask_buf;
+ 760              		.loc 1 149 13 view .LVU252
+ 761 0202 FEE7     		b	.L52
+ 762              	.L63:
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf += image_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1
+ 763              		.loc 1 151 87 is_stmt 0 discriminator 2 view .LVU253
+ 764 0204 FFF7FEFF 		bl	lv_area_get_width
+ 765              	.LVL77:
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf += image_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1
+ 766              		.loc 1 151 87 discriminator 2 view .LVU254
+ 767 0208 0246     		mov	r2, r0
+ 768 020a 6CE7     		b	.L53
+ 769              	.LVL78:
+ 770              	.L56:
+ 771              	.LCFI6:
+ 772              		.cfi_def_cfa_offset 0
+ 773              		.cfi_restore 4
+ 774              		.cfi_restore 5
+ 775              		.cfi_restore 6
+ 776              		.cfi_restore 7
+ 777              		.cfi_restore 14
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.c ****             image_dsc.mask_buf += image_dsc.mask_stride * (blend_area.y1 - blend_dsc->mask_area->y1
+ 778              		.loc 1 151 87 discriminator 2 view .LVU255
+ 779 020c 7047     		bx	lr
+ 780              	.LBE5:
+ 781              		.cfi_endproc
+ 782              	.LFE41:
+ 784              		.text
+ 785              	.Letext0:
+ 786              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 787              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 788              		.file 4 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ 789              		.file 5 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw.h"
+ 790              		.file 6 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_private.h"
+ 791              		.file 7 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend_private.h"
+ 792              		.file 8 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf.h"
+ 793              		.file 9 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_area.h"
+ 794              		.file 10 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_color.h"
+ 795              		.file 11 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/../lv_draw_sw_mask.h"
+ 796              		.file 12 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_image_dsc.h"
+ 797              		.file 13 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_style.h"
+ 798              		.file 14 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 24
+
+
+ 799              		.file 15 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_i1.h"
+ 800              		.file 16 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_al88.h"
+ 801              		.file 17 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_l8.h"
+ 802              		.file 18 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_argb8888_premultip
+ 803              		.file 19 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_rgb888.h"
+ 804              		.file 20 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_argb8888.h"
+ 805              		.file 21 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_rgb565_swapped.h"
+ 806              		.file 22 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend_to_rgb565.h"
+ 807              		.file 23 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/../lv_draw_sw.h"
+ 808              		.file 24 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_area_private.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_draw_sw_blend.c
+C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s:20     .text.lv_draw_sw_blend_color:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s:25     .text.lv_draw_sw_blend_color:00000000 lv_draw_sw_blend_color
+C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s:136    .text.lv_draw_sw_blend_image:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s:141    .text.lv_draw_sw_blend_image:00000000 lv_draw_sw_blend_image
+C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s:255    .text.lv_draw_sw_blend:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc5xaQ0c.s:261    .text.lv_draw_sw_blend:00000000 lv_draw_sw_blend
+
+UNDEFINED SYMBOLS
+lv_draw_sw_blend_color_to_al88
+lv_draw_sw_blend_color_to_i1
+lv_draw_sw_blend_color_to_argb8888
+lv_draw_sw_blend_color_to_rgb565_swapped
+lv_draw_sw_blend_color_to_rgb565
+lv_draw_sw_blend_color_to_rgb888
+lv_draw_sw_blend_color_to_argb8888_premultiplied
+lv_draw_sw_blend_color_to_l8
+lv_draw_sw_blend_image_to_rgb565_swapped
+lv_draw_sw_blend_image_to_i1
+lv_draw_sw_blend_image_to_argb8888
+lv_draw_sw_blend_image_to_rgb565
+lv_draw_sw_blend_image_to_rgb888
+lv_draw_sw_blend_image_to_argb8888_premultiplied
+lv_draw_sw_blend_image_to_l8
+lv_draw_sw_blend_image_to_al88
+lv_area_intersect
+lv_draw_sw_get_blend_handler
+lv_area_get_width
+lv_area_get_height
+lv_color_format_get_bpp
+lv_area_move
+lv_draw_layer_go_to_xy

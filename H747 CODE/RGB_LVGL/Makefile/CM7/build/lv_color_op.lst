@@ -1,0 +1,672 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_color_op.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c"
+  19              		.section	.text.lv_color_mix,"ax",%progbits
+  20              		.align	1
+  21              		.global	lv_color_mix
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_color_mix:
+  27              	.LVL0:
+  28              	.LFB4:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  * @file lv_color.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** #include "lv_color_op_private.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** #include "lv_log.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  12:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** /*********************
+  13:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  *      DEFINES
+  14:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  *********************/
+  15:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  16:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** /**********************
+  17:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  *      TYPEDEFS
+  18:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  **********************/
+  19:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  20:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** /**********************
+  21:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  *  STATIC PROTOTYPES
+  22:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  **********************/
+  23:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  24:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** /**********************
+  25:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  *  STATIC VARIABLES
+  26:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  **********************/
+  27:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  28:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** /**********************
+  29:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  *      MACROS
+  30:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  **********************/
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 2
+
+
+  31:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  32:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** /**********************
+  33:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  *   GLOBAL FUNCTIONS
+  34:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****  **********************/
+  35:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  36:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** lv_color_t LV_ATTRIBUTE_FAST_MEM lv_color_mix(lv_color_t c1, lv_color_t c2, uint8_t mix)
+  37:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** {
+  29              		.loc 1 37 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              		.loc 1 37 1 is_stmt 0 view .LVU1
+  35 0000 84B0     		sub	sp, sp, #16
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 16
+  38 0002 0190     		str	r0, [sp, #4]
+  39 0004 0091     		str	r1, [sp]
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     lv_color_t ret;
+  40              		.loc 1 38 5 is_stmt 1 view .LVU2
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     ret.red = LV_UDIV255((uint16_t)c1.red * mix + c2.red * (255 - mix) + LV_COLOR_MIX_ROUND_OFS);
+  41              		.loc 1 40 5 view .LVU3
+  42              		.loc 1 40 15 is_stmt 0 view .LVU4
+  43 0006 9DF80600 		ldrb	r0, [sp, #6]	@ zero_extendqisi2
+  44 000a 9DF80210 		ldrb	r1, [sp, #2]	@ zero_extendqisi2
+  45 000e C2F1FF03 		rsb	r3, r2, #255
+  46 0012 03FB01F1 		mul	r1, r3, r1
+  47 0016 02FB0011 		mla	r1, r2, r0, r1
+  48 001a 01EB0120 		add	r0, r1, r1, lsl #8
+  49 001e 01EBC011 		add	r1, r1, r0, lsl #7
+  50 0022 C90D     		lsrs	r1, r1, #23
+  51              		.loc 1 40 13 view .LVU5
+  52 0024 8DF80A10 		strb	r1, [sp, #10]
+  41:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     ret.green = LV_UDIV255((uint16_t)c1.green * mix + c2.green * (255 - mix) + LV_COLOR_MIX_ROUND_O
+  53              		.loc 1 41 5 is_stmt 1 view .LVU6
+  54              		.loc 1 41 17 is_stmt 0 view .LVU7
+  55 0028 9DF80500 		ldrb	r0, [sp, #5]	@ zero_extendqisi2
+  56 002c 9DF80110 		ldrb	r1, [sp, #1]	@ zero_extendqisi2
+  57 0030 03FB01F1 		mul	r1, r3, r1
+  58 0034 00FB0211 		mla	r1, r0, r2, r1
+  59 0038 01EB0120 		add	r0, r1, r1, lsl #8
+  60 003c 01EBC011 		add	r1, r1, r0, lsl #7
+  61 0040 C90D     		lsrs	r1, r1, #23
+  62              		.loc 1 41 15 view .LVU8
+  63 0042 8DF80910 		strb	r1, [sp, #9]
+  42:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     ret.blue = LV_UDIV255((uint16_t)c1.blue * mix + c2.blue * (255 - mix) + LV_COLOR_MIX_ROUND_OFS)
+  64              		.loc 1 42 5 is_stmt 1 view .LVU9
+  65              		.loc 1 42 16 is_stmt 0 view .LVU10
+  66 0046 9DF80410 		ldrb	r1, [sp, #4]	@ zero_extendqisi2
+  67 004a 9DF80000 		ldrb	r0, [sp]	@ zero_extendqisi2
+  68 004e 00FB03F3 		mul	r3, r0, r3
+  69 0052 01FB0232 		mla	r2, r1, r2, r3
+  70              	.LVL1:
+  71              		.loc 1 42 16 view .LVU11
+  72 0056 02EB0223 		add	r3, r2, r2, lsl #8
+  73 005a 02EBC312 		add	r2, r2, r3, lsl #7
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 3
+
+
+  74 005e D20D     		lsrs	r2, r2, #23
+  75              		.loc 1 42 14 view .LVU12
+  76 0060 8DF80820 		strb	r2, [sp, #8]
+  43:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     return ret;
+  77              		.loc 1 43 5 is_stmt 1 view .LVU13
+  78              		.loc 1 43 12 is_stmt 0 view .LVU14
+  79 0064 029B     		ldr	r3, [sp, #8]
+  80 0066 ADF80C30 		strh	r3, [sp, #12]	@ movhi
+  81 006a 1B0C     		lsrs	r3, r3, #16
+  82 006c 8DF80E30 		strb	r3, [sp, #14]
+  83 0070 0020     		movs	r0, #0
+  84 0072 9DF80C30 		ldrb	r3, [sp, #12]	@ zero_extendqisi2
+  85 0076 63F30700 		bfi	r0, r3, #0, #8
+  86 007a 9DF80D30 		ldrb	r3, [sp, #13]	@ zero_extendqisi2
+  87 007e 63F30F20 		bfi	r0, r3, #8, #8
+  88 0082 9DF80E30 		ldrb	r3, [sp, #14]	@ zero_extendqisi2
+  89 0086 63F31740 		bfi	r0, r3, #16, #8
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** }
+  90              		.loc 1 44 1 view .LVU15
+  91 008a 04B0     		add	sp, sp, #16
+  92              	.LCFI1:
+  93              		.cfi_def_cfa_offset 0
+  94              		@ sp needed
+  95 008c 7047     		bx	lr
+  96              		.cfi_endproc
+  97              	.LFE4:
+  99              		.section	.text.lv_color_mix32,"ax",%progbits
+ 100              		.align	1
+ 101              		.global	lv_color_mix32
+ 102              		.syntax unified
+ 103              		.thumb
+ 104              		.thumb_func
+ 106              	lv_color_mix32:
+ 107              	.LFB5:
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** lv_color32_t lv_color_mix32(lv_color32_t fg, lv_color32_t bg)
+  47:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** {
+ 108              		.loc 1 47 1 is_stmt 1 view -0
+ 109              		.cfi_startproc
+ 110              		@ args = 0, pretend = 0, frame = 16
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112              		@ link register save eliminated.
+ 113 0000 84B0     		sub	sp, sp, #16
+ 114              	.LCFI2:
+ 115              		.cfi_def_cfa_offset 16
+ 116 0002 0190     		str	r0, [sp, #4]
+ 117 0004 0091     		str	r1, [sp]
+  48:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     if(fg.alpha >= LV_OPA_MAX) {
+ 118              		.loc 1 48 5 view .LVU17
+ 119              		.loc 1 48 10 is_stmt 0 view .LVU18
+ 120 0006 9DF80710 		ldrb	r1, [sp, #7]	@ zero_extendqisi2
+ 121              		.loc 1 48 7 view .LVU19
+ 122 000a FC29     		cmp	r1, #252
+ 123 000c 45D8     		bhi	.L8
+  49:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         fg.alpha = bg.alpha;
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         return fg;
+  51:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 4
+
+
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     if(fg.alpha <= LV_OPA_MIN) {
+ 124              		.loc 1 52 5 is_stmt 1 view .LVU20
+ 125              		.loc 1 52 7 is_stmt 0 view .LVU21
+ 126 000e 0229     		cmp	r1, #2
+ 127 0010 4AD9     		bls	.L9
+  53:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         return bg;
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+  55:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     bg.red = LV_UDIV255((uint32_t)((uint32_t)fg.red * fg.alpha + (uint32_t)bg.red * (255 - fg.alpha
+ 128              		.loc 1 55 5 is_stmt 1 view .LVU22
+ 129              		.loc 1 55 14 is_stmt 0 view .LVU23
+ 130 0012 9DF80600 		ldrb	r0, [sp, #6]	@ zero_extendqisi2
+ 131 0016 9DF80220 		ldrb	r2, [sp, #2]	@ zero_extendqisi2
+ 132 001a C1F1FF03 		rsb	r3, r1, #255
+ 133 001e 03FB02F2 		mul	r2, r3, r2
+ 134 0022 01FB0022 		mla	r2, r1, r0, r2
+ 135 0026 02EB0220 		add	r0, r2, r2, lsl #8
+ 136 002a 02EBC012 		add	r2, r2, r0, lsl #7
+ 137 002e D20D     		lsrs	r2, r2, #23
+ 138              		.loc 1 55 12 view .LVU24
+ 139 0030 8DF80220 		strb	r2, [sp, #2]
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     bg.green = LV_UDIV255((uint32_t)((uint32_t)fg.green * fg.alpha + (uint32_t)bg.green * (255 - fg
+ 140              		.loc 1 56 5 is_stmt 1 view .LVU25
+ 141              		.loc 1 56 16 is_stmt 0 view .LVU26
+ 142 0034 9DF80500 		ldrb	r0, [sp, #5]	@ zero_extendqisi2
+ 143 0038 9DF80120 		ldrb	r2, [sp, #1]	@ zero_extendqisi2
+ 144 003c 03FB02F2 		mul	r2, r3, r2
+ 145 0040 00FB0122 		mla	r2, r0, r1, r2
+ 146 0044 02EB0220 		add	r0, r2, r2, lsl #8
+ 147 0048 02EBC012 		add	r2, r2, r0, lsl #7
+ 148 004c D20D     		lsrs	r2, r2, #23
+ 149              		.loc 1 56 14 view .LVU27
+ 150 004e 8DF80120 		strb	r2, [sp, #1]
+  57:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     bg.blue = LV_UDIV255((uint32_t)((uint32_t)fg.blue * fg.alpha + (uint32_t)bg.blue * (255 - fg.al
+ 151              		.loc 1 57 5 is_stmt 1 view .LVU28
+ 152              		.loc 1 57 15 is_stmt 0 view .LVU29
+ 153 0052 9DF80420 		ldrb	r2, [sp, #4]	@ zero_extendqisi2
+ 154 0056 9DF80000 		ldrb	r0, [sp]	@ zero_extendqisi2
+ 155 005a 00FB03F3 		mul	r3, r0, r3
+ 156 005e 02FB0133 		mla	r3, r2, r1, r3
+ 157 0062 03EB0322 		add	r2, r3, r3, lsl #8
+ 158 0066 03EBC213 		add	r3, r3, r2, lsl #7
+ 159 006a DB0D     		lsrs	r3, r3, #23
+ 160              		.loc 1 57 13 view .LVU30
+ 161 006c 8DF80030 		strb	r3, [sp]
+  58:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     return bg;
+ 162              		.loc 1 58 5 is_stmt 1 view .LVU31
+ 163              		.loc 1 58 12 is_stmt 0 view .LVU32
+ 164 0070 009B     		ldr	r3, [sp]
+ 165 0072 0393     		str	r3, [sp, #12]
+ 166              	.L5:
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** }
+ 167              		.loc 1 59 1 view .LVU33
+ 168 0074 0020     		movs	r0, #0
+ 169 0076 9DF80C30 		ldrb	r3, [sp, #12]	@ zero_extendqisi2
+ 170 007a 63F30700 		bfi	r0, r3, #0, #8
+ 171 007e 9DF80D30 		ldrb	r3, [sp, #13]	@ zero_extendqisi2
+ 172 0082 63F30F20 		bfi	r0, r3, #8, #8
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 5
+
+
+ 173 0086 9DF80E30 		ldrb	r3, [sp, #14]	@ zero_extendqisi2
+ 174 008a 63F31740 		bfi	r0, r3, #16, #8
+ 175 008e 9DF80F30 		ldrb	r3, [sp, #15]	@ zero_extendqisi2
+ 176 0092 63F31F60 		bfi	r0, r3, #24, #8
+ 177 0096 04B0     		add	sp, sp, #16
+ 178              	.LCFI3:
+ 179              		.cfi_remember_state
+ 180              		.cfi_def_cfa_offset 0
+ 181              		@ sp needed
+ 182 0098 7047     		bx	lr
+ 183              	.L8:
+ 184              	.LCFI4:
+ 185              		.cfi_restore_state
+  49:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         return fg;
+ 186              		.loc 1 49 9 is_stmt 1 view .LVU34
+  49:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         return fg;
+ 187              		.loc 1 49 22 is_stmt 0 view .LVU35
+ 188 009a 9DF80330 		ldrb	r3, [sp, #3]	@ zero_extendqisi2
+  49:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         return fg;
+ 189              		.loc 1 49 18 view .LVU36
+ 190 009e 8DF80730 		strb	r3, [sp, #7]
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 191              		.loc 1 50 9 is_stmt 1 view .LVU37
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 192              		.loc 1 50 16 is_stmt 0 view .LVU38
+ 193 00a2 019B     		ldr	r3, [sp, #4]
+ 194 00a4 0393     		str	r3, [sp, #12]
+ 195 00a6 E5E7     		b	.L5
+ 196              	.L9:
+  53:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 197              		.loc 1 53 9 is_stmt 1 view .LVU39
+  53:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 198              		.loc 1 53 16 is_stmt 0 view .LVU40
+ 199 00a8 009B     		ldr	r3, [sp]
+ 200 00aa 0393     		str	r3, [sp, #12]
+ 201 00ac E2E7     		b	.L5
+ 202              		.cfi_endproc
+ 203              	.LFE5:
+ 205              		.section	.text.lv_color_mix32_premultiplied,"ax",%progbits
+ 206              		.align	1
+ 207              		.global	lv_color_mix32_premultiplied
+ 208              		.syntax unified
+ 209              		.thumb
+ 210              		.thumb_func
+ 212              	lv_color_mix32_premultiplied:
+ 213              	.LFB6:
+  60:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  61:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** lv_color32_t lv_color_mix32_premultiplied(lv_color32_t fg, lv_color32_t bg)
+  62:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** {
+ 214              		.loc 1 62 1 is_stmt 1 view -0
+ 215              		.cfi_startproc
+ 216              		@ args = 0, pretend = 0, frame = 16
+ 217              		@ frame_needed = 0, uses_anonymous_args = 0
+ 218              		@ link register save eliminated.
+ 219 0000 84B0     		sub	sp, sp, #16
+ 220              	.LCFI5:
+ 221              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 6
+
+
+ 222 0002 0190     		str	r0, [sp, #4]
+ 223 0004 0091     		str	r1, [sp]
+  63:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     if(fg.alpha >= LV_OPA_MAX) {
+ 224              		.loc 1 63 5 view .LVU42
+ 225              		.loc 1 63 10 is_stmt 0 view .LVU43
+ 226 0006 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 227              		.loc 1 63 7 view .LVU44
+ 228 000a FC2B     		cmp	r3, #252
+ 229 000c 36D8     		bhi	.L15
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         return fg;  /* Fully opaque foreground replaces background */
+  65:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+  66:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     if(fg.alpha <= LV_OPA_MIN) {
+ 230              		.loc 1 66 5 is_stmt 1 view .LVU45
+ 231              		.loc 1 66 7 is_stmt 0 view .LVU46
+ 232 000e 022B     		cmp	r3, #2
+ 233 0010 36D9     		bls	.L16
+  67:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         return bg;  /* Fully transparent foreground, return background */
+  68:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+  69:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     uint32_t inv_fg_alpha = LV_OPA_MAX - fg.alpha;
+ 234              		.loc 1 70 5 is_stmt 1 view .LVU47
+ 235              		.loc 1 70 40 is_stmt 0 view .LVU48
+ 236 0012 C3F1FD03 		rsb	r3, r3, #253
+ 237              	.LVL2:
+  71:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  72:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     /* Premultiplied blending */
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     bg.red   = fg.red   + ((bg.red   * inv_fg_alpha) >> 8);
+ 238              		.loc 1 73 5 is_stmt 1 view .LVU49
+ 239              		.loc 1 73 18 is_stmt 0 view .LVU50
+ 240 0016 9DF80620 		ldrb	r2, [sp, #6]	@ zero_extendqisi2
+ 241              		.loc 1 73 31 view .LVU51
+ 242 001a 9DF80210 		ldrb	r1, [sp, #2]	@ zero_extendqisi2
+ 243              		.loc 1 73 38 view .LVU52
+ 244 001e 03FB01F1 		mul	r1, r3, r1
+ 245              		.loc 1 73 25 view .LVU53
+ 246 0022 02EB1122 		add	r2, r2, r1, lsr #8
+ 247              		.loc 1 73 14 view .LVU54
+ 248 0026 8DF80220 		strb	r2, [sp, #2]
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     bg.green = fg.green + ((bg.green * inv_fg_alpha) >> 8);
+ 249              		.loc 1 74 5 is_stmt 1 view .LVU55
+ 250              		.loc 1 74 18 is_stmt 0 view .LVU56
+ 251 002a 9DF80520 		ldrb	r2, [sp, #5]	@ zero_extendqisi2
+ 252              		.loc 1 74 31 view .LVU57
+ 253 002e 9DF80110 		ldrb	r1, [sp, #1]	@ zero_extendqisi2
+ 254              		.loc 1 74 38 view .LVU58
+ 255 0032 03FB01F1 		mul	r1, r3, r1
+ 256              		.loc 1 74 25 view .LVU59
+ 257 0036 02EB1122 		add	r2, r2, r1, lsr #8
+ 258              		.loc 1 74 14 view .LVU60
+ 259 003a 8DF80120 		strb	r2, [sp, #1]
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     bg.blue  = fg.blue  + ((bg.blue  * inv_fg_alpha) >> 8);
+ 260              		.loc 1 75 5 is_stmt 1 view .LVU61
+ 261              		.loc 1 75 18 is_stmt 0 view .LVU62
+ 262 003e 9DF80420 		ldrb	r2, [sp, #4]	@ zero_extendqisi2
+ 263              		.loc 1 75 31 view .LVU63
+ 264 0042 9DF80010 		ldrb	r1, [sp]	@ zero_extendqisi2
+ 265              		.loc 1 75 38 view .LVU64
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 7
+
+
+ 266 0046 01FB03F3 		mul	r3, r1, r3
+ 267              	.LVL3:
+ 268              		.loc 1 75 25 view .LVU65
+ 269 004a 02EB1323 		add	r3, r2, r3, lsr #8
+ 270              		.loc 1 75 14 view .LVU66
+ 271 004e 8DF80030 		strb	r3, [sp]
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     return bg;
+ 272              		.loc 1 77 5 is_stmt 1 view .LVU67
+ 273              		.loc 1 77 12 is_stmt 0 view .LVU68
+ 274 0052 009B     		ldr	r3, [sp]
+ 275 0054 0393     		str	r3, [sp, #12]
+ 276              	.LVL4:
+ 277              	.L12:
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** }
+ 278              		.loc 1 78 1 view .LVU69
+ 279 0056 0020     		movs	r0, #0
+ 280 0058 9DF80C30 		ldrb	r3, [sp, #12]	@ zero_extendqisi2
+ 281 005c 63F30700 		bfi	r0, r3, #0, #8
+ 282 0060 9DF80D30 		ldrb	r3, [sp, #13]	@ zero_extendqisi2
+ 283 0064 63F30F20 		bfi	r0, r3, #8, #8
+ 284 0068 9DF80E30 		ldrb	r3, [sp, #14]	@ zero_extendqisi2
+ 285 006c 63F31740 		bfi	r0, r3, #16, #8
+ 286 0070 9DF80F30 		ldrb	r3, [sp, #15]	@ zero_extendqisi2
+ 287 0074 63F31F60 		bfi	r0, r3, #24, #8
+ 288 0078 04B0     		add	sp, sp, #16
+ 289              	.LCFI6:
+ 290              		.cfi_remember_state
+ 291              		.cfi_def_cfa_offset 0
+ 292              		@ sp needed
+ 293 007a 7047     		bx	lr
+ 294              	.L15:
+ 295              	.LCFI7:
+ 296              		.cfi_restore_state
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 297              		.loc 1 64 9 is_stmt 1 view .LVU70
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 298              		.loc 1 64 16 is_stmt 0 view .LVU71
+ 299 007c 0390     		str	r0, [sp, #12]
+ 300 007e EAE7     		b	.L12
+ 301              	.L16:
+  67:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 302              		.loc 1 67 9 is_stmt 1 view .LVU72
+  67:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 303              		.loc 1 67 16 is_stmt 0 view .LVU73
+ 304 0080 009B     		ldr	r3, [sp]
+ 305 0082 0393     		str	r3, [sp, #12]
+ 306 0084 E7E7     		b	.L12
+ 307              		.cfi_endproc
+ 308              	.LFE6:
+ 310              		.section	.text.lv_color_brightness,"ax",%progbits
+ 311              		.align	1
+ 312              		.global	lv_color_brightness
+ 313              		.syntax unified
+ 314              		.thumb
+ 315              		.thumb_func
+ 317              	lv_color_brightness:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 8
+
+
+ 318              	.LFB7:
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  80:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** uint8_t lv_color_brightness(lv_color_t c)
+  81:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** {
+ 319              		.loc 1 81 1 is_stmt 1 view -0
+ 320              		.cfi_startproc
+ 321              		@ args = 0, pretend = 0, frame = 8
+ 322              		@ frame_needed = 0, uses_anonymous_args = 0
+ 323              		@ link register save eliminated.
+ 324 0000 82B0     		sub	sp, sp, #8
+ 325              	.LCFI8:
+ 326              		.cfi_def_cfa_offset 8
+ 327 0002 0190     		str	r0, [sp, #4]
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     uint16_t bright = (uint16_t)(3u * c.red + c.green + 4u * c.blue);
+ 328              		.loc 1 82 5 view .LVU75
+ 329              		.loc 1 82 40 is_stmt 0 view .LVU76
+ 330 0004 9DF80600 		ldrb	r0, [sp, #6]	@ zero_extendqisi2
+ 331              		.loc 1 82 37 view .LVU77
+ 332 0008 00EB4000 		add	r0, r0, r0, lsl #1
+ 333              		.loc 1 82 63 view .LVU78
+ 334 000c 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 335              		.loc 1 82 55 view .LVU79
+ 336 0010 00EB8300 		add	r0, r0, r3, lsl #2
+ 337              		.loc 1 82 48 view .LVU80
+ 338 0014 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 339              		.loc 1 82 14 view .LVU81
+ 340 0018 1844     		add	r0, r0, r3
+ 341              	.LVL5:
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     return (uint8_t)(bright >> 3);
+ 342              		.loc 1 83 5 is_stmt 1 view .LVU82
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** }
+ 343              		.loc 1 84 1 is_stmt 0 view .LVU83
+ 344 001a C0F3C700 		ubfx	r0, r0, #3, #8
+ 345              	.LVL6:
+ 346              		.loc 1 84 1 view .LVU84
+ 347 001e 02B0     		add	sp, sp, #8
+ 348              	.LCFI9:
+ 349              		.cfi_def_cfa_offset 0
+ 350              	.LVL7:
+ 351              		.loc 1 84 1 view .LVU85
+ 352              		@ sp needed
+ 353 0020 7047     		bx	lr
+ 354              		.cfi_endproc
+ 355              	.LFE7:
+ 357              		.section	.text.lv_color_filter_dsc_init,"ax",%progbits
+ 358              		.align	1
+ 359              		.global	lv_color_filter_dsc_init
+ 360              		.syntax unified
+ 361              		.thumb
+ 362              		.thumb_func
+ 364              	lv_color_filter_dsc_init:
+ 365              	.LVL8:
+ 366              	.LFB8:
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  86:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** void lv_color_filter_dsc_init(lv_color_filter_dsc_t * dsc, lv_color_filter_cb_t cb)
+  87:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** {
+ 367              		.loc 1 87 1 is_stmt 1 view -0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 9
+
+
+ 368              		.cfi_startproc
+ 369              		@ args = 0, pretend = 0, frame = 0
+ 370              		@ frame_needed = 0, uses_anonymous_args = 0
+ 371              		@ link register save eliminated.
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     dsc->filter_cb = cb;
+ 372              		.loc 1 88 5 view .LVU87
+ 373              		.loc 1 88 20 is_stmt 0 view .LVU88
+ 374 0000 0160     		str	r1, [r0]
+  89:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** }
+ 375              		.loc 1 89 1 view .LVU89
+ 376 0002 7047     		bx	lr
+ 377              		.cfi_endproc
+ 378              	.LFE8:
+ 380              		.section	.text.lv_color_over32,"ax",%progbits
+ 381              		.align	1
+ 382              		.global	lv_color_over32
+ 383              		.syntax unified
+ 384              		.thumb
+ 385              		.thumb_func
+ 387              	lv_color_over32:
+ 388              	.LFB9:
+  90:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+  91:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** lv_color32_t lv_color_over32(lv_color32_t fg, lv_color32_t bg)
+  92:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** {
+ 389              		.loc 1 92 1 is_stmt 1 view -0
+ 390              		.cfi_startproc
+ 391              		@ args = 0, pretend = 0, frame = 16
+ 392              		@ frame_needed = 0, uses_anonymous_args = 0
+ 393 0000 10B5     		push	{r4, lr}
+ 394              	.LCFI10:
+ 395              		.cfi_def_cfa_offset 8
+ 396              		.cfi_offset 4, -8
+ 397              		.cfi_offset 14, -4
+ 398 0002 84B0     		sub	sp, sp, #16
+ 399              	.LCFI11:
+ 400              		.cfi_def_cfa_offset 24
+ 401 0004 0190     		str	r0, [sp, #4]
+ 402 0006 0091     		str	r1, [sp]
+  93:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     if(fg.alpha >= LV_OPA_MAX || bg.alpha <= LV_OPA_MIN) {
+ 403              		.loc 1 93 5 view .LVU91
+ 404              		.loc 1 93 10 is_stmt 0 view .LVU92
+ 405 0008 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 406              		.loc 1 93 7 view .LVU93
+ 407 000c FC2B     		cmp	r3, #252
+ 408 000e 21D8     		bhi	.L21
+ 409              		.loc 1 93 36 discriminator 1 view .LVU94
+ 410 0010 9DF80320 		ldrb	r2, [sp, #3]	@ zero_extendqisi2
+ 411              		.loc 1 93 31 discriminator 1 view .LVU95
+ 412 0014 022A     		cmp	r2, #2
+ 413 0016 1DD9     		bls	.L21
+  94:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         return fg;
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+  96:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     else if(fg.alpha <= LV_OPA_MIN) {
+ 414              		.loc 1 96 10 is_stmt 1 view .LVU96
+ 415              		.loc 1 96 12 is_stmt 0 view .LVU97
+ 416 0018 022B     		cmp	r3, #2
+ 417 001a 30D9     		bls	.L27
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 10
+
+
+  97:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         return bg;
+  98:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+  99:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     else if(bg.alpha == 255) {
+ 418              		.loc 1 99 10 is_stmt 1 view .LVU98
+ 419              		.loc 1 99 12 is_stmt 0 view .LVU99
+ 420 001c FF2A     		cmp	r2, #255
+ 421 001e 31D0     		beq	.L28
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****         return lv_color_mix32(fg, bg);
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     lv_opa_t res_alpha  = 255 - LV_OPA_MIX2(255 - fg.alpha, 255 - bg.alpha);
+ 422              		.loc 1 103 5 is_stmt 1 view .LVU100
+ 423              		.loc 1 103 33 is_stmt 0 view .LVU101
+ 424 0020 C3F1FF01 		rsb	r1, r3, #255
+ 425 0024 C2F1FF02 		rsb	r2, r2, #255
+ 426 0028 01FB02F2 		mul	r2, r1, r2
+ 427 002c C2F30722 		ubfx	r2, r2, #8, #8
+ 428              		.loc 1 103 14 view .LVU102
+ 429 0030 82F0FF04 		eor	r4, r2, #255
+ 430              	.LVL9:
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     lv_opa_t ratio = (uint32_t)((uint32_t)fg.alpha * 255) / res_alpha;
+ 431              		.loc 1 104 5 is_stmt 1 view .LVU103
+ 432              		.loc 1 104 22 is_stmt 0 view .LVU104
+ 433 0034 C3EB0323 		rsb	r3, r3, r3, lsl #8
+ 434              		.loc 1 104 59 view .LVU105
+ 435 0038 B3FBF4F3 		udiv	r3, r3, r4
+ 436              	.LVL10:
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     fg.alpha = ratio;
+ 437              		.loc 1 105 5 is_stmt 1 view .LVU106
+ 438              		.loc 1 105 14 is_stmt 0 view .LVU107
+ 439 003c 8DF80730 		strb	r3, [sp, #7]
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     lv_color32_t res = lv_color_mix32(fg, bg);
+ 440              		.loc 1 106 5 is_stmt 1 view .LVU108
+ 441              		.loc 1 106 24 is_stmt 0 view .LVU109
+ 442 0040 0099     		ldr	r1, [sp]
+ 443 0042 0198     		ldr	r0, [sp, #4]
+ 444 0044 FFF7FEFF 		bl	lv_color_mix32
+ 445              	.LVL11:
+ 446              		.loc 1 106 24 view .LVU110
+ 447 0048 0290     		str	r0, [sp, #8]
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     res.alpha = res_alpha;
+ 448              		.loc 1 107 5 is_stmt 1 view .LVU111
+ 449              		.loc 1 107 15 is_stmt 0 view .LVU112
+ 450 004a 8DF80B40 		strb	r4, [sp, #11]
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** 
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     return res;
+ 451              		.loc 1 109 5 is_stmt 1 view .LVU113
+ 452              		.loc 1 109 12 is_stmt 0 view .LVU114
+ 453 004e 029B     		ldr	r3, [sp, #8]
+ 454 0050 0393     		str	r3, [sp, #12]
+ 455 0052 01E0     		b	.L23
+ 456              	.LVL12:
+ 457              	.L21:
+  94:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 458              		.loc 1 94 9 is_stmt 1 view .LVU115
+  94:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 459              		.loc 1 94 16 is_stmt 0 view .LVU116
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 11
+
+
+ 460 0054 019B     		ldr	r3, [sp, #4]
+ 461 0056 0393     		str	r3, [sp, #12]
+ 462              	.L23:
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c **** }
+ 463              		.loc 1 110 1 view .LVU117
+ 464 0058 0020     		movs	r0, #0
+ 465 005a 9DF80C30 		ldrb	r3, [sp, #12]	@ zero_extendqisi2
+ 466 005e 63F30700 		bfi	r0, r3, #0, #8
+ 467 0062 9DF80D30 		ldrb	r3, [sp, #13]	@ zero_extendqisi2
+ 468 0066 63F30F20 		bfi	r0, r3, #8, #8
+ 469 006a 9DF80E30 		ldrb	r3, [sp, #14]	@ zero_extendqisi2
+ 470 006e 63F31740 		bfi	r0, r3, #16, #8
+ 471 0072 9DF80F30 		ldrb	r3, [sp, #15]	@ zero_extendqisi2
+ 472 0076 63F31F60 		bfi	r0, r3, #24, #8
+ 473 007a 04B0     		add	sp, sp, #16
+ 474              	.LCFI12:
+ 475              		.cfi_remember_state
+ 476              		.cfi_def_cfa_offset 8
+ 477              		@ sp needed
+ 478 007c 10BD     		pop	{r4, pc}
+ 479              	.L27:
+ 480              	.LCFI13:
+ 481              		.cfi_restore_state
+  97:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 482              		.loc 1 97 9 is_stmt 1 view .LVU118
+  97:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 483              		.loc 1 97 16 is_stmt 0 view .LVU119
+ 484 007e 009B     		ldr	r3, [sp]
+ 485 0080 0393     		str	r3, [sp, #12]
+ 486 0082 E9E7     		b	.L23
+ 487              	.L28:
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 488              		.loc 1 100 9 is_stmt 1 view .LVU120
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.c ****     }
+ 489              		.loc 1 100 16 is_stmt 0 view .LVU121
+ 490 0084 0099     		ldr	r1, [sp]
+ 491 0086 0198     		ldr	r0, [sp, #4]
+ 492 0088 FFF7FEFF 		bl	lv_color_mix32
+ 493              	.LVL13:
+ 494 008c 0390     		str	r0, [sp, #12]
+ 495 008e E3E7     		b	.L23
+ 496              		.cfi_endproc
+ 497              	.LFE9:
+ 499              		.text
+ 500              	.Letext0:
+ 501              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 502              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 503              		.file 4 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ 504              		.file 5 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.h"
+ 505              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccHddtLq.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_color_op.c
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:20     .text.lv_color_mix:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:26     .text.lv_color_mix:00000000 lv_color_mix
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:100    .text.lv_color_mix32:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:106    .text.lv_color_mix32:00000000 lv_color_mix32
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:206    .text.lv_color_mix32_premultiplied:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:212    .text.lv_color_mix32_premultiplied:00000000 lv_color_mix32_premultiplied
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:311    .text.lv_color_brightness:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:317    .text.lv_color_brightness:00000000 lv_color_brightness
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:358    .text.lv_color_filter_dsc_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:364    .text.lv_color_filter_dsc_init:00000000 lv_color_filter_dsc_init
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:381    .text.lv_color_over32:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccHddtLq.s:387    .text.lv_color_over32:00000000 lv_color_over32
+
+NO UNDEFINED SYMBOLS

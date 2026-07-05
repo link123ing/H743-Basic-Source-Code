@@ -1,0 +1,1648 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_animimage.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c"
+  19              		.section	.text.lv_animimg_set_src_inner,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	lv_animimg_set_src_inner:
+  26              	.LVL0:
+  27              	.LFB190:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  * @file lv_animimg.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /**
+   7:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  * Modified by NXP in 2025
+   8:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  */
+   9:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  10:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /*********************
+  11:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *      INCLUDES
+  12:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *********************/
+  13:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #include "lv_animimage_private.h"
+  14:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #include "../../core/lv_obj_class_private.h"
+  15:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #if LV_USE_ANIMIMG != 0
+  16:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  17:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /*Testing of dependencies*/
+  18:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #if LV_USE_IMAGE == 0
+  19:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     #error "lv_animimg: lv_img is required. Enable it in lv_conf.h (LV_USE_IMAGE  1) "
+  20:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #endif
+  21:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  22:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #include "../../draw/lv_image_decoder.h"
+  23:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #include "../../misc/lv_assert.h"
+  24:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #include "../../misc/lv_fs.h"
+  25:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #include "../../misc/lv_text.h"
+  26:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #include "../../misc/lv_math.h"
+  27:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #include "../../misc/lv_log.h"
+  28:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #include "../../misc/lv_anim.h"
+  29:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  30:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /*********************
+  31:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *      DEFINES
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 2
+
+
+  32:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *********************/
+  33:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #define LV_OBJX_NAME "lv_animimg"
+  34:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  35:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #define MY_CLASS (&lv_animimg_class)
+  36:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  37:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /**********************
+  38:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *      TYPEDEFS
+  39:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  **********************/
+  40:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  41:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /**********************
+  42:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *  STATIC PROTOTYPES
+  43:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  **********************/
+  44:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** static void index_change(lv_obj_t * obj, int32_t idx);
+  45:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** static void lv_animimg_constructor(const lv_obj_class_t * class_p, lv_obj_t * obj);
+  46:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** static void lv_animimg_set_src_inner(lv_obj_t * obj, const void * dsc[], size_t num, bool reverse);
+  47:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  48:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /**********************
+  49:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *  STATIC VARIABLES
+  50:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  **********************/
+  51:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  52:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #if LV_USE_OBJ_PROPERTY
+  53:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** static const lv_property_ops_t properties[] = {
+  54:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     {
+  55:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .id = LV_PROPERTY_ANIMIMAGE_SRC,
+  56:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .setter = lv_animimg_set_src,
+  57:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .getter = lv_animimg_get_src,
+  58:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     },
+  59:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     {
+  60:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .id = LV_PROPERTY_ANIMIMAGE_DURATION,
+  61:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .setter = lv_animimg_set_duration,
+  62:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .getter = lv_animimg_get_duration,
+  63:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     },
+  64:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     {
+  65:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .id = LV_PROPERTY_ANIMIMAGE_REPEAT_COUNT,
+  66:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .setter = lv_animimg_set_repeat_count,
+  67:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .getter = lv_animimg_get_repeat_count,
+  68:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     },
+  69:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     {
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .id = LV_PROPERTY_ANIMIMAGE_SRC_COUNT,
+  71:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .setter = NULL,
+  72:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         .getter = lv_animimg_get_src_count,
+  73:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     },
+  74:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** };
+  75:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #endif
+  76:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  77:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** const lv_obj_class_t lv_animimg_class = {
+  78:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     .constructor_cb = lv_animimg_constructor,
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     .instance_size = sizeof(lv_animimg_t),
+  80:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     .base_class = &lv_image_class,
+  81:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     .name = "lv_animimg",
+  82:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #if LV_USE_OBJ_PROPERTY
+  83:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     .prop_index_start = LV_PROPERTY_ANIMIMAGE_START,
+  84:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     .prop_index_end = LV_PROPERTY_ANIMIMAGE_END,
+  85:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     .properties = properties,
+  86:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     .properties_count = sizeof(properties) / sizeof(properties[0]),
+  87:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  88:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #if LV_USE_OBJ_PROPERTY_NAME
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 3
+
+
+  89:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     .property_names = lv_animimage_property_names,
+  90:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     .names_count = sizeof(lv_animimage_property_names) / sizeof(lv_property_name_t),
+  91:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #endif
+  92:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** #endif
+  93:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** };
+  94:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  95:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /**********************
+  96:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *      MACROS
+  97:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  **********************/
+  98:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+  99:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /**********************
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *   GLOBAL FUNCTIONS
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  **********************/
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** lv_obj_t * lv_animimg_create(lv_obj_t * parent)
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_LOG_INFO("begin");
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_obj_t * obj = lv_obj_class_create_obj(&lv_animimg_class, parent);
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_obj_class_init_obj(obj);
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return obj;
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 111:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** void lv_animimg_set_src(lv_obj_t * obj, const void * dsc[], size_t num)
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 113:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_set_src_inner(obj, dsc, num, false);
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 116:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** void lv_animimg_set_src_reverse(lv_obj_t * obj, const void * dsc[], size_t num)
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_set_src_inner(obj, dsc, num, true);
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 120:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** void lv_animimg_start(lv_obj_t * obj)
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_start(&animimg->anim);
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 127:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** bool lv_animimg_delete(lv_obj_t * obj)
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return lv_anim_delete(animimg, NULL);
+ 133:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /*=====================
+ 136:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  * Setter functions
+ 137:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *====================*/
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** void lv_animimg_set_duration(lv_obj_t * obj, uint32_t duration)
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 143:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_duration(&animimg->anim, duration);
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_reverse_delay(&animimg->anim, duration);
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 4
+
+
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 147:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** void lv_animimg_set_repeat_count(lv_obj_t * obj, uint32_t count)
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_repeat_count(&animimg->anim, count);
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** void lv_animimg_set_reverse_duration(lv_obj_t * obj, uint32_t duration)
+ 155:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_reverse_duration(&animimg->anim, duration);
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** void lv_animimg_set_reverse_delay(lv_obj_t * obj, uint32_t duration)
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_reverse_delay(&animimg->anim, duration);
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** void lv_animimg_set_start_cb(lv_obj_t * obj, lv_anim_start_cb_t start_cb)
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_start_cb(&animimg->anim, start_cb);
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** void lv_animimg_set_completed_cb(lv_obj_t * obj, lv_anim_completed_cb_t completed_cb)
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_completed_cb(&animimg->anim, completed_cb);
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /*=====================
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  * Getter functions
+ 184:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *====================*/
+ 185:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** const void ** lv_animimg_get_src(lv_obj_t * obj)
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 190:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return animimg->dsc;
+ 191:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 192:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 193:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** uint8_t lv_animimg_get_src_count(lv_obj_t * obj)
+ 194:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 196:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return animimg->pic_count;
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 199:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** uint32_t lv_animimg_get_duration(lv_obj_t * obj)
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 5
+
+
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 204:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return lv_anim_get_time(&animimg->anim);
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 207:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** uint32_t lv_animimg_get_repeat_count(lv_obj_t * obj)
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 210:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return lv_anim_get_repeat_count(&animimg->anim);
+ 212:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 213:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** lv_anim_t * lv_animimg_get_anim(lv_obj_t * obj)
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 217:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 218:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return &animimg->anim;
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 220:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 221:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** /**********************
+ 222:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  *   STATIC FUNCTIONS
+ 223:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****  **********************/
+ 224:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 225:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** static void lv_animimg_constructor(const lv_obj_class_t * class_p, lv_obj_t * obj)
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 227:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_TRACE_OBJ_CREATE("begin");
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 229:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_UNUSED(class_p);
+ 230:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 231:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 232:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     animimg->dsc = NULL;
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     animimg->pic_count = -1;
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     /*initial animation*/
+ 236:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_init(&animimg->anim);
+ 237:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_var(&animimg->anim, obj);
+ 238:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_duration(&animimg->anim, 30);
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_exec_cb(&animimg->anim, (lv_anim_exec_xcb_t)index_change);
+ 240:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_values(&animimg->anim, 0, 1);
+ 241:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_repeat_count(&animimg->anim, LV_ANIM_REPEAT_INFINITE);
+ 242:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 243:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 244:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** static void index_change(lv_obj_t * obj, int32_t idx)
+ 245:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ 246:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 247:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 248:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     if(animimg->dsc == NULL) {
+ 249:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         LV_LOG_WARN("dsc is null");
+ 250:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         return;
+ 251:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     }
+ 252:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     if(idx >= animimg->pic_count) idx =  animimg->pic_count - 1;
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 255:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_image_set_src(obj, animimg->dsc[idx]);
+ 256:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 257:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 258:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** static void lv_animimg_set_src_inner(lv_obj_t * obj, const void * dsc[], size_t num, bool reverse)
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 6
+
+
+  28              		.loc 1 259 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+  32              		.loc 1 260 5 view .LVU1
+  33              		.loc 1 260 5 view .LVU2
+  34 0000 60B1     		cbz	r0, .L3
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+  35              		.loc 1 259 1 is_stmt 0 view .LVU3
+  36 0002 08B5     		push	{r3, lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 8
+  39              		.cfi_offset 3, -8
+  40              		.cfi_offset 14, -4
+  41 0004 8C46     		mov	ip, r1
+  42 0006 1146     		mov	r1, r2
+  43              	.LVL1:
+  44              		.loc 1 260 5 is_stmt 1 view .LVU4
+  45              		.loc 1 260 33 view .LVU5
+ 261:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+  46              		.loc 1 261 5 view .LVU6
+ 262:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     animimg->dsc = dsc;
+  47              		.loc 1 262 5 view .LVU7
+  48              		.loc 1 262 18 is_stmt 0 view .LVU8
+  49 0008 C0F8BCC0 		str	ip, [r0, #188]
+ 263:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     animimg->pic_count = num;
+  50              		.loc 1 263 5 is_stmt 1 view .LVU9
+  51              		.loc 1 263 24 is_stmt 0 view .LVU10
+  52 000c 80F8C020 		strb	r2, [r0, #192]
+ 264:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     if(reverse) {
+  53              		.loc 1 264 5 is_stmt 1 view .LVU11
+  54              		.loc 1 264 7 is_stmt 0 view .LVU12
+  55 0010 2BB1     		cbz	r3, .L4
+ 265:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         lv_anim_set_values(&animimg->anim, (int32_t)num, 0);
+  56              		.loc 1 265 9 is_stmt 1 view .LVU13
+  57 0012 0022     		movs	r2, #0
+  58              	.LVL2:
+  59              		.loc 1 265 9 is_stmt 0 view .LVU14
+  60 0014 5C30     		adds	r0, r0, #92
+  61              	.LVL3:
+  62              		.loc 1 265 9 view .LVU15
+  63 0016 FFF7FEFF 		bl	lv_anim_set_values
+  64              	.LVL4:
+  65              	.L1:
+ 266:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     }
+ 267:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     else {
+ 268:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         lv_anim_set_values(&animimg->anim, 0, (int32_t)num);
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     }
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+  66              		.loc 1 270 1 view .LVU16
+  67 001a 08BD     		pop	{r3, pc}
+  68              	.LVL5:
+  69              	.L3:
+  70              	.LCFI1:
+  71              		.cfi_def_cfa_offset 0
+  72              		.cfi_restore 3
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 7
+
+
+  73              		.cfi_restore 14
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+  74              		.loc 1 260 5 is_stmt 1 view .LVU17
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+  75              		.loc 1 260 5 view .LVU18
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+  76              		.loc 1 260 5 view .LVU19
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+  77              		.loc 1 260 5 view .LVU20
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+  78              		.loc 1 260 5 view .LVU21
+  79 001c FEE7     		b	.L3
+  80              	.LVL6:
+  81              	.L4:
+  82              	.LCFI2:
+  83              		.cfi_def_cfa_offset 8
+  84              		.cfi_offset 3, -8
+  85              		.cfi_offset 14, -4
+ 268:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     }
+  86              		.loc 1 268 9 view .LVU22
+  87 001e 1946     		mov	r1, r3
+  88              	.LVL7:
+ 268:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     }
+  89              		.loc 1 268 9 is_stmt 0 view .LVU23
+  90 0020 5C30     		adds	r0, r0, #92
+  91              	.LVL8:
+ 268:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     }
+  92              		.loc 1 268 9 view .LVU24
+  93 0022 FFF7FEFF 		bl	lv_anim_set_values
+  94              	.LVL9:
+  95              		.loc 1 270 1 view .LVU25
+  96 0026 F8E7     		b	.L1
+  97              		.cfi_endproc
+  98              	.LFE190:
+ 100              		.section	.text.lv_animimg_constructor,"ax",%progbits
+ 101              		.align	1
+ 102              		.syntax unified
+ 103              		.thumb
+ 104              		.thumb_func
+ 106              	lv_animimg_constructor:
+ 107              	.LVL10:
+ 108              	.LFB188:
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_TRACE_OBJ_CREATE("begin");
+ 109              		.loc 1 226 1 is_stmt 1 view -0
+ 110              		.cfi_startproc
+ 111              		@ args = 0, pretend = 0, frame = 0
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_TRACE_OBJ_CREATE("begin");
+ 113              		.loc 1 226 1 is_stmt 0 view .LVU27
+ 114 0000 70B5     		push	{r4, r5, r6, lr}
+ 115              	.LCFI3:
+ 116              		.cfi_def_cfa_offset 16
+ 117              		.cfi_offset 4, -16
+ 118              		.cfi_offset 5, -12
+ 119              		.cfi_offset 6, -8
+ 120              		.cfi_offset 14, -4
+ 121 0002 0D46     		mov	r5, r1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 8
+
+
+ 227:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 122              		.loc 1 227 33 is_stmt 1 view .LVU28
+ 229:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 123              		.loc 1 229 5 view .LVU29
+ 230:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 124              		.loc 1 230 5 view .LVU30
+ 125              	.LVL11:
+ 232:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     animimg->pic_count = -1;
+ 126              		.loc 1 232 5 view .LVU31
+ 232:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     animimg->pic_count = -1;
+ 127              		.loc 1 232 18 is_stmt 0 view .LVU32
+ 128 0004 0026     		movs	r6, #0
+ 129 0006 C1F8BC60 		str	r6, [r1, #188]
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 130              		.loc 1 233 5 is_stmt 1 view .LVU33
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 131              		.loc 1 233 24 is_stmt 0 view .LVU34
+ 132 000a FF23     		movs	r3, #255
+ 133 000c 81F8C030 		strb	r3, [r1, #192]
+ 236:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_var(&animimg->anim, obj);
+ 134              		.loc 1 236 5 is_stmt 1 view .LVU35
+ 135 0010 01F15C04 		add	r4, r1, #92
+ 136 0014 2046     		mov	r0, r4
+ 137              	.LVL12:
+ 236:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_var(&animimg->anim, obj);
+ 138              		.loc 1 236 5 is_stmt 0 view .LVU36
+ 139 0016 FFF7FEFF 		bl	lv_anim_init
+ 140              	.LVL13:
+ 237:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_duration(&animimg->anim, 30);
+ 141              		.loc 1 237 5 is_stmt 1 view .LVU37
+ 142 001a 2946     		mov	r1, r5
+ 143 001c 2046     		mov	r0, r4
+ 144 001e FFF7FEFF 		bl	lv_anim_set_var
+ 145              	.LVL14:
+ 238:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_exec_cb(&animimg->anim, (lv_anim_exec_xcb_t)index_change);
+ 146              		.loc 1 238 5 view .LVU38
+ 147 0022 1E21     		movs	r1, #30
+ 148 0024 2046     		mov	r0, r4
+ 149 0026 FFF7FEFF 		bl	lv_anim_set_duration
+ 150              	.LVL15:
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_values(&animimg->anim, 0, 1);
+ 151              		.loc 1 239 5 view .LVU39
+ 152 002a 0749     		ldr	r1, .L10
+ 153 002c 2046     		mov	r0, r4
+ 154 002e FFF7FEFF 		bl	lv_anim_set_exec_cb
+ 155              	.LVL16:
+ 240:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_repeat_count(&animimg->anim, LV_ANIM_REPEAT_INFINITE);
+ 156              		.loc 1 240 5 view .LVU40
+ 157 0032 0122     		movs	r2, #1
+ 158 0034 3146     		mov	r1, r6
+ 159 0036 2046     		mov	r0, r4
+ 160 0038 FFF7FEFF 		bl	lv_anim_set_values
+ 161              	.LVL17:
+ 241:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 162              		.loc 1 241 5 view .LVU41
+ 163 003c 4FF0FF31 		mov	r1, #-1
+ 164 0040 2046     		mov	r0, r4
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 9
+
+
+ 165 0042 FFF7FEFF 		bl	lv_anim_set_repeat_count
+ 166              	.LVL18:
+ 242:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 167              		.loc 1 242 1 is_stmt 0 view .LVU42
+ 168 0046 70BD     		pop	{r4, r5, r6, pc}
+ 169              	.LVL19:
+ 170              	.L11:
+ 242:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 171              		.loc 1 242 1 view .LVU43
+ 172              		.align	2
+ 173              	.L10:
+ 174 0048 00000000 		.word	index_change
+ 175              		.cfi_endproc
+ 176              	.LFE188:
+ 178              		.section	.text.index_change,"ax",%progbits
+ 179              		.align	1
+ 180              		.syntax unified
+ 181              		.thumb
+ 182              		.thumb_func
+ 184              	index_change:
+ 185              	.LVL20:
+ 186              	.LFB189:
+ 245:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 187              		.loc 1 245 1 is_stmt 1 view -0
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 0
+ 190              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 191              		.loc 1 245 1 is_stmt 0 view .LVU45
+ 192 0000 08B5     		push	{r3, lr}
+ 193              	.LCFI4:
+ 194              		.cfi_def_cfa_offset 8
+ 195              		.cfi_offset 3, -8
+ 196              		.cfi_offset 14, -4
+ 246:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 197              		.loc 1 246 5 is_stmt 1 view .LVU46
+ 198              	.LVL21:
+ 248:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         LV_LOG_WARN("dsc is null");
+ 199              		.loc 1 248 5 view .LVU47
+ 248:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         LV_LOG_WARN("dsc is null");
+ 200              		.loc 1 248 15 is_stmt 0 view .LVU48
+ 201 0002 D0F8BC30 		ldr	r3, [r0, #188]
+ 248:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****         LV_LOG_WARN("dsc is null");
+ 202              		.loc 1 248 7 view .LVU49
+ 203 0006 43B1     		cbz	r3, .L12
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 204              		.loc 1 253 5 is_stmt 1 view .LVU50
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 205              		.loc 1 253 22 is_stmt 0 view .LVU51
+ 206 0008 90F9C020 		ldrsb	r2, [r0, #192]
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 207              		.loc 1 253 7 view .LVU52
+ 208 000c 8A42     		cmp	r2, r1
+ 209 000e 00DC     		bgt	.L14
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 210              		.loc 1 253 35 is_stmt 1 discriminator 1 view .LVU53
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 10
+
+
+ 211              		.loc 1 253 39 is_stmt 0 discriminator 1 view .LVU54
+ 212 0010 511E     		subs	r1, r2, #1
+ 213              	.LVL22:
+ 214              	.L14:
+ 255:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 215              		.loc 1 255 5 is_stmt 1 view .LVU55
+ 216 0012 53F82110 		ldr	r1, [r3, r1, lsl #2]
+ 217              	.LVL23:
+ 255:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 218              		.loc 1 255 5 is_stmt 0 view .LVU56
+ 219 0016 FFF7FEFF 		bl	lv_image_set_src
+ 220              	.LVL24:
+ 221              	.L12:
+ 256:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 222              		.loc 1 256 1 view .LVU57
+ 223 001a 08BD     		pop	{r3, pc}
+ 224              		.cfi_endproc
+ 225              	.LFE189:
+ 227              		.section	.text.lv_animimg_create,"ax",%progbits
+ 228              		.align	1
+ 229              		.global	lv_animimg_create
+ 230              		.syntax unified
+ 231              		.thumb
+ 232              		.thumb_func
+ 234              	lv_animimg_create:
+ 235              	.LVL25:
+ 236              	.LFB172:
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_LOG_INFO("begin");
+ 237              		.loc 1 104 1 is_stmt 1 view -0
+ 238              		.cfi_startproc
+ 239              		@ args = 0, pretend = 0, frame = 0
+ 240              		@ frame_needed = 0, uses_anonymous_args = 0
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_LOG_INFO("begin");
+ 241              		.loc 1 104 1 is_stmt 0 view .LVU59
+ 242 0000 10B5     		push	{r4, lr}
+ 243              	.LCFI5:
+ 244              		.cfi_def_cfa_offset 8
+ 245              		.cfi_offset 4, -8
+ 246              		.cfi_offset 14, -4
+ 247 0002 0146     		mov	r1, r0
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_obj_t * obj = lv_obj_class_create_obj(&lv_animimg_class, parent);
+ 248              		.loc 1 105 5 is_stmt 1 view .LVU60
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_obj_t * obj = lv_obj_class_create_obj(&lv_animimg_class, parent);
+ 249              		.loc 1 105 5 view .LVU61
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_obj_t * obj = lv_obj_class_create_obj(&lv_animimg_class, parent);
+ 250              		.loc 1 105 5 view .LVU62
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_obj_class_init_obj(obj);
+ 251              		.loc 1 106 5 view .LVU63
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_obj_class_init_obj(obj);
+ 252              		.loc 1 106 22 is_stmt 0 view .LVU64
+ 253 0004 0348     		ldr	r0, .L18
+ 254              	.LVL26:
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_obj_class_init_obj(obj);
+ 255              		.loc 1 106 22 view .LVU65
+ 256 0006 FFF7FEFF 		bl	lv_obj_class_create_obj
+ 257              	.LVL27:
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_obj_class_init_obj(obj);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 11
+
+
+ 258              		.loc 1 106 22 view .LVU66
+ 259 000a 0446     		mov	r4, r0
+ 260              	.LVL28:
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return obj;
+ 261              		.loc 1 107 5 is_stmt 1 view .LVU67
+ 262 000c FFF7FEFF 		bl	lv_obj_class_init_obj
+ 263              	.LVL29:
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 264              		.loc 1 108 5 view .LVU68
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 265              		.loc 1 109 1 is_stmt 0 view .LVU69
+ 266 0010 2046     		mov	r0, r4
+ 267 0012 10BD     		pop	{r4, pc}
+ 268              	.LVL30:
+ 269              	.L19:
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 270              		.loc 1 109 1 view .LVU70
+ 271              		.align	2
+ 272              	.L18:
+ 273 0014 00000000 		.word	lv_animimg_class
+ 274              		.cfi_endproc
+ 275              	.LFE172:
+ 277              		.section	.text.lv_animimg_set_src,"ax",%progbits
+ 278              		.align	1
+ 279              		.global	lv_animimg_set_src
+ 280              		.syntax unified
+ 281              		.thumb
+ 282              		.thumb_func
+ 284              	lv_animimg_set_src:
+ 285              	.LVL31:
+ 286              	.LFB173:
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_set_src_inner(obj, dsc, num, false);
+ 287              		.loc 1 112 1 is_stmt 1 view -0
+ 288              		.cfi_startproc
+ 289              		@ args = 0, pretend = 0, frame = 0
+ 290              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_set_src_inner(obj, dsc, num, false);
+ 291              		.loc 1 112 1 is_stmt 0 view .LVU72
+ 292 0000 08B5     		push	{r3, lr}
+ 293              	.LCFI6:
+ 294              		.cfi_def_cfa_offset 8
+ 295              		.cfi_offset 3, -8
+ 296              		.cfi_offset 14, -4
+ 113:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 297              		.loc 1 113 5 is_stmt 1 view .LVU73
+ 298 0002 0023     		movs	r3, #0
+ 299 0004 FFF7FEFF 		bl	lv_animimg_set_src_inner
+ 300              	.LVL32:
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 301              		.loc 1 114 1 is_stmt 0 view .LVU74
+ 302 0008 08BD     		pop	{r3, pc}
+ 303              		.cfi_endproc
+ 304              	.LFE173:
+ 306              		.section	.text.lv_animimg_set_src_reverse,"ax",%progbits
+ 307              		.align	1
+ 308              		.global	lv_animimg_set_src_reverse
+ 309              		.syntax unified
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 12
+
+
+ 310              		.thumb
+ 311              		.thumb_func
+ 313              	lv_animimg_set_src_reverse:
+ 314              	.LVL33:
+ 315              	.LFB174:
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_set_src_inner(obj, dsc, num, true);
+ 316              		.loc 1 117 1 is_stmt 1 view -0
+ 317              		.cfi_startproc
+ 318              		@ args = 0, pretend = 0, frame = 0
+ 319              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_set_src_inner(obj, dsc, num, true);
+ 320              		.loc 1 117 1 is_stmt 0 view .LVU76
+ 321 0000 08B5     		push	{r3, lr}
+ 322              	.LCFI7:
+ 323              		.cfi_def_cfa_offset 8
+ 324              		.cfi_offset 3, -8
+ 325              		.cfi_offset 14, -4
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 326              		.loc 1 118 5 is_stmt 1 view .LVU77
+ 327 0002 0123     		movs	r3, #1
+ 328 0004 FFF7FEFF 		bl	lv_animimg_set_src_inner
+ 329              	.LVL34:
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 330              		.loc 1 119 1 is_stmt 0 view .LVU78
+ 331 0008 08BD     		pop	{r3, pc}
+ 332              		.cfi_endproc
+ 333              	.LFE174:
+ 335              		.section	.text.lv_animimg_start,"ax",%progbits
+ 336              		.align	1
+ 337              		.global	lv_animimg_start
+ 338              		.syntax unified
+ 339              		.thumb
+ 340              		.thumb_func
+ 342              	lv_animimg_start:
+ 343              	.LVL35:
+ 344              	.LFB175:
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 345              		.loc 1 122 1 is_stmt 1 view -0
+ 346              		.cfi_startproc
+ 347              		@ args = 0, pretend = 0, frame = 0
+ 348              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 349              		.loc 1 123 5 view .LVU80
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 350              		.loc 1 123 5 view .LVU81
+ 351 0000 20B1     		cbz	r0, .L26
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 352              		.loc 1 122 1 is_stmt 0 view .LVU82
+ 353 0002 08B5     		push	{r3, lr}
+ 354              	.LCFI8:
+ 355              		.cfi_def_cfa_offset 8
+ 356              		.cfi_offset 3, -8
+ 357              		.cfi_offset 14, -4
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 358              		.loc 1 123 5 is_stmt 1 view .LVU83
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 359              		.loc 1 123 33 view .LVU84
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 13
+
+
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_start(&animimg->anim);
+ 360              		.loc 1 124 5 view .LVU85
+ 361              	.LVL36:
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 362              		.loc 1 125 5 view .LVU86
+ 363 0004 5C30     		adds	r0, r0, #92
+ 364              	.LVL37:
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 365              		.loc 1 125 5 is_stmt 0 view .LVU87
+ 366 0006 FFF7FEFF 		bl	lv_anim_start
+ 367              	.LVL38:
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 368              		.loc 1 126 1 view .LVU88
+ 369 000a 08BD     		pop	{r3, pc}
+ 370              	.LVL39:
+ 371              	.L26:
+ 372              	.LCFI9:
+ 373              		.cfi_def_cfa_offset 0
+ 374              		.cfi_restore 3
+ 375              		.cfi_restore 14
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 376              		.loc 1 123 5 is_stmt 1 view .LVU89
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 377              		.loc 1 123 5 view .LVU90
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 378              		.loc 1 123 5 view .LVU91
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 379              		.loc 1 123 5 view .LVU92
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 380              		.loc 1 123 5 view .LVU93
+ 381 000c FEE7     		b	.L26
+ 382              		.cfi_endproc
+ 383              	.LFE175:
+ 385              		.section	.text.lv_animimg_delete,"ax",%progbits
+ 386              		.align	1
+ 387              		.global	lv_animimg_delete
+ 388              		.syntax unified
+ 389              		.thumb
+ 390              		.thumb_func
+ 392              	lv_animimg_delete:
+ 393              	.LVL40:
+ 394              	.LFB176:
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 395              		.loc 1 129 1 view -0
+ 396              		.cfi_startproc
+ 397              		@ args = 0, pretend = 0, frame = 0
+ 398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 399              		.loc 1 130 5 view .LVU95
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 400              		.loc 1 130 5 view .LVU96
+ 401 0000 20B1     		cbz	r0, .L31
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 402              		.loc 1 129 1 is_stmt 0 view .LVU97
+ 403 0002 08B5     		push	{r3, lr}
+ 404              	.LCFI10:
+ 405              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 14
+
+
+ 406              		.cfi_offset 3, -8
+ 407              		.cfi_offset 14, -4
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 408              		.loc 1 130 5 is_stmt 1 view .LVU98
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 409              		.loc 1 130 33 view .LVU99
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return lv_anim_delete(animimg, NULL);
+ 410              		.loc 1 131 5 view .LVU100
+ 411              	.LVL41:
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 412              		.loc 1 132 5 view .LVU101
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 413              		.loc 1 132 12 is_stmt 0 view .LVU102
+ 414 0004 0021     		movs	r1, #0
+ 415 0006 FFF7FEFF 		bl	lv_anim_delete
+ 416              	.LVL42:
+ 133:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 417              		.loc 1 133 1 view .LVU103
+ 418 000a 08BD     		pop	{r3, pc}
+ 419              	.LVL43:
+ 420              	.L31:
+ 421              	.LCFI11:
+ 422              		.cfi_def_cfa_offset 0
+ 423              		.cfi_restore 3
+ 424              		.cfi_restore 14
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 425              		.loc 1 130 5 is_stmt 1 view .LVU104
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 426              		.loc 1 130 5 view .LVU105
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 427              		.loc 1 130 5 view .LVU106
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 428              		.loc 1 130 5 view .LVU107
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 429              		.loc 1 130 5 view .LVU108
+ 430 000c FEE7     		b	.L31
+ 431              		.cfi_endproc
+ 432              	.LFE176:
+ 434              		.section	.text.lv_animimg_set_duration,"ax",%progbits
+ 435              		.align	1
+ 436              		.global	lv_animimg_set_duration
+ 437              		.syntax unified
+ 438              		.thumb
+ 439              		.thumb_func
+ 441              	lv_animimg_set_duration:
+ 442              	.LVL44:
+ 443              	.LFB177:
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 444              		.loc 1 140 1 view -0
+ 445              		.cfi_startproc
+ 446              		@ args = 0, pretend = 0, frame = 0
+ 447              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 448              		.loc 1 141 5 view .LVU110
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 449              		.loc 1 141 5 view .LVU111
+ 450 0000 60B1     		cbz	r0, .L36
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 15
+
+
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 451              		.loc 1 140 1 is_stmt 0 view .LVU112
+ 452 0002 38B5     		push	{r3, r4, r5, lr}
+ 453              	.LCFI12:
+ 454              		.cfi_def_cfa_offset 16
+ 455              		.cfi_offset 3, -16
+ 456              		.cfi_offset 4, -12
+ 457              		.cfi_offset 5, -8
+ 458              		.cfi_offset 14, -4
+ 459 0004 0346     		mov	r3, r0
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 460              		.loc 1 141 5 is_stmt 1 view .LVU113
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 461              		.loc 1 141 33 view .LVU114
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_duration(&animimg->anim, duration);
+ 462              		.loc 1 142 5 view .LVU115
+ 463              	.LVL45:
+ 143:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_reverse_delay(&animimg->anim, duration);
+ 464              		.loc 1 143 5 view .LVU116
+ 465 0006 5C33     		adds	r3, r3, #92
+ 466 0008 1C46     		mov	r4, r3
+ 467 000a 0D46     		mov	r5, r1
+ 468 000c 1846     		mov	r0, r3
+ 469              	.LVL46:
+ 143:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_reverse_delay(&animimg->anim, duration);
+ 470              		.loc 1 143 5 is_stmt 0 view .LVU117
+ 471 000e FFF7FEFF 		bl	lv_anim_set_duration
+ 472              	.LVL47:
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 473              		.loc 1 144 5 is_stmt 1 view .LVU118
+ 474 0012 2946     		mov	r1, r5
+ 475 0014 2046     		mov	r0, r4
+ 476 0016 FFF7FEFF 		bl	lv_anim_set_reverse_delay
+ 477              	.LVL48:
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 478              		.loc 1 145 1 is_stmt 0 view .LVU119
+ 479 001a 38BD     		pop	{r3, r4, r5, pc}
+ 480              	.LVL49:
+ 481              	.L36:
+ 482              	.LCFI13:
+ 483              		.cfi_def_cfa_offset 0
+ 484              		.cfi_restore 3
+ 485              		.cfi_restore 4
+ 486              		.cfi_restore 5
+ 487              		.cfi_restore 14
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 488              		.loc 1 141 5 is_stmt 1 view .LVU120
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 489              		.loc 1 141 5 view .LVU121
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 490              		.loc 1 141 5 view .LVU122
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 491              		.loc 1 141 5 view .LVU123
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 492              		.loc 1 141 5 view .LVU124
+ 493 001c FEE7     		b	.L36
+ 494              		.cfi_endproc
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 16
+
+
+ 495              	.LFE177:
+ 497              		.section	.text.lv_animimg_set_repeat_count,"ax",%progbits
+ 498              		.align	1
+ 499              		.global	lv_animimg_set_repeat_count
+ 500              		.syntax unified
+ 501              		.thumb
+ 502              		.thumb_func
+ 504              	lv_animimg_set_repeat_count:
+ 505              	.LVL50:
+ 506              	.LFB178:
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 507              		.loc 1 148 1 view -0
+ 508              		.cfi_startproc
+ 509              		@ args = 0, pretend = 0, frame = 0
+ 510              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 511              		.loc 1 149 5 view .LVU126
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 512              		.loc 1 149 5 view .LVU127
+ 513 0000 20B1     		cbz	r0, .L41
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 514              		.loc 1 148 1 is_stmt 0 view .LVU128
+ 515 0002 08B5     		push	{r3, lr}
+ 516              	.LCFI14:
+ 517              		.cfi_def_cfa_offset 8
+ 518              		.cfi_offset 3, -8
+ 519              		.cfi_offset 14, -4
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 520              		.loc 1 149 5 is_stmt 1 view .LVU129
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 521              		.loc 1 149 33 view .LVU130
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_repeat_count(&animimg->anim, count);
+ 522              		.loc 1 150 5 view .LVU131
+ 523              	.LVL51:
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 524              		.loc 1 151 5 view .LVU132
+ 525 0004 5C30     		adds	r0, r0, #92
+ 526              	.LVL52:
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 527              		.loc 1 151 5 is_stmt 0 view .LVU133
+ 528 0006 FFF7FEFF 		bl	lv_anim_set_repeat_count
+ 529              	.LVL53:
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 530              		.loc 1 152 1 view .LVU134
+ 531 000a 08BD     		pop	{r3, pc}
+ 532              	.LVL54:
+ 533              	.L41:
+ 534              	.LCFI15:
+ 535              		.cfi_def_cfa_offset 0
+ 536              		.cfi_restore 3
+ 537              		.cfi_restore 14
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 538              		.loc 1 149 5 is_stmt 1 view .LVU135
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 539              		.loc 1 149 5 view .LVU136
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 540              		.loc 1 149 5 view .LVU137
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 17
+
+
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 541              		.loc 1 149 5 view .LVU138
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 542              		.loc 1 149 5 view .LVU139
+ 543 000c FEE7     		b	.L41
+ 544              		.cfi_endproc
+ 545              	.LFE178:
+ 547              		.section	.text.lv_animimg_set_reverse_duration,"ax",%progbits
+ 548              		.align	1
+ 549              		.global	lv_animimg_set_reverse_duration
+ 550              		.syntax unified
+ 551              		.thumb
+ 552              		.thumb_func
+ 554              	lv_animimg_set_reverse_duration:
+ 555              	.LVL55:
+ 556              	.LFB179:
+ 155:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 557              		.loc 1 155 1 view -0
+ 558              		.cfi_startproc
+ 559              		@ args = 0, pretend = 0, frame = 0
+ 560              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 561              		.loc 1 156 5 view .LVU141
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 562              		.loc 1 156 5 view .LVU142
+ 563 0000 20B1     		cbz	r0, .L46
+ 155:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 564              		.loc 1 155 1 is_stmt 0 view .LVU143
+ 565 0002 08B5     		push	{r3, lr}
+ 566              	.LCFI16:
+ 567              		.cfi_def_cfa_offset 8
+ 568              		.cfi_offset 3, -8
+ 569              		.cfi_offset 14, -4
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 570              		.loc 1 156 5 is_stmt 1 view .LVU144
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 571              		.loc 1 156 33 view .LVU145
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_reverse_duration(&animimg->anim, duration);
+ 572              		.loc 1 157 5 view .LVU146
+ 573              	.LVL56:
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 574              		.loc 1 158 5 view .LVU147
+ 575 0004 5C30     		adds	r0, r0, #92
+ 576              	.LVL57:
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 577              		.loc 1 158 5 is_stmt 0 view .LVU148
+ 578 0006 FFF7FEFF 		bl	lv_anim_set_reverse_duration
+ 579              	.LVL58:
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 580              		.loc 1 159 1 view .LVU149
+ 581 000a 08BD     		pop	{r3, pc}
+ 582              	.LVL59:
+ 583              	.L46:
+ 584              	.LCFI17:
+ 585              		.cfi_def_cfa_offset 0
+ 586              		.cfi_restore 3
+ 587              		.cfi_restore 14
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 18
+
+
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 588              		.loc 1 156 5 is_stmt 1 view .LVU150
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 589              		.loc 1 156 5 view .LVU151
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 590              		.loc 1 156 5 view .LVU152
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 591              		.loc 1 156 5 view .LVU153
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 592              		.loc 1 156 5 view .LVU154
+ 593 000c FEE7     		b	.L46
+ 594              		.cfi_endproc
+ 595              	.LFE179:
+ 597              		.section	.text.lv_animimg_set_reverse_delay,"ax",%progbits
+ 598              		.align	1
+ 599              		.global	lv_animimg_set_reverse_delay
+ 600              		.syntax unified
+ 601              		.thumb
+ 602              		.thumb_func
+ 604              	lv_animimg_set_reverse_delay:
+ 605              	.LVL60:
+ 606              	.LFB180:
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 607              		.loc 1 162 1 view -0
+ 608              		.cfi_startproc
+ 609              		@ args = 0, pretend = 0, frame = 0
+ 610              		@ frame_needed = 0, uses_anonymous_args = 0
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 611              		.loc 1 163 5 view .LVU156
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 612              		.loc 1 163 5 view .LVU157
+ 613 0000 20B1     		cbz	r0, .L51
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 614              		.loc 1 162 1 is_stmt 0 view .LVU158
+ 615 0002 08B5     		push	{r3, lr}
+ 616              	.LCFI18:
+ 617              		.cfi_def_cfa_offset 8
+ 618              		.cfi_offset 3, -8
+ 619              		.cfi_offset 14, -4
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 620              		.loc 1 163 5 is_stmt 1 view .LVU159
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 621              		.loc 1 163 33 view .LVU160
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_reverse_delay(&animimg->anim, duration);
+ 622              		.loc 1 164 5 view .LVU161
+ 623              	.LVL61:
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 624              		.loc 1 165 5 view .LVU162
+ 625 0004 5C30     		adds	r0, r0, #92
+ 626              	.LVL62:
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 627              		.loc 1 165 5 is_stmt 0 view .LVU163
+ 628 0006 FFF7FEFF 		bl	lv_anim_set_reverse_delay
+ 629              	.LVL63:
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 630              		.loc 1 166 1 view .LVU164
+ 631 000a 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 19
+
+
+ 632              	.LVL64:
+ 633              	.L51:
+ 634              	.LCFI19:
+ 635              		.cfi_def_cfa_offset 0
+ 636              		.cfi_restore 3
+ 637              		.cfi_restore 14
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 638              		.loc 1 163 5 is_stmt 1 view .LVU165
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 639              		.loc 1 163 5 view .LVU166
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 640              		.loc 1 163 5 view .LVU167
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 641              		.loc 1 163 5 view .LVU168
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 642              		.loc 1 163 5 view .LVU169
+ 643 000c FEE7     		b	.L51
+ 644              		.cfi_endproc
+ 645              	.LFE180:
+ 647              		.section	.text.lv_animimg_set_start_cb,"ax",%progbits
+ 648              		.align	1
+ 649              		.global	lv_animimg_set_start_cb
+ 650              		.syntax unified
+ 651              		.thumb
+ 652              		.thumb_func
+ 654              	lv_animimg_set_start_cb:
+ 655              	.LVL65:
+ 656              	.LFB181:
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 657              		.loc 1 169 1 view -0
+ 658              		.cfi_startproc
+ 659              		@ args = 0, pretend = 0, frame = 0
+ 660              		@ frame_needed = 0, uses_anonymous_args = 0
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 661              		.loc 1 170 5 view .LVU171
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 662              		.loc 1 170 5 view .LVU172
+ 663 0000 20B1     		cbz	r0, .L56
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 664              		.loc 1 169 1 is_stmt 0 view .LVU173
+ 665 0002 08B5     		push	{r3, lr}
+ 666              	.LCFI20:
+ 667              		.cfi_def_cfa_offset 8
+ 668              		.cfi_offset 3, -8
+ 669              		.cfi_offset 14, -4
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 670              		.loc 1 170 5 is_stmt 1 view .LVU174
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 671              		.loc 1 170 33 view .LVU175
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_start_cb(&animimg->anim, start_cb);
+ 672              		.loc 1 171 5 view .LVU176
+ 673              	.LVL66:
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 674              		.loc 1 172 5 view .LVU177
+ 675 0004 5C30     		adds	r0, r0, #92
+ 676              	.LVL67:
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 20
+
+
+ 677              		.loc 1 172 5 is_stmt 0 view .LVU178
+ 678 0006 FFF7FEFF 		bl	lv_anim_set_start_cb
+ 679              	.LVL68:
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 680              		.loc 1 173 1 view .LVU179
+ 681 000a 08BD     		pop	{r3, pc}
+ 682              	.LVL69:
+ 683              	.L56:
+ 684              	.LCFI21:
+ 685              		.cfi_def_cfa_offset 0
+ 686              		.cfi_restore 3
+ 687              		.cfi_restore 14
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 688              		.loc 1 170 5 is_stmt 1 view .LVU180
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 689              		.loc 1 170 5 view .LVU181
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 690              		.loc 1 170 5 view .LVU182
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 691              		.loc 1 170 5 view .LVU183
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 692              		.loc 1 170 5 view .LVU184
+ 693 000c FEE7     		b	.L56
+ 694              		.cfi_endproc
+ 695              	.LFE181:
+ 697              		.section	.text.lv_animimg_set_completed_cb,"ax",%progbits
+ 698              		.align	1
+ 699              		.global	lv_animimg_set_completed_cb
+ 700              		.syntax unified
+ 701              		.thumb
+ 702              		.thumb_func
+ 704              	lv_animimg_set_completed_cb:
+ 705              	.LVL70:
+ 706              	.LFB182:
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 707              		.loc 1 176 1 view -0
+ 708              		.cfi_startproc
+ 709              		@ args = 0, pretend = 0, frame = 0
+ 710              		@ frame_needed = 0, uses_anonymous_args = 0
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 711              		.loc 1 177 5 view .LVU186
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 712              		.loc 1 177 5 view .LVU187
+ 713 0000 20B1     		cbz	r0, .L61
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 714              		.loc 1 176 1 is_stmt 0 view .LVU188
+ 715 0002 08B5     		push	{r3, lr}
+ 716              	.LCFI22:
+ 717              		.cfi_def_cfa_offset 8
+ 718              		.cfi_offset 3, -8
+ 719              		.cfi_offset 14, -4
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 720              		.loc 1 177 5 is_stmt 1 view .LVU189
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 721              		.loc 1 177 33 view .LVU190
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_anim_set_completed_cb(&animimg->anim, completed_cb);
+ 722              		.loc 1 178 5 view .LVU191
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 21
+
+
+ 723              	.LVL71:
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 724              		.loc 1 179 5 view .LVU192
+ 725 0004 5C30     		adds	r0, r0, #92
+ 726              	.LVL72:
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 727              		.loc 1 179 5 is_stmt 0 view .LVU193
+ 728 0006 FFF7FEFF 		bl	lv_anim_set_completed_cb
+ 729              	.LVL73:
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 730              		.loc 1 180 1 view .LVU194
+ 731 000a 08BD     		pop	{r3, pc}
+ 732              	.LVL74:
+ 733              	.L61:
+ 734              	.LCFI23:
+ 735              		.cfi_def_cfa_offset 0
+ 736              		.cfi_restore 3
+ 737              		.cfi_restore 14
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 738              		.loc 1 177 5 is_stmt 1 view .LVU195
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 739              		.loc 1 177 5 view .LVU196
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 740              		.loc 1 177 5 view .LVU197
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 741              		.loc 1 177 5 view .LVU198
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 742              		.loc 1 177 5 view .LVU199
+ 743 000c FEE7     		b	.L61
+ 744              		.cfi_endproc
+ 745              	.LFE182:
+ 747              		.section	.text.lv_animimg_get_src,"ax",%progbits
+ 748              		.align	1
+ 749              		.global	lv_animimg_get_src
+ 750              		.syntax unified
+ 751              		.thumb
+ 752              		.thumb_func
+ 754              	lv_animimg_get_src:
+ 755              	.LVL75:
+ 756              	.LFB183:
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 757              		.loc 1 187 1 view -0
+ 758              		.cfi_startproc
+ 759              		@ args = 0, pretend = 0, frame = 0
+ 760              		@ frame_needed = 0, uses_anonymous_args = 0
+ 761              		@ link register save eliminated.
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 762              		.loc 1 188 5 view .LVU201
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 763              		.loc 1 188 5 view .LVU202
+ 764 0000 10B1     		cbz	r0, .L66
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 765              		.loc 1 188 5 view .LVU203
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 766              		.loc 1 188 33 view .LVU204
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return animimg->dsc;
+ 767              		.loc 1 189 5 view .LVU205
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 22
+
+
+ 768              	.LVL76:
+ 190:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 769              		.loc 1 190 5 view .LVU206
+ 191:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 770              		.loc 1 191 1 is_stmt 0 view .LVU207
+ 771 0002 D0F8BC00 		ldr	r0, [r0, #188]
+ 772              	.LVL77:
+ 191:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 773              		.loc 1 191 1 view .LVU208
+ 774 0006 7047     		bx	lr
+ 775              	.LVL78:
+ 776              	.L66:
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 777              		.loc 1 188 5 is_stmt 1 view .LVU209
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 778              		.loc 1 188 5 view .LVU210
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 779              		.loc 1 188 5 view .LVU211
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 780              		.loc 1 188 5 view .LVU212
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 781              		.loc 1 188 5 view .LVU213
+ 782 0008 FEE7     		b	.L66
+ 783              		.cfi_endproc
+ 784              	.LFE183:
+ 786              		.section	.text.lv_animimg_get_src_count,"ax",%progbits
+ 787              		.align	1
+ 788              		.global	lv_animimg_get_src_count
+ 789              		.syntax unified
+ 790              		.thumb
+ 791              		.thumb_func
+ 793              	lv_animimg_get_src_count:
+ 794              	.LVL79:
+ 795              	.LFB184:
+ 194:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 796              		.loc 1 194 1 view -0
+ 797              		.cfi_startproc
+ 798              		@ args = 0, pretend = 0, frame = 0
+ 799              		@ frame_needed = 0, uses_anonymous_args = 0
+ 800              		@ link register save eliminated.
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 801              		.loc 1 195 5 view .LVU215
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 802              		.loc 1 195 5 view .LVU216
+ 803 0000 10B1     		cbz	r0, .L69
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 804              		.loc 1 195 5 view .LVU217
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 805              		.loc 1 195 33 view .LVU218
+ 196:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return animimg->pic_count;
+ 806              		.loc 1 196 5 view .LVU219
+ 807              	.LVL80:
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 808              		.loc 1 197 5 view .LVU220
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 809              		.loc 1 198 1 is_stmt 0 view .LVU221
+ 810 0002 90F8C000 		ldrb	r0, [r0, #192]	@ zero_extendqisi2
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 23
+
+
+ 811              	.LVL81:
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 812              		.loc 1 198 1 view .LVU222
+ 813 0006 7047     		bx	lr
+ 814              	.LVL82:
+ 815              	.L69:
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 816              		.loc 1 195 5 is_stmt 1 view .LVU223
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 817              		.loc 1 195 5 view .LVU224
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 818              		.loc 1 195 5 view .LVU225
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 819              		.loc 1 195 5 view .LVU226
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 820              		.loc 1 195 5 view .LVU227
+ 821 0008 FEE7     		b	.L69
+ 822              		.cfi_endproc
+ 823              	.LFE184:
+ 825              		.section	.text.lv_animimg_get_duration,"ax",%progbits
+ 826              		.align	1
+ 827              		.global	lv_animimg_get_duration
+ 828              		.syntax unified
+ 829              		.thumb
+ 830              		.thumb_func
+ 832              	lv_animimg_get_duration:
+ 833              	.LVL83:
+ 834              	.LFB185:
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 835              		.loc 1 201 1 view -0
+ 836              		.cfi_startproc
+ 837              		@ args = 0, pretend = 0, frame = 0
+ 838              		@ frame_needed = 0, uses_anonymous_args = 0
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 839              		.loc 1 202 5 view .LVU229
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 840              		.loc 1 202 5 view .LVU230
+ 841 0000 20B1     		cbz	r0, .L72
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 842              		.loc 1 201 1 is_stmt 0 view .LVU231
+ 843 0002 08B5     		push	{r3, lr}
+ 844              	.LCFI24:
+ 845              		.cfi_def_cfa_offset 8
+ 846              		.cfi_offset 3, -8
+ 847              		.cfi_offset 14, -4
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 848              		.loc 1 202 5 is_stmt 1 view .LVU232
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 849              		.loc 1 202 33 view .LVU233
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return lv_anim_get_time(&animimg->anim);
+ 850              		.loc 1 203 5 view .LVU234
+ 851              	.LVL84:
+ 204:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 852              		.loc 1 204 5 view .LVU235
+ 204:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 853              		.loc 1 204 12 is_stmt 0 view .LVU236
+ 854 0004 5C30     		adds	r0, r0, #92
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 24
+
+
+ 855              	.LVL85:
+ 204:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 856              		.loc 1 204 12 view .LVU237
+ 857 0006 FFF7FEFF 		bl	lv_anim_get_time
+ 858              	.LVL86:
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 859              		.loc 1 205 1 view .LVU238
+ 860 000a 08BD     		pop	{r3, pc}
+ 861              	.LVL87:
+ 862              	.L72:
+ 863              	.LCFI25:
+ 864              		.cfi_def_cfa_offset 0
+ 865              		.cfi_restore 3
+ 866              		.cfi_restore 14
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 867              		.loc 1 202 5 is_stmt 1 view .LVU239
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 868              		.loc 1 202 5 view .LVU240
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 869              		.loc 1 202 5 view .LVU241
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 870              		.loc 1 202 5 view .LVU242
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 871              		.loc 1 202 5 view .LVU243
+ 872 000c FEE7     		b	.L72
+ 873              		.cfi_endproc
+ 874              	.LFE185:
+ 876              		.section	.text.lv_animimg_get_repeat_count,"ax",%progbits
+ 877              		.align	1
+ 878              		.global	lv_animimg_get_repeat_count
+ 879              		.syntax unified
+ 880              		.thumb
+ 881              		.thumb_func
+ 883              	lv_animimg_get_repeat_count:
+ 884              	.LVL88:
+ 885              	.LFB186:
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 886              		.loc 1 208 1 view -0
+ 887              		.cfi_startproc
+ 888              		@ args = 0, pretend = 0, frame = 0
+ 889              		@ frame_needed = 0, uses_anonymous_args = 0
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 890              		.loc 1 209 5 view .LVU245
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 891              		.loc 1 209 5 view .LVU246
+ 892 0000 20B1     		cbz	r0, .L77
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 893              		.loc 1 208 1 is_stmt 0 view .LVU247
+ 894 0002 08B5     		push	{r3, lr}
+ 895              	.LCFI26:
+ 896              		.cfi_def_cfa_offset 8
+ 897              		.cfi_offset 3, -8
+ 898              		.cfi_offset 14, -4
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 899              		.loc 1 209 5 is_stmt 1 view .LVU248
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 900              		.loc 1 209 33 view .LVU249
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 25
+
+
+ 210:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return lv_anim_get_repeat_count(&animimg->anim);
+ 901              		.loc 1 210 5 view .LVU250
+ 902              	.LVL89:
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 903              		.loc 1 211 5 view .LVU251
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 904              		.loc 1 211 12 is_stmt 0 view .LVU252
+ 905 0004 5C30     		adds	r0, r0, #92
+ 906              	.LVL90:
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 907              		.loc 1 211 12 view .LVU253
+ 908 0006 FFF7FEFF 		bl	lv_anim_get_repeat_count
+ 909              	.LVL91:
+ 212:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 910              		.loc 1 212 1 view .LVU254
+ 911 000a 08BD     		pop	{r3, pc}
+ 912              	.LVL92:
+ 913              	.L77:
+ 914              	.LCFI27:
+ 915              		.cfi_def_cfa_offset 0
+ 916              		.cfi_restore 3
+ 917              		.cfi_restore 14
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 918              		.loc 1 209 5 is_stmt 1 view .LVU255
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 919              		.loc 1 209 5 view .LVU256
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 920              		.loc 1 209 5 view .LVU257
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 921              		.loc 1 209 5 view .LVU258
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 922              		.loc 1 209 5 view .LVU259
+ 923 000c FEE7     		b	.L77
+ 924              		.cfi_endproc
+ 925              	.LFE186:
+ 927              		.section	.text.lv_animimg_get_anim,"ax",%progbits
+ 928              		.align	1
+ 929              		.global	lv_animimg_get_anim
+ 930              		.syntax unified
+ 931              		.thumb
+ 932              		.thumb_func
+ 934              	lv_animimg_get_anim:
+ 935              	.LVL93:
+ 936              	.LFB187:
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 937              		.loc 1 215 1 view -0
+ 938              		.cfi_startproc
+ 939              		@ args = 0, pretend = 0, frame = 0
+ 940              		@ frame_needed = 0, uses_anonymous_args = 0
+ 941              		@ link register save eliminated.
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 942              		.loc 1 216 5 view .LVU261
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 943              		.loc 1 216 5 view .LVU262
+ 944 0000 08B1     		cbz	r0, .L82
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 945              		.loc 1 216 5 view .LVU263
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 26
+
+
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 946              		.loc 1 216 33 view .LVU264
+ 217:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     return &animimg->anim;
+ 947              		.loc 1 217 5 view .LVU265
+ 948              	.LVL94:
+ 218:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** }
+ 949              		.loc 1 218 5 view .LVU266
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 950              		.loc 1 219 1 is_stmt 0 view .LVU267
+ 951 0002 5C30     		adds	r0, r0, #92
+ 952              	.LVL95:
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c **** 
+ 953              		.loc 1 219 1 view .LVU268
+ 954 0004 7047     		bx	lr
+ 955              	.LVL96:
+ 956              	.L82:
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 957              		.loc 1 216 5 is_stmt 1 view .LVU269
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 958              		.loc 1 216 5 view .LVU270
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 959              		.loc 1 216 5 view .LVU271
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 960              		.loc 1 216 5 view .LVU272
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.c ****     lv_animimg_t * animimg = (lv_animimg_t *)obj;
+ 961              		.loc 1 216 5 view .LVU273
+ 962 0006 FEE7     		b	.L82
+ 963              		.cfi_endproc
+ 964              	.LFE187:
+ 966              		.global	lv_animimg_class
+ 967              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 968              		.align	2
+ 969              	.LC0:
+ 970 0000 6C765F61 		.ascii	"lv_animimg\000"
+ 970      6E696D69 
+ 970      6D6700
+ 971              		.section	.rodata.lv_animimg_class,"a"
+ 972              		.align	2
+ 975              	lv_animimg_class:
+ 976 0000 00000000 		.word	lv_image_class
+ 977 0004 00000000 		.word	lv_animimg_constructor
+ 978 0008 00000000 		.space	12
+ 978      00000000 
+ 978      00000000 
+ 979 0014 00000000 		.word	.LC0
+ 980 0018 00000000 		.space	8
+ 980      00000000 
+ 981 0020 40       		.byte	64
+ 982 0021 0C       		.byte	12
+ 983 0022 00       		.byte	0
+ 984 0023 00       		.space	1
+ 985              		.text
+ 986              	.Letext0:
+ 987              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 988              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 989              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 990              		.file 5 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 27
+
+
+ 991              		.file 6 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_private.h"
+ 992              		.file 7 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class_private.h"
+ 993              		.file 8 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_anim.h"
+ 994              		.file 9 "../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/../image/lv_image_private.h"
+ 995              		.file 10 "../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage_private.h"
+ 996              		.file 11 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h"
+ 997              		.file 12 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_area.h"
+ 998              		.file 13 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_image_dsc.h"
+ 999              		.file 14 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_event.h"
+ 1000              		.file 15 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/indev/lv_indev.h"
+ 1001              		.file 16 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 1002              		.file 17 "../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/../image/lv_image.h"
+ 1003              		.file 18 "../../Middlewares/LVGL/GUI/lvgl/src/widgets/animimage/lv_animimage.h"
+ 1004              		.file 19 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_animimage.c
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:20     .text.lv_animimg_set_src_inner:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:25     .text.lv_animimg_set_src_inner:00000000 lv_animimg_set_src_inner
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:101    .text.lv_animimg_constructor:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:106    .text.lv_animimg_constructor:00000000 lv_animimg_constructor
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:174    .text.lv_animimg_constructor:00000048 $d
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:184    .text.index_change:00000000 index_change
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:179    .text.index_change:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:228    .text.lv_animimg_create:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:234    .text.lv_animimg_create:00000000 lv_animimg_create
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:273    .text.lv_animimg_create:00000014 $d
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:975    .rodata.lv_animimg_class:00000000 lv_animimg_class
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:278    .text.lv_animimg_set_src:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:284    .text.lv_animimg_set_src:00000000 lv_animimg_set_src
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:307    .text.lv_animimg_set_src_reverse:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:313    .text.lv_animimg_set_src_reverse:00000000 lv_animimg_set_src_reverse
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:336    .text.lv_animimg_start:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:342    .text.lv_animimg_start:00000000 lv_animimg_start
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:386    .text.lv_animimg_delete:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:392    .text.lv_animimg_delete:00000000 lv_animimg_delete
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:435    .text.lv_animimg_set_duration:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:441    .text.lv_animimg_set_duration:00000000 lv_animimg_set_duration
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:498    .text.lv_animimg_set_repeat_count:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:504    .text.lv_animimg_set_repeat_count:00000000 lv_animimg_set_repeat_count
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:548    .text.lv_animimg_set_reverse_duration:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:554    .text.lv_animimg_set_reverse_duration:00000000 lv_animimg_set_reverse_duration
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:598    .text.lv_animimg_set_reverse_delay:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:604    .text.lv_animimg_set_reverse_delay:00000000 lv_animimg_set_reverse_delay
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:648    .text.lv_animimg_set_start_cb:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:654    .text.lv_animimg_set_start_cb:00000000 lv_animimg_set_start_cb
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:698    .text.lv_animimg_set_completed_cb:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:704    .text.lv_animimg_set_completed_cb:00000000 lv_animimg_set_completed_cb
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:748    .text.lv_animimg_get_src:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:754    .text.lv_animimg_get_src:00000000 lv_animimg_get_src
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:787    .text.lv_animimg_get_src_count:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:793    .text.lv_animimg_get_src_count:00000000 lv_animimg_get_src_count
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:826    .text.lv_animimg_get_duration:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:832    .text.lv_animimg_get_duration:00000000 lv_animimg_get_duration
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:877    .text.lv_animimg_get_repeat_count:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:883    .text.lv_animimg_get_repeat_count:00000000 lv_animimg_get_repeat_count
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:928    .text.lv_animimg_get_anim:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:934    .text.lv_animimg_get_anim:00000000 lv_animimg_get_anim
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:968    .rodata.str1.4:00000000 $d
+C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s:972    .rodata.lv_animimg_class:00000000 $d
+
+UNDEFINED SYMBOLS
+lv_anim_set_values
+lv_anim_init
+lv_anim_set_var
+lv_anim_set_duration
+lv_anim_set_exec_cb
+lv_anim_set_repeat_count
+lv_image_set_src
+lv_obj_class_create_obj
+lv_obj_class_init_obj
+lv_anim_start
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc3sFcdN.s 			page 29
+
+
+lv_anim_delete
+lv_anim_set_reverse_delay
+lv_anim_set_reverse_duration
+lv_anim_set_start_cb
+lv_anim_set_completed_cb
+lv_anim_get_time
+lv_anim_get_repeat_count
+lv_image_class

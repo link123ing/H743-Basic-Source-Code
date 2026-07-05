@@ -1,0 +1,2405 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_circle_buf.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c"
+  19              		.section	.text.circle_buf_prepare_empty,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	circle_buf_prepare_empty:
+  26              	.LVL0:
+  27              	.LFB28:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  * @file lv_circle_buf.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  10:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** #include "lv_assert.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  12:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** #include "lv_circle_buf.h"
+  13:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** #include "lv_array.h"
+  14:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  15:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** /*********************
+  16:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *      DEFINES
+  17:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *********************/
+  18:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  19:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** /**********************
+  20:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *      TYPEDEFS
+  21:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  **********************/
+  22:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  23:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** struct _lv_circle_buf_t {
+  24:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_array_t array;
+  25:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     uint32_t head;
+  26:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     uint32_t tail;    /**< The next write position */
+  27:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  28:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     bool inner_alloc; /**< true: the array is allocated by the buffer, false: the array is created 
+  29:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** };
+  30:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  31:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** /**********************
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 2
+
+
+  32:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *  STATIC PROTOTYPES
+  33:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  **********************/
+  34:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  35:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** static void circle_buf_prepare_empty(lv_circle_buf_t * circle_buf);
+  36:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  37:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** /**********************
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *  GLOBAL VARIABLES
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  **********************/
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  41:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** /**********************
+  42:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *  STATIC VARIABLES
+  43:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  **********************/
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** /**********************
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *      MACROS
+  47:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  **********************/
+  48:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  49:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** /**********************
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *   GLOBAL FUNCTIONS
+  51:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  **********************/
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  53:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** lv_circle_buf_t * lv_circle_buf_create(const uint32_t capacity, const uint32_t element_size)
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+  55:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_circle_buf_t * circle_buf = lv_malloc(sizeof(lv_circle_buf_t));
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+  57:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  58:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(circle_buf == NULL) {
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return NULL;
+  60:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+  61:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  62:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_array_init(&circle_buf->array, capacity, element_size);
+  63:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head = 0;
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+  65:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->inner_alloc = true;
+  66:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  67:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf_prepare_empty(circle_buf);
+  68:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  69:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return circle_buf;
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+  71:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  72:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** lv_circle_buf_t * lv_circle_buf_create_from_buf(void * buf, const uint32_t capacity, const uint32_t
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(buf);
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_circle_buf_t * circle_buf = lv_malloc(sizeof(lv_circle_buf_t));
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(circle_buf == NULL) {
+  80:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return NULL;
+  81:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_array_init_from_buf(&circle_buf->array, buf, capacity, element_size);
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head = 0;
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+  86:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->inner_alloc = false;
+  87:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf_prepare_empty(circle_buf);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 3
+
+
+  89:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  90:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return circle_buf;
+  91:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+  92:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+  93:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** lv_circle_buf_t * lv_circle_buf_create_from_array(const lv_array_t * array)
+  94:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(array);
+  96:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(array == NULL) {
+  97:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return NULL;
+  98:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+  99:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_circle_buf_t * circle_buf = lv_malloc(sizeof(lv_circle_buf_t));
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(circle_buf == NULL) {
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return NULL;
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->array = *array;
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head = 0;
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->inner_alloc = false;
+ 111:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf_prepare_empty(circle_buf);
+ 113:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return circle_buf;
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 116:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** lv_result_t lv_circle_buf_resize(lv_circle_buf_t * circle_buf, const uint32_t capacity)
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 120:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(lv_array_resize(&circle_buf->array, capacity) == false) {
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head = 0;
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 127:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf_prepare_empty(circle_buf);
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return LV_RESULT_OK;
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 133:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** void lv_circle_buf_destroy(lv_circle_buf_t * circle_buf)
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 136:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 137:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_array_deinit(&circle_buf->array);
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_free(circle_buf);
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** uint32_t lv_circle_buf_size(const lv_circle_buf_t * circle_buf)
+ 143:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 4
+
+
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return circle_buf->tail - circle_buf->head;
+ 147:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** uint32_t lv_circle_buf_capacity(const lv_circle_buf_t * circle_buf)
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return lv_array_capacity(&circle_buf->array);
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 155:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** uint32_t lv_circle_buf_remain(const lv_circle_buf_t * circle_buf)
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return lv_circle_buf_capacity(circle_buf) - lv_circle_buf_size(circle_buf);
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** bool lv_circle_buf_is_empty(const lv_circle_buf_t * circle_buf)
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return !lv_circle_buf_size(circle_buf);
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** bool lv_circle_buf_is_full(const lv_circle_buf_t * circle_buf)
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return !lv_circle_buf_remain(circle_buf);
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** void lv_circle_buf_reset(lv_circle_buf_t * circle_buf)
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head = 0;
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 184:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 185:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** void * lv_circle_buf_head(const lv_circle_buf_t * circle_buf)
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return lv_array_at(&circle_buf->array,
+ 190:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                        circle_buf->head % lv_circle_buf_capacity(circle_buf));
+ 191:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 192:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 193:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** void * lv_circle_buf_tail(const lv_circle_buf_t * circle_buf)
+ 194:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 196:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return lv_array_at(&circle_buf->array,
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                        circle_buf->tail % lv_circle_buf_capacity(circle_buf));
+ 199:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** lv_result_t lv_circle_buf_read(lv_circle_buf_t * circle_buf, void * data)
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 5
+
+
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 204:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(lv_circle_buf_is_empty(circle_buf)) {
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->head = 0;
+ 207:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->tail = 0;
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 210:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_circle_buf_peek_at(circle_buf, 0, data);
+ 212:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head++;
+ 213:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return LV_RESULT_OK;
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 217:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** lv_result_t lv_circle_buf_write(lv_circle_buf_t * circle_buf, const void * data)
+ 218:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 220:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 221:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(lv_circle_buf_is_full(circle_buf)) {
+ 222:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 223:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 224:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 225:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_array_assign(&circle_buf->array, circle_buf->tail % lv_circle_buf_capacity(circle_buf), data
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail++;
+ 227:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return LV_RESULT_OK;
+ 229:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 230:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 231:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** uint32_t lv_circle_buf_fill(lv_circle_buf_t * circle_buf, uint32_t count, lv_circle_buf_fill_cb_t f
+ 232:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                             void * user_data)
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(fill_cb);
+ 236:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 237:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     uint32_t filled = 0;
+ 238:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     while(count > 0 && !lv_circle_buf_is_full(circle_buf)) {
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         void * data = lv_circle_buf_tail(circle_buf);
+ 240:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         if(fill_cb(data, circle_buf->array.element_size, (int32_t)filled, user_data) == LV_RESULT_O
+ 241:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****             circle_buf->tail++;
+ 242:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****             filled++;
+ 243:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         }
+ 244:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         else break;
+ 245:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 246:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         count--;
+ 247:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 248:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 249:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return filled;
+ 250:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 251:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 252:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** lv_result_t lv_circle_buf_skip(lv_circle_buf_t * circle_buf)
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 255:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 256:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(lv_circle_buf_is_empty(circle_buf)) {
+ 257:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->head = 0;
+ 258:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->tail = 0;
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 6
+
+
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 261:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 262:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head++;
+ 263:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 264:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return LV_RESULT_OK;
+ 265:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 266:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 267:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** lv_result_t lv_circle_buf_peek(const lv_circle_buf_t * circle_buf, void * data)
+ 268:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 271:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 272:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return lv_circle_buf_peek_at(circle_buf, 0, data);
+ 273:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 274:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 275:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** lv_result_t lv_circle_buf_peek_at(const lv_circle_buf_t * circle_buf, const uint32_t index, void * 
+ 276:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 279:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 280:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     const uint32_t real_index = (index % lv_circle_buf_size(circle_buf) + circle_buf->head) % lv_ci
+ 281:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                                     circle_buf);
+ 282:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_memcpy(data, lv_array_at(&circle_buf->array, real_index), circle_buf->array.element_size);
+ 283:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 284:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     return LV_RESULT_OK;
+ 285:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 286:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 287:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** /**********************
+ 288:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  *   STATIC FUNCTIONS
+ 289:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****  **********************/
+ 290:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 291:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** static void circle_buf_prepare_empty(lv_circle_buf_t * circle_buf)
+ 292:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** {
+  28              		.loc 1 292 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 292 1 is_stmt 0 view .LVU1
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0546     		mov	r5, r0
+ 293:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     const uint32_t required = lv_array_capacity(&circle_buf->array) - lv_array_size(&circle_buf->ar
+  41              		.loc 1 293 5 is_stmt 1 view .LVU2
+  42              	.LVL1:
+  43              	.LBB9:
+  44              	.LBI9:
+  45              		.file 2 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h"
+   1:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @file lv_array.h
+   3:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * Array. The elements are dynamically allocated by the 'lv_mem' module.
+   4:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 7
+
+
+   6:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #ifndef LV_ARRAY_H
+   7:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #define LV_ARRAY_H
+   8:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+   9:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #ifdef __cplusplus
+  10:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** extern "C" {
+  11:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #endif
+  12:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  13:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /*********************
+  14:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  *      INCLUDES
+  15:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  *********************/
+  16:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #include "lv_types.h"
+  17:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  18:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /*********************
+  19:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  *      DEFINES
+  20:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  *********************/
+  21:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  22:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #ifndef LV_ARRAY_DEFAULT_CAPACITY
+  23:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #define LV_ARRAY_DEFAULT_CAPACITY  4
+  24:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #endif
+  25:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  26:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #ifndef LV_ARRAY_DEFAULT_SHRINK_RATIO
+  27:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #define LV_ARRAY_DEFAULT_SHRINK_RATIO 2
+  28:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** #endif
+  29:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  30:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /**********************
+  31:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  *      TYPEDEFS
+  32:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  **********************/
+  33:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  34:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /** Description of a array*/
+  35:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** struct _lv_array_t {
+  36:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****     uint8_t * data;
+  37:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****     uint32_t size;
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****     uint32_t capacity;
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****     uint32_t element_size;
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  41:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****     bool inner_alloc; /* true: data is allocated by the array; false: data is allocated by the user
+  42:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** };
+  43:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /**********************
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * GLOBAL PROTOTYPES
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  **********************/
+  47:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  48:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /**
+  49:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * Init an array.
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param array pointer to an `lv_array_t` variable to initialize
+  51:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param capacity the initial capacity of the array
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param element_size the size of an element in bytes
+  53:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  */
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** void lv_array_init(lv_array_t * array, uint32_t capacity, uint32_t element_size);
+  55:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /**
+  57:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * Init an array from a buffer.
+  58:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @note The buffer must be large enough to store `capacity` elements. The array will not release t
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  *       The user must ensure that the buffer is valid during the lifetime of the array. And releas
+  60:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param array pointer to an `lv_array_t` variable to initialize
+  61:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param buf pointer to a buffer to use as the array's data
+  62:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param capacity the initial capacity of the array
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 8
+
+
+  63:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param element_size the size of an element in bytes
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  */
+  65:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** void lv_array_init_from_buf(lv_array_t * array, void * buf, uint32_t capacity, uint32_t element_siz
+  66:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  67:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /**
+  68:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * Resize the array to the given capacity.
+  69:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @note if the new capacity is smaller than the current size, the array will be truncated.
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param array pointer to an `lv_array_t` variable
+  71:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param new_capacity the new capacity of the array
+  72:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  */
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** bool lv_array_resize(lv_array_t * array, uint32_t new_capacity);
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  75:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /**
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * Deinit the array, and free the allocated memory
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param array pointer to an `lv_array_t` variable to deinitialize
+  78:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  */
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** void lv_array_deinit(lv_array_t * array);
+  80:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  81:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /**
+  82:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * Return how many elements are stored in the array.
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param array pointer to an `lv_array_t` variable
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @return the number of elements stored in the array
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  */
+  86:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** static inline uint32_t lv_array_size(const lv_array_t * array)
+  87:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** {
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****     return array->size;
+  89:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** }
+  90:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** 
+  91:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** /**
+  92:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * Return the capacity of the array, i.e. how many elements can be stored.
+  93:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @param array pointer to an `lv_array_t` variable
+  94:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  * @return the capacity of the array
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****  */
+  96:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** static inline uint32_t lv_array_capacity(const lv_array_t * array)
+  46              		.loc 2 96 24 view .LVU3
+  47              	.LBB10:
+  97:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** {
+  98:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h ****     return array->capacity;
+  48              		.loc 2 98 5 view .LVU4
+  49              		.loc 2 98 17 is_stmt 0 view .LVU5
+  50 0004 8668     		ldr	r6, [r0, #8]
+  51              	.LVL2:
+  52              		.loc 2 98 17 view .LVU6
+  53              	.LBE10:
+  54              	.LBE9:
+  55              	.LBB11:
+  56              	.LBI11:
+  86:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** {
+  57              		.loc 2 86 24 is_stmt 1 view .LVU7
+  58              	.LBB12:
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** }
+  59              		.loc 2 88 5 view .LVU8
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** }
+  60              		.loc 2 88 17 is_stmt 0 view .LVU9
+  61 0006 4368     		ldr	r3, [r0, #4]
+  62              	.LVL3:
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 9
+
+
+  63              		.loc 2 88 17 view .LVU10
+  64              	.LBE12:
+  65              	.LBE11:
+  66              		.loc 1 293 20 discriminator 2 view .LVU11
+  67 0008 F61A     		subs	r6, r6, r3
+  68              	.LVL4:
+ 294:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     for(uint32_t i = 0; i < required; i++) lv_array_push_back(&circle_buf->array, NULL);
+  69              		.loc 1 294 5 is_stmt 1 view .LVU12
+  70              	.LBB13:
+  71              		.loc 1 294 9 view .LVU13
+  72              		.loc 1 294 18 is_stmt 0 view .LVU14
+  73 000a 0024     		movs	r4, #0
+  74              		.loc 1 294 5 view .LVU15
+  75 000c 04E0     		b	.L2
+  76              	.LVL5:
+  77              	.L3:
+  78              		.loc 1 294 44 is_stmt 1 discriminator 4 view .LVU16
+  79 000e 0021     		movs	r1, #0
+  80 0010 2846     		mov	r0, r5
+  81 0012 FFF7FEFF 		bl	lv_array_push_back
+  82              	.LVL6:
+  83              		.loc 1 294 40 discriminator 4 view .LVU17
+  84 0016 0134     		adds	r4, r4, #1
+  85              	.LVL7:
+  86              	.L2:
+  87              		.loc 1 294 27 discriminator 3 view .LVU18
+  88 0018 B442     		cmp	r4, r6
+  89 001a F8D3     		bcc	.L3
+  90              	.LBE13:
+ 295:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+  91              		.loc 1 295 1 is_stmt 0 view .LVU19
+  92 001c 70BD     		pop	{r4, r5, r6, pc}
+  93              		.loc 1 295 1 view .LVU20
+  94              		.cfi_endproc
+  95              	.LFE28:
+  97              		.section	.text.lv_circle_buf_create,"ax",%progbits
+  98              		.align	1
+  99              		.global	lv_circle_buf_create
+ 100              		.syntax unified
+ 101              		.thumb
+ 102              		.thumb_func
+ 104              	lv_circle_buf_create:
+ 105              	.LVL8:
+ 106              	.LFB9:
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_circle_buf_t * circle_buf = lv_malloc(sizeof(lv_circle_buf_t));
+ 107              		.loc 1 54 1 is_stmt 1 view -0
+ 108              		.cfi_startproc
+ 109              		@ args = 0, pretend = 0, frame = 0
+ 110              		@ frame_needed = 0, uses_anonymous_args = 0
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     lv_circle_buf_t * circle_buf = lv_malloc(sizeof(lv_circle_buf_t));
+ 111              		.loc 1 54 1 is_stmt 0 view .LVU22
+ 112 0000 70B5     		push	{r4, r5, r6, lr}
+ 113              	.LCFI1:
+ 114              		.cfi_def_cfa_offset 16
+ 115              		.cfi_offset 4, -16
+ 116              		.cfi_offset 5, -12
+ 117              		.cfi_offset 6, -8
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 10
+
+
+ 118              		.cfi_offset 14, -4
+ 119 0002 0546     		mov	r5, r0
+ 120 0004 0E46     		mov	r6, r1
+  55:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+ 121              		.loc 1 55 5 is_stmt 1 view .LVU23
+  55:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+ 122              		.loc 1 55 36 is_stmt 0 view .LVU24
+ 123 0006 2020     		movs	r0, #32
+ 124              	.LVL9:
+  55:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+ 125              		.loc 1 55 36 view .LVU25
+ 126 0008 FFF7FEFF 		bl	lv_malloc
+ 127              	.LVL10:
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 128              		.loc 1 56 5 is_stmt 1 view .LVU26
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 129              		.loc 1 56 5 view .LVU27
+ 130 000c 70B1     		cbz	r0, .L7
+ 131 000e 0446     		mov	r4, r0
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 132              		.loc 1 56 5 view .LVU28
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 133              		.loc 1 56 33 view .LVU29
+  58:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return NULL;
+ 134              		.loc 1 58 5 view .LVU30
+  62:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head = 0;
+ 135              		.loc 1 62 5 view .LVU31
+ 136 0010 3246     		mov	r2, r6
+ 137 0012 2946     		mov	r1, r5
+ 138 0014 FFF7FEFF 		bl	lv_array_init
+ 139              	.LVL11:
+  63:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 140              		.loc 1 63 5 view .LVU32
+  63:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 141              		.loc 1 63 22 is_stmt 0 view .LVU33
+ 142 0018 0023     		movs	r3, #0
+ 143 001a 6361     		str	r3, [r4, #20]
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->inner_alloc = true;
+ 144              		.loc 1 64 5 is_stmt 1 view .LVU34
+  64:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->inner_alloc = true;
+ 145              		.loc 1 64 22 is_stmt 0 view .LVU35
+ 146 001c A361     		str	r3, [r4, #24]
+  65:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 147              		.loc 1 65 5 is_stmt 1 view .LVU36
+  65:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 148              		.loc 1 65 29 is_stmt 0 view .LVU37
+ 149 001e 0123     		movs	r3, #1
+ 150 0020 2377     		strb	r3, [r4, #28]
+  67:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 151              		.loc 1 67 5 is_stmt 1 view .LVU38
+ 152 0022 2046     		mov	r0, r4
+ 153 0024 FFF7FEFF 		bl	circle_buf_prepare_empty
+ 154              	.LVL12:
+  69:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 155              		.loc 1 69 5 view .LVU39
+  70:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 156              		.loc 1 70 1 is_stmt 0 view .LVU40
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 11
+
+
+ 157 0028 2046     		mov	r0, r4
+ 158 002a 70BD     		pop	{r4, r5, r6, pc}
+ 159              	.LVL13:
+ 160              	.L7:
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 161              		.loc 1 56 5 is_stmt 1 view .LVU41
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 162              		.loc 1 56 5 view .LVU42
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 163              		.loc 1 56 5 view .LVU43
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 164              		.loc 1 56 5 view .LVU44
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 165              		.loc 1 56 5 view .LVU45
+ 166 002c FEE7     		b	.L7
+ 167              		.cfi_endproc
+ 168              	.LFE9:
+ 170              		.section	.text.lv_circle_buf_create_from_buf,"ax",%progbits
+ 171              		.align	1
+ 172              		.global	lv_circle_buf_create_from_buf
+ 173              		.syntax unified
+ 174              		.thumb
+ 175              		.thumb_func
+ 177              	lv_circle_buf_create_from_buf:
+ 178              	.LVL14:
+ 179              	.LFB10:
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(buf);
+ 180              		.loc 1 73 1 view -0
+ 181              		.cfi_startproc
+ 182              		@ args = 0, pretend = 0, frame = 0
+ 183              		@ frame_needed = 0, uses_anonymous_args = 0
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 184              		.loc 1 74 5 view .LVU47
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 185              		.loc 1 74 5 view .LVU48
+ 186 0000 B0B1     		cbz	r0, .L11
+  73:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(buf);
+ 187              		.loc 1 73 1 is_stmt 0 view .LVU49
+ 188 0002 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 189              	.LCFI2:
+ 190              		.cfi_def_cfa_offset 24
+ 191              		.cfi_offset 3, -24
+ 192              		.cfi_offset 4, -20
+ 193              		.cfi_offset 5, -16
+ 194              		.cfi_offset 6, -12
+ 195              		.cfi_offset 7, -8
+ 196              		.cfi_offset 14, -4
+ 197 0004 0E46     		mov	r6, r1
+ 198 0006 1746     		mov	r7, r2
+ 199 0008 0546     		mov	r5, r0
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 200              		.loc 1 74 5 is_stmt 1 view .LVU50
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 201              		.loc 1 74 24 view .LVU51
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+ 202              		.loc 1 76 5 view .LVU52
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 12
+
+
+ 203              		.loc 1 76 36 is_stmt 0 view .LVU53
+ 204 000a 2020     		movs	r0, #32
+ 205              	.LVL15:
+  76:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+ 206              		.loc 1 76 36 view .LVU54
+ 207 000c FFF7FEFF 		bl	lv_malloc
+ 208              	.LVL16:
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 209              		.loc 1 77 5 is_stmt 1 view .LVU55
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 210              		.loc 1 77 5 view .LVU56
+ 211 0010 0446     		mov	r4, r0
+ 212 0012 70B1     		cbz	r0, .L13
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 213              		.loc 1 77 5 view .LVU57
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 214              		.loc 1 77 33 view .LVU58
+  79:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return NULL;
+ 215              		.loc 1 79 5 view .LVU59
+  83:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head = 0;
+ 216              		.loc 1 83 5 view .LVU60
+ 217 0014 3B46     		mov	r3, r7
+ 218 0016 3246     		mov	r2, r6
+ 219 0018 2946     		mov	r1, r5
+ 220 001a FFF7FEFF 		bl	lv_array_init_from_buf
+ 221              	.LVL17:
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 222              		.loc 1 84 5 view .LVU61
+  84:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 223              		.loc 1 84 22 is_stmt 0 view .LVU62
+ 224 001e 0023     		movs	r3, #0
+ 225 0020 6361     		str	r3, [r4, #20]
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->inner_alloc = false;
+ 226              		.loc 1 85 5 is_stmt 1 view .LVU63
+  85:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->inner_alloc = false;
+ 227              		.loc 1 85 22 is_stmt 0 view .LVU64
+ 228 0022 A361     		str	r3, [r4, #24]
+  86:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 229              		.loc 1 86 5 is_stmt 1 view .LVU65
+  86:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 230              		.loc 1 86 29 is_stmt 0 view .LVU66
+ 231 0024 2377     		strb	r3, [r4, #28]
+  88:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 232              		.loc 1 88 5 is_stmt 1 view .LVU67
+ 233 0026 2046     		mov	r0, r4
+ 234 0028 FFF7FEFF 		bl	circle_buf_prepare_empty
+ 235              	.LVL18:
+  90:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 236              		.loc 1 90 5 view .LVU68
+  91:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 237              		.loc 1 91 1 is_stmt 0 view .LVU69
+ 238 002c 2046     		mov	r0, r4
+ 239 002e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 240              	.LVL19:
+ 241              	.L11:
+ 242              	.LCFI3:
+ 243              		.cfi_def_cfa_offset 0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 13
+
+
+ 244              		.cfi_restore 3
+ 245              		.cfi_restore 4
+ 246              		.cfi_restore 5
+ 247              		.cfi_restore 6
+ 248              		.cfi_restore 7
+ 249              		.cfi_restore 14
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 250              		.loc 1 74 5 is_stmt 1 view .LVU70
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 251              		.loc 1 74 5 view .LVU71
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 252              		.loc 1 74 5 view .LVU72
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 253              		.loc 1 74 5 view .LVU73
+  74:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 254              		.loc 1 74 5 view .LVU74
+ 255 0030 FEE7     		b	.L11
+ 256              	.LVL20:
+ 257              	.L13:
+ 258              	.LCFI4:
+ 259              		.cfi_def_cfa_offset 24
+ 260              		.cfi_offset 3, -24
+ 261              		.cfi_offset 4, -20
+ 262              		.cfi_offset 5, -16
+ 263              		.cfi_offset 6, -12
+ 264              		.cfi_offset 7, -8
+ 265              		.cfi_offset 14, -4
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 266              		.loc 1 77 5 view .LVU75
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 267              		.loc 1 77 5 view .LVU76
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 268              		.loc 1 77 5 view .LVU77
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 269              		.loc 1 77 5 view .LVU78
+  77:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 270              		.loc 1 77 5 view .LVU79
+ 271 0032 FEE7     		b	.L13
+ 272              		.cfi_endproc
+ 273              	.LFE10:
+ 275              		.section	.text.lv_circle_buf_create_from_array,"ax",%progbits
+ 276              		.align	1
+ 277              		.global	lv_circle_buf_create_from_array
+ 278              		.syntax unified
+ 279              		.thumb
+ 280              		.thumb_func
+ 282              	lv_circle_buf_create_from_array:
+ 283              	.LVL21:
+ 284              	.LFB11:
+  94:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(array);
+ 285              		.loc 1 94 1 view -0
+ 286              		.cfi_startproc
+ 287              		@ args = 0, pretend = 0, frame = 0
+ 288              		@ frame_needed = 0, uses_anonymous_args = 0
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(array == NULL) {
+ 289              		.loc 1 95 5 view .LVU81
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(array == NULL) {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 14
+
+
+ 290              		.loc 1 95 5 view .LVU82
+ 291 0000 C8B1     		cbz	r0, .L18
+  94:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(array);
+ 292              		.loc 1 94 1 is_stmt 0 view .LVU83
+ 293 0002 38B5     		push	{r3, r4, r5, lr}
+ 294              	.LCFI5:
+ 295              		.cfi_def_cfa_offset 16
+ 296              		.cfi_offset 3, -16
+ 297              		.cfi_offset 4, -12
+ 298              		.cfi_offset 5, -8
+ 299              		.cfi_offset 14, -4
+ 300 0004 0546     		mov	r5, r0
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(array == NULL) {
+ 301              		.loc 1 95 5 is_stmt 1 view .LVU84
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(array == NULL) {
+ 302              		.loc 1 95 26 view .LVU85
+  96:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return NULL;
+ 303              		.loc 1 96 5 view .LVU86
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+ 304              		.loc 1 100 5 view .LVU87
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+ 305              		.loc 1 100 36 is_stmt 0 view .LVU88
+ 306 0006 2020     		movs	r0, #32
+ 307              	.LVL22:
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_MALLOC(circle_buf);
+ 308              		.loc 1 100 36 view .LVU89
+ 309 0008 FFF7FEFF 		bl	lv_malloc
+ 310              	.LVL23:
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 311              		.loc 1 101 5 is_stmt 1 view .LVU90
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 312              		.loc 1 101 5 view .LVU91
+ 313 000c 0446     		mov	r4, r0
+ 314 000e 98B1     		cbz	r0, .L20
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 315              		.loc 1 101 5 view .LVU92
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 316              		.loc 1 101 33 view .LVU93
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return NULL;
+ 317              		.loc 1 103 5 view .LVU94
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head = 0;
+ 318              		.loc 1 107 5 view .LVU95
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head = 0;
+ 319              		.loc 1 107 23 is_stmt 0 view .LVU96
+ 320 0010 8646     		mov	lr, r0
+ 321 0012 AC46     		mov	ip, r5
+ 322 0014 BCE80F00 		ldmia	ip!, {r0, r1, r2, r3}
+ 323              	.LVL24:
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head = 0;
+ 324              		.loc 1 107 23 view .LVU97
+ 325 0018 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+ 326 001c DCF80030 		ldr	r3, [ip]
+ 327 0020 CEF80030 		str	r3, [lr]
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 328              		.loc 1 108 5 is_stmt 1 view .LVU98
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 329              		.loc 1 108 22 is_stmt 0 view .LVU99
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 15
+
+
+ 330 0024 0023     		movs	r3, #0
+ 331 0026 6361     		str	r3, [r4, #20]
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->inner_alloc = false;
+ 332              		.loc 1 109 5 is_stmt 1 view .LVU100
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->inner_alloc = false;
+ 333              		.loc 1 109 22 is_stmt 0 view .LVU101
+ 334 0028 A361     		str	r3, [r4, #24]
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 335              		.loc 1 110 5 is_stmt 1 view .LVU102
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 336              		.loc 1 110 29 is_stmt 0 view .LVU103
+ 337 002a 2377     		strb	r3, [r4, #28]
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 338              		.loc 1 112 5 is_stmt 1 view .LVU104
+ 339 002c 2046     		mov	r0, r4
+ 340 002e FFF7FEFF 		bl	circle_buf_prepare_empty
+ 341              	.LVL25:
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 342              		.loc 1 114 5 view .LVU105
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 343              		.loc 1 115 1 is_stmt 0 view .LVU106
+ 344 0032 2046     		mov	r0, r4
+ 345 0034 38BD     		pop	{r3, r4, r5, pc}
+ 346              	.LVL26:
+ 347              	.L18:
+ 348              	.LCFI6:
+ 349              		.cfi_def_cfa_offset 0
+ 350              		.cfi_restore 3
+ 351              		.cfi_restore 4
+ 352              		.cfi_restore 5
+ 353              		.cfi_restore 14
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(array == NULL) {
+ 354              		.loc 1 95 5 is_stmt 1 view .LVU107
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(array == NULL) {
+ 355              		.loc 1 95 5 view .LVU108
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(array == NULL) {
+ 356              		.loc 1 95 5 view .LVU109
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(array == NULL) {
+ 357              		.loc 1 95 5 view .LVU110
+  95:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     if(array == NULL) {
+ 358              		.loc 1 95 5 view .LVU111
+ 359 0036 FEE7     		b	.L18
+ 360              	.LVL27:
+ 361              	.L20:
+ 362              	.LCFI7:
+ 363              		.cfi_def_cfa_offset 16
+ 364              		.cfi_offset 3, -16
+ 365              		.cfi_offset 4, -12
+ 366              		.cfi_offset 5, -8
+ 367              		.cfi_offset 14, -4
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 368              		.loc 1 101 5 view .LVU112
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 369              		.loc 1 101 5 view .LVU113
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 370              		.loc 1 101 5 view .LVU114
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 16
+
+
+ 371              		.loc 1 101 5 view .LVU115
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 372              		.loc 1 101 5 view .LVU116
+ 373 0038 FEE7     		b	.L20
+ 374              		.cfi_endproc
+ 375              	.LFE11:
+ 377              		.section	.text.lv_circle_buf_resize,"ax",%progbits
+ 378              		.align	1
+ 379              		.global	lv_circle_buf_resize
+ 380              		.syntax unified
+ 381              		.thumb
+ 382              		.thumb_func
+ 384              	lv_circle_buf_resize:
+ 385              	.LVL28:
+ 386              	.LFB12:
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 387              		.loc 1 118 1 view -0
+ 388              		.cfi_startproc
+ 389              		@ args = 0, pretend = 0, frame = 0
+ 390              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 391              		.loc 1 119 5 view .LVU118
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 392              		.loc 1 119 5 view .LVU119
+ 393 0000 28B1     		cbz	r0, .L25
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 394              		.loc 1 118 1 is_stmt 0 view .LVU120
+ 395 0002 10B5     		push	{r4, lr}
+ 396              	.LCFI8:
+ 397              		.cfi_def_cfa_offset 8
+ 398              		.cfi_offset 4, -8
+ 399              		.cfi_offset 14, -4
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 400              		.loc 1 119 5 is_stmt 1 view .LVU121
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 401              		.loc 1 119 31 view .LVU122
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 402              		.loc 1 121 5 view .LVU123
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 403              		.loc 1 121 8 is_stmt 0 view .LVU124
+ 404 0004 0446     		mov	r4, r0
+ 405 0006 FFF7FEFF 		bl	lv_array_resize
+ 406              	.LVL29:
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 407              		.loc 1 121 7 discriminator 1 view .LVU125
+ 408 000a 08B9     		cbnz	r0, .L30
+ 409              	.L26:
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 410              		.loc 1 131 1 view .LVU126
+ 411 000c 10BD     		pop	{r4, pc}
+ 412              	.LVL30:
+ 413              	.L25:
+ 414              	.LCFI9:
+ 415              		.cfi_def_cfa_offset 0
+ 416              		.cfi_restore 4
+ 417              		.cfi_restore 14
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 17
+
+
+ 418              		.loc 1 119 5 is_stmt 1 view .LVU127
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 419              		.loc 1 119 5 view .LVU128
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 420              		.loc 1 119 5 view .LVU129
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 421              		.loc 1 119 5 view .LVU130
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 422              		.loc 1 119 5 view .LVU131
+ 423 000e FEE7     		b	.L25
+ 424              	.LVL31:
+ 425              	.L30:
+ 426              	.LCFI10:
+ 427              		.cfi_def_cfa_offset 8
+ 428              		.cfi_offset 4, -8
+ 429              		.cfi_offset 14, -4
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 430              		.loc 1 125 5 view .LVU132
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 431              		.loc 1 125 22 is_stmt 0 view .LVU133
+ 432 0010 0023     		movs	r3, #0
+ 433 0012 6361     		str	r3, [r4, #20]
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 434              		.loc 1 126 5 is_stmt 1 view .LVU134
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 435              		.loc 1 126 22 is_stmt 0 view .LVU135
+ 436 0014 A361     		str	r3, [r4, #24]
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 437              		.loc 1 128 5 is_stmt 1 view .LVU136
+ 438 0016 2046     		mov	r0, r4
+ 439 0018 FFF7FEFF 		bl	circle_buf_prepare_empty
+ 440              	.LVL32:
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 441              		.loc 1 130 5 view .LVU137
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 442              		.loc 1 130 12 is_stmt 0 view .LVU138
+ 443 001c 0120     		movs	r0, #1
+ 444 001e F5E7     		b	.L26
+ 445              		.cfi_endproc
+ 446              	.LFE12:
+ 448              		.section	.text.lv_circle_buf_destroy,"ax",%progbits
+ 449              		.align	1
+ 450              		.global	lv_circle_buf_destroy
+ 451              		.syntax unified
+ 452              		.thumb
+ 453              		.thumb_func
+ 455              	lv_circle_buf_destroy:
+ 456              	.LVL33:
+ 457              	.LFB13:
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 458              		.loc 1 134 1 is_stmt 1 view -0
+ 459              		.cfi_startproc
+ 460              		@ args = 0, pretend = 0, frame = 0
+ 461              		@ frame_needed = 0, uses_anonymous_args = 0
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 462              		.loc 1 135 5 view .LVU140
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 18
+
+
+ 463              		.loc 1 135 5 view .LVU141
+ 464 0000 38B1     		cbz	r0, .L33
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 465              		.loc 1 134 1 is_stmt 0 view .LVU142
+ 466 0002 10B5     		push	{r4, lr}
+ 467              	.LCFI11:
+ 468              		.cfi_def_cfa_offset 8
+ 469              		.cfi_offset 4, -8
+ 470              		.cfi_offset 14, -4
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 471              		.loc 1 135 5 is_stmt 1 view .LVU143
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 472              		.loc 1 135 31 view .LVU144
+ 137:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 473              		.loc 1 137 5 view .LVU145
+ 474 0004 0446     		mov	r4, r0
+ 475 0006 FFF7FEFF 		bl	lv_array_deinit
+ 476              	.LVL34:
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 477              		.loc 1 139 5 view .LVU146
+ 478 000a 2046     		mov	r0, r4
+ 479 000c FFF7FEFF 		bl	lv_free
+ 480              	.LVL35:
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 481              		.loc 1 140 1 is_stmt 0 view .LVU147
+ 482 0010 10BD     		pop	{r4, pc}
+ 483              	.LVL36:
+ 484              	.L33:
+ 485              	.LCFI12:
+ 486              		.cfi_def_cfa_offset 0
+ 487              		.cfi_restore 4
+ 488              		.cfi_restore 14
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 489              		.loc 1 135 5 is_stmt 1 view .LVU148
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 490              		.loc 1 135 5 view .LVU149
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 491              		.loc 1 135 5 view .LVU150
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 492              		.loc 1 135 5 view .LVU151
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 493              		.loc 1 135 5 view .LVU152
+ 494 0012 FEE7     		b	.L33
+ 495              		.cfi_endproc
+ 496              	.LFE13:
+ 498              		.section	.text.lv_circle_buf_size,"ax",%progbits
+ 499              		.align	1
+ 500              		.global	lv_circle_buf_size
+ 501              		.syntax unified
+ 502              		.thumb
+ 503              		.thumb_func
+ 505              	lv_circle_buf_size:
+ 506              	.LVL37:
+ 507              	.LFB14:
+ 143:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 508              		.loc 1 143 1 view -0
+ 509              		.cfi_startproc
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 19
+
+
+ 510              		@ args = 0, pretend = 0, frame = 0
+ 511              		@ frame_needed = 0, uses_anonymous_args = 0
+ 512              		@ link register save eliminated.
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 513              		.loc 1 144 5 view .LVU154
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 514              		.loc 1 144 5 view .LVU155
+ 515 0000 0346     		mov	r3, r0
+ 516 0002 18B1     		cbz	r0, .L38
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 517              		.loc 1 144 5 view .LVU156
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 518              		.loc 1 144 31 view .LVU157
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 519              		.loc 1 146 5 view .LVU158
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 520              		.loc 1 146 22 is_stmt 0 view .LVU159
+ 521 0004 8069     		ldr	r0, [r0, #24]
+ 522              	.LVL38:
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 523              		.loc 1 146 41 view .LVU160
+ 524 0006 5B69     		ldr	r3, [r3, #20]
+ 525              	.LVL39:
+ 147:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 526              		.loc 1 147 1 view .LVU161
+ 527 0008 C01A     		subs	r0, r0, r3
+ 528 000a 7047     		bx	lr
+ 529              	.LVL40:
+ 530              	.L38:
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 531              		.loc 1 144 5 is_stmt 1 view .LVU162
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 532              		.loc 1 144 5 view .LVU163
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 533              		.loc 1 144 5 view .LVU164
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 534              		.loc 1 144 5 view .LVU165
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 535              		.loc 1 144 5 view .LVU166
+ 536 000c FEE7     		b	.L38
+ 537              		.cfi_endproc
+ 538              	.LFE14:
+ 540              		.section	.text.lv_circle_buf_capacity,"ax",%progbits
+ 541              		.align	1
+ 542              		.global	lv_circle_buf_capacity
+ 543              		.syntax unified
+ 544              		.thumb
+ 545              		.thumb_func
+ 547              	lv_circle_buf_capacity:
+ 548              	.LVL41:
+ 549              	.LFB15:
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 550              		.loc 1 150 1 view -0
+ 551              		.cfi_startproc
+ 552              		@ args = 0, pretend = 0, frame = 0
+ 553              		@ frame_needed = 0, uses_anonymous_args = 0
+ 554              		@ link register save eliminated.
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 20
+
+
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 555              		.loc 1 151 5 view .LVU168
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 556              		.loc 1 151 5 view .LVU169
+ 557 0000 08B1     		cbz	r0, .L41
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 558              		.loc 1 151 5 view .LVU170
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 559              		.loc 1 151 31 view .LVU171
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 560              		.loc 1 153 5 view .LVU172
+ 561              	.LVL42:
+ 562              	.LBB14:
+ 563              	.LBI14:
+  96:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h **** {
+ 564              		.loc 2 96 24 view .LVU173
+ 565              	.LBB15:
+ 566              		.loc 2 98 5 view .LVU174
+ 567              		.loc 2 98 5 is_stmt 0 view .LVU175
+ 568              	.LBE15:
+ 569              	.LBE14:
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 570              		.loc 1 154 1 view .LVU176
+ 571 0002 8068     		ldr	r0, [r0, #8]
+ 572              	.LVL43:
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 573              		.loc 1 154 1 view .LVU177
+ 574 0004 7047     		bx	lr
+ 575              	.LVL44:
+ 576              	.L41:
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 577              		.loc 1 151 5 is_stmt 1 view .LVU178
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 578              		.loc 1 151 5 view .LVU179
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 579              		.loc 1 151 5 view .LVU180
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 580              		.loc 1 151 5 view .LVU181
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 581              		.loc 1 151 5 view .LVU182
+ 582 0006 FEE7     		b	.L41
+ 583              		.cfi_endproc
+ 584              	.LFE15:
+ 586              		.section	.text.lv_circle_buf_remain,"ax",%progbits
+ 587              		.align	1
+ 588              		.global	lv_circle_buf_remain
+ 589              		.syntax unified
+ 590              		.thumb
+ 591              		.thumb_func
+ 593              	lv_circle_buf_remain:
+ 594              	.LVL45:
+ 595              	.LFB16:
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 596              		.loc 1 157 1 view -0
+ 597              		.cfi_startproc
+ 598              		@ args = 0, pretend = 0, frame = 0
+ 599              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 21
+
+
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 600              		.loc 1 158 5 view .LVU184
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 601              		.loc 1 158 5 view .LVU185
+ 602 0000 48B1     		cbz	r0, .L44
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 603              		.loc 1 157 1 is_stmt 0 view .LVU186
+ 604 0002 38B5     		push	{r3, r4, r5, lr}
+ 605              	.LCFI13:
+ 606              		.cfi_def_cfa_offset 16
+ 607              		.cfi_offset 3, -16
+ 608              		.cfi_offset 4, -12
+ 609              		.cfi_offset 5, -8
+ 610              		.cfi_offset 14, -4
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 611              		.loc 1 158 5 is_stmt 1 view .LVU187
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 612              		.loc 1 158 31 view .LVU188
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 613              		.loc 1 160 5 view .LVU189
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 614              		.loc 1 160 12 is_stmt 0 view .LVU190
+ 615 0004 0446     		mov	r4, r0
+ 616 0006 FFF7FEFF 		bl	lv_circle_buf_capacity
+ 617              	.LVL46:
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 618              		.loc 1 160 12 view .LVU191
+ 619 000a 0546     		mov	r5, r0
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 620              		.loc 1 160 49 discriminator 1 view .LVU192
+ 621 000c 2046     		mov	r0, r4
+ 622 000e FFF7FEFF 		bl	lv_circle_buf_size
+ 623              	.LVL47:
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 624              		.loc 1 161 1 view .LVU193
+ 625 0012 281A     		subs	r0, r5, r0
+ 626 0014 38BD     		pop	{r3, r4, r5, pc}
+ 627              	.LVL48:
+ 628              	.L44:
+ 629              	.LCFI14:
+ 630              		.cfi_def_cfa_offset 0
+ 631              		.cfi_restore 3
+ 632              		.cfi_restore 4
+ 633              		.cfi_restore 5
+ 634              		.cfi_restore 14
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 635              		.loc 1 158 5 is_stmt 1 view .LVU194
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 636              		.loc 1 158 5 view .LVU195
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 637              		.loc 1 158 5 view .LVU196
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 638              		.loc 1 158 5 view .LVU197
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 639              		.loc 1 158 5 view .LVU198
+ 640 0016 FEE7     		b	.L44
+ 641              		.cfi_endproc
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 22
+
+
+ 642              	.LFE16:
+ 644              		.section	.text.lv_circle_buf_is_empty,"ax",%progbits
+ 645              		.align	1
+ 646              		.global	lv_circle_buf_is_empty
+ 647              		.syntax unified
+ 648              		.thumb
+ 649              		.thumb_func
+ 651              	lv_circle_buf_is_empty:
+ 652              	.LVL49:
+ 653              	.LFB17:
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 654              		.loc 1 164 1 view -0
+ 655              		.cfi_startproc
+ 656              		@ args = 0, pretend = 0, frame = 0
+ 657              		@ frame_needed = 0, uses_anonymous_args = 0
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 658              		.loc 1 165 5 view .LVU200
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 659              		.loc 1 165 5 view .LVU201
+ 660 0000 30B1     		cbz	r0, .L49
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 661              		.loc 1 164 1 is_stmt 0 view .LVU202
+ 662 0002 08B5     		push	{r3, lr}
+ 663              	.LCFI15:
+ 664              		.cfi_def_cfa_offset 8
+ 665              		.cfi_offset 3, -8
+ 666              		.cfi_offset 14, -4
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 667              		.loc 1 165 5 is_stmt 1 view .LVU203
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 668              		.loc 1 165 31 view .LVU204
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 669              		.loc 1 167 5 view .LVU205
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 670              		.loc 1 167 13 is_stmt 0 view .LVU206
+ 671 0004 FFF7FEFF 		bl	lv_circle_buf_size
+ 672              	.LVL50:
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 673              		.loc 1 168 1 view .LVU207
+ 674 0008 B0FA80F0 		clz	r0, r0
+ 675 000c 4009     		lsrs	r0, r0, #5
+ 676 000e 08BD     		pop	{r3, pc}
+ 677              	.LVL51:
+ 678              	.L49:
+ 679              	.LCFI16:
+ 680              		.cfi_def_cfa_offset 0
+ 681              		.cfi_restore 3
+ 682              		.cfi_restore 14
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 683              		.loc 1 165 5 is_stmt 1 view .LVU208
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 684              		.loc 1 165 5 view .LVU209
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 685              		.loc 1 165 5 view .LVU210
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 686              		.loc 1 165 5 view .LVU211
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 23
+
+
+ 687              		.loc 1 165 5 view .LVU212
+ 688 0010 FEE7     		b	.L49
+ 689              		.cfi_endproc
+ 690              	.LFE17:
+ 692              		.section	.text.lv_circle_buf_is_full,"ax",%progbits
+ 693              		.align	1
+ 694              		.global	lv_circle_buf_is_full
+ 695              		.syntax unified
+ 696              		.thumb
+ 697              		.thumb_func
+ 699              	lv_circle_buf_is_full:
+ 700              	.LVL52:
+ 701              	.LFB18:
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 702              		.loc 1 171 1 view -0
+ 703              		.cfi_startproc
+ 704              		@ args = 0, pretend = 0, frame = 0
+ 705              		@ frame_needed = 0, uses_anonymous_args = 0
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 706              		.loc 1 172 5 view .LVU214
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 707              		.loc 1 172 5 view .LVU215
+ 708 0000 30B1     		cbz	r0, .L54
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 709              		.loc 1 171 1 is_stmt 0 view .LVU216
+ 710 0002 08B5     		push	{r3, lr}
+ 711              	.LCFI17:
+ 712              		.cfi_def_cfa_offset 8
+ 713              		.cfi_offset 3, -8
+ 714              		.cfi_offset 14, -4
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 715              		.loc 1 172 5 is_stmt 1 view .LVU217
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 716              		.loc 1 172 31 view .LVU218
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 717              		.loc 1 174 5 view .LVU219
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 718              		.loc 1 174 13 is_stmt 0 view .LVU220
+ 719 0004 FFF7FEFF 		bl	lv_circle_buf_remain
+ 720              	.LVL53:
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 721              		.loc 1 175 1 view .LVU221
+ 722 0008 B0FA80F0 		clz	r0, r0
+ 723 000c 4009     		lsrs	r0, r0, #5
+ 724 000e 08BD     		pop	{r3, pc}
+ 725              	.LVL54:
+ 726              	.L54:
+ 727              	.LCFI18:
+ 728              		.cfi_def_cfa_offset 0
+ 729              		.cfi_restore 3
+ 730              		.cfi_restore 14
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 731              		.loc 1 172 5 is_stmt 1 view .LVU222
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 732              		.loc 1 172 5 view .LVU223
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 733              		.loc 1 172 5 view .LVU224
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 24
+
+
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 734              		.loc 1 172 5 view .LVU225
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 735              		.loc 1 172 5 view .LVU226
+ 736 0010 FEE7     		b	.L54
+ 737              		.cfi_endproc
+ 738              	.LFE18:
+ 740              		.section	.text.lv_circle_buf_reset,"ax",%progbits
+ 741              		.align	1
+ 742              		.global	lv_circle_buf_reset
+ 743              		.syntax unified
+ 744              		.thumb
+ 745              		.thumb_func
+ 747              	lv_circle_buf_reset:
+ 748              	.LVL55:
+ 749              	.LFB19:
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 750              		.loc 1 178 1 view -0
+ 751              		.cfi_startproc
+ 752              		@ args = 0, pretend = 0, frame = 0
+ 753              		@ frame_needed = 0, uses_anonymous_args = 0
+ 754              		@ link register save eliminated.
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 755              		.loc 1 179 5 view .LVU228
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 756              		.loc 1 179 5 view .LVU229
+ 757 0000 18B1     		cbz	r0, .L59
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 758              		.loc 1 179 5 view .LVU230
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 759              		.loc 1 179 31 view .LVU231
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 760              		.loc 1 181 5 view .LVU232
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail = 0;
+ 761              		.loc 1 181 22 is_stmt 0 view .LVU233
+ 762 0002 0022     		movs	r2, #0
+ 763 0004 4261     		str	r2, [r0, #20]
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 764              		.loc 1 182 5 is_stmt 1 view .LVU234
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 765              		.loc 1 182 22 is_stmt 0 view .LVU235
+ 766 0006 8261     		str	r2, [r0, #24]
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 767              		.loc 1 183 1 view .LVU236
+ 768 0008 7047     		bx	lr
+ 769              	.L59:
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 770              		.loc 1 179 5 is_stmt 1 view .LVU237
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 771              		.loc 1 179 5 view .LVU238
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 772              		.loc 1 179 5 view .LVU239
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 773              		.loc 1 179 5 view .LVU240
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 774              		.loc 1 179 5 view .LVU241
+ 775 000a FEE7     		b	.L59
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 25
+
+
+ 776              		.cfi_endproc
+ 777              	.LFE19:
+ 779              		.section	.text.lv_circle_buf_head,"ax",%progbits
+ 780              		.align	1
+ 781              		.global	lv_circle_buf_head
+ 782              		.syntax unified
+ 783              		.thumb
+ 784              		.thumb_func
+ 786              	lv_circle_buf_head:
+ 787              	.LVL56:
+ 788              	.LFB20:
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 789              		.loc 1 186 1 view -0
+ 790              		.cfi_startproc
+ 791              		@ args = 0, pretend = 0, frame = 0
+ 792              		@ frame_needed = 0, uses_anonymous_args = 0
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 793              		.loc 1 187 5 view .LVU243
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 794              		.loc 1 187 5 view .LVU244
+ 795 0000 60B1     		cbz	r0, .L62
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 796              		.loc 1 186 1 is_stmt 0 view .LVU245
+ 797 0002 38B5     		push	{r3, r4, r5, lr}
+ 798              	.LCFI19:
+ 799              		.cfi_def_cfa_offset 16
+ 800              		.cfi_offset 3, -16
+ 801              		.cfi_offset 4, -12
+ 802              		.cfi_offset 5, -8
+ 803              		.cfi_offset 14, -4
+ 804 0004 0446     		mov	r4, r0
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 805              		.loc 1 187 5 is_stmt 1 view .LVU246
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 806              		.loc 1 187 31 view .LVU247
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                        circle_buf->head % lv_circle_buf_capacity(circle_buf));
+ 807              		.loc 1 189 5 view .LVU248
+ 190:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 808              		.loc 1 190 34 is_stmt 0 view .LVU249
+ 809 0006 4569     		ldr	r5, [r0, #20]
+ 190:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 810              		.loc 1 190 43 view .LVU250
+ 811 0008 FFF7FEFF 		bl	lv_circle_buf_capacity
+ 812              	.LVL57:
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                        circle_buf->head % lv_circle_buf_capacity(circle_buf));
+ 813              		.loc 1 189 12 view .LVU251
+ 814 000c B5FBF0F1 		udiv	r1, r5, r0
+ 815 0010 00FB1151 		mls	r1, r0, r1, r5
+ 816 0014 2046     		mov	r0, r4
+ 817 0016 FFF7FEFF 		bl	lv_array_at
+ 818              	.LVL58:
+ 191:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 819              		.loc 1 191 1 view .LVU252
+ 820 001a 38BD     		pop	{r3, r4, r5, pc}
+ 821              	.LVL59:
+ 822              	.L62:
+ 823              	.LCFI20:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 26
+
+
+ 824              		.cfi_def_cfa_offset 0
+ 825              		.cfi_restore 3
+ 826              		.cfi_restore 4
+ 827              		.cfi_restore 5
+ 828              		.cfi_restore 14
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 829              		.loc 1 187 5 is_stmt 1 view .LVU253
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 830              		.loc 1 187 5 view .LVU254
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 831              		.loc 1 187 5 view .LVU255
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 832              		.loc 1 187 5 view .LVU256
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 833              		.loc 1 187 5 view .LVU257
+ 834 001c FEE7     		b	.L62
+ 835              		.cfi_endproc
+ 836              	.LFE20:
+ 838              		.section	.text.lv_circle_buf_tail,"ax",%progbits
+ 839              		.align	1
+ 840              		.global	lv_circle_buf_tail
+ 841              		.syntax unified
+ 842              		.thumb
+ 843              		.thumb_func
+ 845              	lv_circle_buf_tail:
+ 846              	.LVL60:
+ 847              	.LFB21:
+ 194:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 848              		.loc 1 194 1 view -0
+ 849              		.cfi_startproc
+ 850              		@ args = 0, pretend = 0, frame = 0
+ 851              		@ frame_needed = 0, uses_anonymous_args = 0
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 852              		.loc 1 195 5 view .LVU259
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 853              		.loc 1 195 5 view .LVU260
+ 854 0000 60B1     		cbz	r0, .L67
+ 194:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 855              		.loc 1 194 1 is_stmt 0 view .LVU261
+ 856 0002 38B5     		push	{r3, r4, r5, lr}
+ 857              	.LCFI21:
+ 858              		.cfi_def_cfa_offset 16
+ 859              		.cfi_offset 3, -16
+ 860              		.cfi_offset 4, -12
+ 861              		.cfi_offset 5, -8
+ 862              		.cfi_offset 14, -4
+ 863 0004 0446     		mov	r4, r0
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 864              		.loc 1 195 5 is_stmt 1 view .LVU262
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 865              		.loc 1 195 31 view .LVU263
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                        circle_buf->tail % lv_circle_buf_capacity(circle_buf));
+ 866              		.loc 1 197 5 view .LVU264
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 867              		.loc 1 198 34 is_stmt 0 view .LVU265
+ 868 0006 8569     		ldr	r5, [r0, #24]
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 27
+
+
+ 869              		.loc 1 198 43 view .LVU266
+ 870 0008 FFF7FEFF 		bl	lv_circle_buf_capacity
+ 871              	.LVL61:
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                        circle_buf->tail % lv_circle_buf_capacity(circle_buf));
+ 872              		.loc 1 197 12 view .LVU267
+ 873 000c B5FBF0F1 		udiv	r1, r5, r0
+ 874 0010 00FB1151 		mls	r1, r0, r1, r5
+ 875 0014 2046     		mov	r0, r4
+ 876 0016 FFF7FEFF 		bl	lv_array_at
+ 877              	.LVL62:
+ 199:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 878              		.loc 1 199 1 view .LVU268
+ 879 001a 38BD     		pop	{r3, r4, r5, pc}
+ 880              	.LVL63:
+ 881              	.L67:
+ 882              	.LCFI22:
+ 883              		.cfi_def_cfa_offset 0
+ 884              		.cfi_restore 3
+ 885              		.cfi_restore 4
+ 886              		.cfi_restore 5
+ 887              		.cfi_restore 14
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 888              		.loc 1 195 5 is_stmt 1 view .LVU269
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 889              		.loc 1 195 5 view .LVU270
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 890              		.loc 1 195 5 view .LVU271
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 891              		.loc 1 195 5 view .LVU272
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 892              		.loc 1 195 5 view .LVU273
+ 893 001c FEE7     		b	.L67
+ 894              		.cfi_endproc
+ 895              	.LFE21:
+ 897              		.section	.text.lv_circle_buf_write,"ax",%progbits
+ 898              		.align	1
+ 899              		.global	lv_circle_buf_write
+ 900              		.syntax unified
+ 901              		.thumb
+ 902              		.thumb_func
+ 904              	lv_circle_buf_write:
+ 905              	.LVL64:
+ 906              	.LFB23:
+ 218:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 907              		.loc 1 218 1 view -0
+ 908              		.cfi_startproc
+ 909              		@ args = 0, pretend = 0, frame = 0
+ 910              		@ frame_needed = 0, uses_anonymous_args = 0
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 911              		.loc 1 219 5 view .LVU275
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 912              		.loc 1 219 5 view .LVU276
+ 913 0000 38B1     		cbz	r0, .L72
+ 218:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 914              		.loc 1 218 1 is_stmt 0 view .LVU277
+ 915 0002 70B5     		push	{r4, r5, r6, lr}
+ 916              	.LCFI23:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 28
+
+
+ 917              		.cfi_def_cfa_offset 16
+ 918              		.cfi_offset 4, -16
+ 919              		.cfi_offset 5, -12
+ 920              		.cfi_offset 6, -8
+ 921              		.cfi_offset 14, -4
+ 922 0004 0E46     		mov	r6, r1
+ 923 0006 0446     		mov	r4, r0
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 924              		.loc 1 219 5 is_stmt 1 view .LVU278
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 925              		.loc 1 219 31 view .LVU279
+ 221:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 926              		.loc 1 221 5 view .LVU280
+ 221:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 927              		.loc 1 221 8 is_stmt 0 view .LVU281
+ 928 0008 FFF7FEFF 		bl	lv_circle_buf_is_full
+ 929              	.LVL65:
+ 221:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 930              		.loc 1 221 7 discriminator 1 view .LVU282
+ 931 000c 10B1     		cbz	r0, .L77
+ 222:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 932              		.loc 1 222 16 view .LVU283
+ 933 000e 0020     		movs	r0, #0
+ 934              	.L73:
+ 229:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 935              		.loc 1 229 1 view .LVU284
+ 936 0010 70BD     		pop	{r4, r5, r6, pc}
+ 937              	.LVL66:
+ 938              	.L72:
+ 939              	.LCFI24:
+ 940              		.cfi_def_cfa_offset 0
+ 941              		.cfi_restore 4
+ 942              		.cfi_restore 5
+ 943              		.cfi_restore 6
+ 944              		.cfi_restore 14
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 945              		.loc 1 219 5 is_stmt 1 view .LVU285
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 946              		.loc 1 219 5 view .LVU286
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 947              		.loc 1 219 5 view .LVU287
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 948              		.loc 1 219 5 view .LVU288
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 949              		.loc 1 219 5 view .LVU289
+ 950 0012 FEE7     		b	.L72
+ 951              	.LVL67:
+ 952              	.L77:
+ 953              	.LCFI25:
+ 954              		.cfi_def_cfa_offset 16
+ 955              		.cfi_offset 4, -16
+ 956              		.cfi_offset 5, -12
+ 957              		.cfi_offset 6, -8
+ 958              		.cfi_offset 14, -4
+ 225:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail++;
+ 959              		.loc 1 225 5 view .LVU290
+ 225:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail++;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 29
+
+
+ 960              		.loc 1 225 51 is_stmt 0 view .LVU291
+ 961 0014 A569     		ldr	r5, [r4, #24]
+ 225:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail++;
+ 962              		.loc 1 225 60 view .LVU292
+ 963 0016 2046     		mov	r0, r4
+ 964 0018 FFF7FEFF 		bl	lv_circle_buf_capacity
+ 965              	.LVL68:
+ 225:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->tail++;
+ 966              		.loc 1 225 5 discriminator 1 view .LVU293
+ 967 001c B5FBF0F1 		udiv	r1, r5, r0
+ 968 0020 3246     		mov	r2, r6
+ 969 0022 00FB1151 		mls	r1, r0, r1, r5
+ 970 0026 2046     		mov	r0, r4
+ 971 0028 FFF7FEFF 		bl	lv_array_assign
+ 972              	.LVL69:
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 973              		.loc 1 226 5 is_stmt 1 view .LVU294
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 974              		.loc 1 226 15 is_stmt 0 view .LVU295
+ 975 002c A369     		ldr	r3, [r4, #24]
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 976              		.loc 1 226 21 view .LVU296
+ 977 002e 0133     		adds	r3, r3, #1
+ 978 0030 A361     		str	r3, [r4, #24]
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 979              		.loc 1 228 5 is_stmt 1 view .LVU297
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 980              		.loc 1 228 12 is_stmt 0 view .LVU298
+ 981 0032 0120     		movs	r0, #1
+ 982 0034 ECE7     		b	.L73
+ 983              		.cfi_endproc
+ 984              	.LFE23:
+ 986              		.section	.text.lv_circle_buf_fill,"ax",%progbits
+ 987              		.align	1
+ 988              		.global	lv_circle_buf_fill
+ 989              		.syntax unified
+ 990              		.thumb
+ 991              		.thumb_func
+ 993              	lv_circle_buf_fill:
+ 994              	.LVL70:
+ 995              	.LFB24:
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 996              		.loc 1 233 1 is_stmt 1 view -0
+ 997              		.cfi_startproc
+ 998              		@ args = 0, pretend = 0, frame = 0
+ 999              		@ frame_needed = 0, uses_anonymous_args = 0
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(fill_cb);
+ 1000              		.loc 1 234 5 view .LVU300
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(fill_cb);
+ 1001              		.loc 1 234 5 view .LVU301
+ 1002 0000 D0B1     		cbz	r0, .L80
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 1003              		.loc 1 233 1 is_stmt 0 view .LVU302
+ 1004 0002 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1005              	.LCFI26:
+ 1006              		.cfi_def_cfa_offset 24
+ 1007              		.cfi_offset 4, -24
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 30
+
+
+ 1008              		.cfi_offset 5, -20
+ 1009              		.cfi_offset 6, -16
+ 1010              		.cfi_offset 7, -12
+ 1011              		.cfi_offset 8, -8
+ 1012              		.cfi_offset 14, -4
+ 1013 0006 0D46     		mov	r5, r1
+ 1014 0008 1746     		mov	r7, r2
+ 1015 000a 9846     		mov	r8, r3
+ 1016 000c 0446     		mov	r4, r0
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(fill_cb);
+ 1017              		.loc 1 234 5 is_stmt 1 view .LVU303
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(fill_cb);
+ 1018              		.loc 1 234 31 view .LVU304
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1019              		.loc 1 235 5 view .LVU305
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1020              		.loc 1 235 5 view .LVU306
+ 1021 000e A2B1     		cbz	r2, .L82
+ 237:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     while(count > 0 && !lv_circle_buf_is_full(circle_buf)) {
+ 1022              		.loc 1 237 14 is_stmt 0 view .LVU307
+ 1023 0010 0026     		movs	r6, #0
+ 1024              	.LVL71:
+ 1025              	.L81:
+ 238:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         void * data = lv_circle_buf_tail(circle_buf);
+ 1026              		.loc 1 238 21 is_stmt 1 view .LVU308
+ 1027 0012 9DB1     		cbz	r5, .L78
+ 238:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         void * data = lv_circle_buf_tail(circle_buf);
+ 1028              		.loc 1 238 25 is_stmt 0 discriminator 1 view .LVU309
+ 1029 0014 2046     		mov	r0, r4
+ 1030 0016 FFF7FEFF 		bl	lv_circle_buf_is_full
+ 1031              	.LVL72:
+ 238:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         void * data = lv_circle_buf_tail(circle_buf);
+ 1032              		.loc 1 238 21 discriminator 2 view .LVU310
+ 1033 001a 78B9     		cbnz	r0, .L78
+ 1034              	.LBB16:
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         if(fill_cb(data, circle_buf->array.element_size, (int32_t)filled, user_data) == LV_RESULT_O
+ 1035              		.loc 1 239 9 is_stmt 1 view .LVU311
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         if(fill_cb(data, circle_buf->array.element_size, (int32_t)filled, user_data) == LV_RESULT_O
+ 1036              		.loc 1 239 23 is_stmt 0 view .LVU312
+ 1037 001c 2046     		mov	r0, r4
+ 1038 001e FFF7FEFF 		bl	lv_circle_buf_tail
+ 1039              	.LVL73:
+ 240:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****             circle_buf->tail++;
+ 1040              		.loc 1 240 9 is_stmt 1 view .LVU313
+ 240:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****             circle_buf->tail++;
+ 1041              		.loc 1 240 12 is_stmt 0 view .LVU314
+ 1042 0022 4346     		mov	r3, r8
+ 1043 0024 3246     		mov	r2, r6
+ 1044 0026 E168     		ldr	r1, [r4, #12]
+ 1045 0028 B847     		blx	r7
+ 1046              	.LVL74:
+ 240:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****             circle_buf->tail++;
+ 1047              		.loc 1 240 11 discriminator 1 view .LVU315
+ 1048 002a 38B1     		cbz	r0, .L78
+ 241:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****             filled++;
+ 1049              		.loc 1 241 13 is_stmt 1 view .LVU316
+ 241:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****             filled++;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 31
+
+
+ 1050              		.loc 1 241 23 is_stmt 0 view .LVU317
+ 1051 002c A069     		ldr	r0, [r4, #24]
+ 241:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****             filled++;
+ 1052              		.loc 1 241 29 view .LVU318
+ 1053 002e 0130     		adds	r0, r0, #1
+ 1054 0030 A061     		str	r0, [r4, #24]
+ 242:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         }
+ 1055              		.loc 1 242 13 is_stmt 1 view .LVU319
+ 242:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         }
+ 1056              		.loc 1 242 19 is_stmt 0 view .LVU320
+ 1057 0032 0136     		adds	r6, r6, #1
+ 1058              	.LVL75:
+ 246:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 1059              		.loc 1 246 9 is_stmt 1 view .LVU321
+ 246:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 1060              		.loc 1 246 14 is_stmt 0 view .LVU322
+ 1061 0034 013D     		subs	r5, r5, #1
+ 1062              	.LVL76:
+ 246:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 1063              		.loc 1 246 14 view .LVU323
+ 1064 0036 ECE7     		b	.L81
+ 1065              	.LVL77:
+ 1066              	.L80:
+ 1067              	.LCFI27:
+ 1068              		.cfi_def_cfa_offset 0
+ 1069              		.cfi_restore 4
+ 1070              		.cfi_restore 5
+ 1071              		.cfi_restore 6
+ 1072              		.cfi_restore 7
+ 1073              		.cfi_restore 8
+ 1074              		.cfi_restore 14
+ 246:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 1075              		.loc 1 246 14 view .LVU324
+ 1076              	.LBE16:
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(fill_cb);
+ 1077              		.loc 1 234 5 is_stmt 1 view .LVU325
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(fill_cb);
+ 1078              		.loc 1 234 5 view .LVU326
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(fill_cb);
+ 1079              		.loc 1 234 5 view .LVU327
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(fill_cb);
+ 1080              		.loc 1 234 5 view .LVU328
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(fill_cb);
+ 1081              		.loc 1 234 5 view .LVU329
+ 1082 0038 FEE7     		b	.L80
+ 1083              	.L82:
+ 1084              	.LCFI28:
+ 1085              		.cfi_def_cfa_offset 24
+ 1086              		.cfi_offset 4, -24
+ 1087              		.cfi_offset 5, -20
+ 1088              		.cfi_offset 6, -16
+ 1089              		.cfi_offset 7, -12
+ 1090              		.cfi_offset 8, -8
+ 1091              		.cfi_offset 14, -4
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1092              		.loc 1 235 5 view .LVU330
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 32
+
+
+ 1093              		.loc 1 235 5 view .LVU331
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1094              		.loc 1 235 5 view .LVU332
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1095              		.loc 1 235 5 view .LVU333
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1096              		.loc 1 235 5 view .LVU334
+ 1097 003a FEE7     		b	.L82
+ 1098              	.LVL78:
+ 1099              	.L78:
+ 250:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1100              		.loc 1 250 1 is_stmt 0 view .LVU335
+ 1101 003c 3046     		mov	r0, r6
+ 1102 003e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 250:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1103              		.loc 1 250 1 view .LVU336
+ 1104              		.cfi_endproc
+ 1105              	.LFE24:
+ 1107              		.section	.text.lv_circle_buf_skip,"ax",%progbits
+ 1108              		.align	1
+ 1109              		.global	lv_circle_buf_skip
+ 1110              		.syntax unified
+ 1111              		.thumb
+ 1112              		.thumb_func
+ 1114              	lv_circle_buf_skip:
+ 1115              	.LVL79:
+ 1116              	.LFB25:
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 1117              		.loc 1 253 1 is_stmt 1 view -0
+ 1118              		.cfi_startproc
+ 1119              		@ args = 0, pretend = 0, frame = 0
+ 1120              		@ frame_needed = 0, uses_anonymous_args = 0
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1121              		.loc 1 254 5 view .LVU338
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1122              		.loc 1 254 5 view .LVU339
+ 1123 0000 48B1     		cbz	r0, .L90
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 1124              		.loc 1 253 1 is_stmt 0 view .LVU340
+ 1125 0002 10B5     		push	{r4, lr}
+ 1126              	.LCFI29:
+ 1127              		.cfi_def_cfa_offset 8
+ 1128              		.cfi_offset 4, -8
+ 1129              		.cfi_offset 14, -4
+ 1130 0004 0446     		mov	r4, r0
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1131              		.loc 1 254 5 is_stmt 1 view .LVU341
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1132              		.loc 1 254 31 view .LVU342
+ 256:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->head = 0;
+ 1133              		.loc 1 256 5 view .LVU343
+ 256:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->head = 0;
+ 1134              		.loc 1 256 8 is_stmt 0 view .LVU344
+ 1135 0006 FFF7FEFF 		bl	lv_circle_buf_is_empty
+ 1136              	.LVL80:
+ 256:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->head = 0;
+ 1137              		.loc 1 256 7 discriminator 1 view .LVU345
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 33
+
+
+ 1138 000a 28B9     		cbnz	r0, .L95
+ 262:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1139              		.loc 1 262 5 is_stmt 1 view .LVU346
+ 262:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1140              		.loc 1 262 15 is_stmt 0 view .LVU347
+ 1141 000c 6369     		ldr	r3, [r4, #20]
+ 262:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1142              		.loc 1 262 21 view .LVU348
+ 1143 000e 0133     		adds	r3, r3, #1
+ 1144 0010 6361     		str	r3, [r4, #20]
+ 264:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 1145              		.loc 1 264 5 is_stmt 1 view .LVU349
+ 264:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 1146              		.loc 1 264 12 is_stmt 0 view .LVU350
+ 1147 0012 0120     		movs	r0, #1
+ 1148              	.L92:
+ 265:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1149              		.loc 1 265 1 view .LVU351
+ 1150 0014 10BD     		pop	{r4, pc}
+ 1151              	.LVL81:
+ 1152              	.L90:
+ 1153              	.LCFI30:
+ 1154              		.cfi_def_cfa_offset 0
+ 1155              		.cfi_restore 4
+ 1156              		.cfi_restore 14
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1157              		.loc 1 254 5 is_stmt 1 view .LVU352
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1158              		.loc 1 254 5 view .LVU353
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1159              		.loc 1 254 5 view .LVU354
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1160              		.loc 1 254 5 view .LVU355
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1161              		.loc 1 254 5 view .LVU356
+ 1162 0016 FEE7     		b	.L90
+ 1163              	.LVL82:
+ 1164              	.L95:
+ 1165              	.LCFI31:
+ 1166              		.cfi_def_cfa_offset 8
+ 1167              		.cfi_offset 4, -8
+ 1168              		.cfi_offset 14, -4
+ 257:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->tail = 0;
+ 1169              		.loc 1 257 9 view .LVU357
+ 257:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->tail = 0;
+ 1170              		.loc 1 257 26 is_stmt 0 view .LVU358
+ 1171 0018 0020     		movs	r0, #0
+ 1172 001a 6061     		str	r0, [r4, #20]
+ 258:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 1173              		.loc 1 258 9 is_stmt 1 view .LVU359
+ 258:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 1174              		.loc 1 258 26 is_stmt 0 view .LVU360
+ 1175 001c A061     		str	r0, [r4, #24]
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 1176              		.loc 1 259 9 is_stmt 1 view .LVU361
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 1177              		.loc 1 259 16 is_stmt 0 view .LVU362
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 34
+
+
+ 1178 001e F9E7     		b	.L92
+ 1179              		.cfi_endproc
+ 1180              	.LFE25:
+ 1182              		.section	.text.lv_circle_buf_peek_at,"ax",%progbits
+ 1183              		.align	1
+ 1184              		.global	lv_circle_buf_peek_at
+ 1185              		.syntax unified
+ 1186              		.thumb
+ 1187              		.thumb_func
+ 1189              	lv_circle_buf_peek_at:
+ 1190              	.LVL83:
+ 1191              	.LFB27:
+ 276:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 1192              		.loc 1 276 1 is_stmt 1 view -0
+ 1193              		.cfi_startproc
+ 1194              		@ args = 0, pretend = 0, frame = 0
+ 1195              		@ frame_needed = 0, uses_anonymous_args = 0
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1196              		.loc 1 277 5 view .LVU364
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1197              		.loc 1 277 5 view .LVU365
+ 1198 0000 E8B1     		cbz	r0, .L98
+ 276:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 1199              		.loc 1 276 1 is_stmt 0 view .LVU366
+ 1200 0002 70B5     		push	{r4, r5, r6, lr}
+ 1201              	.LCFI32:
+ 1202              		.cfi_def_cfa_offset 16
+ 1203              		.cfi_offset 4, -16
+ 1204              		.cfi_offset 5, -12
+ 1205              		.cfi_offset 6, -8
+ 1206              		.cfi_offset 14, -4
+ 1207 0004 0D46     		mov	r5, r1
+ 1208 0006 1646     		mov	r6, r2
+ 1209 0008 0446     		mov	r4, r0
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1210              		.loc 1 277 5 is_stmt 1 view .LVU367
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1211              		.loc 1 277 31 view .LVU368
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1212              		.loc 1 278 5 view .LVU369
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1213              		.loc 1 278 5 view .LVU370
+ 1214 000a CAB1     		cbz	r2, .L100
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1215              		.loc 1 278 5 view .LVU371
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1216              		.loc 1 278 25 view .LVU372
+ 280:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                                     circle_buf);
+ 1217              		.loc 1 280 5 view .LVU373
+ 280:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                                     circle_buf);
+ 1218              		.loc 1 280 42 is_stmt 0 view .LVU374
+ 1219 000c FFF7FEFF 		bl	lv_circle_buf_size
+ 1220              	.LVL84:
+ 280:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                                     circle_buf);
+ 1221              		.loc 1 280 40 discriminator 1 view .LVU375
+ 1222 0010 B5FBF0F3 		udiv	r3, r5, r0
+ 1223 0014 00FB1351 		mls	r1, r0, r3, r5
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 35
+
+
+ 280:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                                     circle_buf);
+ 1224              		.loc 1 280 85 discriminator 1 view .LVU376
+ 1225 0018 6369     		ldr	r3, [r4, #20]
+ 280:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                                     circle_buf);
+ 1226              		.loc 1 280 73 discriminator 1 view .LVU377
+ 1227 001a CD18     		adds	r5, r1, r3
+ 1228              	.LVL85:
+ 280:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                                     circle_buf);
+ 1229              		.loc 1 280 95 discriminator 1 view .LVU378
+ 1230 001c 2046     		mov	r0, r4
+ 1231 001e FFF7FEFF 		bl	lv_circle_buf_capacity
+ 1232              	.LVL86:
+ 280:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****                                     circle_buf);
+ 1233              		.loc 1 280 20 discriminator 2 view .LVU379
+ 1234 0022 B5FBF0F1 		udiv	r1, r5, r0
+ 1235              	.LVL87:
+ 282:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1236              		.loc 1 282 5 is_stmt 1 view .LVU380
+ 282:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1237              		.loc 1 282 21 is_stmt 0 view .LVU381
+ 1238 0026 00FB1151 		mls	r1, r0, r1, r5
+ 1239              	.LVL88:
+ 282:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1240              		.loc 1 282 21 view .LVU382
+ 1241 002a 2046     		mov	r0, r4
+ 1242              	.LVL89:
+ 282:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1243              		.loc 1 282 21 view .LVU383
+ 1244 002c FFF7FEFF 		bl	lv_array_at
+ 1245              	.LVL90:
+ 1246 0030 0146     		mov	r1, r0
+ 282:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1247              		.loc 1 282 5 discriminator 1 view .LVU384
+ 1248 0032 E268     		ldr	r2, [r4, #12]
+ 1249 0034 3046     		mov	r0, r6
+ 1250 0036 FFF7FEFF 		bl	lv_memcpy
+ 1251              	.LVL91:
+ 284:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 1252              		.loc 1 284 5 is_stmt 1 view .LVU385
+ 285:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1253              		.loc 1 285 1 is_stmt 0 view .LVU386
+ 1254 003a 0120     		movs	r0, #1
+ 1255 003c 70BD     		pop	{r4, r5, r6, pc}
+ 1256              	.LVL92:
+ 1257              	.L98:
+ 1258              	.LCFI33:
+ 1259              		.cfi_def_cfa_offset 0
+ 1260              		.cfi_restore 4
+ 1261              		.cfi_restore 5
+ 1262              		.cfi_restore 6
+ 1263              		.cfi_restore 14
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1264              		.loc 1 277 5 is_stmt 1 view .LVU387
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1265              		.loc 1 277 5 view .LVU388
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1266              		.loc 1 277 5 view .LVU389
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 36
+
+
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1267              		.loc 1 277 5 view .LVU390
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1268              		.loc 1 277 5 view .LVU391
+ 1269 003e FEE7     		b	.L98
+ 1270              	.L100:
+ 1271              	.LCFI34:
+ 1272              		.cfi_def_cfa_offset 16
+ 1273              		.cfi_offset 4, -16
+ 1274              		.cfi_offset 5, -12
+ 1275              		.cfi_offset 6, -8
+ 1276              		.cfi_offset 14, -4
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1277              		.loc 1 278 5 view .LVU392
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1278              		.loc 1 278 5 view .LVU393
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1279              		.loc 1 278 5 view .LVU394
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1280              		.loc 1 278 5 view .LVU395
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1281              		.loc 1 278 5 view .LVU396
+ 1282 0040 FEE7     		b	.L100
+ 1283              		.cfi_endproc
+ 1284              	.LFE27:
+ 1286              		.section	.text.lv_circle_buf_read,"ax",%progbits
+ 1287              		.align	1
+ 1288              		.global	lv_circle_buf_read
+ 1289              		.syntax unified
+ 1290              		.thumb
+ 1291              		.thumb_func
+ 1293              	lv_circle_buf_read:
+ 1294              	.LVL93:
+ 1295              	.LFB22:
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 1296              		.loc 1 202 1 view -0
+ 1297              		.cfi_startproc
+ 1298              		@ args = 0, pretend = 0, frame = 0
+ 1299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1300              		.loc 1 203 5 view .LVU398
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1301              		.loc 1 203 5 view .LVU399
+ 1302 0000 48B1     		cbz	r0, .L105
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 1303              		.loc 1 202 1 is_stmt 0 view .LVU400
+ 1304 0002 38B5     		push	{r3, r4, r5, lr}
+ 1305              	.LCFI35:
+ 1306              		.cfi_def_cfa_offset 16
+ 1307              		.cfi_offset 3, -16
+ 1308              		.cfi_offset 4, -12
+ 1309              		.cfi_offset 5, -8
+ 1310              		.cfi_offset 14, -4
+ 1311 0004 0D46     		mov	r5, r1
+ 1312 0006 0446     		mov	r4, r0
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1313              		.loc 1 203 5 is_stmt 1 view .LVU401
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 37
+
+
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1314              		.loc 1 203 31 view .LVU402
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->head = 0;
+ 1315              		.loc 1 205 5 view .LVU403
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->head = 0;
+ 1316              		.loc 1 205 8 is_stmt 0 view .LVU404
+ 1317 0008 FFF7FEFF 		bl	lv_circle_buf_is_empty
+ 1318              	.LVL94:
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->head = 0;
+ 1319              		.loc 1 205 7 discriminator 1 view .LVU405
+ 1320 000c 20B1     		cbz	r0, .L106
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->tail = 0;
+ 1321              		.loc 1 206 9 is_stmt 1 view .LVU406
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         circle_buf->tail = 0;
+ 1322              		.loc 1 206 26 is_stmt 0 view .LVU407
+ 1323 000e 0020     		movs	r0, #0
+ 1324 0010 6061     		str	r0, [r4, #20]
+ 207:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 1325              		.loc 1 207 9 is_stmt 1 view .LVU408
+ 207:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****         return LV_RESULT_INVALID;
+ 1326              		.loc 1 207 26 is_stmt 0 view .LVU409
+ 1327 0012 A061     		str	r0, [r4, #24]
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     }
+ 1328              		.loc 1 208 9 is_stmt 1 view .LVU410
+ 1329              	.L107:
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1330              		.loc 1 215 1 is_stmt 0 view .LVU411
+ 1331 0014 38BD     		pop	{r3, r4, r5, pc}
+ 1332              	.LVL95:
+ 1333              	.L105:
+ 1334              	.LCFI36:
+ 1335              		.cfi_def_cfa_offset 0
+ 1336              		.cfi_restore 3
+ 1337              		.cfi_restore 4
+ 1338              		.cfi_restore 5
+ 1339              		.cfi_restore 14
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1340              		.loc 1 203 5 is_stmt 1 view .LVU412
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1341              		.loc 1 203 5 view .LVU413
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1342              		.loc 1 203 5 view .LVU414
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1343              		.loc 1 203 5 view .LVU415
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1344              		.loc 1 203 5 view .LVU416
+ 1345 0016 FEE7     		b	.L105
+ 1346              	.LVL96:
+ 1347              	.L106:
+ 1348              	.LCFI37:
+ 1349              		.cfi_def_cfa_offset 16
+ 1350              		.cfi_offset 3, -16
+ 1351              		.cfi_offset 4, -12
+ 1352              		.cfi_offset 5, -8
+ 1353              		.cfi_offset 14, -4
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     circle_buf->head++;
+ 1354              		.loc 1 211 5 view .LVU417
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 38
+
+
+ 1355 0018 2A46     		mov	r2, r5
+ 1356 001a 0146     		mov	r1, r0
+ 1357 001c 2046     		mov	r0, r4
+ 1358 001e FFF7FEFF 		bl	lv_circle_buf_peek_at
+ 1359              	.LVL97:
+ 212:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1360              		.loc 1 212 5 view .LVU418
+ 212:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1361              		.loc 1 212 15 is_stmt 0 view .LVU419
+ 1362 0022 6369     		ldr	r3, [r4, #20]
+ 212:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1363              		.loc 1 212 21 view .LVU420
+ 1364 0024 0133     		adds	r3, r3, #1
+ 1365 0026 6361     		str	r3, [r4, #20]
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 1366              		.loc 1 214 5 is_stmt 1 view .LVU421
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 1367              		.loc 1 214 12 is_stmt 0 view .LVU422
+ 1368 0028 0120     		movs	r0, #1
+ 1369 002a F3E7     		b	.L107
+ 1370              		.cfi_endproc
+ 1371              	.LFE22:
+ 1373              		.section	.text.lv_circle_buf_peek,"ax",%progbits
+ 1374              		.align	1
+ 1375              		.global	lv_circle_buf_peek
+ 1376              		.syntax unified
+ 1377              		.thumb
+ 1378              		.thumb_func
+ 1380              	lv_circle_buf_peek:
+ 1381              	.LVL98:
+ 1382              	.LFB26:
+ 268:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 1383              		.loc 1 268 1 is_stmt 1 view -0
+ 1384              		.cfi_startproc
+ 1385              		@ args = 0, pretend = 0, frame = 0
+ 1386              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1387              		.loc 1 269 5 view .LVU424
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1388              		.loc 1 269 5 view .LVU425
+ 1389 0000 30B1     		cbz	r0, .L112
+ 268:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(circle_buf);
+ 1390              		.loc 1 268 1 is_stmt 0 view .LVU426
+ 1391 0002 08B5     		push	{r3, lr}
+ 1392              	.LCFI38:
+ 1393              		.cfi_def_cfa_offset 8
+ 1394              		.cfi_offset 3, -8
+ 1395              		.cfi_offset 14, -4
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1396              		.loc 1 269 5 is_stmt 1 view .LVU427
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1397              		.loc 1 269 31 view .LVU428
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1398              		.loc 1 270 5 view .LVU429
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1399              		.loc 1 270 5 view .LVU430
+ 1400 0004 29B1     		cbz	r1, .L114
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 39
+
+
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1401              		.loc 1 270 5 view .LVU431
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1402              		.loc 1 270 25 view .LVU432
+ 272:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 1403              		.loc 1 272 5 view .LVU433
+ 272:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 1404              		.loc 1 272 12 is_stmt 0 view .LVU434
+ 1405 0006 0A46     		mov	r2, r1
+ 1406 0008 0021     		movs	r1, #0
+ 1407              	.LVL99:
+ 272:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** }
+ 1408              		.loc 1 272 12 view .LVU435
+ 1409 000a FFF7FEFF 		bl	lv_circle_buf_peek_at
+ 1410              	.LVL100:
+ 273:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1411              		.loc 1 273 1 view .LVU436
+ 1412 000e 08BD     		pop	{r3, pc}
+ 1413              	.LVL101:
+ 1414              	.L112:
+ 1415              	.LCFI39:
+ 1416              		.cfi_def_cfa_offset 0
+ 1417              		.cfi_restore 3
+ 1418              		.cfi_restore 14
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1419              		.loc 1 269 5 is_stmt 1 view .LVU437
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1420              		.loc 1 269 5 view .LVU438
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1421              		.loc 1 269 5 view .LVU439
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1422              		.loc 1 269 5 view .LVU440
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c ****     LV_ASSERT_NULL(data);
+ 1423              		.loc 1 269 5 view .LVU441
+ 1424 0010 FEE7     		b	.L112
+ 1425              	.L114:
+ 1426              	.LCFI40:
+ 1427              		.cfi_def_cfa_offset 8
+ 1428              		.cfi_offset 3, -8
+ 1429              		.cfi_offset 14, -4
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1430              		.loc 1 270 5 view .LVU442
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1431              		.loc 1 270 5 view .LVU443
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1432              		.loc 1 270 5 view .LVU444
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1433              		.loc 1 270 5 view .LVU445
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.c **** 
+ 1434              		.loc 1 270 5 view .LVU446
+ 1435 0012 FEE7     		b	.L114
+ 1436              		.cfi_endproc
+ 1437              	.LFE26:
+ 1439              		.text
+ 1440              	.Letext0:
+ 1441              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1442              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 40
+
+
+ 1443              		.file 5 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1444              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ 1445              		.file 7 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_circle_buf.h"
+ 1446              		.file 8 "../../Middlewares/LVGL/GUI/lvgl/src/misc/../stdlib/lv_string.h"
+ 1447              		.file 9 "../../Middlewares/LVGL/GUI/lvgl/src/misc/../stdlib/lv_mem.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccnJNVco.s 			page 41
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_circle_buf.c
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:20     .text.circle_buf_prepare_empty:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:25     .text.circle_buf_prepare_empty:00000000 circle_buf_prepare_empty
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:98     .text.lv_circle_buf_create:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:104    .text.lv_circle_buf_create:00000000 lv_circle_buf_create
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:171    .text.lv_circle_buf_create_from_buf:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:177    .text.lv_circle_buf_create_from_buf:00000000 lv_circle_buf_create_from_buf
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:276    .text.lv_circle_buf_create_from_array:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:282    .text.lv_circle_buf_create_from_array:00000000 lv_circle_buf_create_from_array
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:378    .text.lv_circle_buf_resize:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:384    .text.lv_circle_buf_resize:00000000 lv_circle_buf_resize
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:449    .text.lv_circle_buf_destroy:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:455    .text.lv_circle_buf_destroy:00000000 lv_circle_buf_destroy
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:499    .text.lv_circle_buf_size:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:505    .text.lv_circle_buf_size:00000000 lv_circle_buf_size
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:541    .text.lv_circle_buf_capacity:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:547    .text.lv_circle_buf_capacity:00000000 lv_circle_buf_capacity
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:587    .text.lv_circle_buf_remain:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:593    .text.lv_circle_buf_remain:00000000 lv_circle_buf_remain
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:645    .text.lv_circle_buf_is_empty:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:651    .text.lv_circle_buf_is_empty:00000000 lv_circle_buf_is_empty
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:693    .text.lv_circle_buf_is_full:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:699    .text.lv_circle_buf_is_full:00000000 lv_circle_buf_is_full
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:741    .text.lv_circle_buf_reset:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:747    .text.lv_circle_buf_reset:00000000 lv_circle_buf_reset
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:780    .text.lv_circle_buf_head:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:786    .text.lv_circle_buf_head:00000000 lv_circle_buf_head
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:839    .text.lv_circle_buf_tail:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:845    .text.lv_circle_buf_tail:00000000 lv_circle_buf_tail
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:898    .text.lv_circle_buf_write:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:904    .text.lv_circle_buf_write:00000000 lv_circle_buf_write
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:987    .text.lv_circle_buf_fill:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:993    .text.lv_circle_buf_fill:00000000 lv_circle_buf_fill
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:1108   .text.lv_circle_buf_skip:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:1114   .text.lv_circle_buf_skip:00000000 lv_circle_buf_skip
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:1183   .text.lv_circle_buf_peek_at:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:1189   .text.lv_circle_buf_peek_at:00000000 lv_circle_buf_peek_at
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:1287   .text.lv_circle_buf_read:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:1293   .text.lv_circle_buf_read:00000000 lv_circle_buf_read
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:1374   .text.lv_circle_buf_peek:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccnJNVco.s:1380   .text.lv_circle_buf_peek:00000000 lv_circle_buf_peek
+
+UNDEFINED SYMBOLS
+lv_array_push_back
+lv_malloc
+lv_array_init
+lv_array_init_from_buf
+lv_array_resize
+lv_array_deinit
+lv_free
+lv_array_at
+lv_array_assign
+lv_memcpy

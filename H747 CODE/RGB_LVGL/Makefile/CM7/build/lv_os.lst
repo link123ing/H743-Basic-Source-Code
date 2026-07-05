@@ -1,0 +1,95 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cccm4QYO.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_os.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c"
+  19              		.section	.text.lv_os_init,"ax",%progbits
+  20              		.align	1
+  21              		.global	lv_os_init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_os_init:
+  27              	.LFB187:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  * @file lv_os.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** #include "lv_os.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** #include "lv_os_private.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** #include "../core/lv_global.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** 
+  13:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** /*********************
+  14:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  *      DEFINES
+  15:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  *********************/
+  16:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** #define lv_general_mutex LV_GLOBAL_DEFAULT()->lv_general_mutex
+  17:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** 
+  18:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** /**********************
+  19:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  *      TYPEDEFS
+  20:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  **********************/
+  21:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** 
+  22:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** /**********************
+  23:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  *  STATIC PROTOTYPES
+  24:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  **********************/
+  25:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** 
+  26:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** /**********************
+  27:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  *  STATIC VARIABLES
+  28:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  **********************/
+  29:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** 
+  30:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** /**********************
+  31:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  *      MACROS
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cccm4QYO.s 			page 2
+
+
+  32:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  **********************/
+  33:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** 
+  34:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** /**********************
+  35:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  *   GLOBAL FUNCTIONS
+  36:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****  **********************/
+  37:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** 
+  38:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** void lv_os_init(void)
+  39:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** {
+  28              		.loc 1 39 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  40:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** #if LV_USE_OS != LV_OS_NONE
+  41:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c ****     lv_mutex_init(&lv_general_mutex);
+  42:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** #endif /*LV_USE_OS != LV_OS_NONE*/
+  43:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os.c **** }
+  33              		.loc 1 43 1 view .LVU1
+  34 0000 7047     		bx	lr
+  35              		.cfi_endproc
+  36              	.LFE187:
+  38              		.text
+  39              	.Letext0:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cccm4QYO.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_os.c
+C:\Users\28576\AppData\Local\Temp\cccm4QYO.s:20     .text.lv_os_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cccm4QYO.s:26     .text.lv_os_init:00000000 lv_os_init
+
+NO UNDEFINED SYMBOLS

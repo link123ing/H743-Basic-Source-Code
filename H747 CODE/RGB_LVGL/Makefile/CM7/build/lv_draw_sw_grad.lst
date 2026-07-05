@@ -1,0 +1,943 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_draw_sw_grad.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c"
+  19              		.section	.text.allocate_item,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	allocate_item:
+  26              	.LVL0:
+  27              	.LFB34:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  * @file lv_draw_sw_grad.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #include "lv_draw_sw_grad.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #if LV_USE_DRAW_SW
+  11:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  12:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #include "../../misc/lv_types.h"
+  13:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #include "../../osal/lv_os.h"
+  14:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #include "../../misc/lv_math.h"
+  15:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  16:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** /*********************
+  17:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  *      DEFINES
+  18:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  *********************/
+  19:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #define GRAD_CM(r,g,b) lv_color_make(r,g,b)
+  20:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #define GRAD_CONV(t, x) t = x
+  21:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  22:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #undef ALIGN
+  23:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #if defined(LV_ARCH_64)
+  24:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     #define ALIGN(X)    (((X) + 7) & ~7)
+  25:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #else
+  26:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     #define ALIGN(X)    (((X) + 3) & ~3)
+  27:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #endif
+  28:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  29:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** /**********************
+  30:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  *      TYPEDEFS
+  31:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  **********************/
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 2
+
+
+  32:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  33:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #if LV_USE_DRAW_SW_COMPLEX_GRADIENTS
+  34:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  35:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** typedef struct {
+  36:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /* w = (-b(xp, yp) + sqrt(sqr(b(xp, yp)) - 4 * a * c(xp, yp))) / (2 * a) */
+  37:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t x0;         /* center of the start circle */
+  38:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t y0;         /* center of the start circle */
+  39:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t r0;         /* radius of the start circle */
+  40:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t inv_dr;     /* 1 / (r1 - r0) */
+  41:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t a4;         /* 4 * a */
+  42:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t inv_a4;     /* 1 / (4 * a) */
+  43:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t dx;
+  44:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /* b(xp, yp) = xp * bpx + yp * bpy + bc */
+  45:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t bpx;
+  46:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t bpy;
+  47:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t bc;
+  48:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_area_t clip_area;
+  49:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_draw_sw_grad_calc_t * cgrad;  /*256 element cache buffer containing the gradient color map*/
+  50:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** } lv_grad_radial_state_t;
+  51:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  52:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** typedef struct {
+  53:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /* w = a * xp + b * yp + c */
+  54:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t a;
+  55:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t b;
+  56:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t c;
+  57:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_draw_sw_grad_calc_t * cgrad; /*256 element cache buffer containing the gradient color map*/
+  58:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** } lv_grad_linear_state_t;
+  59:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** typedef struct {
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /* w = a * xp + b * yp + c */
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t x0;
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t y0;
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t a;
+  65:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t da;
+  66:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t inv_da;
+  67:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_draw_sw_grad_calc_t * cgrad; /*256 element cache buffer containing the gradient color map*/
+  68:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** } lv_grad_conical_state_t;
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #endif
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** /**********************
+  73:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  *  STATIC PROTOTYPES
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  **********************/
+  75:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** typedef lv_result_t (*op_cache_t)(lv_draw_sw_grad_calc_t * c, void * ctx);
+  76:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** static lv_draw_sw_grad_calc_t * allocate_item(const lv_grad_dsc_t * g, int32_t w, int32_t h);
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  78:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #if LV_USE_DRAW_SW_COMPLEX_GRADIENTS
+  79:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  80:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     static inline int32_t extend_w(int32_t w, lv_grad_extend_t extend);
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  82:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #endif
+  83:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  84:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** /**********************
+  85:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  *   STATIC VARIABLE
+  86:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  **********************/
+  87:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  88:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** /**********************
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 3
+
+
+  89:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  *   STATIC FUNCTIONS
+  90:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  **********************/
+  91:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+  92:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** static lv_draw_sw_grad_calc_t * allocate_item(const lv_grad_dsc_t * g, int32_t w, int32_t h)
+  93:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** {
+  28              		.loc 1 93 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 93 1 is_stmt 0 view .LVU1
+  33 0000 38B5     		push	{r3, r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 3, -16
+  37              		.cfi_offset 4, -12
+  38              		.cfi_offset 5, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0D46     		mov	r5, r1
+  94:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t size;
+  41              		.loc 1 94 5 is_stmt 1 view .LVU2
+  95:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     switch(g->dir) {
+  42              		.loc 1 95 5 view .LVU3
+  43              		.loc 1 95 13 is_stmt 0 view .LVU4
+  44 0004 C37A     		ldrb	r3, [r0, #11]	@ zero_extendqisi2
+  45 0006 C3F30301 		ubfx	r1, r3, #0, #4
+  46              	.LVL1:
+  47              		.loc 1 95 13 view .LVU5
+  48 000a 03F00F03 		and	r3, r3, #15
+  49              		.loc 1 95 5 view .LVU6
+  50 000e 012B     		cmp	r3, #1
+  51 0010 1DD0     		beq	.L5
+  52 0012 49B2     		sxtb	r1, r1
+  53 0014 E9B1     		cbz	r1, .L6
+  54 0016 0E33     		adds	r3, r3, #14
+  55 0018 03F00F03 		and	r3, r3, #15
+  56 001c 032B     		cmp	r3, #3
+  57 001e 14D8     		bhi	.L8
+  58              	.LVL2:
+  59              	.L2:
+  96:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         case LV_GRAD_DIR_HOR:
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         case LV_GRAD_DIR_LINEAR:
+  98:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         case LV_GRAD_DIR_RADIAL:
+  99:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         case LV_GRAD_DIR_CONICAL:
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****             size = w;
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****             break;
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         case LV_GRAD_DIR_VER:
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****             size = h;
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****             break;
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         default:
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****             size = 64;
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     size_t req_size = ALIGN(sizeof(lv_draw_sw_grad_calc_t)) + ALIGN(size * sizeof(lv_color_t)) + AL
+  60              		.loc 1 109 5 is_stmt 1 view .LVU7
+  61              		.loc 1 109 63 is_stmt 0 view .LVU8
+  62 0020 6B1C     		adds	r3, r5, #1
+  63 0022 03EB4303 		add	r3, r3, r3, lsl #1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 4
+
+
+  64 0026 23F00304 		bic	r4, r3, #3
+  65              		.loc 1 109 98 view .LVU9
+  66 002a E81C     		adds	r0, r5, #3
+  67              	.LVL3:
+  68              		.loc 1 109 98 view .LVU10
+  69 002c 20F00300 		bic	r0, r0, #3
+  70              		.loc 1 109 96 view .LVU11
+  71 0030 2044     		add	r0, r0, r4
+  72              	.LVL4:
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****                                                                                                    
+ 111:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_draw_sw_grad_calc_t * item  = lv_malloc(req_size);
+  73              		.loc 1 111 5 is_stmt 1 view .LVU12
+  74              		.loc 1 111 38 is_stmt 0 view .LVU13
+  75 0032 0C30     		adds	r0, r0, #12
+  76              	.LVL5:
+  77              		.loc 1 111 38 view .LVU14
+  78 0034 FFF7FEFF 		bl	lv_malloc
+  79              	.LVL6:
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     LV_ASSERT_MALLOC(item);
+  80              		.loc 1 112 5 is_stmt 1 view .LVU15
+  81              		.loc 1 112 5 view .LVU16
+  82 0038 68B1     		cbz	r0, .L4
+  83              		.loc 1 112 5 view .LVU17
+  84              		.loc 1 112 27 view .LVU18
+ 113:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(item == NULL) return NULL;
+  85              		.loc 1 113 5 view .LVU19
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     uint8_t * p = (uint8_t *)item;
+  86              		.loc 1 115 5 view .LVU20
+  87              	.LVL7:
+ 116:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     item->color_map = (lv_color_t *)(p + ALIGN(sizeof(*item)));
+  88              		.loc 1 116 5 view .LVU21
+  89              		.loc 1 116 40 is_stmt 0 view .LVU22
+  90 003a 00F10C02 		add	r2, r0, #12
+  91              		.loc 1 116 21 view .LVU23
+  92 003e 0260     		str	r2, [r0]
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     item->opa_map = (lv_opa_t *)(p + ALIGN(sizeof(*item)) + ALIGN(size * sizeof(lv_color_t)));
+  93              		.loc 1 117 5 is_stmt 1 view .LVU24
+  94              		.loc 1 117 59 is_stmt 0 view .LVU25
+  95 0040 0C34     		adds	r4, r4, #12
+  96              	.LVL8:
+  97              		.loc 1 117 59 view .LVU26
+  98 0042 0444     		add	r4, r4, r0
+  99              	.LVL9:
+ 100              		.loc 1 117 19 view .LVU27
+ 101 0044 4460     		str	r4, [r0, #4]
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     item->size = size;
+ 102              		.loc 1 118 5 is_stmt 1 view .LVU28
+ 103              		.loc 1 118 16 is_stmt 0 view .LVU29
+ 104 0046 8560     		str	r5, [r0, #8]
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     return item;
+ 105              		.loc 1 119 5 is_stmt 1 view .LVU30
+ 120:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** }
+ 106              		.loc 1 120 1 is_stmt 0 view .LVU31
+ 107 0048 38BD     		pop	{r3, r4, r5, pc}
+ 108              	.LVL10:
+ 109              	.L8:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 5
+
+
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 110              		.loc 1 106 18 view .LVU32
+ 111 004a 4025     		movs	r5, #64
+ 112              	.LVL11:
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 113              		.loc 1 106 18 view .LVU33
+ 114 004c E8E7     		b	.L2
+ 115              	.LVL12:
+ 116              	.L5:
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****             break;
+ 117              		.loc 1 103 18 view .LVU34
+ 118 004e 1546     		mov	r5, r2
+ 119              	.LVL13:
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****             break;
+ 120              		.loc 1 103 18 view .LVU35
+ 121 0050 E6E7     		b	.L2
+ 122              	.LVL14:
+ 123              	.L6:
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 124              		.loc 1 106 18 view .LVU36
+ 125 0052 4025     		movs	r5, #64
+ 126              	.LVL15:
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 127              		.loc 1 106 18 view .LVU37
+ 128 0054 E4E7     		b	.L2
+ 129              	.LVL16:
+ 130              	.L4:
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(item == NULL) return NULL;
+ 131              		.loc 1 112 5 is_stmt 1 view .LVU38
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(item == NULL) return NULL;
+ 132              		.loc 1 112 5 view .LVU39
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(item == NULL) return NULL;
+ 133              		.loc 1 112 5 view .LVU40
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(item == NULL) return NULL;
+ 134              		.loc 1 112 5 view .LVU41
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(item == NULL) return NULL;
+ 135              		.loc 1 112 5 view .LVU42
+ 136 0056 FEE7     		b	.L4
+ 137              		.cfi_endproc
+ 138              	.LFE34:
+ 140              		.section	.text.lv_draw_sw_grad_color_calculate,"ax",%progbits
+ 141              		.align	1
+ 142              		.global	lv_draw_sw_grad_color_calculate
+ 143              		.syntax unified
+ 144              		.thumb
+ 145              		.thumb_func
+ 147              	lv_draw_sw_grad_color_calculate:
+ 148              	.LVL17:
+ 149              	.LFB36:
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #if LV_USE_DRAW_SW_COMPLEX_GRADIENTS
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** static inline int32_t extend_w(int32_t w, lv_grad_extend_t extend)
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** {
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(extend == LV_GRAD_EXTEND_PAD) {                  /**< Repeat the same color*/
+ 127:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return w < 0 ? 0 : LV_MIN(w, 255);
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 6
+
+
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(extend == LV_GRAD_EXTEND_REPEAT) {       /**< Repeat the pattern*/
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return w & 255;
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /*LV_GRAD_EXTEND_REFLECT*/
+ 133:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     w &= 511;
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(w > 255)
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         w ^= 511;   /* 511 - w */
+ 136:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     return w;
+ 137:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** }
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** #endif
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** /**********************
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  *     FUNCTIONS
+ 143:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****  **********************/
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** lv_draw_sw_grad_calc_t * lv_draw_sw_grad_get(const lv_grad_dsc_t * g, int32_t w, int32_t h)
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** {
+ 147:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /* No gradient, no cache */
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(g->dir == LV_GRAD_DIR_NONE) return NULL;
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /* Step 1: Search cache for the given key */
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_draw_sw_grad_calc_t * item = allocate_item(g, w, h);
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(item == NULL) {
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         LV_LOG_WARN("Failed to allocate item for the gradient");
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return item;
+ 155:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /* Step 3: Fill it with the gradient, as expected */
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     uint32_t i;
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     for(i = 0; i < item->size; i++) {
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         lv_draw_sw_grad_color_calculate(g, item->size, i, &item->color_map[i], &item->opa_map[i]);
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     return item;
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** }
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** void LV_ATTRIBUTE_FAST_MEM lv_draw_sw_grad_color_calculate(const lv_grad_dsc_t * dsc, int32_t range
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****                                                            int32_t frac, lv_color_t * color_out, lv
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** {
+ 150              		.loc 1 167 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 4, pretend = 0, frame = 16
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154              		.loc 1 167 1 is_stmt 0 view .LVU44
+ 155 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 156              	.LCFI1:
+ 157              		.cfi_def_cfa_offset 24
+ 158              		.cfi_offset 4, -24
+ 159              		.cfi_offset 5, -20
+ 160              		.cfi_offset 6, -16
+ 161              		.cfi_offset 7, -12
+ 162              		.cfi_offset 8, -8
+ 163              		.cfi_offset 14, -4
+ 164 0004 84B0     		sub	sp, sp, #16
+ 165              	.LCFI2:
+ 166              		.cfi_def_cfa_offset 40
+ 167 0006 9846     		mov	r8, r3
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 7
+
+
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_color_t tmp;
+ 168              		.loc 1 168 5 is_stmt 1 view .LVU45
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /*Clip out-of-bounds first*/
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t min = (dsc->stops[0].frac * range) >> 8;
+ 169              		.loc 1 170 5 view .LVU46
+ 170              		.loc 1 170 33 is_stmt 0 view .LVU47
+ 171 0008 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 172              	.LVL18:
+ 173              		.loc 1 170 39 view .LVU48
+ 174 000a 01FB03F3 		mul	r3, r1, r3
+ 175              	.LVL19:
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(frac <= min) {
+ 176              		.loc 1 171 5 is_stmt 1 view .LVU49
+ 177              		.loc 1 171 7 is_stmt 0 view .LVU50
+ 178 000e B2EB232F 		cmp	r2, r3, asr #8
+ 179 0012 20DD     		ble	.L20
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         GRAD_CONV(tmp, dsc->stops[0].color);
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *color_out = tmp;
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *opa_out = dsc->stops[0].opa;
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return;
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t max = (dsc->stops[dsc->stops_count - 1].frac * range) >> 8;
+ 180              		.loc 1 178 5 is_stmt 1 view .LVU51
+ 181              		.loc 1 178 34 is_stmt 0 view .LVU52
+ 182 0014 837A     		ldrb	r3, [r0, #10]	@ zero_extendqisi2
+ 183              	.LVL20:
+ 184              		.loc 1 178 48 view .LVU53
+ 185 0016 03F1FF3C 		add	ip, r3, #-1
+ 186              		.loc 1 178 52 view .LVU54
+ 187 001a 0CEB8C0E 		add	lr, ip, ip, lsl #2
+ 188 001e 8644     		add	lr, lr, r0
+ 189 0020 9EF804E0 		ldrb	lr, [lr, #4]	@ zero_extendqisi2
+ 190              		.loc 1 178 58 view .LVU55
+ 191 0024 01FB0EFE 		mul	lr, r1, lr
+ 192              	.LVL21:
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(frac >= max) {
+ 193              		.loc 1 179 5 is_stmt 1 view .LVU56
+ 194              		.loc 1 179 7 is_stmt 0 view .LVU57
+ 195 0028 B2EB2E2F 		cmp	r2, lr, asr #8
+ 196 002c 27DA     		bge	.L21
+ 197              	.LBB2:
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         GRAD_CONV(tmp, dsc->stops[dsc->stops_count - 1].color);
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *color_out = tmp;
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *opa_out = dsc->stops[dsc->stops_count - 1].opa;
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return;
+ 184:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 185:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /*Find the 2 closest stop now*/
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t d = 0;
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     int32_t found_i = 0;
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     for(uint8_t i = 1; i < dsc->stops_count; i++) {
+ 198              		.loc 1 189 17 view .LVU58
+ 199 002e 4FF0010C 		mov	ip, #1
+ 200              	.LVL22:
+ 201              	.L12:
+ 202              		.loc 1 189 26 is_stmt 1 discriminator 1 view .LVU59
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 8
+
+
+ 203 0032 6345     		cmp	r3, ip
+ 204 0034 3FD9     		bls	.L22
+ 205              	.LBB3:
+ 190:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         int32_t cur = (dsc->stops[i].frac * range) >> 8;
+ 206              		.loc 1 190 9 view .LVU60
+ 207              		.loc 1 190 37 is_stmt 0 view .LVU61
+ 208 0036 6446     		mov	r4, ip
+ 209 0038 0CEB8C0E 		add	lr, ip, ip, lsl #2
+ 210 003c 8644     		add	lr, lr, r0
+ 211 003e 9EF804E0 		ldrb	lr, [lr, #4]	@ zero_extendqisi2
+ 212              		.loc 1 190 43 view .LVU62
+ 213 0042 01FB0EFE 		mul	lr, r1, lr
+ 214              	.LVL23:
+ 191:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         if(frac <= cur) {
+ 215              		.loc 1 191 9 is_stmt 1 view .LVU63
+ 216              		.loc 1 191 11 is_stmt 0 view .LVU64
+ 217 0046 B2EB2E2F 		cmp	r2, lr, asr #8
+ 218 004a 36DD     		ble	.L13
+ 219              	.LBE3:
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         int32_t cur = (dsc->stops[i].frac * range) >> 8;
+ 220              		.loc 1 189 47 is_stmt 1 discriminator 2 view .LVU65
+ 221 004c 0CF1010C 		add	ip, ip, #1
+ 222              	.LVL24:
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         int32_t cur = (dsc->stops[i].frac * range) >> 8;
+ 223              		.loc 1 189 47 is_stmt 0 discriminator 2 view .LVU66
+ 224 0050 5FFA8CFC 		uxtb	ip, ip
+ 225              	.LVL25:
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         int32_t cur = (dsc->stops[i].frac * range) >> 8;
+ 226              		.loc 1 189 47 discriminator 2 view .LVU67
+ 227 0054 EDE7     		b	.L12
+ 228              	.LVL26:
+ 229              	.L20:
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         int32_t cur = (dsc->stops[i].frac * range) >> 8;
+ 230              		.loc 1 189 47 discriminator 2 view .LVU68
+ 231              	.LBE2:
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *color_out = tmp;
+ 232              		.loc 1 172 9 is_stmt 1 view .LVU69
+ 233 0056 0188     		ldrh	r1, [r0]	@ unaligned
+ 234              	.LVL27:
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *color_out = tmp;
+ 235              		.loc 1 172 9 is_stmt 0 view .LVU70
+ 236 0058 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+ 237              	.LVL28:
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *color_out = tmp;
+ 238              		.loc 1 172 9 view .LVU71
+ 239 005a ADF80C10 		strh	r1, [sp, #12]	@ unaligned
+ 240 005e 8DF80E20 		strb	r2, [sp, #14]
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *opa_out = dsc->stops[0].opa;
+ 241              		.loc 1 173 9 is_stmt 1 view .LVU72
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *opa_out = dsc->stops[0].opa;
+ 242              		.loc 1 173 20 is_stmt 0 view .LVU73
+ 243 0062 BDF80C20 		ldrh	r2, [sp, #12]	@ unaligned
+ 244 0066 9DF80E30 		ldrb	r3, [sp, #14]	@ zero_extendqisi2
+ 245              	.LVL29:
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *opa_out = dsc->stops[0].opa;
+ 246              		.loc 1 173 20 view .LVU74
+ 247 006a A8F80020 		strh	r2, [r8]	@ unaligned
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 9
+
+
+ 248              	.LVL30:
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *opa_out = dsc->stops[0].opa;
+ 249              		.loc 1 173 20 view .LVU75
+ 250 006e 88F80230 		strb	r3, [r8, #2]
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return;
+ 251              		.loc 1 174 9 is_stmt 1 view .LVU76
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return;
+ 252              		.loc 1 174 33 is_stmt 0 view .LVU77
+ 253 0072 C378     		ldrb	r3, [r0, #3]	@ zero_extendqisi2
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return;
+ 254              		.loc 1 174 18 view .LVU78
+ 255 0074 0A9A     		ldr	r2, [sp, #40]
+ 256 0076 1370     		strb	r3, [r2]
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 257              		.loc 1 175 9 is_stmt 1 view .LVU79
+ 258              	.LVL31:
+ 259              	.L9:
+ 192:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****             found_i = i;
+ 193:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****             break;
+ 194:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         }
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 196:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     LV_ASSERT(found_i != 0);
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 199:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_color_t one, two;
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     one = dsc->stops[found_i - 1].color;
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     two = dsc->stops[found_i].color;
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     min = (dsc->stops[found_i - 1].frac * range) >> 8;
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     max = (dsc->stops[found_i].frac * range) >> 8;
+ 204:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     d = max - min;
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /*Then interpolate*/
+ 207:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     frac -= min;
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_opa_t mix = (frac * 255) / d;
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_opa_t imix = 255 - mix;
+ 210:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     *color_out = GRAD_CM(LV_UDIV255(two.red * mix   + one.red * imix),
+ 212:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****                          LV_UDIV255(two.green * mix + one.green * imix),
+ 213:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****                          LV_UDIV255(two.blue * mix  + one.blue * imix));
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     *opa_out = LV_UDIV255(dsc->stops[found_i].opa * mix   + dsc->stops[found_i - 1].opa * imix);
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** }
+ 260              		.loc 1 216 1 is_stmt 0 view .LVU80
+ 261 0078 04B0     		add	sp, sp, #16
+ 262              	.LCFI3:
+ 263              		.cfi_remember_state
+ 264              		.cfi_def_cfa_offset 24
+ 265              		@ sp needed
+ 266 007a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 267              	.LVL32:
+ 268              	.L21:
+ 269              	.LCFI4:
+ 270              		.cfi_restore_state
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *color_out = tmp;
+ 271              		.loc 1 180 9 is_stmt 1 view .LVU81
+ 272 007e 0CEB8C0C 		add	ip, ip, ip, lsl #2
+ 273 0082 00EB0C02 		add	r2, r0, ip
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 10
+
+
+ 274              	.LVL33:
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *color_out = tmp;
+ 275              		.loc 1 180 9 is_stmt 0 view .LVU82
+ 276 0086 30F80C10 		ldrh	r1, [r0, ip]	@ unaligned
+ 277              	.LVL34:
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *color_out = tmp;
+ 278              		.loc 1 180 9 view .LVU83
+ 279 008a 9278     		ldrb	r2, [r2, #2]	@ zero_extendqisi2
+ 280 008c ADF80C10 		strh	r1, [sp, #12]	@ unaligned
+ 281 0090 8DF80E20 		strb	r2, [sp, #14]
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *opa_out = dsc->stops[dsc->stops_count - 1].opa;
+ 282              		.loc 1 181 9 is_stmt 1 view .LVU84
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *opa_out = dsc->stops[dsc->stops_count - 1].opa;
+ 283              		.loc 1 181 20 is_stmt 0 view .LVU85
+ 284 0094 BDF80C20 		ldrh	r2, [sp, #12]	@ unaligned
+ 285 0098 9DF80E30 		ldrb	r3, [sp, #14]	@ zero_extendqisi2
+ 286 009c A8F80020 		strh	r2, [r8]	@ unaligned
+ 287              	.LVL35:
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         *opa_out = dsc->stops[dsc->stops_count - 1].opa;
+ 288              		.loc 1 181 20 view .LVU86
+ 289 00a0 88F80230 		strb	r3, [r8, #2]
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return;
+ 290              		.loc 1 182 9 is_stmt 1 view .LVU87
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return;
+ 291              		.loc 1 182 34 is_stmt 0 view .LVU88
+ 292 00a4 837A     		ldrb	r3, [r0, #10]	@ zero_extendqisi2
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return;
+ 293              		.loc 1 182 48 view .LVU89
+ 294 00a6 013B     		subs	r3, r3, #1
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return;
+ 295              		.loc 1 182 52 view .LVU90
+ 296 00a8 03EB8303 		add	r3, r3, r3, lsl #2
+ 297 00ac 0344     		add	r3, r3, r0
+ 298 00ae DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         return;
+ 299              		.loc 1 182 18 view .LVU91
+ 300 00b0 0A9A     		ldr	r2, [sp, #40]
+ 301 00b2 1370     		strb	r3, [r2]
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 302              		.loc 1 183 9 is_stmt 1 view .LVU92
+ 303 00b4 E0E7     		b	.L9
+ 304              	.LVL36:
+ 305              	.L22:
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     for(uint8_t i = 1; i < dsc->stops_count; i++) {
+ 306              		.loc 1 188 13 is_stmt 0 view .LVU93
+ 307 00b6 0023     		movs	r3, #0
+ 308              	.LVL37:
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     for(uint8_t i = 1; i < dsc->stops_count; i++) {
+ 309              		.loc 1 188 13 view .LVU94
+ 310 00b8 1C46     		mov	r4, r3
+ 311              	.L13:
+ 312              	.LVL38:
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 313              		.loc 1 197 5 is_stmt 1 view .LVU95
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 314              		.loc 1 197 5 view .LVU96
+ 315 00ba 04B9     		cbnz	r4, .L15
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 11
+
+
+ 316              	.L16:
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 317              		.loc 1 197 5 view .LVU97
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 318              		.loc 1 197 5 view .LVU98
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 319              		.loc 1 197 5 view .LVU99
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 320              		.loc 1 197 5 view .LVU100
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 321              		.loc 1 197 5 view .LVU101
+ 322 00bc FEE7     		b	.L16
+ 323              	.L15:
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 324              		.loc 1 197 5 view .LVU102
+ 199:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     one = dsc->stops[found_i - 1].color;
+ 325              		.loc 1 199 5 view .LVU103
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     two = dsc->stops[found_i].color;
+ 326              		.loc 1 200 5 view .LVU104
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     two = dsc->stops[found_i].color;
+ 327              		.loc 1 200 30 is_stmt 0 view .LVU105
+ 328 00be 631E     		subs	r3, r4, #1
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     two = dsc->stops[found_i].color;
+ 329              		.loc 1 200 9 view .LVU106
+ 330 00c0 03EB8303 		add	r3, r3, r3, lsl #2
+ 331 00c4 C618     		adds	r6, r0, r3
+ 332 00c6 30F803C0 		ldrh	ip, [r0, r3]	@ unaligned
+ 333              	.LVL39:
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     two = dsc->stops[found_i].color;
+ 334              		.loc 1 200 9 view .LVU107
+ 335 00ca B378     		ldrb	r3, [r6, #2]	@ zero_extendqisi2
+ 336 00cc ADF808C0 		strh	ip, [sp, #8]	@ unaligned
+ 337 00d0 8DF80A30 		strb	r3, [sp, #10]
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     min = (dsc->stops[found_i - 1].frac * range) >> 8;
+ 338              		.loc 1 201 5 is_stmt 1 view .LVU108
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     min = (dsc->stops[found_i - 1].frac * range) >> 8;
+ 339              		.loc 1 201 9 is_stmt 0 view .LVU109
+ 340 00d4 04EB8403 		add	r3, r4, r4, lsl #2
+ 341 00d8 C718     		adds	r7, r0, r3
+ 342 00da C05A     		ldrh	r0, [r0, r3]	@ unaligned
+ 343              	.LVL40:
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     min = (dsc->stops[found_i - 1].frac * range) >> 8;
+ 344              		.loc 1 201 9 view .LVU110
+ 345 00dc BB78     		ldrb	r3, [r7, #2]	@ zero_extendqisi2
+ 346 00de ADF80400 		strh	r0, [sp, #4]	@ unaligned
+ 347 00e2 8DF80630 		strb	r3, [sp, #6]
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     max = (dsc->stops[found_i].frac * range) >> 8;
+ 348              		.loc 1 202 5 is_stmt 1 view .LVU111
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     max = (dsc->stops[found_i].frac * range) >> 8;
+ 349              		.loc 1 202 35 is_stmt 0 view .LVU112
+ 350 00e6 3079     		ldrb	r0, [r6, #4]	@ zero_extendqisi2
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     max = (dsc->stops[found_i].frac * range) >> 8;
+ 351              		.loc 1 202 41 view .LVU113
+ 352 00e8 01FB00F0 		mul	r0, r1, r0
+ 353              	.LVL41:
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     d = max - min;
+ 354              		.loc 1 203 5 is_stmt 1 view .LVU114
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 12
+
+
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     d = max - min;
+ 355              		.loc 1 203 31 is_stmt 0 view .LVU115
+ 356 00ec 3B79     		ldrb	r3, [r7, #4]	@ zero_extendqisi2
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     d = max - min;
+ 357              		.loc 1 203 37 view .LVU116
+ 358 00ee 01FB03F3 		mul	r3, r1, r3
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     d = max - min;
+ 359              		.loc 1 203 9 view .LVU117
+ 360 00f2 1B12     		asrs	r3, r3, #8
+ 361              	.LVL42:
+ 204:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 362              		.loc 1 204 5 is_stmt 1 view .LVU118
+ 204:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 363              		.loc 1 204 7 is_stmt 0 view .LVU119
+ 364 00f4 A3EB2023 		sub	r3, r3, r0, asr #8
+ 365              	.LVL43:
+ 207:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_opa_t mix = (frac * 255) / d;
+ 366              		.loc 1 207 5 is_stmt 1 view .LVU120
+ 207:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_opa_t mix = (frac * 255) / d;
+ 367              		.loc 1 207 10 is_stmt 0 view .LVU121
+ 368 00f8 A2EB2022 		sub	r2, r2, r0, asr #8
+ 369              	.LVL44:
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_opa_t imix = 255 - mix;
+ 370              		.loc 1 208 5 is_stmt 1 view .LVU122
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_opa_t imix = 255 - mix;
+ 371              		.loc 1 208 26 is_stmt 0 view .LVU123
+ 372 00fc C2EB0222 		rsb	r2, r2, r2, lsl #8
+ 373              	.LVL45:
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_opa_t imix = 255 - mix;
+ 374              		.loc 1 208 33 view .LVU124
+ 375 0100 92FBF3F3 		sdiv	r3, r2, r3
+ 376              	.LVL46:
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_opa_t imix = 255 - mix;
+ 377              		.loc 1 208 14 view .LVU125
+ 378 0104 DCB2     		uxtb	r4, r3
+ 379              	.LVL47:
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 380              		.loc 1 209 5 is_stmt 1 view .LVU126
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 381              		.loc 1 209 14 is_stmt 0 view .LVU127
+ 382 0106 84F0FF05 		eor	r5, r4, #255
+ 383              	.LVL48:
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****                          LV_UDIV255(two.green * mix + one.green * imix),
+ 384              		.loc 1 211 5 is_stmt 1 view .LVU128
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****                          LV_UDIV255(two.green * mix + one.green * imix),
+ 385              		.loc 1 211 18 is_stmt 0 view .LVU129
+ 386 010a 9DF80630 		ldrb	r3, [sp, #6]	@ zero_extendqisi2
+ 387 010e 9DF80A00 		ldrb	r0, [sp, #10]	@ zero_extendqisi2
+ 388              	.LVL49:
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****                          LV_UDIV255(two.green * mix + one.green * imix),
+ 389              		.loc 1 211 18 view .LVU130
+ 390 0112 05FB00F0 		mul	r0, r5, r0
+ 391 0116 04FB0300 		mla	r0, r4, r3, r0
+ 392 011a 00EB0023 		add	r3, r0, r0, lsl #8
+ 393 011e 00EBC310 		add	r0, r0, r3, lsl #7
+ 394 0122 9DF80520 		ldrb	r2, [sp, #5]	@ zero_extendqisi2
+ 395 0126 9DF80930 		ldrb	r3, [sp, #9]	@ zero_extendqisi2
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 13
+
+
+ 396 012a 05FB03F3 		mul	r3, r5, r3
+ 397 012e 04FB0233 		mla	r3, r4, r2, r3
+ 398 0132 03EB0322 		add	r2, r3, r3, lsl #8
+ 399 0136 03EBC213 		add	r3, r3, r2, lsl #7
+ 400 013a 9DF80410 		ldrb	r1, [sp, #4]	@ zero_extendqisi2
+ 401              	.LVL50:
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****                          LV_UDIV255(two.green * mix + one.green * imix),
+ 402              		.loc 1 211 18 view .LVU131
+ 403 013e 9DF80820 		ldrb	r2, [sp, #8]	@ zero_extendqisi2
+ 404 0142 05FB02F2 		mul	r2, r5, r2
+ 405 0146 04FB0122 		mla	r2, r4, r1, r2
+ 406 014a 02EB0221 		add	r1, r2, r2, lsl #8
+ 407 014e 02EBC112 		add	r2, r2, r1, lsl #7
+ 408 0152 C2F3C752 		ubfx	r2, r2, #23, #8
+ 409 0156 C3F3C751 		ubfx	r1, r3, #23, #8
+ 410 015a C0F3C750 		ubfx	r0, r0, #23, #8
+ 411 015e FFF7FEFF 		bl	lv_color_make
+ 412              	.LVL51:
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****                          LV_UDIV255(two.green * mix + one.green * imix),
+ 413              		.loc 1 211 18 view .LVU132
+ 414 0162 88F80000 		strb	r0, [r8]
+ 415 0166 C0F30723 		ubfx	r3, r0, #8, #8
+ 416 016a 88F80130 		strb	r3, [r8, #1]
+ 417 016e C0F30740 		ubfx	r0, r0, #16, #8
+ 418 0172 88F80200 		strb	r0, [r8, #2]
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** }
+ 419              		.loc 1 215 5 is_stmt 1 view .LVU133
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** }
+ 420              		.loc 1 215 16 is_stmt 0 view .LVU134
+ 421 0176 FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 422 0178 F378     		ldrb	r3, [r6, #3]	@ zero_extendqisi2
+ 423 017a 05FB03F3 		mul	r3, r5, r3
+ 424 017e 04FB0233 		mla	r3, r4, r2, r3
+ 425 0182 03EB0322 		add	r2, r3, r3, lsl #8
+ 426 0186 03EBC213 		add	r3, r3, r2, lsl #7
+ 427 018a DB0D     		lsrs	r3, r3, #23
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** }
+ 428              		.loc 1 215 14 view .LVU135
+ 429 018c 0A9A     		ldr	r2, [sp, #40]
+ 430 018e 1370     		strb	r3, [r2]
+ 431 0190 72E7     		b	.L9
+ 432              		.cfi_endproc
+ 433              	.LFE36:
+ 435              		.section	.text.lv_draw_sw_grad_get,"ax",%progbits
+ 436              		.align	1
+ 437              		.global	lv_draw_sw_grad_get
+ 438              		.syntax unified
+ 439              		.thumb
+ 440              		.thumb_func
+ 442              	lv_draw_sw_grad_get:
+ 443              	.LVL52:
+ 444              	.LFB35:
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /* No gradient, no cache */
+ 445              		.loc 1 146 1 is_stmt 1 view -0
+ 446              		.cfi_startproc
+ 447              		@ args = 0, pretend = 0, frame = 0
+ 448              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 14
+
+
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     /* No gradient, no cache */
+ 449              		.loc 1 146 1 is_stmt 0 view .LVU137
+ 450 0000 70B5     		push	{r4, r5, r6, lr}
+ 451              	.LCFI5:
+ 452              		.cfi_def_cfa_offset 16
+ 453              		.cfi_offset 4, -16
+ 454              		.cfi_offset 5, -12
+ 455              		.cfi_offset 6, -8
+ 456              		.cfi_offset 14, -4
+ 457 0002 82B0     		sub	sp, sp, #8
+ 458              	.LCFI6:
+ 459              		.cfi_def_cfa_offset 24
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 460              		.loc 1 148 5 is_stmt 1 view .LVU138
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 461              		.loc 1 148 15 is_stmt 0 view .LVU139
+ 462 0004 C37A     		ldrb	r3, [r0, #11]	@ zero_extendqisi2
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 463              		.loc 1 148 7 view .LVU140
+ 464 0006 13F00F0F 		tst	r3, #15
+ 465 000a 18D0     		beq	.L27
+ 466 000c 0646     		mov	r6, r0
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(item == NULL) {
+ 467              		.loc 1 151 5 is_stmt 1 view .LVU141
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     if(item == NULL) {
+ 468              		.loc 1 151 37 is_stmt 0 view .LVU142
+ 469 000e FFF7FEFF 		bl	allocate_item
+ 470              	.LVL53:
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         LV_LOG_WARN("Failed to allocate item for the gradient");
+ 471              		.loc 1 152 5 is_stmt 1 view .LVU143
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         LV_LOG_WARN("Failed to allocate item for the gradient");
+ 472              		.loc 1 152 7 is_stmt 0 view .LVU144
+ 473 0012 0546     		mov	r5, r0
+ 474 0014 80B1     		cbz	r0, .L23
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         lv_draw_sw_grad_color_calculate(g, item->size, i, &item->color_map[i], &item->opa_map[i]);
+ 475              		.loc 1 159 11 view .LVU145
+ 476 0016 0024     		movs	r4, #0
+ 477 0018 0BE0     		b	.L25
+ 478              	.LVL54:
+ 479              	.L26:
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 480              		.loc 1 160 9 is_stmt 1 view .LVU146
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 481              		.loc 1 160 64 is_stmt 0 view .LVU147
+ 482 001a 2868     		ldr	r0, [r5]
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 483              		.loc 1 160 75 view .LVU148
+ 484 001c 04EB4403 		add	r3, r4, r4, lsl #1
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 485              		.loc 1 160 85 view .LVU149
+ 486 0020 6A68     		ldr	r2, [r5, #4]
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     }
+ 487              		.loc 1 160 9 view .LVU150
+ 488 0022 2244     		add	r2, r2, r4
+ 489 0024 0092     		str	r2, [sp]
+ 490 0026 0344     		add	r3, r3, r0
+ 491 0028 2246     		mov	r2, r4
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 15
+
+
+ 492 002a 3046     		mov	r0, r6
+ 493 002c FFF7FEFF 		bl	lv_draw_sw_grad_color_calculate
+ 494              	.LVL55:
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         lv_draw_sw_grad_color_calculate(g, item->size, i, &item->color_map[i], &item->opa_map[i]);
+ 495              		.loc 1 159 33 is_stmt 1 discriminator 3 view .LVU151
+ 496 0030 0134     		adds	r4, r4, #1
+ 497              	.LVL56:
+ 498              	.L25:
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         lv_draw_sw_grad_color_calculate(g, item->size, i, &item->color_map[i], &item->opa_map[i]);
+ 499              		.loc 1 159 18 discriminator 1 view .LVU152
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         lv_draw_sw_grad_color_calculate(g, item->size, i, &item->color_map[i], &item->opa_map[i]);
+ 500              		.loc 1 159 24 is_stmt 0 discriminator 1 view .LVU153
+ 501 0032 A968     		ldr	r1, [r5, #8]
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****         lv_draw_sw_grad_color_calculate(g, item->size, i, &item->color_map[i], &item->opa_map[i]);
+ 502              		.loc 1 159 18 discriminator 1 view .LVU154
+ 503 0034 A142     		cmp	r1, r4
+ 504 0036 F0D8     		bhi	.L26
+ 505              	.LVL57:
+ 506              	.L23:
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 507              		.loc 1 163 1 view .LVU155
+ 508 0038 2846     		mov	r0, r5
+ 509 003a 02B0     		add	sp, sp, #8
+ 510              	.LCFI7:
+ 511              		.cfi_remember_state
+ 512              		.cfi_def_cfa_offset 16
+ 513              		@ sp needed
+ 514 003c 70BD     		pop	{r4, r5, r6, pc}
+ 515              	.LVL58:
+ 516              	.L27:
+ 517              	.LCFI8:
+ 518              		.cfi_restore_state
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 519              		.loc 1 148 43 discriminator 1 view .LVU156
+ 520 003e 0025     		movs	r5, #0
+ 521 0040 FAE7     		b	.L23
+ 522              		.cfi_endproc
+ 523              	.LFE35:
+ 525              		.section	.text.lv_draw_sw_grad_cleanup,"ax",%progbits
+ 526              		.align	1
+ 527              		.global	lv_draw_sw_grad_cleanup
+ 528              		.syntax unified
+ 529              		.thumb
+ 530              		.thumb_func
+ 532              	lv_draw_sw_grad_cleanup:
+ 533              	.LVL59:
+ 534              	.LFB37:
+ 217:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** 
+ 218:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** void lv_draw_sw_grad_cleanup(lv_draw_sw_grad_calc_t * grad)
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** {
+ 535              		.loc 1 219 1 is_stmt 1 view -0
+ 536              		.cfi_startproc
+ 537              		@ args = 0, pretend = 0, frame = 0
+ 538              		@ frame_needed = 0, uses_anonymous_args = 0
+ 539              		.loc 1 219 1 is_stmt 0 view .LVU158
+ 540 0000 08B5     		push	{r3, lr}
+ 541              	.LCFI9:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 16
+
+
+ 542              		.cfi_def_cfa_offset 8
+ 543              		.cfi_offset 3, -8
+ 544              		.cfi_offset 14, -4
+ 220:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c ****     lv_free(grad);
+ 545              		.loc 1 220 5 is_stmt 1 view .LVU159
+ 546 0002 FFF7FEFF 		bl	lv_free
+ 547              	.LVL60:
+ 221:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.c **** }
+ 548              		.loc 1 221 1 is_stmt 0 view .LVU160
+ 549 0006 08BD     		pop	{r3, pc}
+ 550              		.cfi_endproc
+ 551              	.LFE37:
+ 553              		.text
+ 554              	.Letext0:
+ 555              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 556              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 557              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 558              		.file 5 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_types.h"
+ 559              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_color.h"
+ 560              		.file 7 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_grad.h"
+ 561              		.file 8 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_grad.h"
+ 562              		.file 9 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib/lv_mem.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s 			page 17
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_draw_sw_grad.c
+C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s:20     .text.allocate_item:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s:25     .text.allocate_item:00000000 allocate_item
+C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s:141    .text.lv_draw_sw_grad_color_calculate:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s:147    .text.lv_draw_sw_grad_color_calculate:00000000 lv_draw_sw_grad_color_calculate
+C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s:436    .text.lv_draw_sw_grad_get:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s:442    .text.lv_draw_sw_grad_get:00000000 lv_draw_sw_grad_get
+C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s:526    .text.lv_draw_sw_grad_cleanup:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccO6ypPl.s:532    .text.lv_draw_sw_grad_cleanup:00000000 lv_draw_sw_grad_cleanup
+
+UNDEFINED SYMBOLS
+lv_malloc
+lv_color_make
+lv_free

@@ -1,0 +1,491 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"sdram.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../BSP/SDRAM/sdram.c"
+  19              		.section	.text.sdram_send_cmd,"ax",%progbits
+  20              		.align	1
+  21              		.global	sdram_send_cmd
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	sdram_send_cmd:
+  27              	.LVL0:
+  28              	.LFB149:
+   1:../../BSP/SDRAM/sdram.c **** /**
+   2:../../BSP/SDRAM/sdram.c ****  **************************************************************************************************
+   3:../../BSP/SDRAM/sdram.c ****  * @file        sdram.c
+   4:../../BSP/SDRAM/sdram.c ****  * @brief       SDRAM driver (CubeMX FMC + post-init sequence)
+   5:../../BSP/SDRAM/sdram.c ****  **************************************************************************************************
+   6:../../BSP/SDRAM/sdram.c ****  */
+   7:../../BSP/SDRAM/sdram.c **** 
+   8:../../BSP/SDRAM/sdram.c **** #include "sdram.h"
+   9:../../BSP/SDRAM/sdram.c **** #include <stdio.h>
+  10:../../BSP/SDRAM/sdram.c **** 
+  11:../../BSP/SDRAM/sdram.c **** /**
+  12:../../BSP/SDRAM/sdram.c ****  * @brief  SDRAM mode register init and refresh rate (call after MX_FMC_Init)
+  13:../../BSP/SDRAM/sdram.c ****  */
+  14:../../BSP/SDRAM/sdram.c **** void sdram_init(void)
+  15:../../BSP/SDRAM/sdram.c **** {
+  16:../../BSP/SDRAM/sdram.c ****     sdram_initialization_sequence();
+  17:../../BSP/SDRAM/sdram.c ****     HAL_SDRAM_ProgramRefreshRate(&hsdram2, SDRAM_REFRESH_COUNT);
+  18:../../BSP/SDRAM/sdram.c **** }
+  19:../../BSP/SDRAM/sdram.c **** 
+  20:../../BSP/SDRAM/sdram.c **** /**
+  21:../../BSP/SDRAM/sdram.c ****  * @brief  SDRAM controller initialization command sequence
+  22:../../BSP/SDRAM/sdram.c ****  */
+  23:../../BSP/SDRAM/sdram.c **** void sdram_initialization_sequence(void)
+  24:../../BSP/SDRAM/sdram.c **** {
+  25:../../BSP/SDRAM/sdram.c ****     uint32_t temp = 0;
+  26:../../BSP/SDRAM/sdram.c **** 
+  27:../../BSP/SDRAM/sdram.c ****     sdram_send_cmd(1, FMC_SDRAM_CMD_CLK_ENABLE, 1, 0);
+  28:../../BSP/SDRAM/sdram.c ****     HAL_Delay(1);
+  29:../../BSP/SDRAM/sdram.c **** 
+  30:../../BSP/SDRAM/sdram.c ****     sdram_send_cmd(1, FMC_SDRAM_CMD_PALL, 1, 0);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s 			page 2
+
+
+  31:../../BSP/SDRAM/sdram.c ****     sdram_send_cmd(1, FMC_SDRAM_CMD_AUTOREFRESH_MODE, 8, 0);
+  32:../../BSP/SDRAM/sdram.c **** 
+  33:../../BSP/SDRAM/sdram.c ****     temp = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_1 |
+  34:../../BSP/SDRAM/sdram.c ****            SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL |
+  35:../../BSP/SDRAM/sdram.c ****            SDRAM_MODEREG_CAS_LATENCY_2 |
+  36:../../BSP/SDRAM/sdram.c ****            SDRAM_MODEREG_OPERATING_MODE_STANDARD |
+  37:../../BSP/SDRAM/sdram.c ****            SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
+  38:../../BSP/SDRAM/sdram.c **** 
+  39:../../BSP/SDRAM/sdram.c ****     sdram_send_cmd(1, FMC_SDRAM_CMD_LOAD_MODE, 1, (uint16_t)temp);
+  40:../../BSP/SDRAM/sdram.c **** }
+  41:../../BSP/SDRAM/sdram.c **** 
+  42:../../BSP/SDRAM/sdram.c **** /**
+  43:../../BSP/SDRAM/sdram.c ****  * @brief  Send SDRAM command
+  44:../../BSP/SDRAM/sdram.c ****  * @param  bankx   0: Bank1, 1: Bank2
+  45:../../BSP/SDRAM/sdram.c ****  */
+  46:../../BSP/SDRAM/sdram.c **** uint8_t sdram_send_cmd(uint8_t bankx, uint8_t cmd, uint8_t refresh, uint16_t regval)
+  47:../../BSP/SDRAM/sdram.c **** {
+  29              		.loc 1 47 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 47 1 is_stmt 0 view .LVU1
+  34 0000 00B5     		push	{lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 14, -4
+  38 0002 85B0     		sub	sp, sp, #20
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 24
+  48:../../BSP/SDRAM/sdram.c ****     uint32_t target_bank;
+  41              		.loc 1 48 5 is_stmt 1 view .LVU2
+  49:../../BSP/SDRAM/sdram.c ****     FMC_SDRAM_CommandTypeDef command;
+  42              		.loc 1 49 5 view .LVU3
+  50:../../BSP/SDRAM/sdram.c **** 
+  51:../../BSP/SDRAM/sdram.c ****     if (bankx == 0)
+  43              		.loc 1 51 5 view .LVU4
+  44              		.loc 1 51 8 is_stmt 0 view .LVU5
+  45 0004 70B9     		cbnz	r0, .L4
+  52:../../BSP/SDRAM/sdram.c ****     {
+  53:../../BSP/SDRAM/sdram.c ****         target_bank = FMC_SDRAM_CMD_TARGET_BANK1;
+  46              		.loc 1 53 21 view .LVU6
+  47 0006 1020     		movs	r0, #16
+  48              	.LVL1:
+  49              	.L2:
+  54:../../BSP/SDRAM/sdram.c ****     }
+  55:../../BSP/SDRAM/sdram.c ****     else
+  56:../../BSP/SDRAM/sdram.c ****     {
+  57:../../BSP/SDRAM/sdram.c ****         target_bank = FMC_SDRAM_CMD_TARGET_BANK2;
+  58:../../BSP/SDRAM/sdram.c ****     }
+  59:../../BSP/SDRAM/sdram.c **** 
+  60:../../BSP/SDRAM/sdram.c ****     command.CommandMode = cmd;
+  50              		.loc 1 60 5 is_stmt 1 view .LVU7
+  51              		.loc 1 60 25 is_stmt 0 view .LVU8
+  52 0008 0091     		str	r1, [sp]
+  61:../../BSP/SDRAM/sdram.c ****     command.CommandTarget = target_bank;
+  53              		.loc 1 61 5 is_stmt 1 view .LVU9
+  54              		.loc 1 61 27 is_stmt 0 view .LVU10
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s 			page 3
+
+
+  55 000a 0190     		str	r0, [sp, #4]
+  62:../../BSP/SDRAM/sdram.c ****     command.AutoRefreshNumber = refresh;
+  56              		.loc 1 62 5 is_stmt 1 view .LVU11
+  57              		.loc 1 62 31 is_stmt 0 view .LVU12
+  58 000c 0292     		str	r2, [sp, #8]
+  63:../../BSP/SDRAM/sdram.c ****     command.ModeRegisterDefinition = regval;
+  59              		.loc 1 63 5 is_stmt 1 view .LVU13
+  60              		.loc 1 63 36 is_stmt 0 view .LVU14
+  61 000e 0393     		str	r3, [sp, #12]
+  64:../../BSP/SDRAM/sdram.c **** 
+  65:../../BSP/SDRAM/sdram.c ****     if (HAL_SDRAM_SendCommand(&hsdram2, &command, 0x1000U) == HAL_OK)
+  62              		.loc 1 65 5 is_stmt 1 view .LVU15
+  63              		.loc 1 65 9 is_stmt 0 view .LVU16
+  64 0010 4FF48052 		mov	r2, #4096
+  65              	.LVL2:
+  66              		.loc 1 65 9 view .LVU17
+  67 0014 6946     		mov	r1, sp
+  68              	.LVL3:
+  69              		.loc 1 65 9 view .LVU18
+  70 0016 0448     		ldr	r0, .L6
+  71              	.LVL4:
+  72              		.loc 1 65 9 view .LVU19
+  73 0018 FFF7FEFF 		bl	HAL_SDRAM_SendCommand
+  74              	.LVL5:
+  75              		.loc 1 65 8 discriminator 1 view .LVU20
+  76 001c 00B1     		cbz	r0, .L3
+  66:../../BSP/SDRAM/sdram.c ****     {
+  67:../../BSP/SDRAM/sdram.c ****         return 0;
+  68:../../BSP/SDRAM/sdram.c ****     }
+  69:../../BSP/SDRAM/sdram.c **** 
+  70:../../BSP/SDRAM/sdram.c ****     return 1;
+  77              		.loc 1 70 12 view .LVU21
+  78 001e 0120     		movs	r0, #1
+  79              	.L3:
+  71:../../BSP/SDRAM/sdram.c **** }
+  80              		.loc 1 71 1 view .LVU22
+  81 0020 05B0     		add	sp, sp, #20
+  82              	.LCFI2:
+  83              		.cfi_remember_state
+  84              		.cfi_def_cfa_offset 4
+  85              		@ sp needed
+  86 0022 00BD     		pop	{pc}
+  87              	.LVL6:
+  88              	.L4:
+  89              	.LCFI3:
+  90              		.cfi_restore_state
+  57:../../BSP/SDRAM/sdram.c ****     }
+  91              		.loc 1 57 21 view .LVU23
+  92 0024 0820     		movs	r0, #8
+  93              	.LVL7:
+  57:../../BSP/SDRAM/sdram.c ****     }
+  94              		.loc 1 57 21 view .LVU24
+  95 0026 EFE7     		b	.L2
+  96              	.L7:
+  97              		.align	2
+  98              	.L6:
+  99 0028 00000000 		.word	hsdram2
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s 			page 4
+
+
+ 100              		.cfi_endproc
+ 101              	.LFE149:
+ 103              		.section	.text.sdram_initialization_sequence,"ax",%progbits
+ 104              		.align	1
+ 105              		.global	sdram_initialization_sequence
+ 106              		.syntax unified
+ 107              		.thumb
+ 108              		.thumb_func
+ 110              	sdram_initialization_sequence:
+ 111              	.LFB148:
+  24:../../BSP/SDRAM/sdram.c ****     uint32_t temp = 0;
+ 112              		.loc 1 24 1 is_stmt 1 view -0
+ 113              		.cfi_startproc
+ 114              		@ args = 0, pretend = 0, frame = 0
+ 115              		@ frame_needed = 0, uses_anonymous_args = 0
+ 116 0000 08B5     		push	{r3, lr}
+ 117              	.LCFI4:
+ 118              		.cfi_def_cfa_offset 8
+ 119              		.cfi_offset 3, -8
+ 120              		.cfi_offset 14, -4
+  25:../../BSP/SDRAM/sdram.c **** 
+ 121              		.loc 1 25 5 view .LVU26
+ 122              	.LVL8:
+  27:../../BSP/SDRAM/sdram.c ****     HAL_Delay(1);
+ 123              		.loc 1 27 5 view .LVU27
+ 124 0002 0023     		movs	r3, #0
+ 125 0004 0122     		movs	r2, #1
+ 126 0006 1146     		mov	r1, r2
+ 127 0008 1046     		mov	r0, r2
+ 128 000a FFF7FEFF 		bl	sdram_send_cmd
+ 129              	.LVL9:
+  28:../../BSP/SDRAM/sdram.c **** 
+ 130              		.loc 1 28 5 view .LVU28
+ 131 000e 0120     		movs	r0, #1
+ 132 0010 FFF7FEFF 		bl	HAL_Delay
+ 133              	.LVL10:
+  30:../../BSP/SDRAM/sdram.c ****     sdram_send_cmd(1, FMC_SDRAM_CMD_AUTOREFRESH_MODE, 8, 0);
+ 134              		.loc 1 30 5 view .LVU29
+ 135 0014 0023     		movs	r3, #0
+ 136 0016 0122     		movs	r2, #1
+ 137 0018 0221     		movs	r1, #2
+ 138 001a 1046     		mov	r0, r2
+ 139 001c FFF7FEFF 		bl	sdram_send_cmd
+ 140              	.LVL11:
+  31:../../BSP/SDRAM/sdram.c **** 
+ 141              		.loc 1 31 5 view .LVU30
+ 142 0020 0023     		movs	r3, #0
+ 143 0022 0822     		movs	r2, #8
+ 144 0024 0321     		movs	r1, #3
+ 145 0026 0120     		movs	r0, #1
+ 146 0028 FFF7FEFF 		bl	sdram_send_cmd
+ 147              	.LVL12:
+  33:../../BSP/SDRAM/sdram.c ****            SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL |
+ 148              		.loc 1 33 5 view .LVU31
+  39:../../BSP/SDRAM/sdram.c **** }
+ 149              		.loc 1 39 5 view .LVU32
+ 150 002c 4FF40873 		mov	r3, #544
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s 			page 5
+
+
+ 151 0030 0122     		movs	r2, #1
+ 152 0032 0421     		movs	r1, #4
+ 153 0034 1046     		mov	r0, r2
+ 154 0036 FFF7FEFF 		bl	sdram_send_cmd
+ 155              	.LVL13:
+  40:../../BSP/SDRAM/sdram.c **** 
+ 156              		.loc 1 40 1 is_stmt 0 view .LVU33
+ 157 003a 08BD     		pop	{r3, pc}
+ 158              		.cfi_endproc
+ 159              	.LFE148:
+ 161              		.section	.text.sdram_init,"ax",%progbits
+ 162              		.align	1
+ 163              		.global	sdram_init
+ 164              		.syntax unified
+ 165              		.thumb
+ 166              		.thumb_func
+ 168              	sdram_init:
+ 169              	.LFB147:
+  15:../../BSP/SDRAM/sdram.c ****     sdram_initialization_sequence();
+ 170              		.loc 1 15 1 is_stmt 1 view -0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174 0000 08B5     		push	{r3, lr}
+ 175              	.LCFI5:
+ 176              		.cfi_def_cfa_offset 8
+ 177              		.cfi_offset 3, -8
+ 178              		.cfi_offset 14, -4
+  16:../../BSP/SDRAM/sdram.c ****     HAL_SDRAM_ProgramRefreshRate(&hsdram2, SDRAM_REFRESH_COUNT);
+ 179              		.loc 1 16 5 view .LVU35
+ 180 0002 FFF7FEFF 		bl	sdram_initialization_sequence
+ 181              	.LVL14:
+  17:../../BSP/SDRAM/sdram.c **** }
+ 182              		.loc 1 17 5 view .LVU36
+ 183 0006 40F23F71 		movw	r1, #1855
+ 184 000a 0248     		ldr	r0, .L12
+ 185 000c FFF7FEFF 		bl	HAL_SDRAM_ProgramRefreshRate
+ 186              	.LVL15:
+  18:../../BSP/SDRAM/sdram.c **** 
+ 187              		.loc 1 18 1 is_stmt 0 view .LVU37
+ 188 0010 08BD     		pop	{r3, pc}
+ 189              	.L13:
+ 190 0012 00BF     		.align	2
+ 191              	.L12:
+ 192 0014 00000000 		.word	hsdram2
+ 193              		.cfi_endproc
+ 194              	.LFE147:
+ 196              		.section	.rodata.sdram_test.str1.4,"aMS",%progbits,1
+ 197              		.align	2
+ 198              	.LC0:
+ 199 0000 53445241 		.ascii	"SDRAM Capacity: %lu KB\015\012\000"
+ 199      4D204361 
+ 199      70616369 
+ 199      74793A20 
+ 199      256C7520 
+ 200              		.section	.text.sdram_test,"ax",%progbits
+ 201              		.align	1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s 			page 6
+
+
+ 202              		.global	sdram_test
+ 203              		.syntax unified
+ 204              		.thumb
+ 205              		.thumb_func
+ 207              	sdram_test:
+ 208              	.LFB150:
+  72:../../BSP/SDRAM/sdram.c **** 
+  73:../../BSP/SDRAM/sdram.c **** /**
+  74:../../BSP/SDRAM/sdram.c ****  * @brief  Probe SDRAM capacity by writing incremental patterns every 16KB
+  75:../../BSP/SDRAM/sdram.c ****  */
+  76:../../BSP/SDRAM/sdram.c **** void sdram_test(void)
+  77:../../BSP/SDRAM/sdram.c **** {
+ 209              		.loc 1 77 1 is_stmt 1 view -0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 0
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213 0000 38B5     		push	{r3, r4, r5, lr}
+ 214              	.LCFI6:
+ 215              		.cfi_def_cfa_offset 16
+ 216              		.cfi_offset 3, -16
+ 217              		.cfi_offset 4, -12
+ 218              		.cfi_offset 5, -8
+ 219              		.cfi_offset 14, -4
+  78:../../BSP/SDRAM/sdram.c ****     uint32_t i;
+ 220              		.loc 1 78 5 view .LVU39
+  79:../../BSP/SDRAM/sdram.c ****     uint32_t temp = 0;
+ 221              		.loc 1 79 5 view .LVU40
+ 222              	.LVL16:
+  80:../../BSP/SDRAM/sdram.c ****     uint32_t sval = 0;
+ 223              		.loc 1 80 5 view .LVU41
+  81:../../BSP/SDRAM/sdram.c **** 
+  82:../../BSP/SDRAM/sdram.c ****     for (i = 0; i < 32U * 1024U * 1024U; i += 16U * 1024U)
+ 224              		.loc 1 82 5 view .LVU42
+  79:../../BSP/SDRAM/sdram.c ****     uint32_t sval = 0;
+ 225              		.loc 1 79 14 is_stmt 0 view .LVU43
+ 226 0002 0022     		movs	r2, #0
+ 227              		.loc 1 82 12 view .LVU44
+ 228 0004 1346     		mov	r3, r2
+ 229              		.loc 1 82 5 view .LVU45
+ 230 0006 05E0     		b	.L15
+ 231              	.LVL17:
+ 232              	.L16:
+  83:../../BSP/SDRAM/sdram.c ****     {
+  84:../../BSP/SDRAM/sdram.c ****         *(volatile uint32_t *)(BANK6_SDRAM_ADDR + i) = temp;
+ 233              		.loc 1 84 9 is_stmt 1 view .LVU46
+ 234              		.loc 1 84 49 is_stmt 0 view .LVU47
+ 235 0008 03F15041 		add	r1, r3, #-805306368
+ 236              		.loc 1 84 54 view .LVU48
+ 237 000c 0A60     		str	r2, [r1]
+  85:../../BSP/SDRAM/sdram.c ****         temp++;
+ 238              		.loc 1 85 9 is_stmt 1 view .LVU49
+ 239              		.loc 1 85 13 is_stmt 0 view .LVU50
+ 240 000e 0132     		adds	r2, r2, #1
+ 241              	.LVL18:
+  82:../../BSP/SDRAM/sdram.c ****     {
+ 242              		.loc 1 82 44 is_stmt 1 discriminator 3 view .LVU51
+ 243 0010 03F58043 		add	r3, r3, #16384
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s 			page 7
+
+
+ 244              	.LVL19:
+ 245              	.L15:
+  82:../../BSP/SDRAM/sdram.c ****     {
+ 246              		.loc 1 82 19 discriminator 1 view .LVU52
+ 247 0014 B3F1007F 		cmp	r3, #33554432
+ 248 0018 F6D3     		bcc	.L16
+  80:../../BSP/SDRAM/sdram.c **** 
+ 249              		.loc 1 80 14 is_stmt 0 view .LVU53
+ 250 001a 0025     		movs	r5, #0
+  86:../../BSP/SDRAM/sdram.c ****     }
+  87:../../BSP/SDRAM/sdram.c **** 
+  88:../../BSP/SDRAM/sdram.c ****     for (i = 0; i < 32U * 1024U * 1024U; i += 16U * 1024U)
+ 251              		.loc 1 88 12 view .LVU54
+ 252 001c 2C46     		mov	r4, r5
+ 253 001e 08E0     		b	.L17
+ 254              	.LVL20:
+ 255              	.L21:
+  89:../../BSP/SDRAM/sdram.c ****     {
+  90:../../BSP/SDRAM/sdram.c ****         temp = *(volatile uint32_t *)(BANK6_SDRAM_ADDR + i);
+  91:../../BSP/SDRAM/sdram.c **** 
+  92:../../BSP/SDRAM/sdram.c ****         if (i == 0U)
+  93:../../BSP/SDRAM/sdram.c ****         {
+  94:../../BSP/SDRAM/sdram.c ****             sval = temp;
+ 256              		.loc 1 94 18 view .LVU55
+ 257 0020 0D46     		mov	r5, r1
+ 258              	.LVL21:
+ 259              	.L18:
+  95:../../BSP/SDRAM/sdram.c ****         }
+  96:../../BSP/SDRAM/sdram.c ****         else if (temp <= sval)
+  97:../../BSP/SDRAM/sdram.c ****         {
+  98:../../BSP/SDRAM/sdram.c ****             break;
+  99:../../BSP/SDRAM/sdram.c ****         }
+ 100:../../BSP/SDRAM/sdram.c **** 
+ 101:../../BSP/SDRAM/sdram.c ****         printf("SDRAM Capacity: %lu KB\r\n", (unsigned long)((temp - sval + 1U) * 16U));
+ 260              		.loc 1 101 9 is_stmt 1 view .LVU56
+ 261              		.loc 1 101 68 is_stmt 0 view .LVU57
+ 262 0022 491B     		subs	r1, r1, r5
+ 263              	.LVL22:
+ 264              		.loc 1 101 75 view .LVU58
+ 265 0024 0131     		adds	r1, r1, #1
+ 266              		.loc 1 101 9 view .LVU59
+ 267 0026 0901     		lsls	r1, r1, #4
+ 268 0028 0748     		ldr	r0, .L23
+ 269 002a FFF7FEFF 		bl	printf
+ 270              	.LVL23:
+  88:../../BSP/SDRAM/sdram.c ****     {
+ 271              		.loc 1 88 44 is_stmt 1 discriminator 2 view .LVU60
+ 272 002e 04F58044 		add	r4, r4, #16384
+ 273              	.LVL24:
+ 274              	.L17:
+  88:../../BSP/SDRAM/sdram.c ****     {
+ 275              		.loc 1 88 19 discriminator 1 view .LVU61
+ 276 0032 B4F1007F 		cmp	r4, #33554432
+ 277 0036 06D2     		bcs	.L14
+  90:../../BSP/SDRAM/sdram.c **** 
+ 278              		.loc 1 90 9 view .LVU62
+  90:../../BSP/SDRAM/sdram.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s 			page 8
+
+
+ 279              		.loc 1 90 56 is_stmt 0 view .LVU63
+ 280 0038 04F15043 		add	r3, r4, #-805306368
+  90:../../BSP/SDRAM/sdram.c **** 
+ 281              		.loc 1 90 14 view .LVU64
+ 282 003c 1968     		ldr	r1, [r3]
+ 283              	.LVL25:
+  92:../../BSP/SDRAM/sdram.c ****         {
+ 284              		.loc 1 92 9 is_stmt 1 view .LVU65
+  92:../../BSP/SDRAM/sdram.c ****         {
+ 285              		.loc 1 92 12 is_stmt 0 view .LVU66
+ 286 003e 002C     		cmp	r4, #0
+ 287 0040 EED0     		beq	.L21
+  96:../../BSP/SDRAM/sdram.c ****         {
+ 288              		.loc 1 96 14 is_stmt 1 view .LVU67
+  96:../../BSP/SDRAM/sdram.c ****         {
+ 289              		.loc 1 96 17 is_stmt 0 view .LVU68
+ 290 0042 8D42     		cmp	r5, r1
+ 291 0044 EDD3     		bcc	.L18
+ 292              	.LVL26:
+ 293              	.L14:
+ 102:../../BSP/SDRAM/sdram.c ****     }
+ 103:../../BSP/SDRAM/sdram.c **** }
+ 294              		.loc 1 103 1 view .LVU69
+ 295 0046 38BD     		pop	{r3, r4, r5, pc}
+ 296              	.LVL27:
+ 297              	.L24:
+ 298              		.loc 1 103 1 view .LVU70
+ 299              		.align	2
+ 300              	.L23:
+ 301 0048 00000000 		.word	.LC0
+ 302              		.cfi_endproc
+ 303              	.LFE150:
+ 305              		.text
+ 306              	.Letext0:
+ 307              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 308              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 309              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 310              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 311              		.file 6 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h"
+ 312              		.file 7 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h"
+ 313              		.file 8 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h"
+ 314              		.file 9 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 315              		.file 10 "../../CM7/Core/Inc/fmc.h"
+ 316              		.file 11 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sdram.c
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:20     .text.sdram_send_cmd:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:26     .text.sdram_send_cmd:00000000 sdram_send_cmd
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:99     .text.sdram_send_cmd:00000028 $d
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:104    .text.sdram_initialization_sequence:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:110    .text.sdram_initialization_sequence:00000000 sdram_initialization_sequence
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:162    .text.sdram_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:168    .text.sdram_init:00000000 sdram_init
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:192    .text.sdram_init:00000014 $d
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:197    .rodata.sdram_test.str1.4:00000000 $d
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:201    .text.sdram_test:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:207    .text.sdram_test:00000000 sdram_test
+C:\Users\28576\AppData\Local\Temp\ccXXHEmP.s:301    .text.sdram_test:00000048 $d
+
+UNDEFINED SYMBOLS
+HAL_SDRAM_SendCommand
+hsdram2
+HAL_Delay
+HAL_SDRAM_ProgramRefreshRate
+printf

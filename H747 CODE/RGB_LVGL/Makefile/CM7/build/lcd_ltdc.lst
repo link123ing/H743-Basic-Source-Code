@@ -1,0 +1,3413 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lcd_ltdc.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../BSP/LCD/lcd_ltdc.c"
+  19              		.section	.text.ltdc_switch,"ax",%progbits
+  20              		.align	1
+  21              		.global	ltdc_switch
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	ltdc_switch:
+  27              	.LVL0:
+  28              	.LFB144:
+   1:../../BSP/LCD/lcd_ltdc.c **** /**
+   2:../../BSP/LCD/lcd_ltdc.c ****  **************************************************************************************************
+   3:../../BSP/LCD/lcd_ltdc.c ****  * @file        lcd_ltdc.c
+   4:../../BSP/LCD/lcd_ltdc.c ****  * @version     V1.0
+   5:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC 驱动代码
+   6:../../BSP/LCD/lcd_ltdc.c ****  **************************************************************************************************
+   7:../../BSP/LCD/lcd_ltdc.c ****  * @attention   Waiken-Smart 慧勤智远
+   8:../../BSP/LCD/lcd_ltdc.c ****  *
+   9:../../BSP/LCD/lcd_ltdc.c ****  * 实验平台:    STM32H747XIH6小系统板
+  10:../../BSP/LCD/lcd_ltdc.c ****  *
+  11:../../BSP/LCD/lcd_ltdc.c ****  **************************************************************************************************
+  12:../../BSP/LCD/lcd_ltdc.c ****  */
+  13:../../BSP/LCD/lcd_ltdc.c **** 
+  14:../../BSP/LCD/lcd_ltdc.c **** #include "lcd_ltdc.h"
+  15:../../BSP/LCD/lcd_ltdc.c **** #include "lcd.h"
+  16:../../BSP/LCD/lcd_ltdc.c **** #include "bsp_delay.h"
+  17:../../BSP/LCD/lcd_ltdc.c **** 
+  18:../../BSP/LCD/lcd_ltdc.c **** 
+  19:../../BSP/LCD/lcd_ltdc.c **** uint32_t *g_ltdc_framebuf[2];              /* LTDC LCD帧缓存数组指针,必须指向对应大�
+  20:../../BSP/LCD/lcd_ltdc.c **** _ltdc_dev lcdltdc;                         /* 管理LCD LTDC的重要参数 */
+  21:../../BSP/LCD/lcd_ltdc.c **** 
+  22:../../BSP/LCD/lcd_ltdc.c **** 
+  23:../../BSP/LCD/lcd_ltdc.c **** /**
+  24:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC开关
+  25:../../BSP/LCD/lcd_ltdc.c ****  * @param       sw   : 1,打开; 0,关闭;
+  26:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+  27:../../BSP/LCD/lcd_ltdc.c ****  */
+  28:../../BSP/LCD/lcd_ltdc.c **** void ltdc_switch(uint8_t sw)
+  29:../../BSP/LCD/lcd_ltdc.c **** {
+  29              		.loc 1 29 1 view -0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 2
+
+
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  30:../../BSP/LCD/lcd_ltdc.c ****     if (sw)
+  34              		.loc 1 30 5 view .LVU1
+  35              		.loc 1 30 8 is_stmt 0 view .LVU2
+  36 0000 30B1     		cbz	r0, .L2
+  31:../../BSP/LCD/lcd_ltdc.c ****     {
+  32:../../BSP/LCD/lcd_ltdc.c ****         __HAL_LTDC_ENABLE(&hltdc);   /* 打开LTDC */
+  37              		.loc 1 32 9 is_stmt 1 view .LVU3
+  38 0002 074B     		ldr	r3, .L4
+  39 0004 1A68     		ldr	r2, [r3]
+  40 0006 9369     		ldr	r3, [r2, #24]
+  41 0008 43F00103 		orr	r3, r3, #1
+  42 000c 9361     		str	r3, [r2, #24]
+  43 000e 7047     		bx	lr
+  44              	.L2:
+  33:../../BSP/LCD/lcd_ltdc.c ****     }
+  34:../../BSP/LCD/lcd_ltdc.c ****     else
+  35:../../BSP/LCD/lcd_ltdc.c ****     {
+  36:../../BSP/LCD/lcd_ltdc.c ****         __HAL_LTDC_DISABLE(&hltdc);  /* 关闭LTDC */
+  45              		.loc 1 36 9 view .LVU4
+  46 0010 034B     		ldr	r3, .L4
+  47 0012 1A68     		ldr	r2, [r3]
+  48 0014 9369     		ldr	r3, [r2, #24]
+  49 0016 23F00103 		bic	r3, r3, #1
+  50 001a 9361     		str	r3, [r2, #24]
+  37:../../BSP/LCD/lcd_ltdc.c ****     }
+  38:../../BSP/LCD/lcd_ltdc.c **** }
+  51              		.loc 1 38 1 is_stmt 0 view .LVU5
+  52 001c 7047     		bx	lr
+  53              	.L5:
+  54 001e 00BF     		.align	2
+  55              	.L4:
+  56 0020 00000000 		.word	hltdc
+  57              		.cfi_endproc
+  58              	.LFE144:
+  60              		.section	.text.ltdc_layer_switch,"ax",%progbits
+  61              		.align	1
+  62              		.global	ltdc_layer_switch
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  67              	ltdc_layer_switch:
+  68              	.LVL1:
+  69              	.LFB145:
+  39:../../BSP/LCD/lcd_ltdc.c **** 
+  40:../../BSP/LCD/lcd_ltdc.c **** /**
+  41:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC开关指定层
+  42:../../BSP/LCD/lcd_ltdc.c ****  * @param       layerx      : 0,第一层; 1,第二层;
+  43:../../BSP/LCD/lcd_ltdc.c ****  * @param       sw          : 1,打开;   0,关闭;
+  44:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+  45:../../BSP/LCD/lcd_ltdc.c ****  */
+  46:../../BSP/LCD/lcd_ltdc.c **** void ltdc_layer_switch(uint8_t layerx, uint8_t sw)
+  47:../../BSP/LCD/lcd_ltdc.c **** {
+  70              		.loc 1 47 1 is_stmt 1 view -0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 3
+
+
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		@ link register save eliminated.
+  48:../../BSP/LCD/lcd_ltdc.c ****     if (sw) 
+  75              		.loc 1 48 5 view .LVU7
+  76              		.loc 1 48 8 is_stmt 0 view .LVU8
+  77 0000 81B1     		cbz	r1, .L7
+  49:../../BSP/LCD/lcd_ltdc.c ****     {
+  50:../../BSP/LCD/lcd_ltdc.c ****         __HAL_LTDC_LAYER_ENABLE(&hltdc, layerx);   /* 开启layerx */
+  78              		.loc 1 50 9 is_stmt 1 view .LVU9
+  79 0002 0E4B     		ldr	r3, .L9
+  80 0004 1B68     		ldr	r3, [r3]
+  81 0006 03EBC013 		add	r3, r3, r0, lsl #7
+  82 000a D3F88420 		ldr	r2, [r3, #132]
+  83 000e 42F00102 		orr	r2, r2, #1
+  84 0012 C3F88420 		str	r2, [r3, #132]
+  85              	.L8:
+  51:../../BSP/LCD/lcd_ltdc.c ****     }
+  52:../../BSP/LCD/lcd_ltdc.c ****     else
+  53:../../BSP/LCD/lcd_ltdc.c ****     {
+  54:../../BSP/LCD/lcd_ltdc.c ****         __HAL_LTDC_LAYER_DISABLE(&hltdc, layerx);  /* 关闭layerx */
+  55:../../BSP/LCD/lcd_ltdc.c ****     }
+  56:../../BSP/LCD/lcd_ltdc.c **** 
+  57:../../BSP/LCD/lcd_ltdc.c ****     __HAL_LTDC_RELOAD_CONFIG(&hltdc);              /* 立即重新加载配置 */
+  86              		.loc 1 57 5 view .LVU10
+  87 0016 094B     		ldr	r3, .L9
+  88 0018 1A68     		ldr	r2, [r3]
+  89 001a 536A     		ldr	r3, [r2, #36]
+  90 001c 43F00103 		orr	r3, r3, #1
+  91 0020 5362     		str	r3, [r2, #36]
+  58:../../BSP/LCD/lcd_ltdc.c **** }
+  92              		.loc 1 58 1 is_stmt 0 view .LVU11
+  93 0022 7047     		bx	lr
+  94              	.L7:
+  54:../../BSP/LCD/lcd_ltdc.c ****     }
+  95              		.loc 1 54 9 is_stmt 1 view .LVU12
+  96 0024 054B     		ldr	r3, .L9
+  97 0026 1B68     		ldr	r3, [r3]
+  98 0028 03EBC013 		add	r3, r3, r0, lsl #7
+  99 002c D3F88420 		ldr	r2, [r3, #132]
+ 100 0030 22F00102 		bic	r2, r2, #1
+ 101 0034 C3F88420 		str	r2, [r3, #132]
+ 102 0038 EDE7     		b	.L8
+ 103              	.L10:
+ 104 003a 00BF     		.align	2
+ 105              	.L9:
+ 106 003c 00000000 		.word	hltdc
+ 107              		.cfi_endproc
+ 108              	.LFE145:
+ 110              		.section	.text.ltdc_select_layer,"ax",%progbits
+ 111              		.align	1
+ 112              		.global	ltdc_select_layer
+ 113              		.syntax unified
+ 114              		.thumb
+ 115              		.thumb_func
+ 117              	ltdc_select_layer:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 4
+
+
+ 118              	.LVL2:
+ 119              	.LFB146:
+  59:../../BSP/LCD/lcd_ltdc.c **** 
+  60:../../BSP/LCD/lcd_ltdc.c **** /**
+  61:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC选择层
+  62:../../BSP/LCD/lcd_ltdc.c ****  * @param       layerx   : 层号:0,第一层; 1,第二层;
+  63:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+  64:../../BSP/LCD/lcd_ltdc.c ****  */
+  65:../../BSP/LCD/lcd_ltdc.c **** void ltdc_select_layer(uint8_t layerx)
+  66:../../BSP/LCD/lcd_ltdc.c **** {
+ 120              		.loc 1 66 1 view -0
+ 121              		.cfi_startproc
+ 122              		@ args = 0, pretend = 0, frame = 0
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124              		@ link register save eliminated.
+  67:../../BSP/LCD/lcd_ltdc.c ****     lcdltdc.activelayer = layerx;
+ 125              		.loc 1 67 5 view .LVU14
+ 126              		.loc 1 67 25 is_stmt 0 view .LVU15
+ 127 0000 014B     		ldr	r3, .L12
+ 128 0002 1875     		strb	r0, [r3, #20]
+  68:../../BSP/LCD/lcd_ltdc.c **** }
+ 129              		.loc 1 68 1 view .LVU16
+ 130 0004 7047     		bx	lr
+ 131              	.L13:
+ 132 0006 00BF     		.align	2
+ 133              	.L12:
+ 134 0008 00000000 		.word	lcdltdc
+ 135              		.cfi_endproc
+ 136              	.LFE146:
+ 138              		.section	.text.ltdc_display_dir,"ax",%progbits
+ 139              		.align	1
+ 140              		.global	ltdc_display_dir
+ 141              		.syntax unified
+ 142              		.thumb
+ 143              		.thumb_func
+ 145              	ltdc_display_dir:
+ 146              	.LVL3:
+ 147              	.LFB147:
+  69:../../BSP/LCD/lcd_ltdc.c **** 
+  70:../../BSP/LCD/lcd_ltdc.c **** /**
+  71:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC显示方向设置
+  72:../../BSP/LCD/lcd_ltdc.c ****  * @param       dir         : 0,竖屏; 1,横屏;
+  73:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+  74:../../BSP/LCD/lcd_ltdc.c ****  */
+  75:../../BSP/LCD/lcd_ltdc.c **** void ltdc_display_dir(uint8_t dir)
+  76:../../BSP/LCD/lcd_ltdc.c **** {
+ 148              		.loc 1 76 1 is_stmt 1 view -0
+ 149              		.cfi_startproc
+ 150              		@ args = 0, pretend = 0, frame = 0
+ 151              		@ frame_needed = 0, uses_anonymous_args = 0
+ 152              		@ link register save eliminated.
+  77:../../BSP/LCD/lcd_ltdc.c ****     lcdltdc.dir = dir;     /* 显示方向 */
+ 153              		.loc 1 77 5 view .LVU18
+ 154              		.loc 1 77 17 is_stmt 0 view .LVU19
+ 155 0000 084B     		ldr	r3, .L18
+ 156 0002 5875     		strb	r0, [r3, #21]
+  78:../../BSP/LCD/lcd_ltdc.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 5
+
+
+  79:../../BSP/LCD/lcd_ltdc.c ****     if (dir == 0)          /* 竖屏 */
+ 157              		.loc 1 79 5 is_stmt 1 view .LVU20
+ 158              		.loc 1 79 8 is_stmt 0 view .LVU21
+ 159 0004 20B9     		cbnz	r0, .L15
+  80:../../BSP/LCD/lcd_ltdc.c ****     {
+  81:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.width = lcdltdc.pheight;
+ 160              		.loc 1 81 9 is_stmt 1 view .LVU22
+ 161              		.loc 1 81 32 is_stmt 0 view .LVU23
+ 162 0006 5A68     		ldr	r2, [r3, #4]
+ 163              		.loc 1 81 23 view .LVU24
+ 164 0008 DA82     		strh	r2, [r3, #22]	@ movhi
+  82:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.height = lcdltdc.pwidth;
+ 165              		.loc 1 82 9 is_stmt 1 view .LVU25
+ 166              		.loc 1 82 33 is_stmt 0 view .LVU26
+ 167 000a 1A68     		ldr	r2, [r3]
+ 168              		.loc 1 82 24 view .LVU27
+ 169 000c 1A83     		strh	r2, [r3, #24]	@ movhi
+ 170 000e 7047     		bx	lr
+ 171              	.L15:
+  83:../../BSP/LCD/lcd_ltdc.c ****     }
+  84:../../BSP/LCD/lcd_ltdc.c ****     else if (dir == 1)     /* 横屏 */
+ 172              		.loc 1 84 10 is_stmt 1 view .LVU28
+ 173              		.loc 1 84 13 is_stmt 0 view .LVU29
+ 174 0010 0128     		cmp	r0, #1
+ 175 0012 00D0     		beq	.L17
+ 176              	.L14:
+  85:../../BSP/LCD/lcd_ltdc.c ****     {
+  86:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.width = lcdltdc.pwidth;
+  87:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.height = lcdltdc.pheight;
+  88:../../BSP/LCD/lcd_ltdc.c ****     }
+  89:../../BSP/LCD/lcd_ltdc.c **** }
+ 177              		.loc 1 89 1 view .LVU30
+ 178 0014 7047     		bx	lr
+ 179              	.L17:
+  86:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.height = lcdltdc.pheight;
+ 180              		.loc 1 86 9 is_stmt 1 view .LVU31
+  86:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.height = lcdltdc.pheight;
+ 181              		.loc 1 86 32 is_stmt 0 view .LVU32
+ 182 0016 034B     		ldr	r3, .L18
+ 183 0018 1A68     		ldr	r2, [r3]
+  86:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.height = lcdltdc.pheight;
+ 184              		.loc 1 86 23 view .LVU33
+ 185 001a DA82     		strh	r2, [r3, #22]	@ movhi
+  87:../../BSP/LCD/lcd_ltdc.c ****     }
+ 186              		.loc 1 87 9 is_stmt 1 view .LVU34
+  87:../../BSP/LCD/lcd_ltdc.c ****     }
+ 187              		.loc 1 87 33 is_stmt 0 view .LVU35
+ 188 001c 5A68     		ldr	r2, [r3, #4]
+  87:../../BSP/LCD/lcd_ltdc.c ****     }
+ 189              		.loc 1 87 24 view .LVU36
+ 190 001e 1A83     		strh	r2, [r3, #24]	@ movhi
+ 191              		.loc 1 89 1 view .LVU37
+ 192 0020 F8E7     		b	.L14
+ 193              	.L19:
+ 194 0022 00BF     		.align	2
+ 195              	.L18:
+ 196 0024 00000000 		.word	lcdltdc
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 6
+
+
+ 197              		.cfi_endproc
+ 198              	.LFE147:
+ 200              		.section	.text.ltdc_draw_point,"ax",%progbits
+ 201              		.align	1
+ 202              		.global	ltdc_draw_point
+ 203              		.syntax unified
+ 204              		.thumb
+ 205              		.thumb_func
+ 207              	ltdc_draw_point:
+ 208              	.LVL4:
+ 209              	.LFB148:
+  90:../../BSP/LCD/lcd_ltdc.c **** 
+  91:../../BSP/LCD/lcd_ltdc.c **** /**
+  92:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC画点函数
+  93:../../BSP/LCD/lcd_ltdc.c ****  * @param       x,y         : 写入坐标
+  94:../../BSP/LCD/lcd_ltdc.c ****  * @param       color       : 颜色值
+  95:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+  96:../../BSP/LCD/lcd_ltdc.c ****  */
+  97:../../BSP/LCD/lcd_ltdc.c **** void ltdc_draw_point(uint16_t x, uint16_t y, uint32_t color)
+  98:../../BSP/LCD/lcd_ltdc.c **** { 
+ 210              		.loc 1 98 1 is_stmt 1 view -0
+ 211              		.cfi_startproc
+ 212              		@ args = 0, pretend = 0, frame = 0
+ 213              		@ frame_needed = 0, uses_anonymous_args = 0
+ 214              		.loc 1 98 1 is_stmt 0 view .LVU39
+ 215 0000 10B5     		push	{r4, lr}
+ 216              	.LCFI0:
+ 217              		.cfi_def_cfa_offset 8
+ 218              		.cfi_offset 4, -8
+ 219              		.cfi_offset 14, -4
+  99:../../BSP/LCD/lcd_ltdc.c **** #if LTDC_PIXFORMAT == LTDC_PIXFORMAT_ARGB8888
+ 100:../../BSP/LCD/lcd_ltdc.c **** 
+ 101:../../BSP/LCD/lcd_ltdc.c ****     if (lcdltdc.dir)    /* 横屏 */
+ 102:../../BSP/LCD/lcd_ltdc.c ****     {
+ 103:../../BSP/LCD/lcd_ltdc.c ****         *(uint32_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.p
+ 104:../../BSP/LCD/lcd_ltdc.c ****     }
+ 105:../../BSP/LCD/lcd_ltdc.c ****     else                /* 竖屏 */
+ 106:../../BSP/LCD/lcd_ltdc.c ****     {
+ 107:../../BSP/LCD/lcd_ltdc.c ****         *(uint32_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.p
+ 108:../../BSP/LCD/lcd_ltdc.c ****     }
+ 109:../../BSP/LCD/lcd_ltdc.c **** 
+ 110:../../BSP/LCD/lcd_ltdc.c **** #elif LTDC_PIXFORMAT == LTDC_PIXFORMAT_RGB888
+ 111:../../BSP/LCD/lcd_ltdc.c **** 
+ 112:../../BSP/LCD/lcd_ltdc.c ****     if (lcdltdc.dir)    /* 横屏 */
+ 113:../../BSP/LCD/lcd_ltdc.c ****     {
+ 114:../../BSP/LCD/lcd_ltdc.c ****         *(uint16_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.p
+ 115:../../BSP/LCD/lcd_ltdc.c ****         *(uint8_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.pw
+ 116:../../BSP/LCD/lcd_ltdc.c ****     }
+ 117:../../BSP/LCD/lcd_ltdc.c ****     else                /* 竖屏 */
+ 118:../../BSP/LCD/lcd_ltdc.c ****     {
+ 119:../../BSP/LCD/lcd_ltdc.c ****         *(uint16_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.p
+ 120:../../BSP/LCD/lcd_ltdc.c ****         *(uint8_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.pw
+ 121:../../BSP/LCD/lcd_ltdc.c ****     }
+ 122:../../BSP/LCD/lcd_ltdc.c ****     
+ 123:../../BSP/LCD/lcd_ltdc.c **** #else
+ 124:../../BSP/LCD/lcd_ltdc.c **** 
+ 125:../../BSP/LCD/lcd_ltdc.c ****     if (lcdltdc.dir)    /* 横屏 */
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 7
+
+
+ 220              		.loc 1 125 5 is_stmt 1 view .LVU40
+ 221              		.loc 1 125 16 is_stmt 0 view .LVU41
+ 222 0002 144B     		ldr	r3, .L24
+ 223 0004 5B7D     		ldrb	r3, [r3, #21]	@ zero_extendqisi2
+ 224              		.loc 1 125 8 view .LVU42
+ 225 0006 8BB1     		cbz	r3, .L21
+ 126:../../BSP/LCD/lcd_ltdc.c ****     {
+ 127:../../BSP/LCD/lcd_ltdc.c ****         *(uint16_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.p
+ 226              		.loc 1 127 9 is_stmt 1 view .LVU43
+ 227              		.loc 1 127 56 is_stmt 0 view .LVU44
+ 228 0008 DFF848C0 		ldr	ip, .L24
+ 229 000c 9CF814E0 		ldrb	lr, [ip, #20]	@ zero_extendqisi2
+ 230              		.loc 1 127 48 view .LVU45
+ 231 0010 114B     		ldr	r3, .L24+4
+ 232 0012 53F82EE0 		ldr	lr, [r3, lr, lsl #2]
+ 233              		.loc 1 127 79 view .LVU46
+ 234 0016 DCF81C30 		ldr	r3, [ip, #28]
+ 235              		.loc 1 127 98 view .LVU47
+ 236 001a DCF800C0 		ldr	ip, [ip]
+ 237              		.loc 1 127 110 view .LVU48
+ 238 001e 0CFB0101 		mla	r1, ip, r1, r0
+ 239              	.LVL5:
+ 240              		.loc 1 127 88 view .LVU49
+ 241 0022 01FB03F3 		mul	r3, r1, r3
+ 242              		.loc 1 127 116 view .LVU50
+ 243 0026 2EF80320 		strh	r2, [lr, r3]	@ movhi
+ 244              	.L20:
+ 128:../../BSP/LCD/lcd_ltdc.c ****     }
+ 129:../../BSP/LCD/lcd_ltdc.c ****     else                /* 竖屏 */
+ 130:../../BSP/LCD/lcd_ltdc.c ****     {
+ 131:../../BSP/LCD/lcd_ltdc.c ****         *(uint16_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.p
+ 132:../../BSP/LCD/lcd_ltdc.c ****     }
+ 133:../../BSP/LCD/lcd_ltdc.c **** 
+ 134:../../BSP/LCD/lcd_ltdc.c **** #endif
+ 135:../../BSP/LCD/lcd_ltdc.c **** }
+ 245              		.loc 1 135 1 view .LVU51
+ 246 002a 10BD     		pop	{r4, pc}
+ 247              	.LVL6:
+ 248              	.L21:
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 249              		.loc 1 131 9 is_stmt 1 view .LVU52
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 250              		.loc 1 131 56 is_stmt 0 view .LVU53
+ 251 002c 094B     		ldr	r3, .L24
+ 252 002e 93F814E0 		ldrb	lr, [r3, #20]	@ zero_extendqisi2
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 253              		.loc 1 131 48 view .LVU54
+ 254 0032 DFF824C0 		ldr	ip, .L24+4
+ 255 0036 5CF82EE0 		ldr	lr, [ip, lr, lsl #2]
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 256              		.loc 1 131 79 view .LVU55
+ 257 003a D3F81CC0 		ldr	ip, [r3, #28]
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 258              		.loc 1 131 98 view .LVU56
+ 259 003e 1C68     		ldr	r4, [r3]
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 260              		.loc 1 131 116 view .LVU57
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 8
+
+
+ 261 0040 5B68     		ldr	r3, [r3, #4]
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 262              		.loc 1 131 125 view .LVU58
+ 263 0042 1B1A     		subs	r3, r3, r0
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 264              		.loc 1 131 129 view .LVU59
+ 265 0044 013B     		subs	r3, r3, #1
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 266              		.loc 1 131 134 view .LVU60
+ 267 0046 03FB0411 		mla	r1, r3, r4, r1
+ 268              	.LVL7:
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 269              		.loc 1 131 88 view .LVU61
+ 270 004a 01FB0CF3 		mul	r3, r1, ip
+ 131:../../BSP/LCD/lcd_ltdc.c ****     }
+ 271              		.loc 1 131 140 view .LVU62
+ 272 004e 2EF80320 		strh	r2, [lr, r3]	@ movhi
+ 273              		.loc 1 135 1 view .LVU63
+ 274 0052 EAE7     		b	.L20
+ 275              	.L25:
+ 276              		.align	2
+ 277              	.L24:
+ 278 0054 00000000 		.word	lcdltdc
+ 279 0058 00000000 		.word	g_ltdc_framebuf
+ 280              		.cfi_endproc
+ 281              	.LFE148:
+ 283              		.section	.text.ltdc_read_point,"ax",%progbits
+ 284              		.align	1
+ 285              		.global	ltdc_read_point
+ 286              		.syntax unified
+ 287              		.thumb
+ 288              		.thumb_func
+ 290              	ltdc_read_point:
+ 291              	.LVL8:
+ 292              	.LFB149:
+ 136:../../BSP/LCD/lcd_ltdc.c **** 
+ 137:../../BSP/LCD/lcd_ltdc.c **** /**
+ 138:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC读点函数
+ 139:../../BSP/LCD/lcd_ltdc.c ****  * @param       x,y       : 读取点的坐标
+ 140:../../BSP/LCD/lcd_ltdc.c ****  * @retval      颜色值
+ 141:../../BSP/LCD/lcd_ltdc.c ****  */
+ 142:../../BSP/LCD/lcd_ltdc.c **** uint32_t ltdc_read_point(uint16_t x, uint16_t y)
+ 143:../../BSP/LCD/lcd_ltdc.c **** { 
+ 293              		.loc 1 143 1 is_stmt 1 view -0
+ 294              		.cfi_startproc
+ 295              		@ args = 0, pretend = 0, frame = 0
+ 296              		@ frame_needed = 0, uses_anonymous_args = 0
+ 144:../../BSP/LCD/lcd_ltdc.c **** #if LTDC_PIXFORMAT == LTDC_PIXFORMAT_ARGB8888
+ 145:../../BSP/LCD/lcd_ltdc.c **** 
+ 146:../../BSP/LCD/lcd_ltdc.c ****     if (lcdltdc.dir)    /* 横屏 */
+ 147:../../BSP/LCD/lcd_ltdc.c ****     {
+ 148:../../BSP/LCD/lcd_ltdc.c ****         return *(uint32_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lc
+ 149:../../BSP/LCD/lcd_ltdc.c ****     }
+ 150:../../BSP/LCD/lcd_ltdc.c ****     else                /* 竖屏 */
+ 151:../../BSP/LCD/lcd_ltdc.c ****     {
+ 152:../../BSP/LCD/lcd_ltdc.c ****         return *(uint32_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lc
+ 153:../../BSP/LCD/lcd_ltdc.c ****     }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 9
+
+
+ 154:../../BSP/LCD/lcd_ltdc.c **** 
+ 155:../../BSP/LCD/lcd_ltdc.c **** #elif LTDC_PIXFORMAT == LTDC_PIXFORMAT_RGB888
+ 156:../../BSP/LCD/lcd_ltdc.c **** 
+ 157:../../BSP/LCD/lcd_ltdc.c ****     if (lcdltdc.dir)    /* 横屏 */
+ 158:../../BSP/LCD/lcd_ltdc.c ****     {
+ 159:../../BSP/LCD/lcd_ltdc.c ****         return *(uint32_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lc
+ 160:../../BSP/LCD/lcd_ltdc.c ****     }
+ 161:../../BSP/LCD/lcd_ltdc.c ****     else                /* 竖屏 */
+ 162:../../BSP/LCD/lcd_ltdc.c ****     {
+ 163:../../BSP/LCD/lcd_ltdc.c ****         return *(uint32_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lc
+ 164:../../BSP/LCD/lcd_ltdc.c ****     }
+ 165:../../BSP/LCD/lcd_ltdc.c ****     
+ 166:../../BSP/LCD/lcd_ltdc.c **** #else
+ 167:../../BSP/LCD/lcd_ltdc.c **** 
+ 168:../../BSP/LCD/lcd_ltdc.c ****     if (lcdltdc.dir)    /* 横屏 */
+ 297              		.loc 1 168 5 view .LVU65
+ 298              		.loc 1 168 16 is_stmt 0 view .LVU66
+ 299 0000 124B     		ldr	r3, .L32
+ 300 0002 5B7D     		ldrb	r3, [r3, #21]	@ zero_extendqisi2
+ 301              		.loc 1 168 8 view .LVU67
+ 302 0004 73B1     		cbz	r3, .L27
+ 169:../../BSP/LCD/lcd_ltdc.c ****     {
+ 170:../../BSP/LCD/lcd_ltdc.c ****         return *(uint16_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lc
+ 303              		.loc 1 170 9 is_stmt 1 view .LVU68
+ 304              		.loc 1 170 63 is_stmt 0 view .LVU69
+ 305 0006 114A     		ldr	r2, .L32
+ 306 0008 92F814C0 		ldrb	ip, [r2, #20]	@ zero_extendqisi2
+ 307              		.loc 1 170 55 view .LVU70
+ 308 000c 104B     		ldr	r3, .L32+4
+ 309 000e 53F82CC0 		ldr	ip, [r3, ip, lsl #2]
+ 310              		.loc 1 170 86 view .LVU71
+ 311 0012 D369     		ldr	r3, [r2, #28]
+ 312              		.loc 1 170 105 view .LVU72
+ 313 0014 1268     		ldr	r2, [r2]
+ 314              		.loc 1 170 117 view .LVU73
+ 315 0016 02FB0100 		mla	r0, r2, r1, r0
+ 316              	.LVL9:
+ 317              		.loc 1 170 95 view .LVU74
+ 318 001a 03FB00F0 		mul	r0, r3, r0
+ 319              		.loc 1 170 16 view .LVU75
+ 320 001e 3CF80000 		ldrh	r0, [ip, r0]
+ 171:../../BSP/LCD/lcd_ltdc.c ****     }
+ 172:../../BSP/LCD/lcd_ltdc.c ****     else                /* 竖屏 */
+ 173:../../BSP/LCD/lcd_ltdc.c ****     {
+ 174:../../BSP/LCD/lcd_ltdc.c ****         return *(uint16_t *)((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lc
+ 175:../../BSP/LCD/lcd_ltdc.c ****     }
+ 176:../../BSP/LCD/lcd_ltdc.c **** 
+ 177:../../BSP/LCD/lcd_ltdc.c **** #endif
+ 178:../../BSP/LCD/lcd_ltdc.c **** }
+ 321              		.loc 1 178 1 view .LVU76
+ 322 0022 7047     		bx	lr
+ 323              	.LVL10:
+ 324              	.L27:
+ 143:../../BSP/LCD/lcd_ltdc.c **** #if LTDC_PIXFORMAT == LTDC_PIXFORMAT_ARGB8888
+ 325              		.loc 1 143 1 view .LVU77
+ 326 0024 00B5     		push	{lr}
+ 327              	.LCFI1:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 10
+
+
+ 328              		.cfi_def_cfa_offset 4
+ 329              		.cfi_offset 14, -4
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 330              		.loc 1 174 9 is_stmt 1 view .LVU78
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 331              		.loc 1 174 63 is_stmt 0 view .LVU79
+ 332 0026 094B     		ldr	r3, .L32
+ 333 0028 93F814C0 		ldrb	ip, [r3, #20]	@ zero_extendqisi2
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 334              		.loc 1 174 55 view .LVU80
+ 335 002c 084A     		ldr	r2, .L32+4
+ 336 002e 52F82CC0 		ldr	ip, [r2, ip, lsl #2]
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 337              		.loc 1 174 86 view .LVU81
+ 338 0032 DA69     		ldr	r2, [r3, #28]
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 339              		.loc 1 174 105 view .LVU82
+ 340 0034 D3F800E0 		ldr	lr, [r3]
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 341              		.loc 1 174 123 view .LVU83
+ 342 0038 5B68     		ldr	r3, [r3, #4]
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 343              		.loc 1 174 132 view .LVU84
+ 344 003a 181A     		subs	r0, r3, r0
+ 345              	.LVL11:
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 346              		.loc 1 174 136 view .LVU85
+ 347 003c 0138     		subs	r0, r0, #1
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 348              		.loc 1 174 141 view .LVU86
+ 349 003e 00FB0E11 		mla	r1, r0, lr, r1
+ 350              	.LVL12:
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 351              		.loc 1 174 95 view .LVU87
+ 352 0042 01FB02F3 		mul	r3, r1, r2
+ 174:../../BSP/LCD/lcd_ltdc.c ****     }
+ 353              		.loc 1 174 16 view .LVU88
+ 354 0046 3CF80300 		ldrh	r0, [ip, r3]
+ 355              		.loc 1 178 1 view .LVU89
+ 356 004a 00BD     		pop	{pc}
+ 357              	.L33:
+ 358              		.align	2
+ 359              	.L32:
+ 360 004c 00000000 		.word	lcdltdc
+ 361 0050 00000000 		.word	g_ltdc_framebuf
+ 362              		.cfi_endproc
+ 363              	.LFE149:
+ 365              		.section	.text.ltdc_fill,"ax",%progbits
+ 366              		.align	1
+ 367              		.global	ltdc_fill
+ 368              		.syntax unified
+ 369              		.thumb
+ 370              		.thumb_func
+ 372              	ltdc_fill:
+ 373              	.LVL13:
+ 374              	.LFB150:
+ 179:../../BSP/LCD/lcd_ltdc.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 11
+
+
+ 180:../../BSP/LCD/lcd_ltdc.c **** /**
+ 181:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC填充矩形, DMA2D填充
+ 182:../../BSP/LCD/lcd_ltdc.c ****  * @note       (sx,sy),(ex,ey):填充矩形对角坐标,区域大小为:(ex - sx + 1) * (ey - sy + 
+ 183:../../BSP/LCD/lcd_ltdc.c ****  *              注意:sx,ex,不能大于lcddev.width - 1; sy,ey,不能大于lcddev.height - 1
+ 184:../../BSP/LCD/lcd_ltdc.c ****  * @param       sx,sy       : 起始坐标
+ 185:../../BSP/LCD/lcd_ltdc.c ****  * @param       ex,ey       : 结束坐标
+ 186:../../BSP/LCD/lcd_ltdc.c ****  * @param       color       : 填充的颜色
+ 187:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+ 188:../../BSP/LCD/lcd_ltdc.c ****  */
+ 189:../../BSP/LCD/lcd_ltdc.c **** void ltdc_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint32_t color)
+ 190:../../BSP/LCD/lcd_ltdc.c **** { 
+ 375              		.loc 1 190 1 is_stmt 1 view -0
+ 376              		.cfi_startproc
+ 377              		@ args = 4, pretend = 0, frame = 8
+ 378              		@ frame_needed = 0, uses_anonymous_args = 0
+ 379              		.loc 1 190 1 is_stmt 0 view .LVU91
+ 380 0000 70B5     		push	{r4, r5, r6, lr}
+ 381              	.LCFI2:
+ 382              		.cfi_def_cfa_offset 16
+ 383              		.cfi_offset 4, -16
+ 384              		.cfi_offset 5, -12
+ 385              		.cfi_offset 6, -8
+ 386              		.cfi_offset 14, -4
+ 387 0002 82B0     		sub	sp, sp, #8
+ 388              	.LCFI3:
+ 389              		.cfi_def_cfa_offset 24
+ 390 0004 8C46     		mov	ip, r1
+ 191:../../BSP/LCD/lcd_ltdc.c ****     uint32_t psx, psy, pex, pey;        /* 以LCD面板为基准的坐标系,不随横竖屏变化�
+ 391              		.loc 1 191 5 is_stmt 1 view .LVU92
+ 192:../../BSP/LCD/lcd_ltdc.c ****     uint32_t timeout = 0; 
+ 392              		.loc 1 192 5 view .LVU93
+ 393              	.LVL14:
+ 193:../../BSP/LCD/lcd_ltdc.c ****     uint16_t offline;
+ 394              		.loc 1 193 5 view .LVU94
+ 194:../../BSP/LCD/lcd_ltdc.c ****     uint32_t addr; 
+ 395              		.loc 1 194 5 view .LVU95
+ 195:../../BSP/LCD/lcd_ltdc.c **** 
+ 196:../../BSP/LCD/lcd_ltdc.c ****     /* 坐标系转换 */
+ 197:../../BSP/LCD/lcd_ltdc.c ****     if (lcdltdc.dir)                    /* 横屏 */
+ 396              		.loc 1 197 5 view .LVU96
+ 397              		.loc 1 197 16 is_stmt 0 view .LVU97
+ 398 0006 324C     		ldr	r4, .L43
+ 399 0008 647D     		ldrb	r4, [r4, #21]	@ zero_extendqisi2
+ 400              		.loc 1 197 8 view .LVU98
+ 401 000a 002C     		cmp	r4, #0
+ 402 000c 4BD0     		beq	.L35
+ 198:../../BSP/LCD/lcd_ltdc.c ****     {
+ 199:../../BSP/LCD/lcd_ltdc.c ****         psx = sx;
+ 403              		.loc 1 199 9 is_stmt 1 view .LVU99
+ 404              		.loc 1 199 13 is_stmt 0 view .LVU100
+ 405 000e 8646     		mov	lr, r0
+ 406              	.LVL15:
+ 200:../../BSP/LCD/lcd_ltdc.c ****         psy = sy;
+ 407              		.loc 1 200 9 is_stmt 1 view .LVU101
+ 201:../../BSP/LCD/lcd_ltdc.c ****         pex = ex;
+ 408              		.loc 1 201 9 view .LVU102
+ 202:../../BSP/LCD/lcd_ltdc.c ****         pey = ey;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 12
+
+
+ 409              		.loc 1 202 9 view .LVU103
+ 410              	.L36:
+ 203:../../BSP/LCD/lcd_ltdc.c ****     }
+ 204:../../BSP/LCD/lcd_ltdc.c ****     else                                /* 竖屏 */
+ 205:../../BSP/LCD/lcd_ltdc.c ****     {
+ 206:../../BSP/LCD/lcd_ltdc.c ****         if (ex >= lcdltdc.pheight)
+ 207:../../BSP/LCD/lcd_ltdc.c ****         {
+ 208:../../BSP/LCD/lcd_ltdc.c ****             ex = lcdltdc.pheight - 1;   /* 限制范围 */
+ 209:../../BSP/LCD/lcd_ltdc.c ****         }
+ 210:../../BSP/LCD/lcd_ltdc.c **** 
+ 211:../../BSP/LCD/lcd_ltdc.c ****         if (sx >= lcdltdc.pheight)
+ 212:../../BSP/LCD/lcd_ltdc.c ****         {
+ 213:../../BSP/LCD/lcd_ltdc.c ****             sx = lcdltdc.pheight - 1;   /* 限制范围 */
+ 214:../../BSP/LCD/lcd_ltdc.c ****         }
+ 215:../../BSP/LCD/lcd_ltdc.c ****         
+ 216:../../BSP/LCD/lcd_ltdc.c ****         psx = sy;
+ 217:../../BSP/LCD/lcd_ltdc.c ****         psy = lcdltdc.pheight - ex - 1;
+ 218:../../BSP/LCD/lcd_ltdc.c ****         pex = ey;
+ 219:../../BSP/LCD/lcd_ltdc.c ****         pey = lcdltdc.pheight - sx - 1;
+ 220:../../BSP/LCD/lcd_ltdc.c ****     }
+ 221:../../BSP/LCD/lcd_ltdc.c **** 
+ 222:../../BSP/LCD/lcd_ltdc.c ****     offline = lcdltdc.pwidth - (pex - psx + 1);   /* 行偏移:当前行最后一个像素和下一
+ 411              		.loc 1 222 5 view .LVU104
+ 412              		.loc 1 222 22 is_stmt 0 view .LVU105
+ 413 0010 2F4D     		ldr	r5, .L43
+ 414 0012 2968     		ldr	r1, [r5]
+ 415              		.loc 1 222 37 view .LVU106
+ 416 0014 AEEB0200 		sub	r0, lr, r2
+ 417              	.LVL16:
+ 418              		.loc 1 222 30 view .LVU107
+ 419 0018 11FA80F0 		uxtah	r0, r1, r0
+ 420 001c 80B2     		uxth	r0, r0
+ 421              		.loc 1 222 13 view .LVU108
+ 422 001e 0138     		subs	r0, r0, #1
+ 423 0020 80B2     		uxth	r0, r0
+ 424              	.LVL17:
+ 223:../../BSP/LCD/lcd_ltdc.c ****     addr = ((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.pwidth * ps
+ 425              		.loc 1 223 5 is_stmt 1 view .LVU109
+ 426              		.loc 1 223 46 is_stmt 0 view .LVU110
+ 427 0022 2E7D     		ldrb	r6, [r5, #20]	@ zero_extendqisi2
+ 428              		.loc 1 223 38 view .LVU111
+ 429 0024 2B4C     		ldr	r4, .L43+4
+ 430 0026 54F82640 		ldr	r4, [r4, r6, lsl #2]
+ 431              		.loc 1 223 69 view .LVU112
+ 432 002a ED69     		ldr	r5, [r5, #28]
+ 433              		.loc 1 223 102 view .LVU113
+ 434 002c 0CFB01E1 		mla	r1, ip, r1, lr
+ 435              		.loc 1 223 10 view .LVU114
+ 436 0030 01FB0544 		mla	r4, r1, r5, r4
+ 437              	.LVL18:
+ 224:../../BSP/LCD/lcd_ltdc.c **** 
+ 225:../../BSP/LCD/lcd_ltdc.c ****     __HAL_RCC_DMA2D_CLK_ENABLE();                             /* 使能DMA2D时钟 */
+ 438              		.loc 1 225 5 is_stmt 1 view .LVU115
+ 439              	.LBB2:
+ 440              		.loc 1 225 5 view .LVU116
+ 441              		.loc 1 225 5 view .LVU117
+ 442 0034 2849     		ldr	r1, .L43+8
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 13
+
+
+ 443 0036 D1F8D450 		ldr	r5, [r1, #212]
+ 444 003a 45F01005 		orr	r5, r5, #16
+ 445 003e C1F8D450 		str	r5, [r1, #212]
+ 446              	.LVL19:
+ 447              		.loc 1 225 5 view .LVU118
+ 448 0042 D1F8D410 		ldr	r1, [r1, #212]
+ 449 0046 01F01001 		and	r1, r1, #16
+ 450 004a 0191     		str	r1, [sp, #4]
+ 451              		.loc 1 225 5 view .LVU119
+ 452 004c 0199     		ldr	r1, [sp, #4]
+ 453              	.LBE2:
+ 454              		.loc 1 225 5 view .LVU120
+ 226:../../BSP/LCD/lcd_ltdc.c **** 
+ 227:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->CR &= ~(DMA2D_CR_START);                           /* 先停止DMA2D */
+ 455              		.loc 1 227 5 view .LVU121
+ 456              		.loc 1 227 10 is_stmt 0 view .LVU122
+ 457 004e 2349     		ldr	r1, .L43+12
+ 458 0050 0D68     		ldr	r5, [r1]
+ 459              		.loc 1 227 15 view .LVU123
+ 460 0052 25F00105 		bic	r5, r5, #1
+ 461 0056 0D60     		str	r5, [r1]
+ 228:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->CR = DMA2D_R2M;                                    /* 寄存器到存储器模式 */
+ 462              		.loc 1 228 5 is_stmt 1 view .LVU124
+ 463              		.loc 1 228 15 is_stmt 0 view .LVU125
+ 464 0058 4FF44035 		mov	r5, #196608
+ 465 005c 0D60     		str	r5, [r1]
+ 229:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->OPFCCR = LTDC_PIXFORMAT;                           /* 设置颜色格式 */
+ 466              		.loc 1 229 5 is_stmt 1 view .LVU126
+ 467              		.loc 1 229 19 is_stmt 0 view .LVU127
+ 468 005e 0225     		movs	r5, #2
+ 469 0060 4D63     		str	r5, [r1, #52]
+ 230:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->OOR = offline;                                     /* 设置行偏移  */
+ 470              		.loc 1 230 5 is_stmt 1 view .LVU128
+ 471              		.loc 1 230 16 is_stmt 0 view .LVU129
+ 472 0062 0864     		str	r0, [r1, #64]
+ 231:../../BSP/LCD/lcd_ltdc.c **** 
+ 232:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->OMAR = addr;                                       /* 输出存储器地址 */
+ 473              		.loc 1 232 5 is_stmt 1 view .LVU130
+ 474              		.loc 1 232 17 is_stmt 0 view .LVU131
+ 475 0064 CC63     		str	r4, [r1, #60]
+ 233:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->NLR = (pey - psy + 1) | ((pex - psx + 1) << 16);   /* 设定行数寄存器 */
+ 476              		.loc 1 233 5 is_stmt 1 view .LVU132
+ 477              		.loc 1 233 23 is_stmt 0 view .LVU133
+ 478 0066 A3EB0C03 		sub	r3, r3, ip
+ 479              	.LVL20:
+ 480              		.loc 1 233 29 view .LVU134
+ 481 006a 0133     		adds	r3, r3, #1
+ 482              		.loc 1 233 42 view .LVU135
+ 483 006c A2EB0E02 		sub	r2, r2, lr
+ 484              	.LVL21:
+ 485              		.loc 1 233 48 view .LVU136
+ 486 0070 0132     		adds	r2, r2, #1
+ 487              		.loc 1 233 34 view .LVU137
+ 488 0072 43EA0243 		orr	r3, r3, r2, lsl #16
+ 489              		.loc 1 233 16 view .LVU138
+ 490 0076 4B64     		str	r3, [r1, #68]
+ 234:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->OCOLR = color;                                     /* 设定输出颜色寄存器 */
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 14
+
+
+ 491              		.loc 1 234 5 is_stmt 1 view .LVU139
+ 492              		.loc 1 234 18 is_stmt 0 view .LVU140
+ 493 0078 069B     		ldr	r3, [sp, #24]
+ 494 007a 8B63     		str	r3, [r1, #56]
+ 235:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->CR |= DMA2D_CR_START;                              /* 启动DMA2D */
+ 495              		.loc 1 235 5 is_stmt 1 view .LVU141
+ 496              		.loc 1 235 10 is_stmt 0 view .LVU142
+ 497 007c 0B68     		ldr	r3, [r1]
+ 498              		.loc 1 235 15 view .LVU143
+ 499 007e 43F00103 		orr	r3, r3, #1
+ 500 0082 0B60     		str	r3, [r1]
+ 236:../../BSP/LCD/lcd_ltdc.c **** 
+ 237:../../BSP/LCD/lcd_ltdc.c ****     while ((DMA2D->ISR & (DMA2D_FLAG_TC)) == 0)               /* 等待传输完成 */
+ 501              		.loc 1 237 5 is_stmt 1 view .LVU144
+ 192:../../BSP/LCD/lcd_ltdc.c ****     uint16_t offline;
+ 502              		.loc 1 192 14 is_stmt 0 view .LVU145
+ 503 0084 0023     		movs	r3, #0
+ 504              	.LVL22:
+ 505              	.L39:
+ 506              		.loc 1 237 43 is_stmt 1 view .LVU146
+ 507              		.loc 1 237 18 is_stmt 0 view .LVU147
+ 508 0086 154A     		ldr	r2, .L43+12
+ 509 0088 5268     		ldr	r2, [r2, #4]
+ 510              		.loc 1 237 43 view .LVU148
+ 511 008a 12F0020F 		tst	r2, #2
+ 512 008e 03D1     		bne	.L40
+ 238:../../BSP/LCD/lcd_ltdc.c ****     {
+ 239:../../BSP/LCD/lcd_ltdc.c ****         timeout++;
+ 513              		.loc 1 239 9 is_stmt 1 view .LVU149
+ 514              		.loc 1 239 16 is_stmt 0 view .LVU150
+ 515 0090 0133     		adds	r3, r3, #1
+ 516              	.LVL23:
+ 240:../../BSP/LCD/lcd_ltdc.c ****       
+ 241:../../BSP/LCD/lcd_ltdc.c ****         if (timeout > 0X1FFFFF)break;                         /* 超时退出 */
+ 517              		.loc 1 241 9 is_stmt 1 view .LVU151
+ 518              		.loc 1 241 12 is_stmt 0 view .LVU152
+ 519 0092 B3F5001F 		cmp	r3, #2097152
+ 520 0096 F6D3     		bcc	.L39
+ 521              	.L40:
+ 242:../../BSP/LCD/lcd_ltdc.c ****     } 
+ 243:../../BSP/LCD/lcd_ltdc.c ****     
+ 244:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->IFCR |= DMA2D_FLAG_TC;                             /* 清除传输完成标志 */
+ 522              		.loc 1 244 5 is_stmt 1 view .LVU153
+ 523              		.loc 1 244 10 is_stmt 0 view .LVU154
+ 524 0098 104A     		ldr	r2, .L43+12
+ 525 009a 9368     		ldr	r3, [r2, #8]
+ 526              	.LVL24:
+ 527              		.loc 1 244 17 view .LVU155
+ 528 009c 43F00203 		orr	r3, r3, #2
+ 529 00a0 9360     		str	r3, [r2, #8]
+ 245:../../BSP/LCD/lcd_ltdc.c **** }
+ 530              		.loc 1 245 1 view .LVU156
+ 531 00a2 02B0     		add	sp, sp, #8
+ 532              	.LCFI4:
+ 533              		.cfi_remember_state
+ 534              		.cfi_def_cfa_offset 16
+ 535              		@ sp needed
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 15
+
+
+ 536 00a4 70BD     		pop	{r4, r5, r6, pc}
+ 537              	.LVL25:
+ 538              	.L35:
+ 539              	.LCFI5:
+ 540              		.cfi_restore_state
+ 206:../../BSP/LCD/lcd_ltdc.c ****         {
+ 541              		.loc 1 206 9 is_stmt 1 view .LVU157
+ 206:../../BSP/LCD/lcd_ltdc.c ****         {
+ 542              		.loc 1 206 26 is_stmt 0 view .LVU158
+ 543 00a6 0A49     		ldr	r1, .L43
+ 544              	.LVL26:
+ 206:../../BSP/LCD/lcd_ltdc.c ****         {
+ 545              		.loc 1 206 26 view .LVU159
+ 546 00a8 4C68     		ldr	r4, [r1, #4]
+ 206:../../BSP/LCD/lcd_ltdc.c ****         {
+ 547              		.loc 1 206 12 view .LVU160
+ 548 00aa A242     		cmp	r2, r4
+ 549 00ac 02D3     		bcc	.L37
+ 208:../../BSP/LCD/lcd_ltdc.c ****         }
+ 550              		.loc 1 208 13 is_stmt 1 view .LVU161
+ 208:../../BSP/LCD/lcd_ltdc.c ****         }
+ 551              		.loc 1 208 34 is_stmt 0 view .LVU162
+ 552 00ae A2B2     		uxth	r2, r4
+ 553              	.LVL27:
+ 208:../../BSP/LCD/lcd_ltdc.c ****         }
+ 554              		.loc 1 208 16 view .LVU163
+ 555 00b0 013A     		subs	r2, r2, #1
+ 556 00b2 92B2     		uxth	r2, r2
+ 557              	.L37:
+ 558              	.LVL28:
+ 211:../../BSP/LCD/lcd_ltdc.c ****         {
+ 559              		.loc 1 211 9 is_stmt 1 view .LVU164
+ 211:../../BSP/LCD/lcd_ltdc.c ****         {
+ 560              		.loc 1 211 12 is_stmt 0 view .LVU165
+ 561 00b4 8442     		cmp	r4, r0
+ 562 00b6 02D8     		bhi	.L38
+ 213:../../BSP/LCD/lcd_ltdc.c ****         }
+ 563              		.loc 1 213 13 is_stmt 1 view .LVU166
+ 213:../../BSP/LCD/lcd_ltdc.c ****         }
+ 564              		.loc 1 213 34 is_stmt 0 view .LVU167
+ 565 00b8 A0B2     		uxth	r0, r4
+ 566              	.LVL29:
+ 213:../../BSP/LCD/lcd_ltdc.c ****         }
+ 567              		.loc 1 213 16 view .LVU168
+ 568 00ba 0138     		subs	r0, r0, #1
+ 569 00bc 80B2     		uxth	r0, r0
+ 570              	.L38:
+ 571              	.LVL30:
+ 216:../../BSP/LCD/lcd_ltdc.c ****         psy = lcdltdc.pheight - ex - 1;
+ 572              		.loc 1 216 9 is_stmt 1 view .LVU169
+ 216:../../BSP/LCD/lcd_ltdc.c ****         psy = lcdltdc.pheight - ex - 1;
+ 573              		.loc 1 216 13 is_stmt 0 view .LVU170
+ 574 00be E646     		mov	lr, ip
+ 575              	.LVL31:
+ 217:../../BSP/LCD/lcd_ltdc.c ****         pex = ey;
+ 576              		.loc 1 217 9 is_stmt 1 view .LVU171
+ 217:../../BSP/LCD/lcd_ltdc.c ****         pex = ey;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 16
+
+
+ 577              		.loc 1 217 31 is_stmt 0 view .LVU172
+ 578 00c0 A21A     		subs	r2, r4, r2
+ 579              	.LVL32:
+ 217:../../BSP/LCD/lcd_ltdc.c ****         pex = ey;
+ 580              		.loc 1 217 13 view .LVU173
+ 581 00c2 02F1FF3C 		add	ip, r2, #-1
+ 582              	.LVL33:
+ 218:../../BSP/LCD/lcd_ltdc.c ****         pey = lcdltdc.pheight - sx - 1;
+ 583              		.loc 1 218 9 is_stmt 1 view .LVU174
+ 218:../../BSP/LCD/lcd_ltdc.c ****         pey = lcdltdc.pheight - sx - 1;
+ 584              		.loc 1 218 13 is_stmt 0 view .LVU175
+ 585 00c6 1A46     		mov	r2, r3
+ 586              	.LVL34:
+ 219:../../BSP/LCD/lcd_ltdc.c ****     }
+ 587              		.loc 1 219 9 is_stmt 1 view .LVU176
+ 219:../../BSP/LCD/lcd_ltdc.c ****     }
+ 588              		.loc 1 219 31 is_stmt 0 view .LVU177
+ 589 00c8 241A     		subs	r4, r4, r0
+ 219:../../BSP/LCD/lcd_ltdc.c ****     }
+ 590              		.loc 1 219 13 view .LVU178
+ 591 00ca 631E     		subs	r3, r4, #1
+ 592              	.LVL35:
+ 219:../../BSP/LCD/lcd_ltdc.c ****     }
+ 593              		.loc 1 219 13 view .LVU179
+ 594 00cc A0E7     		b	.L36
+ 595              	.L44:
+ 596 00ce 00BF     		.align	2
+ 597              	.L43:
+ 598 00d0 00000000 		.word	lcdltdc
+ 599 00d4 00000000 		.word	g_ltdc_framebuf
+ 600 00d8 00440258 		.word	1476543488
+ 601 00dc 00100052 		.word	1375735808
+ 602              		.cfi_endproc
+ 603              	.LFE150:
+ 605              		.section	.text.ltdc_color_fill,"ax",%progbits
+ 606              		.align	1
+ 607              		.global	ltdc_color_fill
+ 608              		.syntax unified
+ 609              		.thumb
+ 610              		.thumb_func
+ 612              	ltdc_color_fill:
+ 613              	.LVL36:
+ 614              	.LFB151:
+ 246:../../BSP/LCD/lcd_ltdc.c **** 
+ 247:../../BSP/LCD/lcd_ltdc.c **** ///* 使用DMA2D相关的HAL库函数使用DMA2D外设(不推荐) */
+ 248:../../BSP/LCD/lcd_ltdc.c **** ///**
+ 249:../../BSP/LCD/lcd_ltdc.c **** // * @brief       在指定区域内填充单个颜色
+ 250:../../BSP/LCD/lcd_ltdc.c **** // * @param       (sx,sy),(ex,ey)  : 填充矩形对角坐标,区域大小为:(ex - sx + 1) * (ey -
+ 251:../../BSP/LCD/lcd_ltdc.c **** // * @param       color            : 要填充的颜色
+ 252:../../BSP/LCD/lcd_ltdc.c **** // * @retval      无
+ 253:../../BSP/LCD/lcd_ltdc.c **** // */
+ 254:../../BSP/LCD/lcd_ltdc.c **** //void ltdc_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint32_t color)
+ 255:../../BSP/LCD/lcd_ltdc.c **** //{
+ 256:../../BSP/LCD/lcd_ltdc.c **** //    uint32_t psx, psy, pex, pey;   /* 以LCD面板为基准的坐标系,不随横竖屏变化而�
+ 257:../../BSP/LCD/lcd_ltdc.c **** //    uint32_t timeout = 0; 
+ 258:../../BSP/LCD/lcd_ltdc.c **** //    uint16_t offline;
+ 259:../../BSP/LCD/lcd_ltdc.c **** //    uint32_t addr;  
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 17
+
+
+ 260:../../BSP/LCD/lcd_ltdc.c **** //
+ 261:../../BSP/LCD/lcd_ltdc.c **** //    if (ex >= lcdltdc.width)
+ 262:../../BSP/LCD/lcd_ltdc.c **** //    {
+ 263:../../BSP/LCD/lcd_ltdc.c **** //        ex = lcdltdc.width - 1;
+ 264:../../BSP/LCD/lcd_ltdc.c **** //    }
+ 265:../../BSP/LCD/lcd_ltdc.c **** //
+ 266:../../BSP/LCD/lcd_ltdc.c **** //    if (ey >= lcdltdc.height)
+ 267:../../BSP/LCD/lcd_ltdc.c **** //    {
+ 268:../../BSP/LCD/lcd_ltdc.c **** //        ey = lcdltdc.height - 1;
+ 269:../../BSP/LCD/lcd_ltdc.c **** //    }
+ 270:../../BSP/LCD/lcd_ltdc.c **** //
+ 271:../../BSP/LCD/lcd_ltdc.c **** //    /* 坐标系转换 */
+ 272:../../BSP/LCD/lcd_ltdc.c **** //    if (lcdltdc.dir)   /* 横屏 */
+ 273:../../BSP/LCD/lcd_ltdc.c **** //    {
+ 274:../../BSP/LCD/lcd_ltdc.c **** //        psx = sx; 
+ 275:../../BSP/LCD/lcd_ltdc.c **** //        psy = sy;
+ 276:../../BSP/LCD/lcd_ltdc.c **** //        pex = ex;
+ 277:../../BSP/LCD/lcd_ltdc.c **** //        pey = ey;
+ 278:../../BSP/LCD/lcd_ltdc.c **** //    }
+ 279:../../BSP/LCD/lcd_ltdc.c **** //    else               /* 竖屏 */
+ 280:../../BSP/LCD/lcd_ltdc.c **** //    {
+ 281:../../BSP/LCD/lcd_ltdc.c **** //        psx = sy;
+ 282:../../BSP/LCD/lcd_ltdc.c **** //        psy = lcdltdc.pheight - ex - 1;
+ 283:../../BSP/LCD/lcd_ltdc.c **** //        pex = ey;
+ 284:../../BSP/LCD/lcd_ltdc.c **** //        pey = lcdltdc.pheight - sx - 1;
+ 285:../../BSP/LCD/lcd_ltdc.c **** //    }
+ 286:../../BSP/LCD/lcd_ltdc.c **** 
+ 287:../../BSP/LCD/lcd_ltdc.c **** //    offline = lcdltdc.pwidth - (pex - psx + 1);
+ 288:../../BSP/LCD/lcd_ltdc.c **** //    addr =((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.pwidth * p
+ 289:../../BSP/LCD/lcd_ltdc.c **** //
+ 290:../../BSP/LCD/lcd_ltdc.c **** //    if (LTDC_PIXFORMAT == LTDC_PIXEL_FORMAT_RGB565)  /* 如果是RGB565格式的话需要进行�
+ 291:../../BSP/LCD/lcd_ltdc.c **** //    {
+ 292:../../BSP/LCD/lcd_ltdc.c **** //        color = ((color & 0X0000F800) << 8) | ((color & 0X000007E0) << 5 ) | ((color & 0X0000001F
+ 293:../../BSP/LCD/lcd_ltdc.c **** //    }
+ 294:../../BSP/LCD/lcd_ltdc.c **** //
+ 295:../../BSP/LCD/lcd_ltdc.c **** //    /* 配置DMA2D的模式 */
+ 296:../../BSP/LCD/lcd_ltdc.c **** //    g_dma2d_handle.Instance = DMA2D;
+ 297:../../BSP/LCD/lcd_ltdc.c **** //    g_dma2d_handle.Init.Mode = DMA2D_R2M;                                                    /* �
+ 298:../../BSP/LCD/lcd_ltdc.c **** //    g_dma2d_handle.Init.ColorMode = LTDC_PIXFORMAT;                                          /* �
+ 299:../../BSP/LCD/lcd_ltdc.c **** //    g_dma2d_handle.Init.OutputOffset = offline;                                              /* �
+ 300:../../BSP/LCD/lcd_ltdc.c **** //    HAL_DMA2D_Init(&g_dma2d_handle);                                                         /* �
+ 301:../../BSP/LCD/lcd_ltdc.c **** //
+ 302:../../BSP/LCD/lcd_ltdc.c **** //    HAL_DMA2D_ConfigLayer(&g_dma2d_handle, lcdltdc.activelayer);                             /* �
+ 303:../../BSP/LCD/lcd_ltdc.c **** //    HAL_DMA2D_Start(&g_dma2d_handle, color, (uint32_t)addr, pex - psx + 1, pey - psy + 1);   /* �
+ 304:../../BSP/LCD/lcd_ltdc.c **** //    HAL_DMA2D_PollForTransfer(&g_dma2d_handle, 1000);                                        /* �
+ 305:../../BSP/LCD/lcd_ltdc.c **** //
+ 306:../../BSP/LCD/lcd_ltdc.c **** //    while((__HAL_DMA2D_GET_FLAG( &g_dma2d_handle,DMA2D_FLAG_TC) == 0) && (timeout < 0X5000)) /* �
+ 307:../../BSP/LCD/lcd_ltdc.c **** //    {
+ 308:../../BSP/LCD/lcd_ltdc.c **** //        timeout++;
+ 309:../../BSP/LCD/lcd_ltdc.c **** //    }
+ 310:../../BSP/LCD/lcd_ltdc.c **** //    __HAL_DMA2D_CLEAR_FLAG(&g_dma2d_handle,DMA2D_FLAG_TC);                                   /* �
+ 311:../../BSP/LCD/lcd_ltdc.c **** //}
+ 312:../../BSP/LCD/lcd_ltdc.c **** 
+ 313:../../BSP/LCD/lcd_ltdc.c **** /**
+ 314:../../BSP/LCD/lcd_ltdc.c ****  * @brief       在指定区域内填充指定颜色块, DMA2D填充
+ 315:../../BSP/LCD/lcd_ltdc.c ****  * @note        此函数仅支持uint16_t,RGB565格式的颜色数组填充.
+ 316:../../BSP/LCD/lcd_ltdc.c ****  *              (sx,sy),(ex,ey):填充矩形对角坐标,区域大小为:(ex - sx + 1) * (ey - sy +
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 18
+
+
+ 317:../../BSP/LCD/lcd_ltdc.c ****  *              注意:sx,ex,不能大于lcddev.width - 1; sy,ey,不能大于lcddev.height - 1
+ 318:../../BSP/LCD/lcd_ltdc.c ****  * @param       sx,sy       : 起始坐标
+ 319:../../BSP/LCD/lcd_ltdc.c ****  * @param       ex,ey       : 结束坐标
+ 320:../../BSP/LCD/lcd_ltdc.c ****  * @param       color       : 填充的颜色数组首地址
+ 321:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+ 322:../../BSP/LCD/lcd_ltdc.c ****  */
+ 323:../../BSP/LCD/lcd_ltdc.c **** void ltdc_color_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t *color)
+ 324:../../BSP/LCD/lcd_ltdc.c **** {
+ 615              		.loc 1 324 1 is_stmt 1 view -0
+ 616              		.cfi_startproc
+ 617              		@ args = 4, pretend = 0, frame = 8
+ 618              		@ frame_needed = 0, uses_anonymous_args = 0
+ 619              		.loc 1 324 1 is_stmt 0 view .LVU181
+ 620 0000 70B5     		push	{r4, r5, r6, lr}
+ 621              	.LCFI6:
+ 622              		.cfi_def_cfa_offset 16
+ 623              		.cfi_offset 4, -16
+ 624              		.cfi_offset 5, -12
+ 625              		.cfi_offset 6, -8
+ 626              		.cfi_offset 14, -4
+ 627 0002 82B0     		sub	sp, sp, #8
+ 628              	.LCFI7:
+ 629              		.cfi_def_cfa_offset 24
+ 630 0004 9646     		mov	lr, r2
+ 631 0006 1A46     		mov	r2, r3
+ 632              	.LVL37:
+ 325:../../BSP/LCD/lcd_ltdc.c ****     uint32_t psx, psy, pex, pey;   /* 以LCD面板为基准的坐标系,不随横竖屏变化而变
+ 633              		.loc 1 325 5 is_stmt 1 view .LVU182
+ 326:../../BSP/LCD/lcd_ltdc.c ****     uint32_t timeout = 0; 
+ 634              		.loc 1 326 5 view .LVU183
+ 327:../../BSP/LCD/lcd_ltdc.c ****     uint16_t offline;
+ 635              		.loc 1 327 5 view .LVU184
+ 328:../../BSP/LCD/lcd_ltdc.c ****     uint32_t addr;
+ 636              		.loc 1 328 5 view .LVU185
+ 329:../../BSP/LCD/lcd_ltdc.c ****   
+ 330:../../BSP/LCD/lcd_ltdc.c ****     /* 坐标系转换 */
+ 331:../../BSP/LCD/lcd_ltdc.c ****     if (lcdltdc.dir)               /* 横屏 */
+ 637              		.loc 1 331 5 view .LVU186
+ 638              		.loc 1 331 16 is_stmt 0 view .LVU187
+ 639 0008 2E4B     		ldr	r3, .L52
+ 640              	.LVL38:
+ 641              		.loc 1 331 16 view .LVU188
+ 642 000a 5B7D     		ldrb	r3, [r3, #21]	@ zero_extendqisi2
+ 643              		.loc 1 331 8 view .LVU189
+ 644 000c 002B     		cmp	r3, #0
+ 645 000e 4CD0     		beq	.L46
+ 332:../../BSP/LCD/lcd_ltdc.c ****     {
+ 333:../../BSP/LCD/lcd_ltdc.c ****         psx = sx;
+ 646              		.loc 1 333 9 is_stmt 1 view .LVU190
+ 647              		.loc 1 333 13 is_stmt 0 view .LVU191
+ 648 0010 0446     		mov	r4, r0
+ 649              	.LVL39:
+ 334:../../BSP/LCD/lcd_ltdc.c ****         psy = sy;
+ 650              		.loc 1 334 9 is_stmt 1 view .LVU192
+ 335:../../BSP/LCD/lcd_ltdc.c ****         pex = ex;
+ 651              		.loc 1 335 9 view .LVU193
+ 336:../../BSP/LCD/lcd_ltdc.c ****         pey = ey;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 19
+
+
+ 652              		.loc 1 336 9 view .LVU194
+ 653              		.loc 1 336 13 is_stmt 0 view .LVU195
+ 654 0012 9446     		mov	ip, r2
+ 655              	.LVL40:
+ 656              	.L47:
+ 337:../../BSP/LCD/lcd_ltdc.c ****     }
+ 338:../../BSP/LCD/lcd_ltdc.c ****     else                           /* 竖屏 */
+ 339:../../BSP/LCD/lcd_ltdc.c ****     {
+ 340:../../BSP/LCD/lcd_ltdc.c ****         psx = sy;
+ 341:../../BSP/LCD/lcd_ltdc.c ****         psy = lcdltdc.pheight - ex - 1;
+ 342:../../BSP/LCD/lcd_ltdc.c ****         pex = ey;
+ 343:../../BSP/LCD/lcd_ltdc.c ****         pey = lcdltdc.pheight - sx - 1;
+ 344:../../BSP/LCD/lcd_ltdc.c ****     }
+ 345:../../BSP/LCD/lcd_ltdc.c **** 
+ 346:../../BSP/LCD/lcd_ltdc.c ****     offline = lcdltdc.pwidth - (pex - psx + 1);   /* 行偏移:当前行最后一个像素和下一
+ 657              		.loc 1 346 5 is_stmt 1 view .LVU196
+ 658              		.loc 1 346 22 is_stmt 0 view .LVU197
+ 659 0014 2B48     		ldr	r0, .L52
+ 660              	.LVL41:
+ 661              		.loc 1 346 22 view .LVU198
+ 662 0016 0368     		ldr	r3, [r0]
+ 663              		.loc 1 346 37 view .LVU199
+ 664 0018 A4EB0E02 		sub	r2, r4, lr
+ 665              	.LVL42:
+ 666              		.loc 1 346 30 view .LVU200
+ 667 001c 13FA82F2 		uxtah	r2, r3, r2
+ 668 0020 92B2     		uxth	r2, r2
+ 669              		.loc 1 346 13 view .LVU201
+ 670 0022 013A     		subs	r2, r2, #1
+ 671 0024 92B2     		uxth	r2, r2
+ 672              	.LVL43:
+ 347:../../BSP/LCD/lcd_ltdc.c ****     addr = ((uint32_t)g_ltdc_framebuf[lcdltdc.activelayer] + lcdltdc.pixsize * (lcdltdc.pwidth * ps
+ 673              		.loc 1 347 5 is_stmt 1 view .LVU202
+ 674              		.loc 1 347 46 is_stmt 0 view .LVU203
+ 675 0026 067D     		ldrb	r6, [r0, #20]	@ zero_extendqisi2
+ 676              		.loc 1 347 38 view .LVU204
+ 677 0028 274D     		ldr	r5, .L52+4
+ 678 002a 55F82650 		ldr	r5, [r5, r6, lsl #2]
+ 679              		.loc 1 347 69 view .LVU205
+ 680 002e C069     		ldr	r0, [r0, #28]
+ 681              		.loc 1 347 102 view .LVU206
+ 682 0030 01FB0343 		mla	r3, r1, r3, r4
+ 683              		.loc 1 347 10 view .LVU207
+ 684 0034 03FB0055 		mla	r5, r3, r0, r5
+ 685              	.LVL44:
+ 348:../../BSP/LCD/lcd_ltdc.c **** 
+ 349:../../BSP/LCD/lcd_ltdc.c ****     __HAL_RCC_DMA2D_CLK_ENABLE();                             /* 使能DMA2D时钟 */
+ 686              		.loc 1 349 5 is_stmt 1 view .LVU208
+ 687              	.LBB3:
+ 688              		.loc 1 349 5 view .LVU209
+ 689              		.loc 1 349 5 view .LVU210
+ 690 0038 244B     		ldr	r3, .L52+8
+ 691 003a D3F8D400 		ldr	r0, [r3, #212]
+ 692 003e 40F01000 		orr	r0, r0, #16
+ 693 0042 C3F8D400 		str	r0, [r3, #212]
+ 694              	.LVL45:
+ 695              		.loc 1 349 5 view .LVU211
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 20
+
+
+ 696 0046 D3F8D430 		ldr	r3, [r3, #212]
+ 697 004a 03F01003 		and	r3, r3, #16
+ 698 004e 0193     		str	r3, [sp, #4]
+ 699              		.loc 1 349 5 view .LVU212
+ 700 0050 019B     		ldr	r3, [sp, #4]
+ 701              	.LBE3:
+ 702              		.loc 1 349 5 view .LVU213
+ 350:../../BSP/LCD/lcd_ltdc.c **** 
+ 351:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->CR &= ~(DMA2D_CR_START);                           /* 先停止DMA2D */
+ 703              		.loc 1 351 5 view .LVU214
+ 704              		.loc 1 351 10 is_stmt 0 view .LVU215
+ 705 0052 1F48     		ldr	r0, .L52+12
+ 706 0054 0368     		ldr	r3, [r0]
+ 707              		.loc 1 351 15 view .LVU216
+ 708 0056 23F00103 		bic	r3, r3, #1
+ 709 005a 0360     		str	r3, [r0]
+ 352:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->CR = DMA2D_M2M;                                    /* 存储器到存储器模式 */
+ 710              		.loc 1 352 5 is_stmt 1 view .LVU217
+ 711              		.loc 1 352 15 is_stmt 0 view .LVU218
+ 712 005c 0023     		movs	r3, #0
+ 713 005e 0360     		str	r3, [r0]
+ 353:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->FGPFCCR = LTDC_PIXFORMAT;                          /* 设置前景层颜色格式 */
+ 714              		.loc 1 353 5 is_stmt 1 view .LVU219
+ 715              		.loc 1 353 20 is_stmt 0 view .LVU220
+ 716 0060 0226     		movs	r6, #2
+ 717 0062 C661     		str	r6, [r0, #28]
+ 354:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->FGOR = 0;                                          /* 前景层行偏移为0 */
+ 718              		.loc 1 354 5 is_stmt 1 view .LVU221
+ 719              		.loc 1 354 17 is_stmt 0 view .LVU222
+ 720 0064 0361     		str	r3, [r0, #16]
+ 355:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->OOR = offline;                                     /* 设置行偏移 */
+ 721              		.loc 1 355 5 is_stmt 1 view .LVU223
+ 722              		.loc 1 355 16 is_stmt 0 view .LVU224
+ 723 0066 0264     		str	r2, [r0, #64]
+ 356:../../BSP/LCD/lcd_ltdc.c **** 
+ 357:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->FGMAR = (uint32_t)color;                           /* 源地址 */
+ 724              		.loc 1 357 5 is_stmt 1 view .LVU225
+ 725              		.loc 1 357 18 is_stmt 0 view .LVU226
+ 726 0068 069A     		ldr	r2, [sp, #24]
+ 727              	.LVL46:
+ 728              		.loc 1 357 18 view .LVU227
+ 729 006a C260     		str	r2, [r0, #12]
+ 730              	.LVL47:
+ 358:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->OMAR = addr;                                       /* 输出存储器地址 */
+ 731              		.loc 1 358 5 is_stmt 1 view .LVU228
+ 732              		.loc 1 358 17 is_stmt 0 view .LVU229
+ 733 006c C563     		str	r5, [r0, #60]
+ 359:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->NLR = (pey - psy + 1) | ((pex - psx + 1) << 16);   /* 设定行数寄存器 */
+ 734              		.loc 1 359 5 is_stmt 1 view .LVU230
+ 735              		.loc 1 359 23 is_stmt 0 view .LVU231
+ 736 006e ACEB0102 		sub	r2, ip, r1
+ 737              		.loc 1 359 29 view .LVU232
+ 738 0072 0132     		adds	r2, r2, #1
+ 739              		.loc 1 359 42 view .LVU233
+ 740 0074 AEEB040E 		sub	lr, lr, r4
+ 741              	.LVL48:
+ 742              		.loc 1 359 48 view .LVU234
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 21
+
+
+ 743 0078 0EF1010E 		add	lr, lr, #1
+ 744              		.loc 1 359 34 view .LVU235
+ 745 007c 42EA0E42 		orr	r2, r2, lr, lsl #16
+ 746              		.loc 1 359 16 view .LVU236
+ 747 0080 4264     		str	r2, [r0, #68]
+ 360:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->CR |= DMA2D_CR_START;                              /* 启动DMA2D */
+ 748              		.loc 1 360 5 is_stmt 1 view .LVU237
+ 749              		.loc 1 360 10 is_stmt 0 view .LVU238
+ 750 0082 0268     		ldr	r2, [r0]
+ 751              		.loc 1 360 15 view .LVU239
+ 752 0084 42F00102 		orr	r2, r2, #1
+ 753 0088 0260     		str	r2, [r0]
+ 361:../../BSP/LCD/lcd_ltdc.c **** 
+ 362:../../BSP/LCD/lcd_ltdc.c ****     while((DMA2D->ISR & (DMA2D_FLAG_TC)) == 0)                /* 等待传输完成 */
+ 754              		.loc 1 362 5 is_stmt 1 view .LVU240
+ 755              	.LVL49:
+ 756              	.L48:
+ 757              		.loc 1 362 42 view .LVU241
+ 758              		.loc 1 362 17 is_stmt 0 view .LVU242
+ 759 008a 114A     		ldr	r2, .L52+12
+ 760 008c 5268     		ldr	r2, [r2, #4]
+ 761              		.loc 1 362 42 view .LVU243
+ 762 008e 12F0020F 		tst	r2, #2
+ 763 0092 03D1     		bne	.L49
+ 363:../../BSP/LCD/lcd_ltdc.c ****     {
+ 364:../../BSP/LCD/lcd_ltdc.c ****         timeout++;
+ 764              		.loc 1 364 9 is_stmt 1 view .LVU244
+ 765              		.loc 1 364 16 is_stmt 0 view .LVU245
+ 766 0094 0133     		adds	r3, r3, #1
+ 767              	.LVL50:
+ 365:../../BSP/LCD/lcd_ltdc.c ****       
+ 366:../../BSP/LCD/lcd_ltdc.c ****         if (timeout > 0X1FFFFF)break;                         /* 超时退出 */
+ 768              		.loc 1 366 9 is_stmt 1 view .LVU246
+ 769              		.loc 1 366 12 is_stmt 0 view .LVU247
+ 770 0096 B3F5001F 		cmp	r3, #2097152
+ 771 009a F6D3     		bcc	.L48
+ 772              	.L49:
+ 367:../../BSP/LCD/lcd_ltdc.c ****     } 
+ 368:../../BSP/LCD/lcd_ltdc.c ****     
+ 369:../../BSP/LCD/lcd_ltdc.c ****     DMA2D->IFCR |= DMA2D_FLAG_TC;                             /* 清除传输完成标志 */
+ 773              		.loc 1 369 5 is_stmt 1 view .LVU248
+ 774              		.loc 1 369 10 is_stmt 0 view .LVU249
+ 775 009c 0C4A     		ldr	r2, .L52+12
+ 776 009e 9368     		ldr	r3, [r2, #8]
+ 777              	.LVL51:
+ 778              		.loc 1 369 17 view .LVU250
+ 779 00a0 43F00203 		orr	r3, r3, #2
+ 780 00a4 9360     		str	r3, [r2, #8]
+ 370:../../BSP/LCD/lcd_ltdc.c **** }  
+ 781              		.loc 1 370 1 view .LVU251
+ 782 00a6 02B0     		add	sp, sp, #8
+ 783              	.LCFI8:
+ 784              		.cfi_remember_state
+ 785              		.cfi_def_cfa_offset 16
+ 786              		@ sp needed
+ 787 00a8 70BD     		pop	{r4, r5, r6, pc}
+ 788              	.LVL52:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 22
+
+
+ 789              	.L46:
+ 790              	.LCFI9:
+ 791              		.cfi_restore_state
+ 340:../../BSP/LCD/lcd_ltdc.c ****         psy = lcdltdc.pheight - ex - 1;
+ 792              		.loc 1 340 9 is_stmt 1 view .LVU252
+ 340:../../BSP/LCD/lcd_ltdc.c ****         psy = lcdltdc.pheight - ex - 1;
+ 793              		.loc 1 340 13 is_stmt 0 view .LVU253
+ 794 00aa 0C46     		mov	r4, r1
+ 795              	.LVL53:
+ 341:../../BSP/LCD/lcd_ltdc.c ****         pex = ey;
+ 796              		.loc 1 341 9 is_stmt 1 view .LVU254
+ 341:../../BSP/LCD/lcd_ltdc.c ****         pex = ey;
+ 797              		.loc 1 341 22 is_stmt 0 view .LVU255
+ 798 00ac 054B     		ldr	r3, .L52
+ 799 00ae 5B68     		ldr	r3, [r3, #4]
+ 341:../../BSP/LCD/lcd_ltdc.c ****         pex = ey;
+ 800              		.loc 1 341 31 view .LVU256
+ 801 00b0 A3EB0E0E 		sub	lr, r3, lr
+ 341:../../BSP/LCD/lcd_ltdc.c ****         pex = ey;
+ 802              		.loc 1 341 13 view .LVU257
+ 803 00b4 0EF1FF31 		add	r1, lr, #-1
+ 804              	.LVL54:
+ 342:../../BSP/LCD/lcd_ltdc.c ****         pey = lcdltdc.pheight - sx - 1;
+ 805              		.loc 1 342 9 is_stmt 1 view .LVU258
+ 342:../../BSP/LCD/lcd_ltdc.c ****         pey = lcdltdc.pheight - sx - 1;
+ 806              		.loc 1 342 13 is_stmt 0 view .LVU259
+ 807 00b8 9646     		mov	lr, r2
+ 808              	.LVL55:
+ 343:../../BSP/LCD/lcd_ltdc.c ****     }
+ 809              		.loc 1 343 9 is_stmt 1 view .LVU260
+ 343:../../BSP/LCD/lcd_ltdc.c ****     }
+ 810              		.loc 1 343 31 is_stmt 0 view .LVU261
+ 811 00ba 1B1A     		subs	r3, r3, r0
+ 343:../../BSP/LCD/lcd_ltdc.c ****     }
+ 812              		.loc 1 343 13 view .LVU262
+ 813 00bc 03F1FF3C 		add	ip, r3, #-1
+ 814 00c0 A8E7     		b	.L47
+ 815              	.L53:
+ 816 00c2 00BF     		.align	2
+ 817              	.L52:
+ 818 00c4 00000000 		.word	lcdltdc
+ 819 00c8 00000000 		.word	g_ltdc_framebuf
+ 820 00cc 00440258 		.word	1476543488
+ 821 00d0 00100052 		.word	1375735808
+ 822              		.cfi_endproc
+ 823              	.LFE151:
+ 825              		.section	.text.ltdc_clear,"ax",%progbits
+ 826              		.align	1
+ 827              		.global	ltdc_clear
+ 828              		.syntax unified
+ 829              		.thumb
+ 830              		.thumb_func
+ 832              	ltdc_clear:
+ 833              	.LVL56:
+ 834              	.LFB152:
+ 371:../../BSP/LCD/lcd_ltdc.c **** 
+ 372:../../BSP/LCD/lcd_ltdc.c **** /**
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 23
+
+
+ 373:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC清屏
+ 374:../../BSP/LCD/lcd_ltdc.c ****  * @param       color       : 颜色值
+ 375:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+ 376:../../BSP/LCD/lcd_ltdc.c ****  */
+ 377:../../BSP/LCD/lcd_ltdc.c **** void ltdc_clear(uint32_t color)
+ 378:../../BSP/LCD/lcd_ltdc.c **** {
+ 835              		.loc 1 378 1 is_stmt 1 view -0
+ 836              		.cfi_startproc
+ 837              		@ args = 0, pretend = 0, frame = 0
+ 838              		@ frame_needed = 0, uses_anonymous_args = 0
+ 839              		.loc 1 378 1 is_stmt 0 view .LVU264
+ 840 0000 00B5     		push	{lr}
+ 841              	.LCFI10:
+ 842              		.cfi_def_cfa_offset 4
+ 843              		.cfi_offset 14, -4
+ 844 0002 83B0     		sub	sp, sp, #12
+ 845              	.LCFI11:
+ 846              		.cfi_def_cfa_offset 16
+ 379:../../BSP/LCD/lcd_ltdc.c ****     ltdc_fill(0, 0, lcdltdc.width - 1, lcdltdc.height - 1, color);
+ 847              		.loc 1 379 5 is_stmt 1 view .LVU265
+ 848              		.loc 1 379 28 is_stmt 0 view .LVU266
+ 849 0004 064B     		ldr	r3, .L56
+ 850 0006 DA8A     		ldrh	r2, [r3, #22]
+ 851              		.loc 1 379 47 view .LVU267
+ 852 0008 1B8B     		ldrh	r3, [r3, #24]
+ 853              		.loc 1 379 5 view .LVU268
+ 854 000a 013B     		subs	r3, r3, #1
+ 855 000c 013A     		subs	r2, r2, #1
+ 856 000e 0090     		str	r0, [sp]
+ 857 0010 9BB2     		uxth	r3, r3
+ 858 0012 92B2     		uxth	r2, r2
+ 859 0014 0021     		movs	r1, #0
+ 860 0016 0846     		mov	r0, r1
+ 861              	.LVL57:
+ 862              		.loc 1 379 5 view .LVU269
+ 863 0018 FFF7FEFF 		bl	ltdc_fill
+ 864              	.LVL58:
+ 380:../../BSP/LCD/lcd_ltdc.c **** }
+ 865              		.loc 1 380 1 view .LVU270
+ 866 001c 03B0     		add	sp, sp, #12
+ 867              	.LCFI12:
+ 868              		.cfi_def_cfa_offset 4
+ 869              		@ sp needed
+ 870 001e 00BD     		pop	{pc}
+ 871              	.L57:
+ 872              		.align	2
+ 873              	.L56:
+ 874 0020 00000000 		.word	lcdltdc
+ 875              		.cfi_endproc
+ 876              	.LFE152:
+ 878              		.section	.text.ltdc_clk_set,"ax",%progbits
+ 879              		.align	1
+ 880              		.global	ltdc_clk_set
+ 881              		.syntax unified
+ 882              		.thumb
+ 883              		.thumb_func
+ 885              	ltdc_clk_set:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 24
+
+
+ 886              	.LVL59:
+ 887              	.LFB153:
+ 381:../../BSP/LCD/lcd_ltdc.c **** 
+ 382:../../BSP/LCD/lcd_ltdc.c **** /**
+ 383:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC时钟(Fdclk)设置函数
+ 384:../../BSP/LCD/lcd_ltdc.c ****  * @param       pll3n     : PLL3 VCO倍频系数(PLL倍频),        取值范围:4~512.
+ 385:../../BSP/LCD/lcd_ltdc.c ****  * @param       pll3m     : PLL3预分频系数(进PLL之前的分频),  取值范围:1~63.
+ 386:../../BSP/LCD/lcd_ltdc.c ****  * @param       pll3r     : PLL3的r分频系数(PLL之后的分频),   取值范围:1~128.
+ 387:../../BSP/LCD/lcd_ltdc.c ****  *
+ 388:../../BSP/LCD/lcd_ltdc.c ****  * @note        Fvco = Fs * (pll3n / pll3m);
+ 389:../../BSP/LCD/lcd_ltdc.c ****  *              Fr = Fvco / pll3r = Fs * (pll3n / (pll3m * pll3r));
+ 390:../../BSP/LCD/lcd_ltdc.c ****  *              Fdclk = Fr;
+ 391:../../BSP/LCD/lcd_ltdc.c ****  *              其中:
+ 392:../../BSP/LCD/lcd_ltdc.c ****  *              Fvco: VCO频率
+ 393:../../BSP/LCD/lcd_ltdc.c ****  *              Fr: PLL3的r分频输出时钟频率
+ 394:../../BSP/LCD/lcd_ltdc.c ****  *              Fs: PLL3输入时钟频率,可以是HSI,CSI,HSE等(系统时钟初始化时选择HS
+ 395:../../BSP/LCD/lcd_ltdc.c ****  *
+ 396:../../BSP/LCD/lcd_ltdc.c ****  *              假设:外部晶振为25M, pllm = 25 的时候, Fs = 25Mhz， pllm分频后频率 �
+ 397:../../BSP/LCD/lcd_ltdc.c ****  *              例如: 要得到33M的LTDC时钟, 则可以设置: pll3n = 300, pllm = 25, pll3r =
+ 398:../../BSP/LCD/lcd_ltdc.c ****  *              Fdclk= ((25 / 25) * 300) / 9 = 33 Mhz
+ 399:../../BSP/LCD/lcd_ltdc.c ****  * @retval      0, 成功;
+ 400:../../BSP/LCD/lcd_ltdc.c ****  *              1, 失败;
+ 401:../../BSP/LCD/lcd_ltdc.c ****  */
+ 402:../../BSP/LCD/lcd_ltdc.c **** uint8_t ltdc_clk_set(uint32_t pll3n, uint32_t pll3m, uint32_t pll3r)
+ 403:../../BSP/LCD/lcd_ltdc.c **** {
+ 888              		.loc 1 403 1 is_stmt 1 view -0
+ 889              		.cfi_startproc
+ 890              		@ args = 0, pretend = 0, frame = 200
+ 891              		@ frame_needed = 0, uses_anonymous_args = 0
+ 892              		.loc 1 403 1 is_stmt 0 view .LVU272
+ 893 0000 00B5     		push	{lr}
+ 894              	.LCFI13:
+ 895              		.cfi_def_cfa_offset 4
+ 896              		.cfi_offset 14, -4
+ 897 0002 B3B0     		sub	sp, sp, #204
+ 898              	.LCFI14:
+ 899              		.cfi_def_cfa_offset 208
+ 404:../../BSP/LCD/lcd_ltdc.c ****     RCC_PeriphCLKInitTypeDef periphclk_initure;
+ 900              		.loc 1 404 5 is_stmt 1 view .LVU273
+ 405:../../BSP/LCD/lcd_ltdc.c **** 
+ 406:../../BSP/LCD/lcd_ltdc.c ****     /* LTDC输出像素时钟，需要根据自己所使用的LCD数据手册来配置！ */
+ 407:../../BSP/LCD/lcd_ltdc.c ****     periphclk_initure.PeriphClockSelection = RCC_PERIPHCLK_LTDC;     /* LTDC时钟 */
+ 901              		.loc 1 407 5 view .LVU274
+ 902              		.loc 1 407 44 is_stmt 0 view .LVU275
+ 903 0004 9FED087B 		vldr.64	d7, .L62	@ int
+ 904 0008 8DED007B 		vstr.64	d7, [sp]	@ int
+ 408:../../BSP/LCD/lcd_ltdc.c ****     periphclk_initure.PLL3.PLL3M = pll3m;
+ 905              		.loc 1 408 5 is_stmt 1 view .LVU276
+ 906              		.loc 1 408 34 is_stmt 0 view .LVU277
+ 907 000c 0A91     		str	r1, [sp, #40]
+ 409:../../BSP/LCD/lcd_ltdc.c ****     periphclk_initure.PLL3.PLL3N = pll3n;
+ 908              		.loc 1 409 5 is_stmt 1 view .LVU278
+ 909              		.loc 1 409 34 is_stmt 0 view .LVU279
+ 910 000e 0B90     		str	r0, [sp, #44]
+ 410:../../BSP/LCD/lcd_ltdc.c ****     periphclk_initure.PLL3.PLL3P = 2;
+ 911              		.loc 1 410 5 is_stmt 1 view .LVU280
+ 912              		.loc 1 410 34 is_stmt 0 view .LVU281
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 25
+
+
+ 913 0010 0223     		movs	r3, #2
+ 914 0012 0C93     		str	r3, [sp, #48]
+ 411:../../BSP/LCD/lcd_ltdc.c ****     periphclk_initure.PLL3.PLL3Q = 2;
+ 915              		.loc 1 411 5 is_stmt 1 view .LVU282
+ 916              		.loc 1 411 34 is_stmt 0 view .LVU283
+ 917 0014 0D93     		str	r3, [sp, #52]
+ 412:../../BSP/LCD/lcd_ltdc.c ****     periphclk_initure.PLL3.PLL3R = pll3r;
+ 918              		.loc 1 412 5 is_stmt 1 view .LVU284
+ 919              		.loc 1 412 34 is_stmt 0 view .LVU285
+ 920 0016 0E92     		str	r2, [sp, #56]
+ 413:../../BSP/LCD/lcd_ltdc.c **** 
+ 414:../../BSP/LCD/lcd_ltdc.c ****     if (HAL_RCCEx_PeriphCLKConfig(&periphclk_initure) == HAL_OK)     /* 配置像素时钟 */
+ 921              		.loc 1 414 5 is_stmt 1 view .LVU286
+ 922              		.loc 1 414 9 is_stmt 0 view .LVU287
+ 923 0018 6846     		mov	r0, sp
+ 924              	.LVL60:
+ 925              		.loc 1 414 9 view .LVU288
+ 926 001a FFF7FEFF 		bl	HAL_RCCEx_PeriphCLKConfig
+ 927              	.LVL61:
+ 928              		.loc 1 414 8 discriminator 1 view .LVU289
+ 929 001e 00B1     		cbz	r0, .L59
+ 415:../../BSP/LCD/lcd_ltdc.c ****     {
+ 416:../../BSP/LCD/lcd_ltdc.c ****         return 0;                                                    /* 成功 */
+ 417:../../BSP/LCD/lcd_ltdc.c ****     }
+ 418:../../BSP/LCD/lcd_ltdc.c ****     else 
+ 419:../../BSP/LCD/lcd_ltdc.c ****     {
+ 420:../../BSP/LCD/lcd_ltdc.c ****         return 1;                                                    /* 失败 */
+ 930              		.loc 1 420 16 view .LVU290
+ 931 0020 0120     		movs	r0, #1
+ 932              	.L59:
+ 421:../../BSP/LCD/lcd_ltdc.c ****     }
+ 422:../../BSP/LCD/lcd_ltdc.c **** }
+ 933              		.loc 1 422 1 view .LVU291
+ 934 0022 33B0     		add	sp, sp, #204
+ 935              	.LCFI15:
+ 936              		.cfi_def_cfa_offset 4
+ 937              		@ sp needed
+ 938 0024 00BD     		pop	{pc}
+ 939              	.L63:
+ 940 0026 00BF     		.align	3
+ 941              	.L62:
+ 942 0028 00000020 		.word	536870912
+ 943 002c 00000000 		.word	0
+ 944              		.cfi_endproc
+ 945              	.LFE153:
+ 947              		.section	.text.ltdc_layer_window_config,"ax",%progbits
+ 948              		.align	1
+ 949              		.global	ltdc_layer_window_config
+ 950              		.syntax unified
+ 951              		.thumb
+ 952              		.thumb_func
+ 954              	ltdc_layer_window_config:
+ 955              	.LVL62:
+ 956              	.LFB154:
+ 423:../../BSP/LCD/lcd_ltdc.c **** 
+ 424:../../BSP/LCD/lcd_ltdc.c **** /**
+ 425:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC层窗口设置, 窗口以LCD面板坐标系为基准
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 26
+
+
+ 426:../../BSP/LCD/lcd_ltdc.c ****  * @note        此函数必须在ltdc_layer_parameter_config之后再设置.另外,当设置的窗
+ 427:../../BSP/LCD/lcd_ltdc.c ****  *              寸时,GRAM的操作(读/写点函数),也要根据窗口的宽高来进行修改,�
+ 428:../../BSP/LCD/lcd_ltdc.c ****  * @param       layerx      : 0,第一层; 1,第二层;
+ 429:../../BSP/LCD/lcd_ltdc.c ****  * @param       sx, sy      : 起始坐标
+ 430:../../BSP/LCD/lcd_ltdc.c ****  * @param       width,height: 宽度和高度
+ 431:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+ 432:../../BSP/LCD/lcd_ltdc.c ****  */
+ 433:../../BSP/LCD/lcd_ltdc.c **** void ltdc_layer_window_config(uint8_t layerx, uint16_t sx, uint16_t sy, uint16_t width, uint16_t he
+ 434:../../BSP/LCD/lcd_ltdc.c **** {
+ 957              		.loc 1 434 1 is_stmt 1 view -0
+ 958              		.cfi_startproc
+ 959              		@ args = 4, pretend = 0, frame = 0
+ 960              		@ frame_needed = 0, uses_anonymous_args = 0
+ 961              		.loc 1 434 1 is_stmt 0 view .LVU293
+ 962 0000 70B5     		push	{r4, r5, r6, lr}
+ 963              	.LCFI16:
+ 964              		.cfi_def_cfa_offset 16
+ 965              		.cfi_offset 4, -16
+ 966              		.cfi_offset 5, -12
+ 967              		.cfi_offset 6, -8
+ 968              		.cfi_offset 14, -4
+ 969 0002 0446     		mov	r4, r0
+ 970 0004 1E46     		mov	r6, r3
+ 435:../../BSP/LCD/lcd_ltdc.c ****     HAL_LTDC_SetWindowPosition(&hltdc, sx, sy, layerx);     /* 设置窗口的位置 */
+ 971              		.loc 1 435 5 is_stmt 1 view .LVU294
+ 972 0006 0E4D     		ldr	r5, .L68
+ 973 0008 0346     		mov	r3, r0
+ 974              	.LVL63:
+ 975              		.loc 1 435 5 is_stmt 0 view .LVU295
+ 976 000a 2846     		mov	r0, r5
+ 977              	.LVL64:
+ 978              		.loc 1 435 5 view .LVU296
+ 979 000c FFF7FEFF 		bl	HAL_LTDC_SetWindowPosition
+ 980              	.LVL65:
+ 436:../../BSP/LCD/lcd_ltdc.c ****     HAL_LTDC_SetWindowSize(&hltdc, width, height, layerx);  /* 设置窗口大小 */
+ 981              		.loc 1 436 5 is_stmt 1 view .LVU297
+ 982 0010 2346     		mov	r3, r4
+ 983 0012 BDF81020 		ldrh	r2, [sp, #16]
+ 984 0016 3146     		mov	r1, r6
+ 985 0018 2846     		mov	r0, r5
+ 986 001a FFF7FEFF 		bl	HAL_LTDC_SetWindowSize
+ 987              	.LVL66:
+ 437:../../BSP/LCD/lcd_ltdc.c ****   
+ 438:../../BSP/LCD/lcd_ltdc.c ****     if (lcdltdc.pheight == 1280 && layerx == 0)
+ 988              		.loc 1 438 5 view .LVU298
+ 989              		.loc 1 438 16 is_stmt 0 view .LVU299
+ 990 001e 094B     		ldr	r3, .L68+4
+ 991 0020 5B68     		ldr	r3, [r3, #4]
+ 992              		.loc 1 438 8 view .LVU300
+ 993 0022 B3F5A06F 		cmp	r3, #1280
+ 994 0026 00D0     		beq	.L67
+ 995              	.LVL67:
+ 996              	.L64:
+ 439:../../BSP/LCD/lcd_ltdc.c ****     {
+ 440:../../BSP/LCD/lcd_ltdc.c ****         LTDC_Layer1->CFBLR = (width * 4 << 16) | (width * 4 + 7);   /* 帧缓冲区行长和行间�
+ 441:../../BSP/LCD/lcd_ltdc.c ****     }  
+ 442:../../BSP/LCD/lcd_ltdc.c **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 27
+
+
+ 997              		.loc 1 442 1 view .LVU301
+ 998 0028 70BD     		pop	{r4, r5, r6, pc}
+ 999              	.LVL68:
+ 1000              	.L67:
+ 438:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1001              		.loc 1 438 33 discriminator 1 view .LVU302
+ 1002 002a 002C     		cmp	r4, #0
+ 1003 002c FCD1     		bne	.L64
+ 440:../../BSP/LCD/lcd_ltdc.c ****     }  
+ 1004              		.loc 1 440 9 is_stmt 1 view .LVU303
+ 440:../../BSP/LCD/lcd_ltdc.c ****     }  
+ 1005              		.loc 1 440 37 is_stmt 0 view .LVU304
+ 1006 002e B300     		lsls	r3, r6, #2
+ 440:../../BSP/LCD/lcd_ltdc.c ****     }  
+ 1007              		.loc 1 440 61 view .LVU305
+ 1008 0030 0733     		adds	r3, r3, #7
+ 440:../../BSP/LCD/lcd_ltdc.c ****     }  
+ 1009              		.loc 1 440 48 view .LVU306
+ 1010 0032 43EA8643 		orr	r3, r3, r6, lsl #18
+ 440:../../BSP/LCD/lcd_ltdc.c ****     }  
+ 1011              		.loc 1 440 28 view .LVU307
+ 1012 0036 044A     		ldr	r2, .L68+8
+ 1013 0038 C2F8B030 		str	r3, [r2, #176]
+ 1014              	.LVL69:
+ 1015              		.loc 1 442 1 view .LVU308
+ 1016 003c F4E7     		b	.L64
+ 1017              	.L69:
+ 1018 003e 00BF     		.align	2
+ 1019              	.L68:
+ 1020 0040 00000000 		.word	hltdc
+ 1021 0044 00000000 		.word	lcdltdc
+ 1022 0048 00100050 		.word	1342181376
+ 1023              		.cfi_endproc
+ 1024              	.LFE154:
+ 1026              		.section	.text.ltdc_layer_parameter_config,"ax",%progbits
+ 1027              		.align	1
+ 1028              		.global	ltdc_layer_parameter_config
+ 1029              		.syntax unified
+ 1030              		.thumb
+ 1031              		.thumb_func
+ 1033              	ltdc_layer_parameter_config:
+ 1034              	.LVL70:
+ 1035              	.LFB155:
+ 443:../../BSP/LCD/lcd_ltdc.c **** 
+ 444:../../BSP/LCD/lcd_ltdc.c **** /**
+ 445:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC层基本参数设置
+ 446:../../BSP/LCD/lcd_ltdc.c ****  * @note        此函数,必须在ltdc_layer_window_config之前设置.
+ 447:../../BSP/LCD/lcd_ltdc.c ****  * @param       layerx      : 0,第一层; 1,第二层;
+ 448:../../BSP/LCD/lcd_ltdc.c ****  * @param       bufaddr     : 层颜色帧缓存起始地址
+ 449:../../BSP/LCD/lcd_ltdc.c ****  * @param       pixformat   : 层像素格式. 0,ARGB8888; 1,RGB888; 2,RGB565; 3,ARGB1555; 4,ARGB44
+ 450:../../BSP/LCD/lcd_ltdc.c ****  * @param       alpha       : 层恒定Alpha值, 0,全透明;255,不透明
+ 451:../../BSP/LCD/lcd_ltdc.c ****  * @param       alpha0      : 默认颜色Alpha值, 0,全透明;255,不透明
+ 452:../../BSP/LCD/lcd_ltdc.c ****  * @param       bfac1       : 混合系数1, 4(100),恒定Alpha; 6(101),像素Alpha*恒定Alpha
+ 453:../../BSP/LCD/lcd_ltdc.c ****  * @param       bfac2       : 混合系数2, 5(101),恒定Alpha; 7(111),像素Alpha*恒定Alpha
+ 454:../../BSP/LCD/lcd_ltdc.c ****  * @param       bkcolor     : 层默认颜色,32位,低24位有效,RGB888格式
+ 455:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+ 456:../../BSP/LCD/lcd_ltdc.c ****  */
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 28
+
+
+ 457:../../BSP/LCD/lcd_ltdc.c **** void ltdc_layer_parameter_config(uint8_t layerx, uint32_t bufaddr, uint8_t pixformat, uint8_t alpha
+ 458:../../BSP/LCD/lcd_ltdc.c **** {
+ 1036              		.loc 1 458 1 is_stmt 1 view -0
+ 1037              		.cfi_startproc
+ 1038              		@ args = 16, pretend = 0, frame = 56
+ 1039              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1040              		.loc 1 458 1 is_stmt 0 view .LVU310
+ 1041 0000 10B5     		push	{r4, lr}
+ 1042              	.LCFI17:
+ 1043              		.cfi_def_cfa_offset 8
+ 1044              		.cfi_offset 4, -8
+ 1045              		.cfi_offset 14, -4
+ 1046 0002 8EB0     		sub	sp, sp, #56
+ 1047              	.LCFI18:
+ 1048              		.cfi_def_cfa_offset 64
+ 1049 0004 8646     		mov	lr, r0
+ 1050 0006 0C46     		mov	r4, r1
+ 1051 0008 9C46     		mov	ip, r3
+ 459:../../BSP/LCD/lcd_ltdc.c ****     LTDC_LayerCfgTypeDef playercfg;
+ 1052              		.loc 1 459 5 is_stmt 1 view .LVU311
+ 460:../../BSP/LCD/lcd_ltdc.c **** 
+ 461:../../BSP/LCD/lcd_ltdc.c ****     playercfg.WindowX0 = 0;                                            /* 窗口起始X坐标 */
+ 1053              		.loc 1 461 5 view .LVU312
+ 1054              		.loc 1 461 24 is_stmt 0 view .LVU313
+ 1055 000a 0023     		movs	r3, #0
+ 1056              	.LVL71:
+ 1057              		.loc 1 461 24 view .LVU314
+ 1058 000c 0193     		str	r3, [sp, #4]
+ 462:../../BSP/LCD/lcd_ltdc.c ****     playercfg.WindowY0 = 0;                                            /* 窗口起始Y坐标 */
+ 1059              		.loc 1 462 5 is_stmt 1 view .LVU315
+ 1060              		.loc 1 462 24 is_stmt 0 view .LVU316
+ 1061 000e 0393     		str	r3, [sp, #12]
+ 463:../../BSP/LCD/lcd_ltdc.c ****     playercfg.WindowX1 = lcdltdc.pwidth;                               /* 窗口终止X坐标 */
+ 1062              		.loc 1 463 5 is_stmt 1 view .LVU317
+ 1063              		.loc 1 463 33 is_stmt 0 view .LVU318
+ 1064 0010 1149     		ldr	r1, .L72
+ 1065              	.LVL72:
+ 1066              		.loc 1 463 33 view .LVU319
+ 1067 0012 0868     		ldr	r0, [r1]
+ 1068              	.LVL73:
+ 1069              		.loc 1 463 24 view .LVU320
+ 1070 0014 0290     		str	r0, [sp, #8]
+ 464:../../BSP/LCD/lcd_ltdc.c ****     playercfg.WindowY1 = lcdltdc.pheight;                              /* 窗口终止Y坐标 */
+ 1071              		.loc 1 464 5 is_stmt 1 view .LVU321
+ 1072              		.loc 1 464 33 is_stmt 0 view .LVU322
+ 1073 0016 4968     		ldr	r1, [r1, #4]
+ 1074              		.loc 1 464 24 view .LVU323
+ 1075 0018 0491     		str	r1, [sp, #16]
+ 465:../../BSP/LCD/lcd_ltdc.c ****     playercfg.PixelFormat = pixformat;                                 /* 设置层像素格式 */
+ 1076              		.loc 1 465 5 is_stmt 1 view .LVU324
+ 1077              		.loc 1 465 27 is_stmt 0 view .LVU325
+ 1078 001a 0592     		str	r2, [sp, #20]
+ 466:../../BSP/LCD/lcd_ltdc.c ****     playercfg.Alpha = alpha;                                           /* 设置层恒定Alpha值,0
+ 1079              		.loc 1 466 5 is_stmt 1 view .LVU326
+ 1080              		.loc 1 466 21 is_stmt 0 view .LVU327
+ 1081 001c CDF818C0 		str	ip, [sp, #24]
+ 467:../../BSP/LCD/lcd_ltdc.c ****     playercfg.Alpha0 = alpha0;                                         /* 设置默认颜色Alpha�
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 29
+
+
+ 1082              		.loc 1 467 5 is_stmt 1 view .LVU328
+ 1083              		.loc 1 467 22 is_stmt 0 view .LVU329
+ 1084 0020 9DF84020 		ldrb	r2, [sp, #64]	@ zero_extendqisi2
+ 1085              	.LVL74:
+ 1086              		.loc 1 467 22 view .LVU330
+ 1087 0024 0792     		str	r2, [sp, #28]
+ 468:../../BSP/LCD/lcd_ltdc.c ****     playercfg.BlendingFactor1 = (uint32_t)bfac1 << 8;                  /* 设置层混合系数1 */
+ 1088              		.loc 1 468 5 is_stmt 1 view .LVU331
+ 1089              		.loc 1 468 49 is_stmt 0 view .LVU332
+ 1090 0026 9DF84420 		ldrb	r2, [sp, #68]	@ zero_extendqisi2
+ 1091 002a 1202     		lsls	r2, r2, #8
+ 1092              		.loc 1 468 31 view .LVU333
+ 1093 002c 0892     		str	r2, [sp, #32]
+ 469:../../BSP/LCD/lcd_ltdc.c ****     playercfg.BlendingFactor2 = (uint32_t)bfac2;                       /* 设置层混合系数2 */
+ 1094              		.loc 1 469 5 is_stmt 1 view .LVU334
+ 1095              		.loc 1 469 31 is_stmt 0 view .LVU335
+ 1096 002e 9DF84820 		ldrb	r2, [sp, #72]	@ zero_extendqisi2
+ 1097 0032 0992     		str	r2, [sp, #36]
+ 470:../../BSP/LCD/lcd_ltdc.c ****     playercfg.FBStartAdress = bufaddr;                                 /* 设置层颜色帧缓存�
+ 1098              		.loc 1 470 5 is_stmt 1 view .LVU336
+ 1099              		.loc 1 470 29 is_stmt 0 view .LVU337
+ 1100 0034 0A94     		str	r4, [sp, #40]
+ 471:../../BSP/LCD/lcd_ltdc.c ****     playercfg.ImageWidth = lcdltdc.pwidth;                             /* 设置颜色帧缓冲区�
+ 1101              		.loc 1 471 5 is_stmt 1 view .LVU338
+ 1102              		.loc 1 471 26 is_stmt 0 view .LVU339
+ 1103 0036 0B90     		str	r0, [sp, #44]
+ 472:../../BSP/LCD/lcd_ltdc.c ****     playercfg.ImageHeight = lcdltdc.pheight;                           /* 设置颜色帧缓冲区�
+ 1104              		.loc 1 472 5 is_stmt 1 view .LVU340
+ 1105              		.loc 1 472 27 is_stmt 0 view .LVU341
+ 1106 0038 0C91     		str	r1, [sp, #48]
+ 473:../../BSP/LCD/lcd_ltdc.c ****     playercfg.Backcolor.Red = (uint8_t)(bkcolor & 0X00FF0000) >> 16;   /* 背景颜色红色部分 
+ 1107              		.loc 1 473 5 is_stmt 1 view .LVU342
+ 1108              		.loc 1 473 29 is_stmt 0 view .LVU343
+ 1109 003a 8DF83630 		strb	r3, [sp, #54]
+ 474:../../BSP/LCD/lcd_ltdc.c ****     playercfg.Backcolor.Green = (uint8_t)(bkcolor & 0X0000FF00) >> 8;  /* 背景颜色绿色部分 
+ 1110              		.loc 1 474 5 is_stmt 1 view .LVU344
+ 1111              		.loc 1 474 31 is_stmt 0 view .LVU345
+ 1112 003e 8DF83530 		strb	r3, [sp, #53]
+ 475:../../BSP/LCD/lcd_ltdc.c ****     playercfg.Backcolor.Blue = (uint8_t)bkcolor & 0X000000FF;          /* 背景颜色蓝色部分 
+ 1113              		.loc 1 475 5 is_stmt 1 view .LVU346
+ 1114              		.loc 1 475 32 is_stmt 0 view .LVU347
+ 1115 0042 9DF84C30 		ldrb	r3, [sp, #76]	@ zero_extendqisi2
+ 1116              		.loc 1 475 30 view .LVU348
+ 1117 0046 8DF83430 		strb	r3, [sp, #52]
+ 476:../../BSP/LCD/lcd_ltdc.c ****     HAL_LTDC_ConfigLayer(&hltdc, &playercfg, layerx);          /* 设置所选中的层 */
+ 1118              		.loc 1 476 5 is_stmt 1 view .LVU349
+ 1119 004a 7246     		mov	r2, lr
+ 1120 004c 01A9     		add	r1, sp, #4
+ 1121 004e 0348     		ldr	r0, .L72+4
+ 1122 0050 FFF7FEFF 		bl	HAL_LTDC_ConfigLayer
+ 1123              	.LVL75:
+ 477:../../BSP/LCD/lcd_ltdc.c **** }  
+ 1124              		.loc 1 477 1 is_stmt 0 view .LVU350
+ 1125 0054 0EB0     		add	sp, sp, #56
+ 1126              	.LCFI19:
+ 1127              		.cfi_def_cfa_offset 8
+ 1128              		@ sp needed
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 30
+
+
+ 1129 0056 10BD     		pop	{r4, pc}
+ 1130              	.LVL76:
+ 1131              	.L73:
+ 1132              		.loc 1 477 1 view .LVU351
+ 1133              		.align	2
+ 1134              	.L72:
+ 1135 0058 00000000 		.word	lcdltdc
+ 1136 005c 00000000 		.word	hltdc
+ 1137              		.cfi_endproc
+ 1138              	.LFE155:
+ 1140              		.section	.text.ltdc_panelid_read,"ax",%progbits
+ 1141              		.align	1
+ 1142              		.global	ltdc_panelid_read
+ 1143              		.syntax unified
+ 1144              		.thumb
+ 1145              		.thumb_func
+ 1147              	ltdc_panelid_read:
+ 1148              	.LFB156:
+ 478:../../BSP/LCD/lcd_ltdc.c **** 
+ 479:../../BSP/LCD/lcd_ltdc.c **** /**
+ 480:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC读取面板ID
+ 481:../../BSP/LCD/lcd_ltdc.c ****  * @note        利用LCD RGB线的最高位(R7,G7,B7)来识别面板ID
+ 482:../../BSP/LCD/lcd_ltdc.c ****  *              PJ6 = R7(M0); PK2 = G7(M1); PK6 = B7(M2);
+ 483:../../BSP/LCD/lcd_ltdc.c ****  *              M2:M1:M0
+ 484:../../BSP/LCD/lcd_ltdc.c ****  *              0 :0 :0     4.3 寸480*272  RGB屏,ID = 0X4342
+ 485:../../BSP/LCD/lcd_ltdc.c ****  *              0 :0 :1     7   寸800*480  RGB屏,ID = 0X7084
+ 486:../../BSP/LCD/lcd_ltdc.c ****  *              0 :1 :0     7   寸1024*600 RGB屏,ID = 0X7016
+ 487:../../BSP/LCD/lcd_ltdc.c ****  *              0 :1 :1     5.5 寸720*1280 RGB屏,ID = 0X5571
+ 488:../../BSP/LCD/lcd_ltdc.c ****  *              1 :0 :0     4.3 寸800*480  RGB屏,ID = 0X4384
+ 489:../../BSP/LCD/lcd_ltdc.c ****  *              1 :0 :1     10.1寸1280*800 RGB屏,ID = 0X1018
+ 490:../../BSP/LCD/lcd_ltdc.c ****  * @param       无
+ 491:../../BSP/LCD/lcd_ltdc.c ****  * @retval      0, 非法; 
+ 492:../../BSP/LCD/lcd_ltdc.c ****  *              其他, LCD ID
+ 493:../../BSP/LCD/lcd_ltdc.c ****  */
+ 494:../../BSP/LCD/lcd_ltdc.c **** uint16_t ltdc_panelid_read(void)
+ 495:../../BSP/LCD/lcd_ltdc.c **** {
+ 1149              		.loc 1 495 1 is_stmt 1 view -0
+ 1150              		.cfi_startproc
+ 1151              		@ args = 0, pretend = 0, frame = 32
+ 1152              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1153 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1154              	.LCFI20:
+ 1155              		.cfi_def_cfa_offset 20
+ 1156              		.cfi_offset 4, -20
+ 1157              		.cfi_offset 5, -16
+ 1158              		.cfi_offset 6, -12
+ 1159              		.cfi_offset 7, -8
+ 1160              		.cfi_offset 14, -4
+ 1161 0002 89B0     		sub	sp, sp, #36
+ 1162              	.LCFI21:
+ 1163              		.cfi_def_cfa_offset 56
+ 496:../../BSP/LCD/lcd_ltdc.c ****     uint8_t idx = 0;
+ 1164              		.loc 1 496 5 view .LVU353
+ 1165              	.LVL77:
+ 497:../../BSP/LCD/lcd_ltdc.c **** 
+ 498:../../BSP/LCD/lcd_ltdc.c ****     GPIO_InitTypeDef gpio_init_struct;
+ 1166              		.loc 1 498 5 view .LVU354
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 31
+
+
+ 499:../../BSP/LCD/lcd_ltdc.c **** 
+ 500:../../BSP/LCD/lcd_ltdc.c ****     __HAL_RCC_GPIOJ_CLK_ENABLE();                              /* 使能GPIOJ时钟 */
+ 1167              		.loc 1 500 5 view .LVU355
+ 1168              	.LBB4:
+ 1169              		.loc 1 500 5 view .LVU356
+ 1170              		.loc 1 500 5 view .LVU357
+ 1171 0004 334B     		ldr	r3, .L84
+ 1172 0006 D3F8E020 		ldr	r2, [r3, #224]
+ 1173 000a 42F40072 		orr	r2, r2, #512
+ 1174 000e C3F8E020 		str	r2, [r3, #224]
+ 1175              		.loc 1 500 5 view .LVU358
+ 1176 0012 D3F8E020 		ldr	r2, [r3, #224]
+ 1177 0016 02F40072 		and	r2, r2, #512
+ 1178 001a 0192     		str	r2, [sp, #4]
+ 1179              		.loc 1 500 5 view .LVU359
+ 1180 001c 019A     		ldr	r2, [sp, #4]
+ 1181              	.LBE4:
+ 1182              		.loc 1 500 5 view .LVU360
+ 501:../../BSP/LCD/lcd_ltdc.c ****     __HAL_RCC_GPIOK_CLK_ENABLE();                              /* 使能GPIOK时钟 */
+ 1183              		.loc 1 501 5 view .LVU361
+ 1184              	.LBB5:
+ 1185              		.loc 1 501 5 view .LVU362
+ 1186              		.loc 1 501 5 view .LVU363
+ 1187 001e D3F8E020 		ldr	r2, [r3, #224]
+ 1188 0022 42F48062 		orr	r2, r2, #1024
+ 1189 0026 C3F8E020 		str	r2, [r3, #224]
+ 1190              		.loc 1 501 5 view .LVU364
+ 1191 002a D3F8E030 		ldr	r3, [r3, #224]
+ 1192 002e 03F48063 		and	r3, r3, #1024
+ 1193 0032 0293     		str	r3, [sp, #8]
+ 1194              		.loc 1 501 5 view .LVU365
+ 1195 0034 029B     		ldr	r3, [sp, #8]
+ 1196              	.LBE5:
+ 1197              		.loc 1 501 5 view .LVU366
+ 502:../../BSP/LCD/lcd_ltdc.c ****     
+ 503:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Pin = GPIO_PIN_6;                         /* R7引脚PJ6 */
+ 1198              		.loc 1 503 5 view .LVU367
+ 1199              		.loc 1 503 26 is_stmt 0 view .LVU368
+ 1200 0036 4026     		movs	r6, #64
+ 1201 0038 0396     		str	r6, [sp, #12]
+ 504:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Mode = GPIO_MODE_INPUT;                   /* 输入 */
+ 1202              		.loc 1 504 5 is_stmt 1 view .LVU369
+ 1203              		.loc 1 504 27 is_stmt 0 view .LVU370
+ 1204 003a 0023     		movs	r3, #0
+ 1205 003c 0493     		str	r3, [sp, #16]
+ 505:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Pull = GPIO_PULLUP;                       /* 上拉 */
+ 1206              		.loc 1 505 5 is_stmt 1 view .LVU371
+ 1207              		.loc 1 505 27 is_stmt 0 view .LVU372
+ 1208 003e 0123     		movs	r3, #1
+ 1209 0040 0593     		str	r3, [sp, #20]
+ 506:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;        /* 高速 */
+ 1210              		.loc 1 506 5 is_stmt 1 view .LVU373
+ 1211              		.loc 1 506 28 is_stmt 0 view .LVU374
+ 1212 0042 0323     		movs	r3, #3
+ 1213 0044 0693     		str	r3, [sp, #24]
+ 507:../../BSP/LCD/lcd_ltdc.c ****     HAL_GPIO_Init(GPIOJ, &gpio_init_struct);                   /* 初始化PJ6 */
+ 1214              		.loc 1 507 5 is_stmt 1 view .LVU375
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 32
+
+
+ 1215 0046 03AF     		add	r7, sp, #12
+ 1216 0048 234C     		ldr	r4, .L84+4
+ 1217 004a 3946     		mov	r1, r7
+ 1218 004c 2046     		mov	r0, r4
+ 1219 004e FFF7FEFF 		bl	HAL_GPIO_Init
+ 1220              	.LVL78:
+ 508:../../BSP/LCD/lcd_ltdc.c ****     
+ 509:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Pin = GPIO_PIN_2 | GPIO_PIN_6;            /* G7,B7引脚PK2,6 */
+ 1221              		.loc 1 509 5 view .LVU376
+ 1222              		.loc 1 509 26 is_stmt 0 view .LVU377
+ 1223 0052 4423     		movs	r3, #68
+ 1224 0054 0393     		str	r3, [sp, #12]
+ 510:../../BSP/LCD/lcd_ltdc.c ****     HAL_GPIO_Init(GPIOK, &gpio_init_struct);                   /* 初始化PK2,6 */
+ 1225              		.loc 1 510 5 is_stmt 1 view .LVU378
+ 1226 0056 214D     		ldr	r5, .L84+8
+ 1227 0058 3946     		mov	r1, r7
+ 1228 005a 2846     		mov	r0, r5
+ 1229 005c FFF7FEFF 		bl	HAL_GPIO_Init
+ 1230              	.LVL79:
+ 511:../../BSP/LCD/lcd_ltdc.c **** 
+ 512:../../BSP/LCD/lcd_ltdc.c ****     delay_us(10);
+ 1231              		.loc 1 512 5 view .LVU379
+ 1232 0060 0A20     		movs	r0, #10
+ 1233 0062 FFF7FEFF 		bl	delay_us
+ 1234              	.LVL80:
+ 513:../../BSP/LCD/lcd_ltdc.c ****     idx  = (uint8_t)HAL_GPIO_ReadPin(GPIOJ, GPIO_PIN_6);       /* 读取M0 */
+ 1235              		.loc 1 513 5 view .LVU380
+ 1236              		.loc 1 513 21 is_stmt 0 view .LVU381
+ 1237 0066 3146     		mov	r1, r6
+ 1238 0068 2046     		mov	r0, r4
+ 1239 006a FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 1240              	.LVL81:
+ 1241 006e 0446     		mov	r4, r0
+ 1242              	.LVL82:
+ 514:../../BSP/LCD/lcd_ltdc.c ****     idx |= (uint8_t)HAL_GPIO_ReadPin(GPIOK, GPIO_PIN_2) << 1;  /* 读取M1 */
+ 1243              		.loc 1 514 5 is_stmt 1 view .LVU382
+ 1244              		.loc 1 514 21 is_stmt 0 view .LVU383
+ 1245 0070 0421     		movs	r1, #4
+ 1246 0072 2846     		mov	r0, r5
+ 1247 0074 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 1248              	.LVL83:
+ 1249              		.loc 1 514 9 discriminator 1 view .LVU384
+ 1250 0078 44EA4004 		orr	r4, r4, r0, lsl #1
+ 1251              	.LVL84:
+ 1252              		.loc 1 514 9 discriminator 1 view .LVU385
+ 1253 007c 64B2     		sxtb	r4, r4
+ 1254              	.LVL85:
+ 515:../../BSP/LCD/lcd_ltdc.c ****     idx |= (uint8_t)HAL_GPIO_ReadPin(GPIOK, GPIO_PIN_6) << 2;  /* 读取M2 */
+ 1255              		.loc 1 515 5 is_stmt 1 view .LVU386
+ 1256              		.loc 1 515 21 is_stmt 0 view .LVU387
+ 1257 007e 3146     		mov	r1, r6
+ 1258 0080 2846     		mov	r0, r5
+ 1259 0082 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 1260              	.LVL86:
+ 1261              		.loc 1 515 9 discriminator 1 view .LVU388
+ 1262 0086 44EA8000 		orr	r0, r4, r0, lsl #2
+ 1263 008a 40B2     		sxtb	r0, r0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 33
+
+
+ 1264              	.LVL87:
+ 516:../../BSP/LCD/lcd_ltdc.c **** 
+ 517:../../BSP/LCD/lcd_ltdc.c ****     switch (idx)
+ 1265              		.loc 1 517 5 is_stmt 1 view .LVU389
+ 1266 008c 0328     		cmp	r0, #3
+ 1267 008e 0FD0     		beq	.L77
+ 1268 0090 07DC     		bgt	.L76
+ 1269 0092 0128     		cmp	r0, #1
+ 1270 0094 0FD0     		beq	.L78
+ 1271 0096 0228     		cmp	r0, #2
+ 1272 0098 10D0     		beq	.L79
+ 1273 009a 90B9     		cbnz	r0, .L80
+ 1274 009c 44F24230 		movw	r0, #17218
+ 1275              	.LVL88:
+ 1276              		.loc 1 517 5 is_stmt 0 view .LVU390
+ 1277 00a0 13E0     		b	.L75
+ 1278              	.LVL89:
+ 1279              	.L76:
+ 1280              		.loc 1 517 5 view .LVU391
+ 1281 00a2 0428     		cmp	r0, #4
+ 1282 00a4 0FD0     		beq	.L81
+ 1283 00a6 0528     		cmp	r0, #5
+ 1284 00a8 11D1     		bne	.L82
+ 518:../../BSP/LCD/lcd_ltdc.c ****     {
+ 519:../../BSP/LCD/lcd_ltdc.c ****         case 0 :
+ 520:../../BSP/LCD/lcd_ltdc.c ****             return 0X4342;                    /* 4.3寸屏,480*272分辨率 */
+ 521:../../BSP/LCD/lcd_ltdc.c ****         
+ 522:../../BSP/LCD/lcd_ltdc.c ****         case 1 :
+ 523:../../BSP/LCD/lcd_ltdc.c ****             return 0X7084;                    /* 7  寸屏,800*480分辨率 */
+ 524:../../BSP/LCD/lcd_ltdc.c ****         
+ 525:../../BSP/LCD/lcd_ltdc.c ****         case 2 :
+ 526:../../BSP/LCD/lcd_ltdc.c ****             return 0X7016;                    /* 7  寸屏,1024*600分辨率 */
+ 527:../../BSP/LCD/lcd_ltdc.c ****         
+ 528:../../BSP/LCD/lcd_ltdc.c ****         case 3 :
+ 529:../../BSP/LCD/lcd_ltdc.c ****             return 0X5571;                    /* 5.5寸屏,720*1280分辨率 */
+ 530:../../BSP/LCD/lcd_ltdc.c ****         
+ 531:../../BSP/LCD/lcd_ltdc.c ****         case 4 :
+ 532:../../BSP/LCD/lcd_ltdc.c ****             return 0X4384;                    /* 4.3寸屏,800*480分辨率 */
+ 533:../../BSP/LCD/lcd_ltdc.c ****         
+ 534:../../BSP/LCD/lcd_ltdc.c ****         case 5 :
+ 535:../../BSP/LCD/lcd_ltdc.c ****             return 0X1018;                    /* 10.1寸屏,1280*800分辨率 */
+ 1285              		.loc 1 535 20 view .LVU392
+ 1286 00aa 41F21800 		movw	r0, #4120
+ 1287              	.LVL90:
+ 1288              		.loc 1 535 20 view .LVU393
+ 1289 00ae 0CE0     		b	.L75
+ 1290              	.LVL91:
+ 1291              	.L77:
+ 529:../../BSP/LCD/lcd_ltdc.c ****         
+ 1292              		.loc 1 529 20 view .LVU394
+ 1293 00b0 45F27150 		movw	r0, #21873
+ 1294              	.LVL92:
+ 529:../../BSP/LCD/lcd_ltdc.c ****         
+ 1295              		.loc 1 529 20 view .LVU395
+ 1296 00b4 09E0     		b	.L75
+ 1297              	.LVL93:
+ 1298              	.L78:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 34
+
+
+ 523:../../BSP/LCD/lcd_ltdc.c ****         
+ 1299              		.loc 1 523 20 view .LVU396
+ 1300 00b6 47F28400 		movw	r0, #28804
+ 1301              	.LVL94:
+ 523:../../BSP/LCD/lcd_ltdc.c ****         
+ 1302              		.loc 1 523 20 view .LVU397
+ 1303 00ba 06E0     		b	.L75
+ 1304              	.LVL95:
+ 1305              	.L79:
+ 526:../../BSP/LCD/lcd_ltdc.c ****         
+ 1306              		.loc 1 526 20 view .LVU398
+ 1307 00bc 47F21600 		movw	r0, #28694
+ 1308              	.LVL96:
+ 526:../../BSP/LCD/lcd_ltdc.c ****         
+ 1309              		.loc 1 526 20 view .LVU399
+ 1310 00c0 03E0     		b	.L75
+ 1311              	.LVL97:
+ 1312              	.L80:
+ 536:../../BSP/LCD/lcd_ltdc.c ****         
+ 537:../../BSP/LCD/lcd_ltdc.c ****         default :
+ 538:../../BSP/LCD/lcd_ltdc.c ****             return 0;
+ 1313              		.loc 1 538 20 view .LVU400
+ 1314 00c2 0020     		movs	r0, #0
+ 1315              	.LVL98:
+ 1316              		.loc 1 538 20 view .LVU401
+ 1317 00c4 01E0     		b	.L75
+ 1318              	.LVL99:
+ 1319              	.L81:
+ 532:../../BSP/LCD/lcd_ltdc.c ****         
+ 1320              		.loc 1 532 20 view .LVU402
+ 1321 00c6 44F28430 		movw	r0, #17284
+ 1322              	.LVL100:
+ 1323              	.L75:
+ 539:../../BSP/LCD/lcd_ltdc.c ****     }
+ 540:../../BSP/LCD/lcd_ltdc.c **** }
+ 1324              		.loc 1 540 1 view .LVU403
+ 1325 00ca 09B0     		add	sp, sp, #36
+ 1326              	.LCFI22:
+ 1327              		.cfi_remember_state
+ 1328              		.cfi_def_cfa_offset 20
+ 1329              		@ sp needed
+ 1330 00cc F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1331              	.LVL101:
+ 1332              	.L82:
+ 1333              	.LCFI23:
+ 1334              		.cfi_restore_state
+ 538:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1335              		.loc 1 538 20 view .LVU404
+ 1336 00ce 0020     		movs	r0, #0
+ 1337              	.LVL102:
+ 538:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1338              		.loc 1 538 20 view .LVU405
+ 1339 00d0 FBE7     		b	.L75
+ 1340              	.L85:
+ 1341 00d2 00BF     		.align	2
+ 1342              	.L84:
+ 1343 00d4 00440258 		.word	1476543488
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 35
+
+
+ 1344 00d8 00240258 		.word	1476535296
+ 1345 00dc 00280258 		.word	1476536320
+ 1346              		.cfi_endproc
+ 1347              	.LFE156:
+ 1349              		.section	.text.ltdc_gpio_init,"ax",%progbits
+ 1350              		.align	1
+ 1351              		.global	ltdc_gpio_init
+ 1352              		.syntax unified
+ 1353              		.thumb
+ 1354              		.thumb_func
+ 1356              	ltdc_gpio_init:
+ 1357              	.LFB158:
+ 541:../../BSP/LCD/lcd_ltdc.c **** 
+ 542:../../BSP/LCD/lcd_ltdc.c **** /**
+ 543:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC初始化函数
+ 544:../../BSP/LCD/lcd_ltdc.c ****  * @param       无
+ 545:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+ 546:../../BSP/LCD/lcd_ltdc.c ****  */
+ 547:../../BSP/LCD/lcd_ltdc.c **** void ltdc_init(void)
+ 548:../../BSP/LCD/lcd_ltdc.c **** {
+ 549:../../BSP/LCD/lcd_ltdc.c ****     uint16_t lcdid = 0;
+ 550:../../BSP/LCD/lcd_ltdc.c **** 
+ 551:../../BSP/LCD/lcd_ltdc.c ****     ltdc_gpio_init();
+ 552:../../BSP/LCD/lcd_ltdc.c ****     lcdid = ltdc_panelid_read();    /* 读取LCD面板ID */
+ 553:../../BSP/LCD/lcd_ltdc.c **** 
+ 554:../../BSP/LCD/lcd_ltdc.c **** #if RGB_80_8001280         
+ 555:../../BSP/LCD/lcd_ltdc.c ****     lcdid = 0X8081;
+ 556:../../BSP/LCD/lcd_ltdc.c **** #endif
+ 557:../../BSP/LCD/lcd_ltdc.c ****   
+ 558:../../BSP/LCD/lcd_ltdc.c ****     if (lcdid == 0X4342)
+ 559:../../BSP/LCD/lcd_ltdc.c ****     {
+ 560:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pwidth = 480;       /* 面板宽度,单位:像素 */
+ 561:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 272;      /* 面板高度,单位:像素 */
+ 562:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 1;            /* 水平同步宽度 */
+ 563:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 40;           /* 水平后廊 */
+ 564:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 5;            /* 水平前廊 */      
+ 565:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 1;            /* 垂直同步宽度 */
+ 566:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 8;            /* 垂直后廊 */      
+ 567:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 8;            /* 垂直前廊 */
+ 568:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 33);  /* 设置像素时钟  9Mhz */
+ 569:../../BSP/LCD/lcd_ltdc.c ****     }
+ 570:../../BSP/LCD/lcd_ltdc.c ****     else if (lcdid == 0X7084)
+ 571:../../BSP/LCD/lcd_ltdc.c ****     {
+ 572:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pwidth = 800;       /* 面板宽度,单位:像素 */
+ 573:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 480;      /* 面板高度,单位:像素 */
+ 574:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 1;            /* 水平同步宽度 */
+ 575:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 46;           /* 水平后廊 */
+ 576:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 210;          /* 水平前廊 */
+ 577:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 1;            /* 垂直同步宽度 */
+ 578:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 23;           /* 垂直后廊 */
+ 579:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 22;           /* 垂直前廊 */
+ 580:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 9);   /* 设置像素时钟 33Mhz(如果开双显,需要降低DCLK到
+ 581:../../BSP/LCD/lcd_ltdc.c ****     }
+ 582:../../BSP/LCD/lcd_ltdc.c ****     else if (lcdid == 0X7016)
+ 583:../../BSP/LCD/lcd_ltdc.c ****     {
+ 584:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pwidth = 1024;      /* 面板宽度,单位:像素 */
+ 585:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 600;      /* 面板高度,单位:像素 */
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 36
+
+
+ 586:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 20;           /* 水平同步宽度 */
+ 587:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 140;          /* 水平后廊 */
+ 588:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 160;          /* 水平前廊 */
+ 589:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 590:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 20;           /* 垂直后廊 */
+ 591:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 12;           /* 垂直前廊 */
+ 592:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 6);   /* 设置像素时钟  50Mhz */
+ 593:../../BSP/LCD/lcd_ltdc.c ****     }
+ 594:../../BSP/LCD/lcd_ltdc.c ****     else if (lcdid == 0X5571)
+ 595:../../BSP/LCD/lcd_ltdc.c ****     {
+ 596:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pwidth = 720;       /* 面板宽度,单位:像素 */
+ 597:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 1280;     /* 面板高度,单位:像素 */
+ 598:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 10;           /* 水平同步宽度 */
+ 599:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 36;           /* 水平后廊 */
+ 600:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 46;           /* 水平前廊 */
+ 601:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 5;            /* 垂直同步宽度 */
+ 602:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 5;            /* 垂直后廊 */
+ 603:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 16;           /* 垂直前廊 */
+ 604:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(330, 25, 6);   /* 设置像素时钟  55Mhz */
+ 605:../../BSP/LCD/lcd_ltdc.c ****     }
+ 606:../../BSP/LCD/lcd_ltdc.c ****     else if (lcdid == 0X4384)
+ 607:../../BSP/LCD/lcd_ltdc.c ****     {
+ 608:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pwidth = 800;       /* 面板宽度,单位:像素 */
+ 609:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 480;      /* 面板高度,单位:像素 */
+ 610:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 48;           /* 水平同步宽度 */      
+ 611:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 88;           /* 水平后廊 */
+ 612:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 40;           /* 水平前廊 */
+ 613:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 614:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 32;           /* 垂直后廊 */
+ 615:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 13;           /* 垂直前廊 */
+ 616:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 9);   /* 设置像素时钟 33Mhz */ 
+ 617:../../BSP/LCD/lcd_ltdc.c ****     }
+ 618:../../BSP/LCD/lcd_ltdc.c ****     else if (lcdid == 0X8081)       /* 8寸800*1280 RGB屏 */
+ 619:../../BSP/LCD/lcd_ltdc.c ****     {
+ 620:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pwidth = 800;       /* 面板宽度,单位:像素 */
+ 621:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 1280;     /* 面板高度,单位:像素 */
+ 622:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 5;            /* 水平同步宽度 */
+ 623:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 20;           /* 水平后廊 */
+ 624:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 40;           /* 水平前廊 */
+ 625:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 626:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 20;           /* 垂直后廊 */
+ 627:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 30;           /* 垂直前廊 */
+ 628:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 5);   /* 设置像素时钟  60Mhz */
+ 629:../../BSP/LCD/lcd_ltdc.c ****     }
+ 630:../../BSP/LCD/lcd_ltdc.c ****     else if (lcdid == 0X1018)       /* 10.1寸1280*800 RGB屏 */
+ 631:../../BSP/LCD/lcd_ltdc.c ****     {
+ 632:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pwidth = 1280;      /* 面板宽度,单位:像素 */
+ 633:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 800;      /* 面板高度,单位:像素 */
+ 634:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 10;           /* 水平同步宽度 */
+ 635:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 140;          /* 水平后廊 */
+ 636:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 10;           /* 水平前廊 */
+ 637:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 638:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 10;           /* 垂直后廊 */
+ 639:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 10;           /* 垂直前廊 */
+ 640:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 5);   /* 设置像素时钟  60Mhz */
+ 641:../../BSP/LCD/lcd_ltdc.c ****     } 
+ 642:../../BSP/LCD/lcd_ltdc.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 37
+
+
+ 643:../../BSP/LCD/lcd_ltdc.c **** 
+ 644:../../BSP/LCD/lcd_ltdc.c ****     lcddev.width = lcdltdc.pwidth;      /* 设置lcddev的宽度参数 */
+ 645:../../BSP/LCD/lcd_ltdc.c ****     lcddev.height = lcdltdc.pheight;    /* 设置lcddev的高度参数 */
+ 646:../../BSP/LCD/lcd_ltdc.c ****     lcdltdc.pixformat = LTDC_PIXFORMAT; /* 颜色像素格式 */
+ 647:../../BSP/LCD/lcd_ltdc.c **** 
+ 648:../../BSP/LCD/lcd_ltdc.c ****     g_ltdc_framebuf[0] = (uint32_t *)LTDC_FRAME_BUF_ADDR;
+ 649:../../BSP/LCD/lcd_ltdc.c ****     lcdltdc.pixsize = 2;
+ 650:../../BSP/LCD/lcd_ltdc.c **** 
+ 651:../../BSP/LCD/lcd_ltdc.c **** #if !BSP_USE_CUBEMX_LTDC
+ 652:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Instance = LTDC;
+ 653:../../BSP/LCD/lcd_ltdc.c **** 
+ 654:../../BSP/LCD/lcd_ltdc.c ****     if (lcdid == 0X8081)
+ 655:../../BSP/LCD/lcd_ltdc.c ****     {
+ 656:../../BSP/LCD/lcd_ltdc.c ****         hltdc.Init.HSPolarity = LTDC_HSPOLARITY_AH;     /* 水平同步极性:高电平有效 */
+ 657:../../BSP/LCD/lcd_ltdc.c ****     }
+ 658:../../BSP/LCD/lcd_ltdc.c ****     else
+ 659:../../BSP/LCD/lcd_ltdc.c ****     {
+ 660:../../BSP/LCD/lcd_ltdc.c ****         hltdc.Init.HSPolarity = LTDC_HSPOLARITY_AL;     /* 水平同步极性:低电平有效 */
+ 661:../../BSP/LCD/lcd_ltdc.c ****     }
+ 662:../../BSP/LCD/lcd_ltdc.c **** 
+ 663:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;         /* 垂直同步极性:低电平有效 */
+ 664:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;         /* 数据使能极性:低电平有效 */
+ 665:../../BSP/LCD/lcd_ltdc.c ****     hltdc.State = HAL_LTDC_STATE_RESET;
+ 666:../../BSP/LCD/lcd_ltdc.c **** 
+ 667:../../BSP/LCD/lcd_ltdc.c ****     if (lcdid == 0X1018 || lcdid == 0X8081)
+ 668:../../BSP/LCD/lcd_ltdc.c ****     {
+ 669:../../BSP/LCD/lcd_ltdc.c ****         hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IIPC;   /* 像素时钟极性:高电平有效 */
+ 670:../../BSP/LCD/lcd_ltdc.c ****     }
+ 671:../../BSP/LCD/lcd_ltdc.c ****     else
+ 672:../../BSP/LCD/lcd_ltdc.c ****     {
+ 673:../../BSP/LCD/lcd_ltdc.c ****         hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;    /* 像素时钟极性:低电平有效 */
+ 674:../../BSP/LCD/lcd_ltdc.c ****     }
+ 675:../../BSP/LCD/lcd_ltdc.c **** 
+ 676:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.HorizontalSync = lcdltdc.hsw - 1;
+ 677:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.VerticalSync = lcdltdc.vsw - 1;
+ 678:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedHBP = lcdltdc.hsw + lcdltdc.hbp - 1;
+ 679:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedVBP = lcdltdc.vsw + lcdltdc.vbp - 1;
+ 680:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveW = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth - 1;
+ 681:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveH = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight - 1;
+ 682:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalWidth = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth + lcdltdc.hfp - 1;
+ 683:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalHeigh = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight + lcdltdc.vfp - 1;
+ 684:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Red = 0;
+ 685:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Green = 0;
+ 686:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Blue = 0;
+ 687:../../BSP/LCD/lcd_ltdc.c ****     HAL_LTDC_Init(&hltdc);
+ 688:../../BSP/LCD/lcd_ltdc.c **** #endif
+ 689:../../BSP/LCD/lcd_ltdc.c **** 
+ 690:../../BSP/LCD/lcd_ltdc.c ****     ltdc_layer_parameter_config(0, (uint32_t)g_ltdc_framebuf[0], LTDC_PIXFORMAT, 255, 0, 6, 7, 0X00
+ 691:../../BSP/LCD/lcd_ltdc.c ****     ltdc_layer_window_config(0, 0, 0, lcdltdc.pwidth, lcdltdc.pheight);
+ 692:../../BSP/LCD/lcd_ltdc.c **** 
+ 693:../../BSP/LCD/lcd_ltdc.c ****     ltdc_display_dir(1);
+ 694:../../BSP/LCD/lcd_ltdc.c ****     ltdc_select_layer(0);
+ 695:../../BSP/LCD/lcd_ltdc.c ****     LTDC_RST(1);
+ 696:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(10);
+ 697:../../BSP/LCD/lcd_ltdc.c ****     LTDC_RST(0);
+ 698:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(50);
+ 699:../../BSP/LCD/lcd_ltdc.c ****     LTDC_RST(1);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 38
+
+
+ 700:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(200);
+ 701:../../BSP/LCD/lcd_ltdc.c **** 
+ 702:../../BSP/LCD/lcd_ltdc.c ****     LTDC_BL(1);
+ 703:../../BSP/LCD/lcd_ltdc.c ****     ltdc_clear(0XFFFFFFFF);
+ 704:../../BSP/LCD/lcd_ltdc.c **** }
+ 705:../../BSP/LCD/lcd_ltdc.c **** 
+ 706:../../BSP/LCD/lcd_ltdc.c **** 
+ 707:../../BSP/LCD/lcd_ltdc.c **** /**
+ 708:../../BSP/LCD/lcd_ltdc.c ****  * @brief       LTDC底层GPIO初始化(背光/复位/供电)
+ 709:../../BSP/LCD/lcd_ltdc.c ****  * @retval      无
+ 710:../../BSP/LCD/lcd_ltdc.c ****  */
+ 711:../../BSP/LCD/lcd_ltdc.c **** void ltdc_gpio_init(void)
+ 712:../../BSP/LCD/lcd_ltdc.c **** {
+ 1358              		.loc 1 712 1 is_stmt 1 view -0
+ 1359              		.cfi_startproc
+ 1360              		@ args = 0, pretend = 0, frame = 32
+ 1361              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1362 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1363              	.LCFI24:
+ 1364              		.cfi_def_cfa_offset 20
+ 1365              		.cfi_offset 4, -20
+ 1366              		.cfi_offset 5, -16
+ 1367              		.cfi_offset 6, -12
+ 1368              		.cfi_offset 7, -8
+ 1369              		.cfi_offset 14, -4
+ 1370 0002 89B0     		sub	sp, sp, #36
+ 1371              	.LCFI25:
+ 1372              		.cfi_def_cfa_offset 56
+ 713:../../BSP/LCD/lcd_ltdc.c ****     GPIO_InitTypeDef gpio_init_struct = {0};
+ 1373              		.loc 1 713 5 view .LVU407
+ 1374              		.loc 1 713 22 is_stmt 0 view .LVU408
+ 1375 0004 03AC     		add	r4, sp, #12
+ 1376 0006 0023     		movs	r3, #0
+ 1377 0008 0393     		str	r3, [sp, #12]
+ 1378 000a 0493     		str	r3, [sp, #16]
+ 1379 000c 0593     		str	r3, [sp, #20]
+ 1380 000e 0693     		str	r3, [sp, #24]
+ 1381 0010 0793     		str	r3, [sp, #28]
+ 714:../../BSP/LCD/lcd_ltdc.c **** 
+ 715:../../BSP/LCD/lcd_ltdc.c ****     LTDC_BL_GPIO_CLK_ENABLE();
+ 1382              		.loc 1 715 5 is_stmt 1 view .LVU409
+ 1383              		.loc 1 715 5 view .LVU410
+ 1384              	.LBB6:
+ 1385              		.loc 1 715 5 view .LVU411
+ 1386              		.loc 1 715 5 view .LVU412
+ 1387 0012 224B     		ldr	r3, .L88
+ 1388 0014 D3F8E020 		ldr	r2, [r3, #224]
+ 1389 0018 42F00202 		orr	r2, r2, #2
+ 1390 001c C3F8E020 		str	r2, [r3, #224]
+ 1391              		.loc 1 715 5 view .LVU413
+ 1392 0020 D3F8E020 		ldr	r2, [r3, #224]
+ 1393 0024 02F00202 		and	r2, r2, #2
+ 1394 0028 0092     		str	r2, [sp]
+ 1395              		.loc 1 715 5 view .LVU414
+ 1396 002a 009A     		ldr	r2, [sp]
+ 1397              	.LBE6:
+ 1398              		.loc 1 715 5 view .LVU415
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 39
+
+
+ 1399              		.loc 1 715 5 view .LVU416
+ 716:../../BSP/LCD/lcd_ltdc.c ****     LTDC_RST_GPIO_CLK_ENABLE();
+ 1400              		.loc 1 716 5 view .LVU417
+ 1401              		.loc 1 716 5 view .LVU418
+ 1402              	.LBB7:
+ 1403              		.loc 1 716 5 view .LVU419
+ 1404              		.loc 1 716 5 view .LVU420
+ 1405 002c D3F8E020 		ldr	r2, [r3, #224]
+ 1406 0030 42F08002 		orr	r2, r2, #128
+ 1407 0034 C3F8E020 		str	r2, [r3, #224]
+ 1408              		.loc 1 716 5 view .LVU421
+ 1409 0038 D3F8E020 		ldr	r2, [r3, #224]
+ 1410 003c 02F08002 		and	r2, r2, #128
+ 1411 0040 0192     		str	r2, [sp, #4]
+ 1412              		.loc 1 716 5 view .LVU422
+ 1413 0042 019A     		ldr	r2, [sp, #4]
+ 1414              	.LBE7:
+ 1415              		.loc 1 716 5 view .LVU423
+ 1416              		.loc 1 716 5 view .LVU424
+ 717:../../BSP/LCD/lcd_ltdc.c ****     LCD_PWREN_GPIO_CLK_ENABLE();
+ 1417              		.loc 1 717 5 view .LVU425
+ 1418              		.loc 1 717 5 view .LVU426
+ 1419              	.LBB8:
+ 1420              		.loc 1 717 5 view .LVU427
+ 1421              		.loc 1 717 5 view .LVU428
+ 1422 0044 D3F8E020 		ldr	r2, [r3, #224]
+ 1423 0048 42F48072 		orr	r2, r2, #256
+ 1424 004c C3F8E020 		str	r2, [r3, #224]
+ 1425              		.loc 1 717 5 view .LVU429
+ 1426 0050 D3F8E030 		ldr	r3, [r3, #224]
+ 1427 0054 03F48073 		and	r3, r3, #256
+ 1428 0058 0293     		str	r3, [sp, #8]
+ 1429              		.loc 1 717 5 view .LVU430
+ 1430 005a 029B     		ldr	r3, [sp, #8]
+ 1431              	.LBE8:
+ 1432              		.loc 1 717 5 view .LVU431
+ 1433              		.loc 1 717 5 view .LVU432
+ 718:../../BSP/LCD/lcd_ltdc.c **** 
+ 719:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Pin = LTDC_BL_GPIO_PIN;
+ 1434              		.loc 1 719 5 view .LVU433
+ 1435              		.loc 1 719 26 is_stmt 0 view .LVU434
+ 1436 005c 0125     		movs	r5, #1
+ 1437 005e 0395     		str	r5, [sp, #12]
+ 720:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Mode = GPIO_MODE_OUTPUT_PP;
+ 1438              		.loc 1 720 5 is_stmt 1 view .LVU435
+ 1439              		.loc 1 720 27 is_stmt 0 view .LVU436
+ 1440 0060 0495     		str	r5, [sp, #16]
+ 721:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Pull = GPIO_PULLUP;
+ 1441              		.loc 1 721 5 is_stmt 1 view .LVU437
+ 1442              		.loc 1 721 27 is_stmt 0 view .LVU438
+ 1443 0062 0595     		str	r5, [sp, #20]
+ 722:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 1444              		.loc 1 722 5 is_stmt 1 view .LVU439
+ 1445              		.loc 1 722 28 is_stmt 0 view .LVU440
+ 1446 0064 0323     		movs	r3, #3
+ 1447 0066 0693     		str	r3, [sp, #24]
+ 723:../../BSP/LCD/lcd_ltdc.c ****     HAL_GPIO_Init(LTDC_BL_GPIO_PORT, &gpio_init_struct);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 40
+
+
+ 1448              		.loc 1 723 5 is_stmt 1 view .LVU441
+ 1449 0068 2146     		mov	r1, r4
+ 1450 006a 0D48     		ldr	r0, .L88+4
+ 1451 006c FFF7FEFF 		bl	HAL_GPIO_Init
+ 1452              	.LVL103:
+ 724:../../BSP/LCD/lcd_ltdc.c **** 
+ 725:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Pin = LTDC_RST_GPIO_PIN;
+ 1453              		.loc 1 725 5 view .LVU442
+ 1454              		.loc 1 725 26 is_stmt 0 view .LVU443
+ 1455 0070 2023     		movs	r3, #32
+ 1456 0072 0393     		str	r3, [sp, #12]
+ 726:../../BSP/LCD/lcd_ltdc.c ****     HAL_GPIO_Init(LTDC_RST_GPIO_PORT, &gpio_init_struct);
+ 1457              		.loc 1 726 5 is_stmt 1 view .LVU444
+ 1458 0074 2146     		mov	r1, r4
+ 1459 0076 0B48     		ldr	r0, .L88+8
+ 1460 0078 FFF7FEFF 		bl	HAL_GPIO_Init
+ 1461              	.LVL104:
+ 727:../../BSP/LCD/lcd_ltdc.c **** 
+ 728:../../BSP/LCD/lcd_ltdc.c ****     gpio_init_struct.Pin = LCD_PWREN_GPIO_PIN;
+ 1462              		.loc 1 728 5 view .LVU445
+ 1463              		.loc 1 728 26 is_stmt 0 view .LVU446
+ 1464 007c 4FF40067 		mov	r7, #2048
+ 1465 0080 0397     		str	r7, [sp, #12]
+ 729:../../BSP/LCD/lcd_ltdc.c ****     HAL_GPIO_Init(LCD_PWREN_GPIO_PORT, &gpio_init_struct);
+ 1466              		.loc 1 729 5 is_stmt 1 view .LVU447
+ 1467 0082 094E     		ldr	r6, .L88+12
+ 1468 0084 2146     		mov	r1, r4
+ 1469 0086 3046     		mov	r0, r6
+ 1470 0088 FFF7FEFF 		bl	HAL_GPIO_Init
+ 1471              	.LVL105:
+ 730:../../BSP/LCD/lcd_ltdc.c **** 
+ 731:../../BSP/LCD/lcd_ltdc.c ****     LCD_PWREN(1);
+ 1472              		.loc 1 731 5 view .LVU448
+ 1473              		.loc 1 731 5 view .LVU449
+ 1474 008c 2A46     		mov	r2, r5
+ 1475 008e 3946     		mov	r1, r7
+ 1476 0090 3046     		mov	r0, r6
+ 1477 0092 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1478              	.LVL106:
+ 1479              		.loc 1 731 5 discriminator 1 view .LVU450
+ 732:../../BSP/LCD/lcd_ltdc.c **** }
+ 1480              		.loc 1 732 1 is_stmt 0 view .LVU451
+ 1481 0096 09B0     		add	sp, sp, #36
+ 1482              	.LCFI26:
+ 1483              		.cfi_def_cfa_offset 20
+ 1484              		@ sp needed
+ 1485 0098 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1486              	.L89:
+ 1487 009a 00BF     		.align	2
+ 1488              	.L88:
+ 1489 009c 00440258 		.word	1476543488
+ 1490 00a0 00040258 		.word	1476527104
+ 1491 00a4 001C0258 		.word	1476533248
+ 1492 00a8 00200258 		.word	1476534272
+ 1493              		.cfi_endproc
+ 1494              	.LFE158:
+ 1496              		.section	.text.ltdc_init,"ax",%progbits
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 41
+
+
+ 1497              		.align	1
+ 1498              		.global	ltdc_init
+ 1499              		.syntax unified
+ 1500              		.thumb
+ 1501              		.thumb_func
+ 1503              	ltdc_init:
+ 1504              	.LFB157:
+ 548:../../BSP/LCD/lcd_ltdc.c ****     uint16_t lcdid = 0;
+ 1505              		.loc 1 548 1 is_stmt 1 view -0
+ 1506              		.cfi_startproc
+ 1507              		@ args = 0, pretend = 0, frame = 0
+ 1508              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1509 0000 30B5     		push	{r4, r5, lr}
+ 1510              	.LCFI27:
+ 1511              		.cfi_def_cfa_offset 12
+ 1512              		.cfi_offset 4, -12
+ 1513              		.cfi_offset 5, -8
+ 1514              		.cfi_offset 14, -4
+ 1515 0002 85B0     		sub	sp, sp, #20
+ 1516              	.LCFI28:
+ 1517              		.cfi_def_cfa_offset 32
+ 549:../../BSP/LCD/lcd_ltdc.c **** 
+ 1518              		.loc 1 549 5 view .LVU453
+ 1519              	.LVL107:
+ 551:../../BSP/LCD/lcd_ltdc.c ****     lcdid = ltdc_panelid_read();    /* 读取LCD面板ID */
+ 1520              		.loc 1 551 5 view .LVU454
+ 1521 0004 FFF7FEFF 		bl	ltdc_gpio_init
+ 1522              	.LVL108:
+ 552:../../BSP/LCD/lcd_ltdc.c **** 
+ 1523              		.loc 1 552 5 view .LVU455
+ 552:../../BSP/LCD/lcd_ltdc.c **** 
+ 1524              		.loc 1 552 13 is_stmt 0 view .LVU456
+ 1525 0008 FFF7FEFF 		bl	ltdc_panelid_read
+ 1526              	.LVL109:
+ 1527 000c 0446     		mov	r4, r0
+ 1528              	.LVL110:
+ 558:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1529              		.loc 1 558 5 is_stmt 1 view .LVU457
+ 558:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1530              		.loc 1 558 8 is_stmt 0 view .LVU458
+ 1531 000e 44F24233 		movw	r3, #17218
+ 1532 0012 9842     		cmp	r0, r3
+ 1533 0014 00F0B980 		beq	.L103
+ 570:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1534              		.loc 1 570 10 is_stmt 1 view .LVU459
+ 570:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1535              		.loc 1 570 13 is_stmt 0 view .LVU460
+ 1536 0018 47F28403 		movw	r3, #28804
+ 1537 001c 9842     		cmp	r0, r3
+ 1538 001e 00F0CC80 		beq	.L104
+ 582:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1539              		.loc 1 582 10 is_stmt 1 view .LVU461
+ 582:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1540              		.loc 1 582 13 is_stmt 0 view .LVU462
+ 1541 0022 47F21603 		movw	r3, #28694
+ 1542 0026 9842     		cmp	r0, r3
+ 1543 0028 00F0E080 		beq	.L105
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 42
+
+
+ 594:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1544              		.loc 1 594 10 is_stmt 1 view .LVU463
+ 594:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1545              		.loc 1 594 13 is_stmt 0 view .LVU464
+ 1546 002c 45F27153 		movw	r3, #21873
+ 1547 0030 9842     		cmp	r0, r3
+ 1548 0032 00F0F480 		beq	.L106
+ 606:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1549              		.loc 1 606 10 is_stmt 1 view .LVU465
+ 606:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1550              		.loc 1 606 13 is_stmt 0 view .LVU466
+ 1551 0036 44F28433 		movw	r3, #17284
+ 1552 003a 9842     		cmp	r0, r3
+ 1553 003c 00F00881 		beq	.L107
+ 618:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1554              		.loc 1 618 10 is_stmt 1 view .LVU467
+ 618:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1555              		.loc 1 618 13 is_stmt 0 view .LVU468
+ 1556 0040 48F28103 		movw	r3, #32897
+ 1557 0044 9842     		cmp	r0, r3
+ 1558 0046 00F01D81 		beq	.L108
+ 630:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1559              		.loc 1 630 10 is_stmt 1 view .LVU469
+ 630:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1560              		.loc 1 630 13 is_stmt 0 view .LVU470
+ 1561 004a 41F21803 		movw	r3, #4120
+ 1562 004e 9842     		cmp	r0, r3
+ 1563 0050 00F03081 		beq	.L109
+ 1564              	.LVL111:
+ 1565              	.L92:
+ 644:../../BSP/LCD/lcd_ltdc.c ****     lcddev.height = lcdltdc.pheight;    /* 设置lcddev的高度参数 */
+ 1566              		.loc 1 644 5 is_stmt 1 view .LVU471
+ 644:../../BSP/LCD/lcd_ltdc.c ****     lcddev.height = lcdltdc.pheight;    /* 设置lcddev的高度参数 */
+ 1567              		.loc 1 644 27 is_stmt 0 view .LVU472
+ 1568 0054 A749     		ldr	r1, .L111
+ 1569 0056 0A68     		ldr	r2, [r1]
+ 644:../../BSP/LCD/lcd_ltdc.c ****     lcddev.height = lcdltdc.pheight;    /* 设置lcddev的高度参数 */
+ 1570              		.loc 1 644 18 view .LVU473
+ 1571 0058 A748     		ldr	r0, .L111+4
+ 1572 005a 0280     		strh	r2, [r0]	@ movhi
+ 645:../../BSP/LCD/lcd_ltdc.c ****     lcdltdc.pixformat = LTDC_PIXFORMAT; /* 颜色像素格式 */
+ 1573              		.loc 1 645 5 is_stmt 1 view .LVU474
+ 645:../../BSP/LCD/lcd_ltdc.c ****     lcdltdc.pixformat = LTDC_PIXFORMAT; /* 颜色像素格式 */
+ 1574              		.loc 1 645 28 is_stmt 0 view .LVU475
+ 1575 005c 4B68     		ldr	r3, [r1, #4]
+ 645:../../BSP/LCD/lcd_ltdc.c ****     lcdltdc.pixformat = LTDC_PIXFORMAT; /* 颜色像素格式 */
+ 1576              		.loc 1 645 19 view .LVU476
+ 1577 005e 4380     		strh	r3, [r0, #2]	@ movhi
+ 646:../../BSP/LCD/lcd_ltdc.c **** 
+ 1578              		.loc 1 646 5 is_stmt 1 view .LVU477
+ 646:../../BSP/LCD/lcd_ltdc.c **** 
+ 1579              		.loc 1 646 23 is_stmt 0 view .LVU478
+ 1580 0060 0220     		movs	r0, #2
+ 1581 0062 81F82000 		strb	r0, [r1, #32]
+ 648:../../BSP/LCD/lcd_ltdc.c ****     lcdltdc.pixsize = 2;
+ 1582              		.loc 1 648 5 is_stmt 1 view .LVU479
+ 648:../../BSP/LCD/lcd_ltdc.c ****     lcdltdc.pixsize = 2;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 43
+
+
+ 1583              		.loc 1 648 24 is_stmt 0 view .LVU480
+ 1584 0066 A54D     		ldr	r5, .L111+8
+ 1585 0068 4FF0504C 		mov	ip, #-805306368
+ 1586 006c C5F800C0 		str	ip, [r5]
+ 649:../../BSP/LCD/lcd_ltdc.c **** 
+ 1587              		.loc 1 649 5 is_stmt 1 view .LVU481
+ 649:../../BSP/LCD/lcd_ltdc.c **** 
+ 1588              		.loc 1 649 21 is_stmt 0 view .LVU482
+ 1589 0070 C861     		str	r0, [r1, #28]
+ 652:../../BSP/LCD/lcd_ltdc.c **** 
+ 1590              		.loc 1 652 5 is_stmt 1 view .LVU483
+ 652:../../BSP/LCD/lcd_ltdc.c **** 
+ 1591              		.loc 1 652 20 is_stmt 0 view .LVU484
+ 1592 0072 A349     		ldr	r1, .L111+12
+ 1593 0074 A348     		ldr	r0, .L111+16
+ 1594 0076 0860     		str	r0, [r1]
+ 654:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1595              		.loc 1 654 5 is_stmt 1 view .LVU485
+ 654:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1596              		.loc 1 654 8 is_stmt 0 view .LVU486
+ 1597 0078 48F28101 		movw	r1, #32897
+ 1598 007c 8C42     		cmp	r4, r1
+ 1599 007e 00F03081 		beq	.L110
+ 660:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1600              		.loc 1 660 9 is_stmt 1 view .LVU487
+ 660:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1601              		.loc 1 660 31 is_stmt 0 view .LVU488
+ 1602 0082 9F49     		ldr	r1, .L111+12
+ 1603 0084 0020     		movs	r0, #0
+ 1604 0086 4860     		str	r0, [r1, #4]
+ 1605              	.L99:
+ 663:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;         /* 数据使能极性:低电平有效 */
+ 1606              		.loc 1 663 5 is_stmt 1 view .LVU489
+ 663:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;         /* 数据使能极性:低电平有效 */
+ 1607              		.loc 1 663 27 is_stmt 0 view .LVU490
+ 1608 0088 9D49     		ldr	r1, .L111+12
+ 1609 008a 0020     		movs	r0, #0
+ 1610 008c 8860     		str	r0, [r1, #8]
+ 664:../../BSP/LCD/lcd_ltdc.c ****     hltdc.State = HAL_LTDC_STATE_RESET;
+ 1611              		.loc 1 664 5 is_stmt 1 view .LVU491
+ 664:../../BSP/LCD/lcd_ltdc.c ****     hltdc.State = HAL_LTDC_STATE_RESET;
+ 1612              		.loc 1 664 27 is_stmt 0 view .LVU492
+ 1613 008e C860     		str	r0, [r1, #12]
+ 665:../../BSP/LCD/lcd_ltdc.c **** 
+ 1614              		.loc 1 665 5 is_stmt 1 view .LVU493
+ 665:../../BSP/LCD/lcd_ltdc.c **** 
+ 1615              		.loc 1 665 17 is_stmt 0 view .LVU494
+ 1616 0090 81F8A100 		strb	r0, [r1, #161]
+ 667:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1617              		.loc 1 667 5 is_stmt 1 view .LVU495
+ 667:../../BSP/LCD/lcd_ltdc.c ****     {
+ 1618              		.loc 1 667 8 is_stmt 0 view .LVU496
+ 1619 0094 41F21800 		movw	r0, #4120
+ 1620 0098 48F28101 		movw	r1, #32897
+ 1621 009c 8C42     		cmp	r4, r1
+ 1622 009e 18BF     		it	ne
+ 1623 00a0 8442     		cmpne	r4, r0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 44
+
+
+ 1624 00a2 40F02381 		bne	.L100
+ 669:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1625              		.loc 1 669 9 is_stmt 1 view .LVU497
+ 669:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1626              		.loc 1 669 31 is_stmt 0 view .LVU498
+ 1627 00a6 9649     		ldr	r1, .L111+12
+ 1628 00a8 4FF08050 		mov	r0, #268435456
+ 1629 00ac 0861     		str	r0, [r1, #16]
+ 1630              	.L101:
+ 676:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.VerticalSync = lcdltdc.vsw - 1;
+ 1631              		.loc 1 676 5 is_stmt 1 view .LVU499
+ 676:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.VerticalSync = lcdltdc.vsw - 1;
+ 1632              		.loc 1 676 40 is_stmt 0 view .LVU500
+ 1633 00ae 914D     		ldr	r5, .L111
+ 1634 00b0 2C89     		ldrh	r4, [r5, #8]
+ 676:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.VerticalSync = lcdltdc.vsw - 1;
+ 1635              		.loc 1 676 45 view .LVU501
+ 1636 00b2 611E     		subs	r1, r4, #1
+ 676:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.VerticalSync = lcdltdc.vsw - 1;
+ 1637              		.loc 1 676 31 view .LVU502
+ 1638 00b4 9248     		ldr	r0, .L111+12
+ 1639 00b6 4161     		str	r1, [r0, #20]
+ 677:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedHBP = lcdltdc.hsw + lcdltdc.hbp - 1;
+ 1640              		.loc 1 677 5 is_stmt 1 view .LVU503
+ 677:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedHBP = lcdltdc.hsw + lcdltdc.hbp - 1;
+ 1641              		.loc 1 677 38 is_stmt 0 view .LVU504
+ 1642 00b8 6989     		ldrh	r1, [r5, #10]
+ 677:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedHBP = lcdltdc.hsw + lcdltdc.hbp - 1;
+ 1643              		.loc 1 677 43 view .LVU505
+ 1644 00ba 01F1FF3C 		add	ip, r1, #-1
+ 677:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedHBP = lcdltdc.hsw + lcdltdc.hbp - 1;
+ 1645              		.loc 1 677 29 view .LVU506
+ 1646 00be C0F818C0 		str	ip, [r0, #24]
+ 678:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedVBP = lcdltdc.vsw + lcdltdc.vbp - 1;
+ 1647              		.loc 1 678 5 is_stmt 1 view .LVU507
+ 678:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedVBP = lcdltdc.vsw + lcdltdc.vbp - 1;
+ 1648              		.loc 1 678 54 is_stmt 0 view .LVU508
+ 1649 00c2 B5F80CC0 		ldrh	ip, [r5, #12]
+ 678:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedVBP = lcdltdc.vsw + lcdltdc.vbp - 1;
+ 1650              		.loc 1 678 45 view .LVU509
+ 1651 00c6 6444     		add	r4, r4, ip
+ 678:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedVBP = lcdltdc.vsw + lcdltdc.vbp - 1;
+ 1652              		.loc 1 678 59 view .LVU510
+ 1653 00c8 04F1FF3C 		add	ip, r4, #-1
+ 678:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedVBP = lcdltdc.vsw + lcdltdc.vbp - 1;
+ 1654              		.loc 1 678 31 view .LVU511
+ 1655 00cc C0F81CC0 		str	ip, [r0, #28]
+ 679:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveW = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth - 1;
+ 1656              		.loc 1 679 5 is_stmt 1 view .LVU512
+ 679:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveW = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth - 1;
+ 1657              		.loc 1 679 54 is_stmt 0 view .LVU513
+ 1658 00d0 B5F80EC0 		ldrh	ip, [r5, #14]
+ 679:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveW = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth - 1;
+ 1659              		.loc 1 679 45 view .LVU514
+ 1660 00d4 6144     		add	r1, r1, ip
+ 679:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveW = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth - 1;
+ 1661              		.loc 1 679 59 view .LVU515
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 45
+
+
+ 1662 00d6 01F1FF3C 		add	ip, r1, #-1
+ 679:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveW = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth - 1;
+ 1663              		.loc 1 679 31 view .LVU516
+ 1664 00da C0F820C0 		str	ip, [r0, #32]
+ 680:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveH = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight - 1;
+ 1665              		.loc 1 680 5 is_stmt 1 view .LVU517
+ 680:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveH = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight - 1;
+ 1666              		.loc 1 680 63 is_stmt 0 view .LVU518
+ 1667 00de 2244     		add	r2, r2, r4
+ 680:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveH = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight - 1;
+ 1668              		.loc 1 680 80 view .LVU519
+ 1669 00e0 541E     		subs	r4, r2, #1
+ 680:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.AccumulatedActiveH = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight - 1;
+ 1670              		.loc 1 680 35 view .LVU520
+ 1671 00e2 4462     		str	r4, [r0, #36]
+ 681:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalWidth = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth + lcdltdc.hfp - 1;
+ 1672              		.loc 1 681 5 is_stmt 1 view .LVU521
+ 681:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalWidth = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth + lcdltdc.hfp - 1;
+ 1673              		.loc 1 681 63 is_stmt 0 view .LVU522
+ 1674 00e4 0B44     		add	r3, r3, r1
+ 681:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalWidth = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth + lcdltdc.hfp - 1;
+ 1675              		.loc 1 681 81 view .LVU523
+ 1676 00e6 591E     		subs	r1, r3, #1
+ 681:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalWidth = lcdltdc.hsw + lcdltdc.hbp + lcdltdc.pwidth + lcdltdc.hfp - 1;
+ 1677              		.loc 1 681 35 view .LVU524
+ 1678 00e8 8162     		str	r1, [r0, #40]
+ 682:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalHeigh = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight + lcdltdc.vfp - 1;
+ 1679              		.loc 1 682 5 is_stmt 1 view .LVU525
+ 682:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalHeigh = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight + lcdltdc.vfp - 1;
+ 1680              		.loc 1 682 81 is_stmt 0 view .LVU526
+ 1681 00ea 298A     		ldrh	r1, [r5, #16]
+ 682:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalHeigh = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight + lcdltdc.vfp - 1;
+ 1682              		.loc 1 682 72 view .LVU527
+ 1683 00ec 0A44     		add	r2, r2, r1
+ 682:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalHeigh = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight + lcdltdc.vfp - 1;
+ 1684              		.loc 1 682 86 view .LVU528
+ 1685 00ee 013A     		subs	r2, r2, #1
+ 682:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.TotalHeigh = lcdltdc.vsw + lcdltdc.vbp + lcdltdc.pheight + lcdltdc.vfp - 1;
+ 1686              		.loc 1 682 27 view .LVU529
+ 1687 00f0 C262     		str	r2, [r0, #44]
+ 683:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Red = 0;
+ 1688              		.loc 1 683 5 is_stmt 1 view .LVU530
+ 683:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Red = 0;
+ 1689              		.loc 1 683 82 is_stmt 0 view .LVU531
+ 1690 00f2 6A8A     		ldrh	r2, [r5, #18]
+ 683:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Red = 0;
+ 1691              		.loc 1 683 73 view .LVU532
+ 1692 00f4 1344     		add	r3, r3, r2
+ 683:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Red = 0;
+ 1693              		.loc 1 683 87 view .LVU533
+ 1694 00f6 013B     		subs	r3, r3, #1
+ 683:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Red = 0;
+ 1695              		.loc 1 683 27 view .LVU534
+ 1696 00f8 0363     		str	r3, [r0, #48]
+ 684:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Green = 0;
+ 1697              		.loc 1 684 5 is_stmt 1 view .LVU535
+ 684:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Green = 0;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 46
+
+
+ 1698              		.loc 1 684 30 is_stmt 0 view .LVU536
+ 1699 00fa 0024     		movs	r4, #0
+ 1700 00fc 80F83640 		strb	r4, [r0, #54]
+ 685:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Blue = 0;
+ 1701              		.loc 1 685 5 is_stmt 1 view .LVU537
+ 685:../../BSP/LCD/lcd_ltdc.c ****     hltdc.Init.Backcolor.Blue = 0;
+ 1702              		.loc 1 685 32 is_stmt 0 view .LVU538
+ 1703 0100 80F83540 		strb	r4, [r0, #53]
+ 686:../../BSP/LCD/lcd_ltdc.c ****     HAL_LTDC_Init(&hltdc);
+ 1704              		.loc 1 686 5 is_stmt 1 view .LVU539
+ 686:../../BSP/LCD/lcd_ltdc.c ****     HAL_LTDC_Init(&hltdc);
+ 1705              		.loc 1 686 31 is_stmt 0 view .LVU540
+ 1706 0104 80F83440 		strb	r4, [r0, #52]
+ 687:../../BSP/LCD/lcd_ltdc.c **** #endif
+ 1707              		.loc 1 687 5 is_stmt 1 view .LVU541
+ 1708 0108 FFF7FEFF 		bl	HAL_LTDC_Init
+ 1709              	.LVL112:
+ 690:../../BSP/LCD/lcd_ltdc.c ****     ltdc_layer_window_config(0, 0, 0, lcdltdc.pwidth, lcdltdc.pheight);
+ 1710              		.loc 1 690 5 view .LVU542
+ 1711 010c 0394     		str	r4, [sp, #12]
+ 1712 010e 0723     		movs	r3, #7
+ 1713 0110 0293     		str	r3, [sp, #8]
+ 1714 0112 0623     		movs	r3, #6
+ 1715 0114 0193     		str	r3, [sp, #4]
+ 1716 0116 0094     		str	r4, [sp]
+ 1717 0118 FF23     		movs	r3, #255
+ 1718 011a 0222     		movs	r2, #2
+ 1719 011c 7749     		ldr	r1, .L111+8
+ 1720 011e 0968     		ldr	r1, [r1]
+ 1721 0120 2046     		mov	r0, r4
+ 1722 0122 FFF7FEFF 		bl	ltdc_layer_parameter_config
+ 1723              	.LVL113:
+ 691:../../BSP/LCD/lcd_ltdc.c **** 
+ 1724              		.loc 1 691 5 view .LVU543
+ 1725 0126 AB88     		ldrh	r3, [r5, #4]
+ 1726 0128 0093     		str	r3, [sp]
+ 1727 012a 2B88     		ldrh	r3, [r5]
+ 1728 012c 2246     		mov	r2, r4
+ 1729 012e 2146     		mov	r1, r4
+ 1730 0130 2046     		mov	r0, r4
+ 1731 0132 FFF7FEFF 		bl	ltdc_layer_window_config
+ 1732              	.LVL114:
+ 693:../../BSP/LCD/lcd_ltdc.c ****     ltdc_select_layer(0);
+ 1733              		.loc 1 693 5 view .LVU544
+ 1734 0136 0120     		movs	r0, #1
+ 1735 0138 FFF7FEFF 		bl	ltdc_display_dir
+ 1736              	.LVL115:
+ 694:../../BSP/LCD/lcd_ltdc.c ****     LTDC_RST(1);
+ 1737              		.loc 1 694 5 view .LVU545
+ 1738 013c 2046     		mov	r0, r4
+ 1739 013e FFF7FEFF 		bl	ltdc_select_layer
+ 1740              	.LVL116:
+ 695:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(10);
+ 1741              		.loc 1 695 5 view .LVU546
+ 695:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(10);
+ 1742              		.loc 1 695 5 view .LVU547
+ 1743 0142 714D     		ldr	r5, .L111+20
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 47
+
+
+ 1744 0144 0122     		movs	r2, #1
+ 1745 0146 2021     		movs	r1, #32
+ 1746 0148 2846     		mov	r0, r5
+ 1747 014a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1748              	.LVL117:
+ 695:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(10);
+ 1749              		.loc 1 695 5 discriminator 1 view .LVU548
+ 696:../../BSP/LCD/lcd_ltdc.c ****     LTDC_RST(0);
+ 1750              		.loc 1 696 5 view .LVU549
+ 1751 014e 0A20     		movs	r0, #10
+ 1752 0150 FFF7FEFF 		bl	delay_ms
+ 1753              	.LVL118:
+ 697:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(50);
+ 1754              		.loc 1 697 5 view .LVU550
+ 697:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(50);
+ 1755              		.loc 1 697 5 view .LVU551
+ 1756 0154 2246     		mov	r2, r4
+ 1757 0156 2021     		movs	r1, #32
+ 1758 0158 2846     		mov	r0, r5
+ 1759 015a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1760              	.LVL119:
+ 697:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(50);
+ 1761              		.loc 1 697 5 discriminator 1 view .LVU552
+ 698:../../BSP/LCD/lcd_ltdc.c ****     LTDC_RST(1);
+ 1762              		.loc 1 698 5 view .LVU553
+ 1763 015e 3220     		movs	r0, #50
+ 1764 0160 FFF7FEFF 		bl	delay_ms
+ 1765              	.LVL120:
+ 699:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(200);
+ 1766              		.loc 1 699 5 view .LVU554
+ 699:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(200);
+ 1767              		.loc 1 699 5 view .LVU555
+ 1768 0164 0122     		movs	r2, #1
+ 1769 0166 2021     		movs	r1, #32
+ 1770 0168 2846     		mov	r0, r5
+ 1771 016a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1772              	.LVL121:
+ 699:../../BSP/LCD/lcd_ltdc.c ****     delay_ms(200);
+ 1773              		.loc 1 699 5 discriminator 1 view .LVU556
+ 700:../../BSP/LCD/lcd_ltdc.c **** 
+ 1774              		.loc 1 700 5 view .LVU557
+ 1775 016e C820     		movs	r0, #200
+ 1776 0170 FFF7FEFF 		bl	delay_ms
+ 1777              	.LVL122:
+ 702:../../BSP/LCD/lcd_ltdc.c ****     ltdc_clear(0XFFFFFFFF);
+ 1778              		.loc 1 702 5 view .LVU558
+ 702:../../BSP/LCD/lcd_ltdc.c ****     ltdc_clear(0XFFFFFFFF);
+ 1779              		.loc 1 702 5 view .LVU559
+ 1780 0174 0122     		movs	r2, #1
+ 1781 0176 1146     		mov	r1, r2
+ 1782 0178 6448     		ldr	r0, .L111+24
+ 1783 017a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 1784              	.LVL123:
+ 702:../../BSP/LCD/lcd_ltdc.c ****     ltdc_clear(0XFFFFFFFF);
+ 1785              		.loc 1 702 5 discriminator 1 view .LVU560
+ 703:../../BSP/LCD/lcd_ltdc.c **** }
+ 1786              		.loc 1 703 5 view .LVU561
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 48
+
+
+ 1787 017e 4FF0FF30 		mov	r0, #-1
+ 1788 0182 FFF7FEFF 		bl	ltdc_clear
+ 1789              	.LVL124:
+ 704:../../BSP/LCD/lcd_ltdc.c **** 
+ 1790              		.loc 1 704 1 is_stmt 0 view .LVU562
+ 1791 0186 05B0     		add	sp, sp, #20
+ 1792              	.LCFI29:
+ 1793              		.cfi_remember_state
+ 1794              		.cfi_def_cfa_offset 12
+ 1795              		@ sp needed
+ 1796 0188 30BD     		pop	{r4, r5, pc}
+ 1797              	.LVL125:
+ 1798              	.L103:
+ 1799              	.LCFI30:
+ 1800              		.cfi_restore_state
+ 560:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 272;      /* 面板高度,单位:像素 */
+ 1801              		.loc 1 560 9 is_stmt 1 view .LVU563
+ 560:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 272;      /* 面板高度,单位:像素 */
+ 1802              		.loc 1 560 24 is_stmt 0 view .LVU564
+ 1803 018a 5A4B     		ldr	r3, .L111
+ 1804 018c 4FF4F072 		mov	r2, #480
+ 1805 0190 1A60     		str	r2, [r3]
+ 561:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 1;            /* 水平同步宽度 */
+ 1806              		.loc 1 561 9 is_stmt 1 view .LVU565
+ 561:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 1;            /* 水平同步宽度 */
+ 1807              		.loc 1 561 25 is_stmt 0 view .LVU566
+ 1808 0192 4FF48872 		mov	r2, #272
+ 1809 0196 5A60     		str	r2, [r3, #4]
+ 562:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 40;           /* 水平后廊 */
+ 1810              		.loc 1 562 9 is_stmt 1 view .LVU567
+ 562:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 40;           /* 水平后廊 */
+ 1811              		.loc 1 562 21 is_stmt 0 view .LVU568
+ 1812 0198 0122     		movs	r2, #1
+ 1813 019a 1A81     		strh	r2, [r3, #8]	@ movhi
+ 563:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 5;            /* 水平前廊 */      
+ 1814              		.loc 1 563 9 is_stmt 1 view .LVU569
+ 563:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 5;            /* 水平前廊 */      
+ 1815              		.loc 1 563 21 is_stmt 0 view .LVU570
+ 1816 019c 2821     		movs	r1, #40
+ 1817 019e 9981     		strh	r1, [r3, #12]	@ movhi
+ 564:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 1;            /* 垂直同步宽度 */
+ 1818              		.loc 1 564 9 is_stmt 1 view .LVU571
+ 564:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 1;            /* 垂直同步宽度 */
+ 1819              		.loc 1 564 21 is_stmt 0 view .LVU572
+ 1820 01a0 0521     		movs	r1, #5
+ 1821 01a2 1982     		strh	r1, [r3, #16]	@ movhi
+ 565:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 8;            /* 垂直后廊 */      
+ 1822              		.loc 1 565 9 is_stmt 1 view .LVU573
+ 565:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 8;            /* 垂直后廊 */      
+ 1823              		.loc 1 565 21 is_stmt 0 view .LVU574
+ 1824 01a4 5A81     		strh	r2, [r3, #10]	@ movhi
+ 566:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 8;            /* 垂直前廊 */
+ 1825              		.loc 1 566 9 is_stmt 1 view .LVU575
+ 566:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 8;            /* 垂直前廊 */
+ 1826              		.loc 1 566 21 is_stmt 0 view .LVU576
+ 1827 01a6 0822     		movs	r2, #8
+ 1828 01a8 DA81     		strh	r2, [r3, #14]	@ movhi
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 49
+
+
+ 567:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 33);  /* 设置像素时钟  9Mhz */
+ 1829              		.loc 1 567 9 is_stmt 1 view .LVU577
+ 567:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 33);  /* 设置像素时钟  9Mhz */
+ 1830              		.loc 1 567 21 is_stmt 0 view .LVU578
+ 1831 01aa 5A82     		strh	r2, [r3, #18]	@ movhi
+ 568:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1832              		.loc 1 568 9 is_stmt 1 view .LVU579
+ 1833 01ac 2122     		movs	r2, #33
+ 1834 01ae 1921     		movs	r1, #25
+ 1835 01b0 4FF49670 		mov	r0, #300
+ 1836              	.LVL126:
+ 568:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1837              		.loc 1 568 9 is_stmt 0 view .LVU580
+ 1838 01b4 FFF7FEFF 		bl	ltdc_clk_set
+ 1839              	.LVL127:
+ 1840 01b8 4CE7     		b	.L92
+ 1841              	.LVL128:
+ 1842              	.L104:
+ 572:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 480;      /* 面板高度,单位:像素 */
+ 1843              		.loc 1 572 9 is_stmt 1 view .LVU581
+ 572:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 480;      /* 面板高度,单位:像素 */
+ 1844              		.loc 1 572 24 is_stmt 0 view .LVU582
+ 1845 01ba 4E4B     		ldr	r3, .L111
+ 1846 01bc 4FF44872 		mov	r2, #800
+ 1847 01c0 1A60     		str	r2, [r3]
+ 573:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 1;            /* 水平同步宽度 */
+ 1848              		.loc 1 573 9 is_stmt 1 view .LVU583
+ 573:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 1;            /* 水平同步宽度 */
+ 1849              		.loc 1 573 25 is_stmt 0 view .LVU584
+ 1850 01c2 4FF4F072 		mov	r2, #480
+ 1851 01c6 5A60     		str	r2, [r3, #4]
+ 574:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 46;           /* 水平后廊 */
+ 1852              		.loc 1 574 9 is_stmt 1 view .LVU585
+ 574:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 46;           /* 水平后廊 */
+ 1853              		.loc 1 574 21 is_stmt 0 view .LVU586
+ 1854 01c8 0122     		movs	r2, #1
+ 1855 01ca 1A81     		strh	r2, [r3, #8]	@ movhi
+ 575:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 210;          /* 水平前廊 */
+ 1856              		.loc 1 575 9 is_stmt 1 view .LVU587
+ 575:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 210;          /* 水平前廊 */
+ 1857              		.loc 1 575 21 is_stmt 0 view .LVU588
+ 1858 01cc 2E21     		movs	r1, #46
+ 1859 01ce 9981     		strh	r1, [r3, #12]	@ movhi
+ 576:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 1;            /* 垂直同步宽度 */
+ 1860              		.loc 1 576 9 is_stmt 1 view .LVU589
+ 576:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 1;            /* 垂直同步宽度 */
+ 1861              		.loc 1 576 21 is_stmt 0 view .LVU590
+ 1862 01d0 D221     		movs	r1, #210
+ 1863 01d2 1982     		strh	r1, [r3, #16]	@ movhi
+ 577:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 23;           /* 垂直后廊 */
+ 1864              		.loc 1 577 9 is_stmt 1 view .LVU591
+ 577:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 23;           /* 垂直后廊 */
+ 1865              		.loc 1 577 21 is_stmt 0 view .LVU592
+ 1866 01d4 5A81     		strh	r2, [r3, #10]	@ movhi
+ 578:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 22;           /* 垂直前廊 */
+ 1867              		.loc 1 578 9 is_stmt 1 view .LVU593
+ 578:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 22;           /* 垂直前廊 */
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 50
+
+
+ 1868              		.loc 1 578 21 is_stmt 0 view .LVU594
+ 1869 01d6 1722     		movs	r2, #23
+ 1870 01d8 DA81     		strh	r2, [r3, #14]	@ movhi
+ 579:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 9);   /* 设置像素时钟 33Mhz(如果开双显,需要降低DCLK到
+ 1871              		.loc 1 579 9 is_stmt 1 view .LVU595
+ 579:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 9);   /* 设置像素时钟 33Mhz(如果开双显,需要降低DCLK到
+ 1872              		.loc 1 579 21 is_stmt 0 view .LVU596
+ 1873 01da 1622     		movs	r2, #22
+ 1874 01dc 5A82     		strh	r2, [r3, #18]	@ movhi
+ 580:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1875              		.loc 1 580 9 is_stmt 1 view .LVU597
+ 1876 01de 0922     		movs	r2, #9
+ 1877 01e0 1921     		movs	r1, #25
+ 1878 01e2 4FF49670 		mov	r0, #300
+ 1879              	.LVL129:
+ 580:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1880              		.loc 1 580 9 is_stmt 0 view .LVU598
+ 1881 01e6 FFF7FEFF 		bl	ltdc_clk_set
+ 1882              	.LVL130:
+ 1883 01ea 33E7     		b	.L92
+ 1884              	.LVL131:
+ 1885              	.L105:
+ 584:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 600;      /* 面板高度,单位:像素 */
+ 1886              		.loc 1 584 9 is_stmt 1 view .LVU599
+ 584:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 600;      /* 面板高度,单位:像素 */
+ 1887              		.loc 1 584 24 is_stmt 0 view .LVU600
+ 1888 01ec 414B     		ldr	r3, .L111
+ 1889 01ee 4FF48062 		mov	r2, #1024
+ 1890 01f2 1A60     		str	r2, [r3]
+ 585:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 20;           /* 水平同步宽度 */
+ 1891              		.loc 1 585 9 is_stmt 1 view .LVU601
+ 585:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 20;           /* 水平同步宽度 */
+ 1892              		.loc 1 585 25 is_stmt 0 view .LVU602
+ 1893 01f4 4FF41672 		mov	r2, #600
+ 1894 01f8 5A60     		str	r2, [r3, #4]
+ 586:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 140;          /* 水平后廊 */
+ 1895              		.loc 1 586 9 is_stmt 1 view .LVU603
+ 586:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 140;          /* 水平后廊 */
+ 1896              		.loc 1 586 21 is_stmt 0 view .LVU604
+ 1897 01fa 1422     		movs	r2, #20
+ 1898 01fc 1A81     		strh	r2, [r3, #8]	@ movhi
+ 587:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 160;          /* 水平前廊 */
+ 1899              		.loc 1 587 9 is_stmt 1 view .LVU605
+ 587:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 160;          /* 水平前廊 */
+ 1900              		.loc 1 587 21 is_stmt 0 view .LVU606
+ 1901 01fe 8C21     		movs	r1, #140
+ 1902 0200 9981     		strh	r1, [r3, #12]	@ movhi
+ 588:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 1903              		.loc 1 588 9 is_stmt 1 view .LVU607
+ 588:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 1904              		.loc 1 588 21 is_stmt 0 view .LVU608
+ 1905 0202 A021     		movs	r1, #160
+ 1906 0204 1982     		strh	r1, [r3, #16]	@ movhi
+ 589:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 20;           /* 垂直后廊 */
+ 1907              		.loc 1 589 9 is_stmt 1 view .LVU609
+ 589:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 20;           /* 垂直后廊 */
+ 1908              		.loc 1 589 21 is_stmt 0 view .LVU610
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 51
+
+
+ 1909 0206 0321     		movs	r1, #3
+ 1910 0208 5981     		strh	r1, [r3, #10]	@ movhi
+ 590:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 12;           /* 垂直前廊 */
+ 1911              		.loc 1 590 9 is_stmt 1 view .LVU611
+ 590:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 12;           /* 垂直前廊 */
+ 1912              		.loc 1 590 21 is_stmt 0 view .LVU612
+ 1913 020a DA81     		strh	r2, [r3, #14]	@ movhi
+ 591:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 6);   /* 设置像素时钟  50Mhz */
+ 1914              		.loc 1 591 9 is_stmt 1 view .LVU613
+ 591:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 6);   /* 设置像素时钟  50Mhz */
+ 1915              		.loc 1 591 21 is_stmt 0 view .LVU614
+ 1916 020c 0C22     		movs	r2, #12
+ 1917 020e 5A82     		strh	r2, [r3, #18]	@ movhi
+ 592:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1918              		.loc 1 592 9 is_stmt 1 view .LVU615
+ 1919 0210 0622     		movs	r2, #6
+ 1920 0212 1921     		movs	r1, #25
+ 1921 0214 4FF49670 		mov	r0, #300
+ 1922              	.LVL132:
+ 592:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1923              		.loc 1 592 9 is_stmt 0 view .LVU616
+ 1924 0218 FFF7FEFF 		bl	ltdc_clk_set
+ 1925              	.LVL133:
+ 1926 021c 1AE7     		b	.L92
+ 1927              	.LVL134:
+ 1928              	.L106:
+ 596:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 1280;     /* 面板高度,单位:像素 */
+ 1929              		.loc 1 596 9 is_stmt 1 view .LVU617
+ 596:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 1280;     /* 面板高度,单位:像素 */
+ 1930              		.loc 1 596 24 is_stmt 0 view .LVU618
+ 1931 021e 354B     		ldr	r3, .L111
+ 1932 0220 4FF43472 		mov	r2, #720
+ 1933 0224 1A60     		str	r2, [r3]
+ 597:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 10;           /* 水平同步宽度 */
+ 1934              		.loc 1 597 9 is_stmt 1 view .LVU619
+ 597:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 10;           /* 水平同步宽度 */
+ 1935              		.loc 1 597 25 is_stmt 0 view .LVU620
+ 1936 0226 4FF4A062 		mov	r2, #1280
+ 1937 022a 5A60     		str	r2, [r3, #4]
+ 598:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 36;           /* 水平后廊 */
+ 1938              		.loc 1 598 9 is_stmt 1 view .LVU621
+ 598:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 36;           /* 水平后廊 */
+ 1939              		.loc 1 598 21 is_stmt 0 view .LVU622
+ 1940 022c 0A22     		movs	r2, #10
+ 1941 022e 1A81     		strh	r2, [r3, #8]	@ movhi
+ 599:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 46;           /* 水平前廊 */
+ 1942              		.loc 1 599 9 is_stmt 1 view .LVU623
+ 599:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 46;           /* 水平前廊 */
+ 1943              		.loc 1 599 21 is_stmt 0 view .LVU624
+ 1944 0230 2422     		movs	r2, #36
+ 1945 0232 9A81     		strh	r2, [r3, #12]	@ movhi
+ 600:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 5;            /* 垂直同步宽度 */
+ 1946              		.loc 1 600 9 is_stmt 1 view .LVU625
+ 600:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 5;            /* 垂直同步宽度 */
+ 1947              		.loc 1 600 21 is_stmt 0 view .LVU626
+ 1948 0234 2E22     		movs	r2, #46
+ 1949 0236 1A82     		strh	r2, [r3, #16]	@ movhi
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 52
+
+
+ 601:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 5;            /* 垂直后廊 */
+ 1950              		.loc 1 601 9 is_stmt 1 view .LVU627
+ 601:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 5;            /* 垂直后廊 */
+ 1951              		.loc 1 601 21 is_stmt 0 view .LVU628
+ 1952 0238 0522     		movs	r2, #5
+ 1953 023a 5A81     		strh	r2, [r3, #10]	@ movhi
+ 602:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 16;           /* 垂直前廊 */
+ 1954              		.loc 1 602 9 is_stmt 1 view .LVU629
+ 602:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 16;           /* 垂直前廊 */
+ 1955              		.loc 1 602 21 is_stmt 0 view .LVU630
+ 1956 023c DA81     		strh	r2, [r3, #14]	@ movhi
+ 603:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(330, 25, 6);   /* 设置像素时钟  55Mhz */
+ 1957              		.loc 1 603 9 is_stmt 1 view .LVU631
+ 603:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(330, 25, 6);   /* 设置像素时钟  55Mhz */
+ 1958              		.loc 1 603 21 is_stmt 0 view .LVU632
+ 1959 023e 1022     		movs	r2, #16
+ 1960 0240 5A82     		strh	r2, [r3, #18]	@ movhi
+ 604:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1961              		.loc 1 604 9 is_stmt 1 view .LVU633
+ 1962 0242 0622     		movs	r2, #6
+ 1963 0244 1921     		movs	r1, #25
+ 1964 0246 4FF4A570 		mov	r0, #330
+ 1965              	.LVL135:
+ 604:../../BSP/LCD/lcd_ltdc.c ****     }
+ 1966              		.loc 1 604 9 is_stmt 0 view .LVU634
+ 1967 024a FFF7FEFF 		bl	ltdc_clk_set
+ 1968              	.LVL136:
+ 1969 024e 01E7     		b	.L92
+ 1970              	.LVL137:
+ 1971              	.L107:
+ 608:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 480;      /* 面板高度,单位:像素 */
+ 1972              		.loc 1 608 9 is_stmt 1 view .LVU635
+ 608:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 480;      /* 面板高度,单位:像素 */
+ 1973              		.loc 1 608 24 is_stmt 0 view .LVU636
+ 1974 0250 284B     		ldr	r3, .L111
+ 1975 0252 4FF44872 		mov	r2, #800
+ 1976 0256 1A60     		str	r2, [r3]
+ 609:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 48;           /* 水平同步宽度 */      
+ 1977              		.loc 1 609 9 is_stmt 1 view .LVU637
+ 609:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 48;           /* 水平同步宽度 */      
+ 1978              		.loc 1 609 25 is_stmt 0 view .LVU638
+ 1979 0258 4FF4F072 		mov	r2, #480
+ 1980 025c 5A60     		str	r2, [r3, #4]
+ 610:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 88;           /* 水平后廊 */
+ 1981              		.loc 1 610 9 is_stmt 1 view .LVU639
+ 610:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 88;           /* 水平后廊 */
+ 1982              		.loc 1 610 21 is_stmt 0 view .LVU640
+ 1983 025e 3022     		movs	r2, #48
+ 1984 0260 1A81     		strh	r2, [r3, #8]	@ movhi
+ 611:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 40;           /* 水平前廊 */
+ 1985              		.loc 1 611 9 is_stmt 1 view .LVU641
+ 611:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 40;           /* 水平前廊 */
+ 1986              		.loc 1 611 21 is_stmt 0 view .LVU642
+ 1987 0262 5822     		movs	r2, #88
+ 1988 0264 9A81     		strh	r2, [r3, #12]	@ movhi
+ 612:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 1989              		.loc 1 612 9 is_stmt 1 view .LVU643
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 53
+
+
+ 612:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 1990              		.loc 1 612 21 is_stmt 0 view .LVU644
+ 1991 0266 2822     		movs	r2, #40
+ 1992 0268 1A82     		strh	r2, [r3, #16]	@ movhi
+ 613:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 32;           /* 垂直后廊 */
+ 1993              		.loc 1 613 9 is_stmt 1 view .LVU645
+ 613:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 32;           /* 垂直后廊 */
+ 1994              		.loc 1 613 21 is_stmt 0 view .LVU646
+ 1995 026a 0322     		movs	r2, #3
+ 1996 026c 5A81     		strh	r2, [r3, #10]	@ movhi
+ 614:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 13;           /* 垂直前廊 */
+ 1997              		.loc 1 614 9 is_stmt 1 view .LVU647
+ 614:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 13;           /* 垂直前廊 */
+ 1998              		.loc 1 614 21 is_stmt 0 view .LVU648
+ 1999 026e 2022     		movs	r2, #32
+ 2000 0270 DA81     		strh	r2, [r3, #14]	@ movhi
+ 615:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 9);   /* 设置像素时钟 33Mhz */ 
+ 2001              		.loc 1 615 9 is_stmt 1 view .LVU649
+ 615:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 9);   /* 设置像素时钟 33Mhz */ 
+ 2002              		.loc 1 615 21 is_stmt 0 view .LVU650
+ 2003 0272 0D22     		movs	r2, #13
+ 2004 0274 5A82     		strh	r2, [r3, #18]	@ movhi
+ 616:../../BSP/LCD/lcd_ltdc.c ****     }
+ 2005              		.loc 1 616 9 is_stmt 1 view .LVU651
+ 2006 0276 0922     		movs	r2, #9
+ 2007 0278 1921     		movs	r1, #25
+ 2008 027a 4FF49670 		mov	r0, #300
+ 2009              	.LVL138:
+ 616:../../BSP/LCD/lcd_ltdc.c ****     }
+ 2010              		.loc 1 616 9 is_stmt 0 view .LVU652
+ 2011 027e FFF7FEFF 		bl	ltdc_clk_set
+ 2012              	.LVL139:
+ 2013 0282 E7E6     		b	.L92
+ 2014              	.LVL140:
+ 2015              	.L108:
+ 620:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 1280;     /* 面板高度,单位:像素 */
+ 2016              		.loc 1 620 9 is_stmt 1 view .LVU653
+ 620:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 1280;     /* 面板高度,单位:像素 */
+ 2017              		.loc 1 620 24 is_stmt 0 view .LVU654
+ 2018 0284 1B4B     		ldr	r3, .L111
+ 2019 0286 4FF44872 		mov	r2, #800
+ 2020 028a 1A60     		str	r2, [r3]
+ 621:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 5;            /* 水平同步宽度 */
+ 2021              		.loc 1 621 9 is_stmt 1 view .LVU655
+ 621:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 5;            /* 水平同步宽度 */
+ 2022              		.loc 1 621 25 is_stmt 0 view .LVU656
+ 2023 028c 4FF4A062 		mov	r2, #1280
+ 2024 0290 5A60     		str	r2, [r3, #4]
+ 622:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 20;           /* 水平后廊 */
+ 2025              		.loc 1 622 9 is_stmt 1 view .LVU657
+ 622:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 20;           /* 水平后廊 */
+ 2026              		.loc 1 622 21 is_stmt 0 view .LVU658
+ 2027 0292 0522     		movs	r2, #5
+ 2028 0294 1A81     		strh	r2, [r3, #8]	@ movhi
+ 623:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 40;           /* 水平前廊 */
+ 2029              		.loc 1 623 9 is_stmt 1 view .LVU659
+ 623:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 40;           /* 水平前廊 */
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 54
+
+
+ 2030              		.loc 1 623 21 is_stmt 0 view .LVU660
+ 2031 0296 1421     		movs	r1, #20
+ 2032 0298 9981     		strh	r1, [r3, #12]	@ movhi
+ 624:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 2033              		.loc 1 624 9 is_stmt 1 view .LVU661
+ 624:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 2034              		.loc 1 624 21 is_stmt 0 view .LVU662
+ 2035 029a 2820     		movs	r0, #40
+ 2036              	.LVL141:
+ 624:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 2037              		.loc 1 624 21 view .LVU663
+ 2038 029c 1882     		strh	r0, [r3, #16]	@ movhi
+ 625:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 20;           /* 垂直后廊 */
+ 2039              		.loc 1 625 9 is_stmt 1 view .LVU664
+ 625:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 20;           /* 垂直后廊 */
+ 2040              		.loc 1 625 21 is_stmt 0 view .LVU665
+ 2041 029e 0320     		movs	r0, #3
+ 2042 02a0 5881     		strh	r0, [r3, #10]	@ movhi
+ 626:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 30;           /* 垂直前廊 */
+ 2043              		.loc 1 626 9 is_stmt 1 view .LVU666
+ 626:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 30;           /* 垂直前廊 */
+ 2044              		.loc 1 626 21 is_stmt 0 view .LVU667
+ 2045 02a2 D981     		strh	r1, [r3, #14]	@ movhi
+ 627:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 5);   /* 设置像素时钟  60Mhz */
+ 2046              		.loc 1 627 9 is_stmt 1 view .LVU668
+ 627:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 5);   /* 设置像素时钟  60Mhz */
+ 2047              		.loc 1 627 21 is_stmt 0 view .LVU669
+ 2048 02a4 1E21     		movs	r1, #30
+ 2049 02a6 5982     		strh	r1, [r3, #18]	@ movhi
+ 628:../../BSP/LCD/lcd_ltdc.c ****     }
+ 2050              		.loc 1 628 9 is_stmt 1 view .LVU670
+ 2051 02a8 1921     		movs	r1, #25
+ 2052 02aa 4FF49670 		mov	r0, #300
+ 2053 02ae FFF7FEFF 		bl	ltdc_clk_set
+ 2054              	.LVL142:
+ 2055 02b2 CFE6     		b	.L92
+ 2056              	.LVL143:
+ 2057              	.L109:
+ 632:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 800;      /* 面板高度,单位:像素 */
+ 2058              		.loc 1 632 9 view .LVU671
+ 632:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.pheight = 800;      /* 面板高度,单位:像素 */
+ 2059              		.loc 1 632 24 is_stmt 0 view .LVU672
+ 2060 02b4 0F4B     		ldr	r3, .L111
+ 2061 02b6 4FF4A062 		mov	r2, #1280
+ 2062 02ba 1A60     		str	r2, [r3]
+ 633:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 10;           /* 水平同步宽度 */
+ 2063              		.loc 1 633 9 is_stmt 1 view .LVU673
+ 633:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hsw = 10;           /* 水平同步宽度 */
+ 2064              		.loc 1 633 25 is_stmt 0 view .LVU674
+ 2065 02bc 4FF44872 		mov	r2, #800
+ 2066 02c0 5A60     		str	r2, [r3, #4]
+ 634:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 140;          /* 水平后廊 */
+ 2067              		.loc 1 634 9 is_stmt 1 view .LVU675
+ 634:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hbp = 140;          /* 水平后廊 */
+ 2068              		.loc 1 634 21 is_stmt 0 view .LVU676
+ 2069 02c2 0A22     		movs	r2, #10
+ 2070 02c4 1A81     		strh	r2, [r3, #8]	@ movhi
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 55
+
+
+ 635:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 10;           /* 水平前廊 */
+ 2071              		.loc 1 635 9 is_stmt 1 view .LVU677
+ 635:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.hfp = 10;           /* 水平前廊 */
+ 2072              		.loc 1 635 21 is_stmt 0 view .LVU678
+ 2073 02c6 8C21     		movs	r1, #140
+ 2074 02c8 9981     		strh	r1, [r3, #12]	@ movhi
+ 636:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 2075              		.loc 1 636 9 is_stmt 1 view .LVU679
+ 636:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vsw = 3;            /* 垂直同步宽度 */
+ 2076              		.loc 1 636 21 is_stmt 0 view .LVU680
+ 2077 02ca 1A82     		strh	r2, [r3, #16]	@ movhi
+ 637:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 10;           /* 垂直后廊 */
+ 2078              		.loc 1 637 9 is_stmt 1 view .LVU681
+ 637:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vbp = 10;           /* 垂直后廊 */
+ 2079              		.loc 1 637 21 is_stmt 0 view .LVU682
+ 2080 02cc 0321     		movs	r1, #3
+ 2081 02ce 5981     		strh	r1, [r3, #10]	@ movhi
+ 638:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 10;           /* 垂直前廊 */
+ 2082              		.loc 1 638 9 is_stmt 1 view .LVU683
+ 638:../../BSP/LCD/lcd_ltdc.c ****         lcdltdc.vfp = 10;           /* 垂直前廊 */
+ 2083              		.loc 1 638 21 is_stmt 0 view .LVU684
+ 2084 02d0 DA81     		strh	r2, [r3, #14]	@ movhi
+ 639:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 5);   /* 设置像素时钟  60Mhz */
+ 2085              		.loc 1 639 9 is_stmt 1 view .LVU685
+ 639:../../BSP/LCD/lcd_ltdc.c ****         ltdc_clk_set(300, 25, 5);   /* 设置像素时钟  60Mhz */
+ 2086              		.loc 1 639 21 is_stmt 0 view .LVU686
+ 2087 02d2 5A82     		strh	r2, [r3, #18]	@ movhi
+ 640:../../BSP/LCD/lcd_ltdc.c ****     } 
+ 2088              		.loc 1 640 9 is_stmt 1 view .LVU687
+ 2089 02d4 0522     		movs	r2, #5
+ 2090 02d6 1921     		movs	r1, #25
+ 2091 02d8 4FF49670 		mov	r0, #300
+ 2092              	.LVL144:
+ 640:../../BSP/LCD/lcd_ltdc.c ****     } 
+ 2093              		.loc 1 640 9 is_stmt 0 view .LVU688
+ 2094 02dc FFF7FEFF 		bl	ltdc_clk_set
+ 2095              	.LVL145:
+ 2096 02e0 B8E6     		b	.L92
+ 2097              	.L110:
+ 656:../../BSP/LCD/lcd_ltdc.c ****     }
+ 2098              		.loc 1 656 9 is_stmt 1 view .LVU689
+ 656:../../BSP/LCD/lcd_ltdc.c ****     }
+ 2099              		.loc 1 656 31 is_stmt 0 view .LVU690
+ 2100 02e2 0749     		ldr	r1, .L111+12
+ 2101 02e4 4FF00040 		mov	r0, #-2147483648
+ 2102 02e8 4860     		str	r0, [r1, #4]
+ 2103 02ea CDE6     		b	.L99
+ 2104              	.L100:
+ 673:../../BSP/LCD/lcd_ltdc.c ****     }
+ 2105              		.loc 1 673 9 is_stmt 1 view .LVU691
+ 673:../../BSP/LCD/lcd_ltdc.c ****     }
+ 2106              		.loc 1 673 31 is_stmt 0 view .LVU692
+ 2107 02ec 0449     		ldr	r1, .L111+12
+ 2108 02ee 0020     		movs	r0, #0
+ 2109 02f0 0861     		str	r0, [r1, #16]
+ 2110 02f2 DCE6     		b	.L101
+ 2111              	.L112:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 56
+
+
+ 2112              		.align	2
+ 2113              	.L111:
+ 2114 02f4 00000000 		.word	lcdltdc
+ 2115 02f8 00000000 		.word	lcddev
+ 2116 02fc 00000000 		.word	g_ltdc_framebuf
+ 2117 0300 00000000 		.word	hltdc
+ 2118 0304 00100050 		.word	1342181376
+ 2119 0308 001C0258 		.word	1476533248
+ 2120 030c 00040258 		.word	1476527104
+ 2121              		.cfi_endproc
+ 2122              	.LFE157:
+ 2124              		.global	lcdltdc
+ 2125              		.section	.bss.lcdltdc,"aw",%nobits
+ 2126              		.align	2
+ 2129              	lcdltdc:
+ 2130 0000 00000000 		.space	36
+ 2130      00000000 
+ 2130      00000000 
+ 2130      00000000 
+ 2130      00000000 
+ 2131              		.global	g_ltdc_framebuf
+ 2132              		.section	.bss.g_ltdc_framebuf,"aw",%nobits
+ 2133              		.align	2
+ 2136              	g_ltdc_framebuf:
+ 2137 0000 00000000 		.space	8
+ 2137      00000000 
+ 2138              		.text
+ 2139              	.Letext0:
+ 2140              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 2141              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 2142              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 2143              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 2144              		.file 6 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h"
+ 2145              		.file 7 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 2146              		.file 8 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h"
+ 2147              		.file 9 "../../BSP/LCD/lcd_ltdc.h"
+ 2148              		.file 10 "../../CM7/Core/Inc/ltdc.h"
+ 2149              		.file 11 "../../BSP/LCD/lcd.h"
+ 2150              		.file 12 "../../BSP/bsp_delay.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 57
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lcd_ltdc.c
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:20     .text.ltdc_switch:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:26     .text.ltdc_switch:00000000 ltdc_switch
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:56     .text.ltdc_switch:00000020 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:61     .text.ltdc_layer_switch:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:67     .text.ltdc_layer_switch:00000000 ltdc_layer_switch
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:106    .text.ltdc_layer_switch:0000003c $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:111    .text.ltdc_select_layer:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:117    .text.ltdc_select_layer:00000000 ltdc_select_layer
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:134    .text.ltdc_select_layer:00000008 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:2129   .bss.lcdltdc:00000000 lcdltdc
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:139    .text.ltdc_display_dir:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:145    .text.ltdc_display_dir:00000000 ltdc_display_dir
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:196    .text.ltdc_display_dir:00000024 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:201    .text.ltdc_draw_point:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:207    .text.ltdc_draw_point:00000000 ltdc_draw_point
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:278    .text.ltdc_draw_point:00000054 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:2136   .bss.g_ltdc_framebuf:00000000 g_ltdc_framebuf
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:284    .text.ltdc_read_point:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:290    .text.ltdc_read_point:00000000 ltdc_read_point
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:360    .text.ltdc_read_point:0000004c $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:366    .text.ltdc_fill:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:372    .text.ltdc_fill:00000000 ltdc_fill
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:598    .text.ltdc_fill:000000d0 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:606    .text.ltdc_color_fill:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:612    .text.ltdc_color_fill:00000000 ltdc_color_fill
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:818    .text.ltdc_color_fill:000000c4 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:826    .text.ltdc_clear:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:832    .text.ltdc_clear:00000000 ltdc_clear
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:874    .text.ltdc_clear:00000020 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:879    .text.ltdc_clk_set:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:885    .text.ltdc_clk_set:00000000 ltdc_clk_set
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:942    .text.ltdc_clk_set:00000028 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:948    .text.ltdc_layer_window_config:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:954    .text.ltdc_layer_window_config:00000000 ltdc_layer_window_config
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1020   .text.ltdc_layer_window_config:00000040 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1027   .text.ltdc_layer_parameter_config:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1033   .text.ltdc_layer_parameter_config:00000000 ltdc_layer_parameter_config
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1135   .text.ltdc_layer_parameter_config:00000058 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1141   .text.ltdc_panelid_read:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1147   .text.ltdc_panelid_read:00000000 ltdc_panelid_read
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1343   .text.ltdc_panelid_read:000000d4 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1350   .text.ltdc_gpio_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1356   .text.ltdc_gpio_init:00000000 ltdc_gpio_init
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1489   .text.ltdc_gpio_init:0000009c $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1497   .text.ltdc_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:1503   .text.ltdc_init:00000000 ltdc_init
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:2114   .text.ltdc_init:000002f4 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:2126   .bss.lcdltdc:00000000 $d
+C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s:2133   .bss.g_ltdc_framebuf:00000000 $d
+
+UNDEFINED SYMBOLS
+hltdc
+HAL_RCCEx_PeriphCLKConfig
+HAL_LTDC_SetWindowPosition
+HAL_LTDC_SetWindowSize
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwKx1Fp.s 			page 58
+
+
+HAL_LTDC_ConfigLayer
+HAL_GPIO_Init
+delay_us
+HAL_GPIO_ReadPin
+HAL_GPIO_WritePin
+HAL_LTDC_Init
+delay_ms
+lcddev

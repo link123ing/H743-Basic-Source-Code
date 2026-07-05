@@ -1,0 +1,303 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lvgl_demo.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../CM7/Core/Src/lvgl_demo.c"
+  19              		.section	.text.lvgl_task,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	lvgl_task:
+  26              	.LVL0:
+  27              	.LFB202:
+   1:../../CM7/Core/Src/lvgl_demo.c **** /**
+   2:../../CM7/Core/Src/lvgl_demo.c ****  * @file lvgl_demo.c
+   3:../../CM7/Core/Src/lvgl_demo.c ****  * @brief LVGL application on FreeRTOS
+   4:../../CM7/Core/Src/lvgl_demo.c ****  */
+   5:../../CM7/Core/Src/lvgl_demo.c **** #include "lvgl_demo.h"
+   6:../../CM7/Core/Src/lvgl_demo.c **** #include "lvgl.h"
+   7:../../CM7/Core/Src/lvgl_demo.c **** #include "lv_port_disp.h"
+   8:../../CM7/Core/Src/lvgl_demo.c **** #include "lv_port_indev.h"
+   9:../../CM7/Core/Src/lvgl_demo.c **** #include "lv_demo_stress.h"
+  10:../../CM7/Core/Src/lvgl_demo.c **** #include "FreeRTOS.h"
+  11:../../CM7/Core/Src/lvgl_demo.c **** #include "task.h"
+  12:../../CM7/Core/Src/lvgl_demo.c **** #include "cmsis_os.h"
+  13:../../CM7/Core/Src/lvgl_demo.c **** 
+  14:../../CM7/Core/Src/lvgl_demo.c **** #define LVGL_TASK_PRIO      (osPriorityAboveNormal)
+  15:../../CM7/Core/Src/lvgl_demo.c **** #define LVGL_TASK_STACK     (4096U * 4U)
+  16:../../CM7/Core/Src/lvgl_demo.c **** 
+  17:../../CM7/Core/Src/lvgl_demo.c **** static osThreadId_t lvglTaskHandle;
+  18:../../CM7/Core/Src/lvgl_demo.c **** 
+  19:../../CM7/Core/Src/lvgl_demo.c **** static void lvgl_task(void *argument);
+  20:../../CM7/Core/Src/lvgl_demo.c **** 
+  21:../../CM7/Core/Src/lvgl_demo.c **** void lvgl_app_init(void)
+  22:../../CM7/Core/Src/lvgl_demo.c **** {
+  23:../../CM7/Core/Src/lvgl_demo.c ****     lv_init();
+  24:../../CM7/Core/Src/lvgl_demo.c ****     lv_port_disp_init();
+  25:../../CM7/Core/Src/lvgl_demo.c ****     lv_port_indev_init();
+  26:../../CM7/Core/Src/lvgl_demo.c **** }
+  27:../../CM7/Core/Src/lvgl_demo.c **** 
+  28:../../CM7/Core/Src/lvgl_demo.c **** void lvgl_start_task(void)
+  29:../../CM7/Core/Src/lvgl_demo.c **** {
+  30:../../CM7/Core/Src/lvgl_demo.c ****     const osThreadAttr_t lvgl_task_attributes = {
+  31:../../CM7/Core/Src/lvgl_demo.c ****         .name = "lvgl_task",
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s 			page 2
+
+
+  32:../../CM7/Core/Src/lvgl_demo.c ****         .stack_size = LVGL_TASK_STACK,
+  33:../../CM7/Core/Src/lvgl_demo.c ****         .priority = LVGL_TASK_PRIO,
+  34:../../CM7/Core/Src/lvgl_demo.c ****     };
+  35:../../CM7/Core/Src/lvgl_demo.c **** 
+  36:../../CM7/Core/Src/lvgl_demo.c ****     lvglTaskHandle = osThreadNew(lvgl_task, NULL, &lvgl_task_attributes);
+  37:../../CM7/Core/Src/lvgl_demo.c **** }
+  38:../../CM7/Core/Src/lvgl_demo.c **** 
+  39:../../CM7/Core/Src/lvgl_demo.c **** static void lvgl_task(void *argument)
+  40:../../CM7/Core/Src/lvgl_demo.c **** {
+  28              		.loc 1 40 1 view -0
+  29              		.cfi_startproc
+  30              		@ Volatile: function does not return.
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 40 1 is_stmt 0 view .LVU1
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+  41:../../CM7/Core/Src/lvgl_demo.c ****     (void)argument;
+  39              		.loc 1 41 5 is_stmt 1 view .LVU2
+  42:../../CM7/Core/Src/lvgl_demo.c **** 
+  43:../../CM7/Core/Src/lvgl_demo.c ****     lv_demo_stress();
+  40              		.loc 1 43 5 view .LVU3
+  41 0002 FFF7FEFF 		bl	lv_demo_stress
+  42              	.LVL1:
+  43              	.L2:
+  44:../../CM7/Core/Src/lvgl_demo.c **** 
+  45:../../CM7/Core/Src/lvgl_demo.c ****     for (;;)
+  44              		.loc 1 45 5 view .LVU4
+  46:../../CM7/Core/Src/lvgl_demo.c ****     {
+  47:../../CM7/Core/Src/lvgl_demo.c ****         lv_timer_handler();
+  45              		.loc 1 47 9 view .LVU5
+  46 0006 FFF7FEFF 		bl	lv_timer_handler
+  47              	.LVL2:
+  48:../../CM7/Core/Src/lvgl_demo.c ****         osDelay(1);
+  48              		.loc 1 48 9 discriminator 2 view .LVU6
+  49 000a 0120     		movs	r0, #1
+  50 000c FFF7FEFF 		bl	osDelay
+  51              	.LVL3:
+  45:../../CM7/Core/Src/lvgl_demo.c ****     {
+  52              		.loc 1 45 5 view .LVU7
+  53 0010 F9E7     		b	.L2
+  54              		.cfi_endproc
+  55              	.LFE202:
+  57              		.section	.text.lvgl_app_init,"ax",%progbits
+  58              		.align	1
+  59              		.global	lvgl_app_init
+  60              		.syntax unified
+  61              		.thumb
+  62              		.thumb_func
+  64              	lvgl_app_init:
+  65              	.LFB200:
+  22:../../CM7/Core/Src/lvgl_demo.c ****     lv_init();
+  66              		.loc 1 22 1 view -0
+  67              		.cfi_startproc
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s 			page 3
+
+
+  68              		@ args = 0, pretend = 0, frame = 0
+  69              		@ frame_needed = 0, uses_anonymous_args = 0
+  70 0000 08B5     		push	{r3, lr}
+  71              	.LCFI1:
+  72              		.cfi_def_cfa_offset 8
+  73              		.cfi_offset 3, -8
+  74              		.cfi_offset 14, -4
+  23:../../CM7/Core/Src/lvgl_demo.c ****     lv_port_disp_init();
+  75              		.loc 1 23 5 view .LVU9
+  76 0002 FFF7FEFF 		bl	lv_init
+  77              	.LVL4:
+  24:../../CM7/Core/Src/lvgl_demo.c ****     lv_port_indev_init();
+  78              		.loc 1 24 5 view .LVU10
+  79 0006 FFF7FEFF 		bl	lv_port_disp_init
+  80              	.LVL5:
+  25:../../CM7/Core/Src/lvgl_demo.c **** }
+  81              		.loc 1 25 5 view .LVU11
+  82 000a FFF7FEFF 		bl	lv_port_indev_init
+  83              	.LVL6:
+  26:../../CM7/Core/Src/lvgl_demo.c **** 
+  84              		.loc 1 26 1 is_stmt 0 view .LVU12
+  85 000e 08BD     		pop	{r3, pc}
+  86              		.cfi_endproc
+  87              	.LFE200:
+  89              		.section	.rodata.lvgl_start_task.str1.4,"aMS",%progbits,1
+  90              		.align	2
+  91              	.LC0:
+  92 0000 6C76676C 		.ascii	"lvgl_task\000"
+  92      5F746173 
+  92      6B00
+  93              		.section	.text.lvgl_start_task,"ax",%progbits
+  94              		.align	1
+  95              		.global	lvgl_start_task
+  96              		.syntax unified
+  97              		.thumb
+  98              		.thumb_func
+ 100              	lvgl_start_task:
+ 101              	.LFB201:
+  29:../../CM7/Core/Src/lvgl_demo.c ****     const osThreadAttr_t lvgl_task_attributes = {
+ 102              		.loc 1 29 1 is_stmt 1 view -0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 40
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106 0000 10B5     		push	{r4, lr}
+ 107              	.LCFI2:
+ 108              		.cfi_def_cfa_offset 8
+ 109              		.cfi_offset 4, -8
+ 110              		.cfi_offset 14, -4
+ 111 0002 8AB0     		sub	sp, sp, #40
+ 112              	.LCFI3:
+ 113              		.cfi_def_cfa_offset 48
+  30:../../CM7/Core/Src/lvgl_demo.c ****         .name = "lvgl_task",
+ 114              		.loc 1 30 5 view .LVU14
+  30:../../CM7/Core/Src/lvgl_demo.c ****         .name = "lvgl_task",
+ 115              		.loc 1 30 26 is_stmt 0 view .LVU15
+ 116 0004 01AC     		add	r4, sp, #4
+ 117 0006 2422     		movs	r2, #36
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s 			page 4
+
+
+ 118 0008 0021     		movs	r1, #0
+ 119 000a 2046     		mov	r0, r4
+ 120 000c FFF7FEFF 		bl	memset
+ 121              	.LVL7:
+ 122 0010 074B     		ldr	r3, .L8
+ 123 0012 0193     		str	r3, [sp, #4]
+ 124 0014 4FF48043 		mov	r3, #16384
+ 125 0018 0693     		str	r3, [sp, #24]
+ 126 001a 2023     		movs	r3, #32
+ 127 001c 0793     		str	r3, [sp, #28]
+  36:../../CM7/Core/Src/lvgl_demo.c **** }
+ 128              		.loc 1 36 5 is_stmt 1 view .LVU16
+  36:../../CM7/Core/Src/lvgl_demo.c **** }
+ 129              		.loc 1 36 22 is_stmt 0 view .LVU17
+ 130 001e 2246     		mov	r2, r4
+ 131 0020 0021     		movs	r1, #0
+ 132 0022 0448     		ldr	r0, .L8+4
+ 133 0024 FFF7FEFF 		bl	osThreadNew
+ 134              	.LVL8:
+  36:../../CM7/Core/Src/lvgl_demo.c **** }
+ 135              		.loc 1 36 20 discriminator 1 view .LVU18
+ 136 0028 034B     		ldr	r3, .L8+8
+ 137 002a 1860     		str	r0, [r3]
+  37:../../CM7/Core/Src/lvgl_demo.c **** 
+ 138              		.loc 1 37 1 view .LVU19
+ 139 002c 0AB0     		add	sp, sp, #40
+ 140              	.LCFI4:
+ 141              		.cfi_def_cfa_offset 8
+ 142              		@ sp needed
+ 143 002e 10BD     		pop	{r4, pc}
+ 144              	.L9:
+ 145              		.align	2
+ 146              	.L8:
+ 147 0030 00000000 		.word	.LC0
+ 148 0034 00000000 		.word	lvgl_task
+ 149 0038 00000000 		.word	lvglTaskHandle
+ 150              		.cfi_endproc
+ 151              	.LFE201:
+ 153              		.section	.text.vApplicationTickHook,"ax",%progbits
+ 154              		.align	1
+ 155              		.global	vApplicationTickHook
+ 156              		.syntax unified
+ 157              		.thumb
+ 158              		.thumb_func
+ 160              	vApplicationTickHook:
+ 161              	.LFB203:
+  49:../../CM7/Core/Src/lvgl_demo.c ****     }
+  50:../../CM7/Core/Src/lvgl_demo.c **** }
+  51:../../CM7/Core/Src/lvgl_demo.c **** 
+  52:../../CM7/Core/Src/lvgl_demo.c **** void vApplicationTickHook(void)
+  53:../../CM7/Core/Src/lvgl_demo.c **** {
+ 162              		.loc 1 53 1 is_stmt 1 view -0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 0, uses_anonymous_args = 0
+ 166 0000 08B5     		push	{r3, lr}
+ 167              	.LCFI5:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s 			page 5
+
+
+ 168              		.cfi_def_cfa_offset 8
+ 169              		.cfi_offset 3, -8
+ 170              		.cfi_offset 14, -4
+  54:../../CM7/Core/Src/lvgl_demo.c ****     lv_tick_inc(1);
+ 171              		.loc 1 54 5 view .LVU21
+ 172 0002 0120     		movs	r0, #1
+ 173 0004 FFF7FEFF 		bl	lv_tick_inc
+ 174              	.LVL9:
+  55:../../CM7/Core/Src/lvgl_demo.c **** }
+ 175              		.loc 1 55 1 is_stmt 0 view .LVU22
+ 176 0008 08BD     		pop	{r3, pc}
+ 177              		.cfi_endproc
+ 178              	.LFE203:
+ 180              		.section	.bss.lvglTaskHandle,"aw",%nobits
+ 181              		.align	2
+ 184              	lvglTaskHandle:
+ 185 0000 00000000 		.space	4
+ 186              		.text
+ 187              	.Letext0:
+ 188              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 189              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 190              		.file 4 "../../Middlewares/LVGL/GUI/lvgl/src/core/../indev/lv_indev.h"
+ 191              		.file 5 "../../Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 192              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/widgets/bar/lv_bar.h"
+ 193              		.file 7 "../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h"
+ 194              		.file 8 "../../Middlewares/LVGL/GUI_APP/demos/stress/lv_demo_stress.h"
+ 195              		.file 9 "../../BSP/LVGL/lv_port_indev.h"
+ 196              		.file 10 "../../BSP/LVGL/lv_port_disp.h"
+ 197              		.file 11 "../../Middlewares/LVGL/GUI/lvgl/src/lv_init.h"
+ 198              		.file 12 "../../Middlewares/LVGL/GUI/lvgl/src/misc/../tick/lv_tick.h"
+ 199              		.file 13 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_timer.h"
+ 200              		.file 14 "<built-in>"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lvgl_demo.c
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:20     .text.lvgl_task:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:25     .text.lvgl_task:00000000 lvgl_task
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:58     .text.lvgl_app_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:64     .text.lvgl_app_init:00000000 lvgl_app_init
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:90     .rodata.lvgl_start_task.str1.4:00000000 $d
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:94     .text.lvgl_start_task:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:100    .text.lvgl_start_task:00000000 lvgl_start_task
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:147    .text.lvgl_start_task:00000030 $d
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:184    .bss.lvglTaskHandle:00000000 lvglTaskHandle
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:154    .text.vApplicationTickHook:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:160    .text.vApplicationTickHook:00000000 vApplicationTickHook
+C:\Users\28576\AppData\Local\Temp\ccwiYTXS.s:181    .bss.lvglTaskHandle:00000000 $d
+
+UNDEFINED SYMBOLS
+lv_demo_stress
+lv_timer_handler
+osDelay
+lv_init
+lv_port_disp_init
+lv_port_indev_init
+memset
+osThreadNew
+lv_tick_inc

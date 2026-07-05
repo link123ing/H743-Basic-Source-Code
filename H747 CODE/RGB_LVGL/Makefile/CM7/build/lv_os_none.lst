@@ -1,0 +1,107 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccw3Igff.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_os_none.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c"
+  19              		.section	.text.lv_os_get_idle_percent,"ax",%progbits
+  20              		.align	1
+  21              		.global	lv_os_get_idle_percent
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_os_get_idle_percent:
+  27              	.LFB15:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  * @file lv_os_none.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** 
+  10:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** #include "../lv_conf_internal.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** #if LV_USE_OS == LV_OS_NONE
+  12:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** 
+  13:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** #include "lv_os.h"
+  14:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** #include "../misc/lv_timer.h"
+  15:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** 
+  16:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** /*********************
+  17:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  *      DEFINES
+  18:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  *********************/
+  19:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** 
+  20:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** /**********************
+  21:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  *      TYPEDEFS
+  22:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  **********************/
+  23:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** 
+  24:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** /**********************
+  25:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  *  STATIC PROTOTYPES
+  26:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  **********************/
+  27:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** 
+  28:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** /**********************
+  29:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  *  STATIC VARIABLES
+  30:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  **********************/
+  31:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccw3Igff.s 			page 2
+
+
+  32:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** /**********************
+  33:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  *      MACROS
+  34:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  **********************/
+  35:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** 
+  36:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** /**********************
+  37:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  *   GLOBAL FUNCTIONS
+  38:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****  **********************/
+  39:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** 
+  40:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** uint32_t lv_os_get_idle_percent(void)
+  41:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** {
+  28              		.loc 1 41 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  42:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c ****     return lv_timer_get_idle();
+  37              		.loc 1 42 5 view .LVU1
+  38              		.loc 1 42 12 is_stmt 0 view .LVU2
+  39 0002 FFF7FEFF 		bl	lv_timer_get_idle
+  40              	.LVL0:
+  43:../../Middlewares/LVGL/GUI/lvgl/src/osal/lv_os_none.c **** }
+  41              		.loc 1 43 1 view .LVU3
+  42 0006 08BD     		pop	{r3, pc}
+  43              		.cfi_endproc
+  44              	.LFE15:
+  46              		.text
+  47              	.Letext0:
+  48              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+  49              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+  50              		.file 4 "../../Middlewares/LVGL/GUI/lvgl/src/osal/../misc/lv_timer.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccw3Igff.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_os_none.c
+C:\Users\28576\AppData\Local\Temp\ccw3Igff.s:20     .text.lv_os_get_idle_percent:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccw3Igff.s:26     .text.lv_os_get_idle_percent:00000000 lv_os_get_idle_percent
+
+UNDEFINED SYMBOLS
+lv_timer_get_idle

@@ -1,0 +1,1326 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_led.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c"
+  19              		.section	.text.lv_led_event,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	lv_led_event:
+  26              	.LVL0:
+  27              	.LFB180:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  * @file lv_led.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** #include "lv_led_private.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** #include "../../core/lv_obj_private.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** #include "../../core/lv_obj_class_private.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  13:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** #if LV_USE_LED
+  14:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  15:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** #include "../../misc/lv_assert.h"
+  16:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** #include "../../themes/lv_theme.h"
+  17:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** #include "../../misc/lv_color.h"
+  18:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  19:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /*********************
+  20:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *      DEFINES
+  21:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *********************/
+  22:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** #define MY_CLASS (&lv_led_class)
+  23:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  24:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /**********************
+  25:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *      TYPEDEFS
+  26:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  **********************/
+  27:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  28:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /**********************
+  29:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *  STATIC PROTOTYPES
+  30:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  **********************/
+  31:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** static void lv_led_constructor(const lv_obj_class_t * class_p, lv_obj_t * obj);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 2
+
+
+  32:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** static void lv_led_event(const lv_obj_class_t * class_p, lv_event_t * e);
+  33:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  34:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /**********************
+  35:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *  STATIC VARIABLES
+  36:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  **********************/
+  37:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  38:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** const lv_obj_class_t lv_led_class  = {
+  39:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     .base_class = &lv_obj_class,
+  40:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     .constructor_cb = lv_led_constructor,
+  41:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     .width_def = LV_DPI_DEF / 5,
+  42:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     .height_def = LV_DPI_DEF / 5,
+  43:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     .event_cb = lv_led_event,
+  44:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     .instance_size = sizeof(lv_led_t),
+  45:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     .name = "lv_led",
+  46:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** };
+  47:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  48:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /**********************
+  49:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *      MACROS
+  50:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  **********************/
+  51:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  52:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /**********************
+  53:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *   GLOBAL FUNCTIONS
+  54:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  **********************/
+  55:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  56:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** lv_obj_t * lv_led_create(lv_obj_t * parent)
+  57:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** {
+  58:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_LOG_INFO("begin");
+  59:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_t * obj = lv_obj_class_create_obj(MY_CLASS, parent);
+  60:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_class_init_obj(obj);
+  61:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     return obj;
+  62:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+  63:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  64:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /*=====================
+  65:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  * Setter functions
+  66:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *====================*/
+  67:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  68:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** void lv_led_set_color(lv_obj_t * obj, lv_color_t color)
+  69:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** {
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+  71:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  72:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_t * led = (lv_led_t *)obj;
+  73:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     led->color = color;
+  74:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_invalidate(obj);
+  75:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+  76:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  77:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** void lv_led_set_brightness(lv_obj_t * obj, uint8_t bright)
+  78:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** {
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+  80:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  81:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_t * led = (lv_led_t *)obj;
+  82:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     if(led->bright == bright) return;
+  83:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  84:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     led->bright = LV_CLAMP(LV_LED_BRIGHT_MIN, bright, LV_LED_BRIGHT_MAX);
+  85:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  86:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     /*Invalidate the object there fore it will be redrawn*/
+  87:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_invalidate(obj);
+  88:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 3
+
+
+  89:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  90:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** void lv_led_on(lv_obj_t * led)
+  91:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** {
+  92:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_set_brightness(led, LV_LED_BRIGHT_MAX);
+  93:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+  94:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+  95:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** void lv_led_off(lv_obj_t * led)
+  96:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** {
+  97:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_set_brightness(led, LV_LED_BRIGHT_MIN);
+  98:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+  99:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** void lv_led_toggle(lv_obj_t * obj)
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** {
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     uint8_t bright = lv_led_get_brightness(obj);
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     if(bright > (LV_LED_BRIGHT_MIN + LV_LED_BRIGHT_MAX) >> 1)
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_led_off(obj);
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     else
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_led_on(obj);
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /*=====================
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  * Getter functions
+ 111:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *====================*/
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 113:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** uint8_t lv_led_get_brightness(const lv_obj_t * obj)
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** {
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 116:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_t * led = (lv_led_t *)obj;
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     return led->bright;
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 120:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** /**********************
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  *   STATIC FUNCTIONS
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****  **********************/
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** static void lv_led_constructor(const lv_obj_class_t * class_p, lv_obj_t * obj)
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** {
+ 127:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_UNUSED(class_p);
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_t * led = (lv_led_t *)obj;
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     led->color = lv_theme_get_color_primary(obj);
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     led->bright = LV_LED_BRIGHT_MAX;
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 133:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** static void lv_led_event(const lv_obj_class_t * class_p, lv_event_t * e)
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** {
+  28              		.loc 1 134 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 160
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 134 1 is_stmt 0 view .LVU1
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 4
+
+
+  39              		.cfi_offset 14, -4
+  40 0002 A8B0     		sub	sp, sp, #160
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 176
+  43 0004 0C46     		mov	r4, r1
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_UNUSED(class_p);
+  44              		.loc 1 135 5 is_stmt 1 view .LVU2
+ 136:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 137:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_result_t res;
+  45              		.loc 1 137 5 view .LVU3
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     /* Call the ancestor's event handler */
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_event_code_t code = lv_event_get_code(e);
+  46              		.loc 1 140 5 view .LVU4
+  47              		.loc 1 140 28 is_stmt 0 view .LVU5
+  48 0006 0846     		mov	r0, r1
+  49              	.LVL1:
+  50              		.loc 1 140 28 view .LVU6
+  51 0008 FFF7FEFF 		bl	lv_event_get_code
+  52              	.LVL2:
+  53              		.loc 1 140 28 view .LVU7
+  54 000c 0646     		mov	r6, r0
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     if(code != LV_EVENT_DRAW_MAIN && code != LV_EVENT_DRAW_MAIN_END) {
+  55              		.loc 1 141 5 is_stmt 1 view .LVU8
+  56              		.loc 1 141 35 is_stmt 0 view .LVU9
+  57 000e A0F11D03 		sub	r3, r0, #29
+  58              		.loc 1 141 7 view .LVU10
+  59 0012 012B     		cmp	r3, #1
+  60 0014 05D9     		bls	.L2
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         res = lv_obj_event_base(MY_CLASS, e);
+  61              		.loc 1 142 9 is_stmt 1 view .LVU11
+  62              		.loc 1 142 15 is_stmt 0 view .LVU12
+  63 0016 2146     		mov	r1, r4
+  64 0018 0648     		ldr	r0, .L6
+  65 001a FFF7FEFF 		bl	lv_obj_event_base
+  66              	.LVL3:
+ 143:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         if(res != LV_RESULT_OK) return;
+  67              		.loc 1 143 9 is_stmt 1 view .LVU13
+  68              		.loc 1 143 11 is_stmt 0 view .LVU14
+  69 001e 0128     		cmp	r0, #1
+  70 0020 05D1     		bne	.L1
+  71              	.LVL4:
+  72              	.L2:
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     }
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_t * obj = lv_event_get_current_target(e);
+  73              		.loc 1 146 5 is_stmt 1 view .LVU15
+  74              		.loc 1 146 22 is_stmt 0 view .LVU16
+  75 0022 2046     		mov	r0, r4
+  76 0024 FFF7FEFF 		bl	lv_event_get_current_target
+  77              	.LVL5:
+  78 0028 0546     		mov	r5, r0
+  79              	.LVL6:
+ 147:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     if(code == LV_EVENT_DRAW_MAIN) {
+  80              		.loc 1 147 5 is_stmt 1 view .LVU17
+  81              		.loc 1 147 7 is_stmt 0 view .LVU18
+  82 002a 1D2E     		cmp	r6, #29
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 5
+
+
+  83 002c 04D0     		beq	.L5
+  84              	.LVL7:
+  85              	.L1:
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         /*Make darker colors in a temporary style according to the brightness*/
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_led_t * led = (lv_led_t *)obj;
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_layer_t * layer = lv_event_get_layer(e);
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_draw_rect_dsc_t rect_dsc;
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_draw_rect_dsc_init(&rect_dsc);
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.base.layer = layer;
+ 155:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_obj_init_draw_rect_dsc(obj, LV_PART_MAIN, &rect_dsc);
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         /*Use the original colors brightness to modify color->led*/
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rect_dsc
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[0].color = lv_color_mix(led->color, lv_color_black(),
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                                        lv_color_brightness(rect_dsc.bg_grad.stops[0
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[1].color = lv_color_mix(led->color, lv_color_black(),
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                                        lv_color_brightness(rect_dsc.bg_grad.stops[1
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.shadow_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rect
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.border_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rect
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.outline_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rec
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         /*Mix. the color with black proportionally with brightness*/
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_color = lv_color_mix(rect_dsc.bg_color, lv_color_black(), led->bright);
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[0].color   = lv_color_mix(rect_dsc.bg_grad.stops[0].color, lv_color_
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[1].color   = lv_color_mix(rect_dsc.bg_grad.stops[1].color, lv_color_
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.border_color = lv_color_mix(rect_dsc.border_color, lv_color_black(), led->bright);
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.shadow_color = lv_color_mix(rect_dsc.shadow_color, lv_color_black(), led->bright);
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.outline_color = lv_color_mix(rect_dsc.outline_color, lv_color_black(), led->bright
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         /*Set the current shadow width according to brightness proportionally between LV_LED_BRIGHT
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****          * and LV_LED_BRIGHT_ON*/
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.shadow_width = ((led->bright - LV_LED_BRIGHT_MIN) * rect_dsc.shadow_width) /
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                 (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.shadow_spread = ((led->bright - LV_LED_BRIGHT_MIN) * rect_dsc.shadow_spread) /
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                  (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_draw_rect(layer, &rect_dsc, &obj->coords);
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     }
+ 184:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+  86              		.loc 1 184 1 view .LVU19
+  87 002e 28B0     		add	sp, sp, #160
+  88              	.LCFI2:
+  89              		.cfi_remember_state
+  90              		.cfi_def_cfa_offset 16
+  91              		@ sp needed
+  92 0030 70BD     		pop	{r4, r5, r6, pc}
+  93              	.LVL8:
+  94              	.L7:
+  95              		.loc 1 184 1 view .LVU20
+  96 0032 00BF     		.align	2
+  97              	.L6:
+  98 0034 00000000 		.word	lv_led_class
+  99              	.LVL9:
+ 100              	.L5:
+ 101              	.LCFI3:
+ 102              		.cfi_restore_state
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 6
+
+
+ 103              	.LBB2:
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_layer_t * layer = lv_event_get_layer(e);
+ 104              		.loc 1 149 9 is_stmt 1 view .LVU21
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 105              		.loc 1 150 9 view .LVU22
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 106              		.loc 1 150 30 is_stmt 0 view .LVU23
+ 107 0038 2046     		mov	r0, r4
+ 108              	.LVL10:
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 109              		.loc 1 150 30 view .LVU24
+ 110 003a FFF7FEFF 		bl	lv_event_get_layer
+ 111              	.LVL11:
+ 112 003e 0646     		mov	r6, r0
+ 113              	.LVL12:
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_draw_rect_dsc_init(&rect_dsc);
+ 114              		.loc 1 152 9 is_stmt 1 view .LVU25
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.base.layer = layer;
+ 115              		.loc 1 153 9 view .LVU26
+ 116 0040 6846     		mov	r0, sp
+ 117              	.LVL13:
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.base.layer = layer;
+ 118              		.loc 1 153 9 is_stmt 0 view .LVU27
+ 119 0042 FFF7FEFF 		bl	lv_draw_rect_dsc_init
+ 120              	.LVL14:
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_obj_init_draw_rect_dsc(obj, LV_PART_MAIN, &rect_dsc);
+ 121              		.loc 1 154 9 is_stmt 1 view .LVU28
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_obj_init_draw_rect_dsc(obj, LV_PART_MAIN, &rect_dsc);
+ 122              		.loc 1 154 29 is_stmt 0 view .LVU29
+ 123 0046 0496     		str	r6, [sp, #16]
+ 155:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 124              		.loc 1 155 9 is_stmt 1 view .LVU30
+ 125 0048 6A46     		mov	r2, sp
+ 126 004a 0021     		movs	r1, #0
+ 127 004c 2846     		mov	r0, r5
+ 128 004e FFF7FEFF 		bl	lv_obj_init_draw_rect_dsc
+ 129              	.LVL15:
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[0].color = lv_color_mix(led->color, lv_color_black(),
+ 130              		.loc 1 158 9 view .LVU31
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[0].color = lv_color_mix(led->color, lv_color_black(),
+ 131              		.loc 1 158 29 is_stmt 0 view .LVU32
+ 132 0052 FFF7FEFF 		bl	lv_color_black
+ 133              	.LVL16:
+ 134 0056 8DF87000 		strb	r0, [sp, #112]
+ 135 005a C0F30723 		ubfx	r3, r0, #8, #8
+ 136 005e 8DF87130 		strb	r3, [sp, #113]
+ 137 0062 C0F30740 		ubfx	r0, r0, #16, #8
+ 138 0066 8DF87200 		strb	r0, [sp, #114]
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[0].color = lv_color_mix(led->color, lv_color_black(),
+ 139              		.loc 1 158 29 discriminator 1 view .LVU33
+ 140 006a 9DF82130 		ldrb	r3, [sp, #33]	@ zero_extendqisi2
+ 141 006e 9DF82220 		ldrb	r2, [sp, #34]	@ zero_extendqisi2
+ 142 0072 43EA0223 		orr	r3, r3, r2, lsl #8
+ 143 0076 9DF82300 		ldrb	r0, [sp, #35]	@ zero_extendqisi2
+ 144 007a 43EA0040 		orr	r0, r3, r0, lsl #16
+ 145 007e FFF7FEFF 		bl	lv_color_brightness
+ 146              	.LVL17:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 7
+
+
+ 147 0082 0246     		mov	r2, r0
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[0].color = lv_color_mix(led->color, lv_color_black(),
+ 148              		.loc 1 158 29 discriminator 2 view .LVU34
+ 149 0084 1C99     		ldr	r1, [sp, #112]
+ 150 0086 E86A     		ldr	r0, [r5, #44]
+ 151 0088 FFF7FEFF 		bl	lv_color_mix
+ 152              	.LVL18:
+ 153 008c 8DF82100 		strb	r0, [sp, #33]
+ 154 0090 C0F30723 		ubfx	r3, r0, #8, #8
+ 155 0094 8DF82230 		strb	r3, [sp, #34]
+ 156 0098 C0F30740 		ubfx	r0, r0, #16, #8
+ 157 009c 8DF82300 		strb	r0, [sp, #35]
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                                        lv_color_brightness(rect_dsc.bg_grad.stops[0
+ 158              		.loc 1 159 9 is_stmt 1 view .LVU35
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                                        lv_color_brightness(rect_dsc.bg_grad.stops[0
+ 159              		.loc 1 159 43 is_stmt 0 view .LVU36
+ 160 00a0 FFF7FEFF 		bl	lv_color_black
+ 161              	.LVL19:
+ 162 00a4 8DF87400 		strb	r0, [sp, #116]
+ 163 00a8 C0F30723 		ubfx	r3, r0, #8, #8
+ 164 00ac 8DF87530 		strb	r3, [sp, #117]
+ 165 00b0 C0F30740 		ubfx	r0, r0, #16, #8
+ 166 00b4 8DF87600 		strb	r0, [sp, #118]
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                                        lv_color_brightness(rect_dsc.bg_grad.stops[0
+ 167              		.loc 1 159 43 discriminator 1 view .LVU37
+ 168 00b8 0998     		ldr	r0, [sp, #36]
+ 169 00ba FFF7FEFF 		bl	lv_color_brightness
+ 170              	.LVL20:
+ 171 00be 0246     		mov	r2, r0
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                                        lv_color_brightness(rect_dsc.bg_grad.stops[0
+ 172              		.loc 1 159 43 discriminator 2 view .LVU38
+ 173 00c0 1D99     		ldr	r1, [sp, #116]
+ 174 00c2 E86A     		ldr	r0, [r5, #44]
+ 175 00c4 FFF7FEFF 		bl	lv_color_mix
+ 176              	.LVL21:
+ 177 00c8 8DF82400 		strb	r0, [sp, #36]
+ 178 00cc C0F30723 		ubfx	r3, r0, #8, #8
+ 179 00d0 8DF82530 		strb	r3, [sp, #37]
+ 180 00d4 C0F30740 		ubfx	r0, r0, #16, #8
+ 181 00d8 8DF82600 		strb	r0, [sp, #38]
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                                        lv_color_brightness(rect_dsc.bg_grad.stops[1
+ 182              		.loc 1 161 9 is_stmt 1 view .LVU39
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                                        lv_color_brightness(rect_dsc.bg_grad.stops[1
+ 183              		.loc 1 161 43 is_stmt 0 view .LVU40
+ 184 00dc FFF7FEFF 		bl	lv_color_black
+ 185              	.LVL22:
+ 186 00e0 8DF87800 		strb	r0, [sp, #120]
+ 187 00e4 C0F30723 		ubfx	r3, r0, #8, #8
+ 188 00e8 8DF87930 		strb	r3, [sp, #121]
+ 189 00ec C0F30740 		ubfx	r0, r0, #16, #8
+ 190 00f0 8DF87A00 		strb	r0, [sp, #122]
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                                        lv_color_brightness(rect_dsc.bg_grad.stops[1
+ 191              		.loc 1 161 43 discriminator 1 view .LVU41
+ 192 00f4 9DF82930 		ldrb	r3, [sp, #41]	@ zero_extendqisi2
+ 193 00f8 9DF82A20 		ldrb	r2, [sp, #42]	@ zero_extendqisi2
+ 194 00fc 43EA0223 		orr	r3, r3, r2, lsl #8
+ 195 0100 9DF82B00 		ldrb	r0, [sp, #43]	@ zero_extendqisi2
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 8
+
+
+ 196 0104 43EA0040 		orr	r0, r3, r0, lsl #16
+ 197 0108 FFF7FEFF 		bl	lv_color_brightness
+ 198              	.LVL23:
+ 199 010c 0246     		mov	r2, r0
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                                        lv_color_brightness(rect_dsc.bg_grad.stops[1
+ 200              		.loc 1 161 43 discriminator 2 view .LVU42
+ 201 010e 1E99     		ldr	r1, [sp, #120]
+ 202 0110 E86A     		ldr	r0, [r5, #44]
+ 203 0112 FFF7FEFF 		bl	lv_color_mix
+ 204              	.LVL24:
+ 205 0116 8DF82900 		strb	r0, [sp, #41]
+ 206 011a C0F30723 		ubfx	r3, r0, #8, #8
+ 207 011e 8DF82A30 		strb	r3, [sp, #42]
+ 208 0122 C0F30740 		ubfx	r0, r0, #16, #8
+ 209 0126 8DF82B00 		strb	r0, [sp, #43]
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.border_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rect
+ 210              		.loc 1 163 9 is_stmt 1 view .LVU43
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.border_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rect
+ 211              		.loc 1 163 33 is_stmt 0 view .LVU44
+ 212 012a FFF7FEFF 		bl	lv_color_black
+ 213              	.LVL25:
+ 214 012e 8DF87C00 		strb	r0, [sp, #124]
+ 215 0132 C0F30723 		ubfx	r3, r0, #8, #8
+ 216 0136 8DF87D30 		strb	r3, [sp, #125]
+ 217 013a C0F30740 		ubfx	r0, r0, #16, #8
+ 218 013e 8DF87E00 		strb	r0, [sp, #126]
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.border_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rect
+ 219              		.loc 1 163 33 discriminator 1 view .LVU45
+ 220 0142 9DF85930 		ldrb	r3, [sp, #89]	@ zero_extendqisi2
+ 221 0146 9DF85A20 		ldrb	r2, [sp, #90]	@ zero_extendqisi2
+ 222 014a 43EA0223 		orr	r3, r3, r2, lsl #8
+ 223 014e 9DF85B00 		ldrb	r0, [sp, #91]	@ zero_extendqisi2
+ 224 0152 43EA0040 		orr	r0, r3, r0, lsl #16
+ 225 0156 FFF7FEFF 		bl	lv_color_brightness
+ 226              	.LVL26:
+ 227 015a 0246     		mov	r2, r0
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.border_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rect
+ 228              		.loc 1 163 33 discriminator 2 view .LVU46
+ 229 015c 1F99     		ldr	r1, [sp, #124]
+ 230 015e E86A     		ldr	r0, [r5, #44]
+ 231 0160 FFF7FEFF 		bl	lv_color_mix
+ 232              	.LVL27:
+ 233 0164 8DF85900 		strb	r0, [sp, #89]
+ 234 0168 C0F30723 		ubfx	r3, r0, #8, #8
+ 235 016c 8DF85A30 		strb	r3, [sp, #90]
+ 236 0170 C0F30740 		ubfx	r0, r0, #16, #8
+ 237 0174 8DF85B00 		strb	r0, [sp, #91]
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.outline_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rec
+ 238              		.loc 1 164 9 is_stmt 1 view .LVU47
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.outline_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rec
+ 239              		.loc 1 164 33 is_stmt 0 view .LVU48
+ 240 0178 FFF7FEFF 		bl	lv_color_black
+ 241              	.LVL28:
+ 242 017c 8DF88000 		strb	r0, [sp, #128]
+ 243 0180 C0F30723 		ubfx	r3, r0, #8, #8
+ 244 0184 8DF88130 		strb	r3, [sp, #129]
+ 245 0188 C0F30740 		ubfx	r0, r0, #16, #8
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 9
+
+
+ 246 018c 8DF88200 		strb	r0, [sp, #130]
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.outline_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rec
+ 247              		.loc 1 164 33 discriminator 1 view .LVU49
+ 248 0190 BDF83E30 		ldrh	r3, [sp, #62]
+ 249 0194 9DF84000 		ldrb	r0, [sp, #64]	@ zero_extendqisi2
+ 250 0198 43EA0040 		orr	r0, r3, r0, lsl #16
+ 251 019c FFF7FEFF 		bl	lv_color_brightness
+ 252              	.LVL29:
+ 253 01a0 0246     		mov	r2, r0
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.outline_color = lv_color_mix(led->color, lv_color_black(), lv_color_brightness(rec
+ 254              		.loc 1 164 33 discriminator 2 view .LVU50
+ 255 01a2 2099     		ldr	r1, [sp, #128]
+ 256 01a4 E86A     		ldr	r0, [r5, #44]
+ 257 01a6 FFF7FEFF 		bl	lv_color_mix
+ 258              	.LVL30:
+ 259 01aa 8DF83E00 		strb	r0, [sp, #62]
+ 260 01ae C0F30723 		ubfx	r3, r0, #8, #8
+ 261 01b2 8DF83F30 		strb	r3, [sp, #63]
+ 262 01b6 C0F30740 		ubfx	r0, r0, #16, #8
+ 263 01ba 8DF84000 		strb	r0, [sp, #64]
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 264              		.loc 1 165 9 is_stmt 1 view .LVU51
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 265              		.loc 1 165 34 is_stmt 0 view .LVU52
+ 266 01be FFF7FEFF 		bl	lv_color_black
+ 267              	.LVL31:
+ 268 01c2 8DF88400 		strb	r0, [sp, #132]
+ 269 01c6 C0F30723 		ubfx	r3, r0, #8, #8
+ 270 01ca 8DF88530 		strb	r3, [sp, #133]
+ 271 01ce C0F30740 		ubfx	r0, r0, #16, #8
+ 272 01d2 8DF88600 		strb	r0, [sp, #134]
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 273              		.loc 1 165 34 discriminator 1 view .LVU53
+ 274 01d6 BDF84A30 		ldrh	r3, [sp, #74]
+ 275 01da 9DF84C00 		ldrb	r0, [sp, #76]	@ zero_extendqisi2
+ 276 01de 43EA0040 		orr	r0, r3, r0, lsl #16
+ 277 01e2 FFF7FEFF 		bl	lv_color_brightness
+ 278              	.LVL32:
+ 279 01e6 0246     		mov	r2, r0
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 280              		.loc 1 165 34 discriminator 2 view .LVU54
+ 281 01e8 2199     		ldr	r1, [sp, #132]
+ 282 01ea E86A     		ldr	r0, [r5, #44]
+ 283 01ec FFF7FEFF 		bl	lv_color_mix
+ 284              	.LVL33:
+ 285 01f0 8DF84A00 		strb	r0, [sp, #74]
+ 286 01f4 C0F30723 		ubfx	r3, r0, #8, #8
+ 287 01f8 8DF84B30 		strb	r3, [sp, #75]
+ 288 01fc C0F30740 		ubfx	r0, r0, #16, #8
+ 289 0200 8DF84C00 		strb	r0, [sp, #76]
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[0].color   = lv_color_mix(rect_dsc.bg_grad.stops[0].color, lv_color_
+ 290              		.loc 1 168 9 is_stmt 1 view .LVU55
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[0].color   = lv_color_mix(rect_dsc.bg_grad.stops[0].color, lv_color_
+ 291              		.loc 1 168 29 is_stmt 0 view .LVU56
+ 292 0204 FFF7FEFF 		bl	lv_color_black
+ 293              	.LVL34:
+ 294 0208 8DF88800 		strb	r0, [sp, #136]
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 10
+
+
+ 295 020c C0F30723 		ubfx	r3, r0, #8, #8
+ 296 0210 8DF88930 		strb	r3, [sp, #137]
+ 297 0214 C0F30740 		ubfx	r0, r0, #16, #8
+ 298 0218 8DF88A00 		strb	r0, [sp, #138]
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[0].color   = lv_color_mix(rect_dsc.bg_grad.stops[0].color, lv_color_
+ 299              		.loc 1 168 29 discriminator 1 view .LVU57
+ 300 021c 9DF82130 		ldrb	r3, [sp, #33]	@ zero_extendqisi2
+ 301 0220 9DF82220 		ldrb	r2, [sp, #34]	@ zero_extendqisi2
+ 302 0224 43EA0223 		orr	r3, r3, r2, lsl #8
+ 303 0228 9DF82300 		ldrb	r0, [sp, #35]	@ zero_extendqisi2
+ 304 022c 95F82F20 		ldrb	r2, [r5, #47]	@ zero_extendqisi2
+ 305 0230 2299     		ldr	r1, [sp, #136]
+ 306 0232 43EA0040 		orr	r0, r3, r0, lsl #16
+ 307 0236 FFF7FEFF 		bl	lv_color_mix
+ 308              	.LVL35:
+ 309 023a 8DF82100 		strb	r0, [sp, #33]
+ 310 023e C0F30723 		ubfx	r3, r0, #8, #8
+ 311 0242 8DF82230 		strb	r3, [sp, #34]
+ 312 0246 C0F30740 		ubfx	r0, r0, #16, #8
+ 313 024a 8DF82300 		strb	r0, [sp, #35]
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[1].color   = lv_color_mix(rect_dsc.bg_grad.stops[1].color, lv_color_
+ 314              		.loc 1 169 9 is_stmt 1 view .LVU58
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[1].color   = lv_color_mix(rect_dsc.bg_grad.stops[1].color, lv_color_
+ 315              		.loc 1 169 45 is_stmt 0 view .LVU59
+ 316 024e FFF7FEFF 		bl	lv_color_black
+ 317              	.LVL36:
+ 318 0252 8DF88C00 		strb	r0, [sp, #140]
+ 319 0256 C0F30723 		ubfx	r3, r0, #8, #8
+ 320 025a 8DF88D30 		strb	r3, [sp, #141]
+ 321 025e C0F30740 		ubfx	r0, r0, #16, #8
+ 322 0262 8DF88E00 		strb	r0, [sp, #142]
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.bg_grad.stops[1].color   = lv_color_mix(rect_dsc.bg_grad.stops[1].color, lv_color_
+ 323              		.loc 1 169 45 discriminator 1 view .LVU60
+ 324 0266 95F82F20 		ldrb	r2, [r5, #47]	@ zero_extendqisi2
+ 325 026a 2399     		ldr	r1, [sp, #140]
+ 326 026c 0998     		ldr	r0, [sp, #36]
+ 327 026e FFF7FEFF 		bl	lv_color_mix
+ 328              	.LVL37:
+ 329 0272 8DF82400 		strb	r0, [sp, #36]
+ 330 0276 C0F30723 		ubfx	r3, r0, #8, #8
+ 331 027a 8DF82530 		strb	r3, [sp, #37]
+ 332 027e C0F30740 		ubfx	r0, r0, #16, #8
+ 333 0282 8DF82600 		strb	r0, [sp, #38]
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.border_color = lv_color_mix(rect_dsc.border_color, lv_color_black(), led->bright);
+ 334              		.loc 1 170 9 is_stmt 1 view .LVU61
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.border_color = lv_color_mix(rect_dsc.border_color, lv_color_black(), led->bright);
+ 335              		.loc 1 170 45 is_stmt 0 view .LVU62
+ 336 0286 FFF7FEFF 		bl	lv_color_black
+ 337              	.LVL38:
+ 338 028a 8DF89000 		strb	r0, [sp, #144]
+ 339 028e C0F30723 		ubfx	r3, r0, #8, #8
+ 340 0292 8DF89130 		strb	r3, [sp, #145]
+ 341 0296 C0F30740 		ubfx	r0, r0, #16, #8
+ 342 029a 8DF89200 		strb	r0, [sp, #146]
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.border_color = lv_color_mix(rect_dsc.border_color, lv_color_black(), led->bright);
+ 343              		.loc 1 170 45 discriminator 1 view .LVU63
+ 344 029e 9DF82930 		ldrb	r3, [sp, #41]	@ zero_extendqisi2
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 11
+
+
+ 345 02a2 9DF82A20 		ldrb	r2, [sp, #42]	@ zero_extendqisi2
+ 346 02a6 43EA0223 		orr	r3, r3, r2, lsl #8
+ 347 02aa 9DF82B00 		ldrb	r0, [sp, #43]	@ zero_extendqisi2
+ 348 02ae 95F82F20 		ldrb	r2, [r5, #47]	@ zero_extendqisi2
+ 349 02b2 2499     		ldr	r1, [sp, #144]
+ 350 02b4 43EA0040 		orr	r0, r3, r0, lsl #16
+ 351 02b8 FFF7FEFF 		bl	lv_color_mix
+ 352              	.LVL39:
+ 353 02bc 8DF82900 		strb	r0, [sp, #41]
+ 354 02c0 C0F30723 		ubfx	r3, r0, #8, #8
+ 355 02c4 8DF82A30 		strb	r3, [sp, #42]
+ 356 02c8 C0F30740 		ubfx	r0, r0, #16, #8
+ 357 02cc 8DF82B00 		strb	r0, [sp, #43]
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.shadow_color = lv_color_mix(rect_dsc.shadow_color, lv_color_black(), led->bright);
+ 358              		.loc 1 171 9 is_stmt 1 view .LVU64
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.shadow_color = lv_color_mix(rect_dsc.shadow_color, lv_color_black(), led->bright);
+ 359              		.loc 1 171 33 is_stmt 0 view .LVU65
+ 360 02d0 FFF7FEFF 		bl	lv_color_black
+ 361              	.LVL40:
+ 362 02d4 8DF89400 		strb	r0, [sp, #148]
+ 363 02d8 C0F30723 		ubfx	r3, r0, #8, #8
+ 364 02dc 8DF89530 		strb	r3, [sp, #149]
+ 365 02e0 C0F30740 		ubfx	r0, r0, #16, #8
+ 366 02e4 8DF89600 		strb	r0, [sp, #150]
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.shadow_color = lv_color_mix(rect_dsc.shadow_color, lv_color_black(), led->bright);
+ 367              		.loc 1 171 33 discriminator 1 view .LVU66
+ 368 02e8 BDF83E30 		ldrh	r3, [sp, #62]
+ 369 02ec 9DF84000 		ldrb	r0, [sp, #64]	@ zero_extendqisi2
+ 370 02f0 95F82F20 		ldrb	r2, [r5, #47]	@ zero_extendqisi2
+ 371 02f4 2599     		ldr	r1, [sp, #148]
+ 372 02f6 43EA0040 		orr	r0, r3, r0, lsl #16
+ 373 02fa FFF7FEFF 		bl	lv_color_mix
+ 374              	.LVL41:
+ 375 02fe 8DF83E00 		strb	r0, [sp, #62]
+ 376 0302 C0F30723 		ubfx	r3, r0, #8, #8
+ 377 0306 8DF83F30 		strb	r3, [sp, #63]
+ 378 030a C0F30740 		ubfx	r0, r0, #16, #8
+ 379 030e 8DF84000 		strb	r0, [sp, #64]
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.outline_color = lv_color_mix(rect_dsc.outline_color, lv_color_black(), led->bright
+ 380              		.loc 1 172 9 is_stmt 1 view .LVU67
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.outline_color = lv_color_mix(rect_dsc.outline_color, lv_color_black(), led->bright
+ 381              		.loc 1 172 33 is_stmt 0 view .LVU68
+ 382 0312 FFF7FEFF 		bl	lv_color_black
+ 383              	.LVL42:
+ 384 0316 8DF89800 		strb	r0, [sp, #152]
+ 385 031a C0F30723 		ubfx	r3, r0, #8, #8
+ 386 031e 8DF89930 		strb	r3, [sp, #153]
+ 387 0322 C0F30740 		ubfx	r0, r0, #16, #8
+ 388 0326 8DF89A00 		strb	r0, [sp, #154]
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         rect_dsc.outline_color = lv_color_mix(rect_dsc.outline_color, lv_color_black(), led->bright
+ 389              		.loc 1 172 33 discriminator 1 view .LVU69
+ 390 032a 9DF85930 		ldrb	r3, [sp, #89]	@ zero_extendqisi2
+ 391 032e 9DF85A20 		ldrb	r2, [sp, #90]	@ zero_extendqisi2
+ 392 0332 43EA0223 		orr	r3, r3, r2, lsl #8
+ 393 0336 9DF85B00 		ldrb	r0, [sp, #91]	@ zero_extendqisi2
+ 394 033a 95F82F20 		ldrb	r2, [r5, #47]	@ zero_extendqisi2
+ 395 033e 2699     		ldr	r1, [sp, #152]
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 12
+
+
+ 396 0340 43EA0040 		orr	r0, r3, r0, lsl #16
+ 397 0344 FFF7FEFF 		bl	lv_color_mix
+ 398              	.LVL43:
+ 399 0348 8DF85900 		strb	r0, [sp, #89]
+ 400 034c C0F30723 		ubfx	r3, r0, #8, #8
+ 401 0350 8DF85A30 		strb	r3, [sp, #90]
+ 402 0354 C0F30740 		ubfx	r0, r0, #16, #8
+ 403 0358 8DF85B00 		strb	r0, [sp, #91]
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 404              		.loc 1 173 9 is_stmt 1 view .LVU70
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 405              		.loc 1 173 34 is_stmt 0 view .LVU71
+ 406 035c FFF7FEFF 		bl	lv_color_black
+ 407              	.LVL44:
+ 408 0360 8DF89C00 		strb	r0, [sp, #156]
+ 409 0364 C0F30723 		ubfx	r3, r0, #8, #8
+ 410 0368 8DF89D30 		strb	r3, [sp, #157]
+ 411 036c C0F30740 		ubfx	r0, r0, #16, #8
+ 412 0370 8DF89E00 		strb	r0, [sp, #158]
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 413              		.loc 1 173 34 discriminator 1 view .LVU72
+ 414 0374 BDF84A30 		ldrh	r3, [sp, #74]
+ 415 0378 9DF84C00 		ldrb	r0, [sp, #76]	@ zero_extendqisi2
+ 416 037c 95F82F20 		ldrb	r2, [r5, #47]	@ zero_extendqisi2
+ 417 0380 2799     		ldr	r1, [sp, #156]
+ 418 0382 43EA0040 		orr	r0, r3, r0, lsl #16
+ 419 0386 FFF7FEFF 		bl	lv_color_mix
+ 420              	.LVL45:
+ 421 038a 8DF84A00 		strb	r0, [sp, #74]
+ 422 038e C0F30723 		ubfx	r3, r0, #8, #8
+ 423 0392 8DF84B30 		strb	r3, [sp, #75]
+ 424 0396 C0F30740 		ubfx	r0, r0, #16, #8
+ 425 039a 8DF84C00 		strb	r0, [sp, #76]
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                 (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 426              		.loc 1 177 9 is_stmt 1 view .LVU73
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                 (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 427              		.loc 1 177 38 is_stmt 0 view .LVU74
+ 428 039e 95F82F30 		ldrb	r3, [r5, #47]	@ zero_extendqisi2
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                 (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 429              		.loc 1 177 47 view .LVU75
+ 430 03a2 503B     		subs	r3, r3, #80
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                 (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 431              		.loc 1 177 78 view .LVU76
+ 432 03a4 179A     		ldr	r2, [sp, #92]
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                 (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 433              		.loc 1 177 68 view .LVU77
+ 434 03a6 02FB03F3 		mul	r3, r2, r3
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                 (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 435              		.loc 1 177 93 view .LVU78
+ 436 03aa 0D4A     		ldr	r2, .L8
+ 437 03ac 82FB0301 		smull	r0, r1, r2, r3
+ 438 03b0 DB17     		asrs	r3, r3, #31
+ 439 03b2 C3EBA113 		rsb	r3, r3, r1, asr #6
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                 (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 440              		.loc 1 177 31 view .LVU79
+ 441 03b6 1793     		str	r3, [sp, #92]
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                  (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 13
+
+
+ 442              		.loc 1 179 9 is_stmt 1 view .LVU80
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                  (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 443              		.loc 1 179 39 is_stmt 0 view .LVU81
+ 444 03b8 95F82F30 		ldrb	r3, [r5, #47]	@ zero_extendqisi2
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                  (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 445              		.loc 1 179 48 view .LVU82
+ 446 03bc 503B     		subs	r3, r3, #80
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                  (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 447              		.loc 1 179 79 view .LVU83
+ 448 03be 1A99     		ldr	r1, [sp, #104]
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                  (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 449              		.loc 1 179 69 view .LVU84
+ 450 03c0 01FB03F3 		mul	r3, r1, r3
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                  (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 451              		.loc 1 179 95 view .LVU85
+ 452 03c4 82FB0312 		smull	r1, r2, r2, r3
+ 453 03c8 DB17     		asrs	r3, r3, #31
+ 454 03ca C3EBA213 		rsb	r3, r3, r2, asr #6
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****                                  (LV_LED_BRIGHT_MAX - LV_LED_BRIGHT_MIN);
+ 455              		.loc 1 179 32 view .LVU86
+ 456 03ce 1A93     		str	r3, [sp, #104]
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     }
+ 457              		.loc 1 182 9 is_stmt 1 view .LVU87
+ 458 03d0 05F11402 		add	r2, r5, #20
+ 459 03d4 6946     		mov	r1, sp
+ 460 03d6 3046     		mov	r0, r6
+ 461 03d8 FFF7FEFF 		bl	lv_draw_rect
+ 462              	.LVL46:
+ 463 03dc 27E6     		b	.L1
+ 464              	.L9:
+ 465 03de 00BF     		.align	2
+ 466              	.L8:
+ 467 03e0 91739F5D 		.word	1570730897
+ 468              	.LBE2:
+ 469              		.cfi_endproc
+ 470              	.LFE180:
+ 472              		.section	.text.lv_led_constructor,"ax",%progbits
+ 473              		.align	1
+ 474              		.syntax unified
+ 475              		.thumb
+ 476              		.thumb_func
+ 478              	lv_led_constructor:
+ 479              	.LVL47:
+ 480              	.LFB179:
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_UNUSED(class_p);
+ 481              		.loc 1 126 1 view -0
+ 482              		.cfi_startproc
+ 483              		@ args = 0, pretend = 0, frame = 0
+ 484              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_UNUSED(class_p);
+ 485              		.loc 1 126 1 is_stmt 0 view .LVU89
+ 486 0000 10B5     		push	{r4, lr}
+ 487              	.LCFI4:
+ 488              		.cfi_def_cfa_offset 8
+ 489              		.cfi_offset 4, -8
+ 490              		.cfi_offset 14, -4
+ 491 0002 0C46     		mov	r4, r1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 14
+
+
+ 127:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_t * led = (lv_led_t *)obj;
+ 492              		.loc 1 127 5 is_stmt 1 view .LVU90
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     led->color = lv_theme_get_color_primary(obj);
+ 493              		.loc 1 128 5 view .LVU91
+ 494              	.LVL48:
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     led->bright = LV_LED_BRIGHT_MAX;
+ 495              		.loc 1 129 5 view .LVU92
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     led->bright = LV_LED_BRIGHT_MAX;
+ 496              		.loc 1 129 18 is_stmt 0 view .LVU93
+ 497 0004 0846     		mov	r0, r1
+ 498              	.LVL49:
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     led->bright = LV_LED_BRIGHT_MAX;
+ 499              		.loc 1 129 18 view .LVU94
+ 500 0006 FFF7FEFF 		bl	lv_theme_get_color_primary
+ 501              	.LVL50:
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     led->bright = LV_LED_BRIGHT_MAX;
+ 502              		.loc 1 129 18 view .LVU95
+ 503 000a 84F82C00 		strb	r0, [r4, #44]
+ 504 000e C0F30723 		ubfx	r3, r0, #8, #8
+ 505 0012 84F82D30 		strb	r3, [r4, #45]
+ 506 0016 C0F30740 		ubfx	r0, r0, #16, #8
+ 507 001a 84F82E00 		strb	r0, [r4, #46]
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 508              		.loc 1 130 5 is_stmt 1 view .LVU96
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 509              		.loc 1 130 17 is_stmt 0 view .LVU97
+ 510 001e FF23     		movs	r3, #255
+ 511 0020 84F82F30 		strb	r3, [r4, #47]
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 512              		.loc 1 131 1 view .LVU98
+ 513 0024 10BD     		pop	{r4, pc}
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 514              		.loc 1 131 1 view .LVU99
+ 515              		.cfi_endproc
+ 516              	.LFE179:
+ 518              		.section	.text.lv_led_create,"ax",%progbits
+ 519              		.align	1
+ 520              		.global	lv_led_create
+ 521              		.syntax unified
+ 522              		.thumb
+ 523              		.thumb_func
+ 525              	lv_led_create:
+ 526              	.LVL51:
+ 527              	.LFB172:
+  57:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_LOG_INFO("begin");
+ 528              		.loc 1 57 1 is_stmt 1 view -0
+ 529              		.cfi_startproc
+ 530              		@ args = 0, pretend = 0, frame = 0
+ 531              		@ frame_needed = 0, uses_anonymous_args = 0
+  57:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_LOG_INFO("begin");
+ 532              		.loc 1 57 1 is_stmt 0 view .LVU101
+ 533 0000 10B5     		push	{r4, lr}
+ 534              	.LCFI5:
+ 535              		.cfi_def_cfa_offset 8
+ 536              		.cfi_offset 4, -8
+ 537              		.cfi_offset 14, -4
+ 538 0002 0146     		mov	r1, r0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 15
+
+
+  58:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_t * obj = lv_obj_class_create_obj(MY_CLASS, parent);
+ 539              		.loc 1 58 5 is_stmt 1 view .LVU102
+  58:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_t * obj = lv_obj_class_create_obj(MY_CLASS, parent);
+ 540              		.loc 1 58 5 view .LVU103
+  58:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_t * obj = lv_obj_class_create_obj(MY_CLASS, parent);
+ 541              		.loc 1 58 5 view .LVU104
+  59:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_class_init_obj(obj);
+ 542              		.loc 1 59 5 view .LVU105
+  59:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_class_init_obj(obj);
+ 543              		.loc 1 59 22 is_stmt 0 view .LVU106
+ 544 0004 0348     		ldr	r0, .L14
+ 545              	.LVL52:
+  59:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_class_init_obj(obj);
+ 546              		.loc 1 59 22 view .LVU107
+ 547 0006 FFF7FEFF 		bl	lv_obj_class_create_obj
+ 548              	.LVL53:
+  59:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_class_init_obj(obj);
+ 549              		.loc 1 59 22 view .LVU108
+ 550 000a 0446     		mov	r4, r0
+ 551              	.LVL54:
+  60:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     return obj;
+ 552              		.loc 1 60 5 is_stmt 1 view .LVU109
+ 553 000c FFF7FEFF 		bl	lv_obj_class_init_obj
+ 554              	.LVL55:
+  61:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 555              		.loc 1 61 5 view .LVU110
+  62:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 556              		.loc 1 62 1 is_stmt 0 view .LVU111
+ 557 0010 2046     		mov	r0, r4
+ 558 0012 10BD     		pop	{r4, pc}
+ 559              	.LVL56:
+ 560              	.L15:
+  62:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 561              		.loc 1 62 1 view .LVU112
+ 562              		.align	2
+ 563              	.L14:
+ 564 0014 00000000 		.word	lv_led_class
+ 565              		.cfi_endproc
+ 566              	.LFE172:
+ 568              		.section	.text.lv_led_set_color,"ax",%progbits
+ 569              		.align	1
+ 570              		.global	lv_led_set_color
+ 571              		.syntax unified
+ 572              		.thumb
+ 573              		.thumb_func
+ 575              	lv_led_set_color:
+ 576              	.LVL57:
+ 577              	.LFB173:
+  69:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 578              		.loc 1 69 1 is_stmt 1 view -0
+ 579              		.cfi_startproc
+ 580              		@ args = 0, pretend = 0, frame = 8
+ 581              		@ frame_needed = 0, uses_anonymous_args = 0
+  69:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 582              		.loc 1 69 1 is_stmt 0 view .LVU114
+ 583 0000 00B5     		push	{lr}
+ 584              	.LCFI6:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 16
+
+
+ 585              		.cfi_def_cfa_offset 4
+ 586              		.cfi_offset 14, -4
+ 587 0002 83B0     		sub	sp, sp, #12
+ 588              	.LCFI7:
+ 589              		.cfi_def_cfa_offset 16
+ 590 0004 0191     		str	r1, [sp, #4]
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 591              		.loc 1 70 5 is_stmt 1 view .LVU115
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 592              		.loc 1 70 5 view .LVU116
+ 593 0006 40B1     		cbz	r0, .L18
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 594              		.loc 1 70 5 view .LVU117
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 595              		.loc 1 70 33 view .LVU118
+  72:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     led->color = color;
+ 596              		.loc 1 72 5 view .LVU119
+ 597              	.LVL58:
+  73:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_invalidate(obj);
+ 598              		.loc 1 73 5 view .LVU120
+  73:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_obj_invalidate(obj);
+ 599              		.loc 1 73 16 is_stmt 0 view .LVU121
+ 600 0008 019B     		ldr	r3, [sp, #4]
+ 601 000a 8385     		strh	r3, [r0, #44]	@ movhi
+ 602 000c 1B0C     		lsrs	r3, r3, #16
+ 603 000e 80F82E30 		strb	r3, [r0, #46]
+  74:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 604              		.loc 1 74 5 is_stmt 1 view .LVU122
+ 605 0012 FFF7FEFF 		bl	lv_obj_invalidate
+ 606              	.LVL59:
+  75:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 607              		.loc 1 75 1 is_stmt 0 view .LVU123
+ 608 0016 03B0     		add	sp, sp, #12
+ 609              	.LCFI8:
+ 610              		.cfi_remember_state
+ 611              		.cfi_def_cfa_offset 4
+ 612              		@ sp needed
+ 613 0018 00BD     		pop	{pc}
+ 614              	.LVL60:
+ 615              	.L18:
+ 616              	.LCFI9:
+ 617              		.cfi_restore_state
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 618              		.loc 1 70 5 is_stmt 1 view .LVU124
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 619              		.loc 1 70 5 view .LVU125
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 620              		.loc 1 70 5 view .LVU126
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 621              		.loc 1 70 5 view .LVU127
+  70:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 622              		.loc 1 70 5 view .LVU128
+ 623 001a FEE7     		b	.L18
+ 624              		.cfi_endproc
+ 625              	.LFE173:
+ 627              		.section	.text.lv_led_set_brightness,"ax",%progbits
+ 628              		.align	1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 17
+
+
+ 629              		.global	lv_led_set_brightness
+ 630              		.syntax unified
+ 631              		.thumb
+ 632              		.thumb_func
+ 634              	lv_led_set_brightness:
+ 635              	.LVL61:
+ 636              	.LFB174:
+  78:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 637              		.loc 1 78 1 view -0
+ 638              		.cfi_startproc
+ 639              		@ args = 0, pretend = 0, frame = 0
+ 640              		@ frame_needed = 0, uses_anonymous_args = 0
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 641              		.loc 1 79 5 view .LVU130
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 642              		.loc 1 79 5 view .LVU131
+ 643 0000 60B1     		cbz	r0, .L22
+  78:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 644              		.loc 1 78 1 is_stmt 0 view .LVU132
+ 645 0002 08B5     		push	{r3, lr}
+ 646              	.LCFI10:
+ 647              		.cfi_def_cfa_offset 8
+ 648              		.cfi_offset 3, -8
+ 649              		.cfi_offset 14, -4
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 650              		.loc 1 79 5 is_stmt 1 view .LVU133
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 651              		.loc 1 79 33 view .LVU134
+  81:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     if(led->bright == bright) return;
+ 652              		.loc 1 81 5 view .LVU135
+ 653              	.LVL62:
+  82:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 654              		.loc 1 82 5 view .LVU136
+  82:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 655              		.loc 1 82 11 is_stmt 0 view .LVU137
+ 656 0004 90F82F20 		ldrb	r2, [r0, #47]	@ zero_extendqisi2
+  82:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 657              		.loc 1 82 7 view .LVU138
+ 658 0008 8A42     		cmp	r2, r1
+ 659 000a 06D0     		beq	.L20
+  84:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 660              		.loc 1 84 5 is_stmt 1 view .LVU139
+  84:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 661              		.loc 1 84 19 is_stmt 0 view .LVU140
+ 662 000c 5029     		cmp	r1, #80
+ 663 000e 38BF     		it	cc
+ 664 0010 5021     		movcc	r1, #80
+ 665              	.LVL63:
+  84:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 666              		.loc 1 84 17 view .LVU141
+ 667 0012 80F82F10 		strb	r1, [r0, #47]
+  87:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 668              		.loc 1 87 5 is_stmt 1 view .LVU142
+ 669 0016 FFF7FEFF 		bl	lv_obj_invalidate
+ 670              	.LVL64:
+ 671              	.L20:
+  88:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 18
+
+
+ 672              		.loc 1 88 1 is_stmt 0 view .LVU143
+ 673 001a 08BD     		pop	{r3, pc}
+ 674              	.LVL65:
+ 675              	.L22:
+ 676              	.LCFI11:
+ 677              		.cfi_def_cfa_offset 0
+ 678              		.cfi_restore 3
+ 679              		.cfi_restore 14
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 680              		.loc 1 79 5 is_stmt 1 view .LVU144
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 681              		.loc 1 79 5 view .LVU145
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 682              		.loc 1 79 5 view .LVU146
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 683              		.loc 1 79 5 view .LVU147
+  79:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 684              		.loc 1 79 5 view .LVU148
+ 685 001c FEE7     		b	.L22
+ 686              		.cfi_endproc
+ 687              	.LFE174:
+ 689              		.section	.text.lv_led_on,"ax",%progbits
+ 690              		.align	1
+ 691              		.global	lv_led_on
+ 692              		.syntax unified
+ 693              		.thumb
+ 694              		.thumb_func
+ 696              	lv_led_on:
+ 697              	.LVL66:
+ 698              	.LFB175:
+  91:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_set_brightness(led, LV_LED_BRIGHT_MAX);
+ 699              		.loc 1 91 1 view -0
+ 700              		.cfi_startproc
+ 701              		@ args = 0, pretend = 0, frame = 0
+ 702              		@ frame_needed = 0, uses_anonymous_args = 0
+  91:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_set_brightness(led, LV_LED_BRIGHT_MAX);
+ 703              		.loc 1 91 1 is_stmt 0 view .LVU150
+ 704 0000 08B5     		push	{r3, lr}
+ 705              	.LCFI12:
+ 706              		.cfi_def_cfa_offset 8
+ 707              		.cfi_offset 3, -8
+ 708              		.cfi_offset 14, -4
+  92:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 709              		.loc 1 92 5 is_stmt 1 view .LVU151
+ 710 0002 FF21     		movs	r1, #255
+ 711 0004 FFF7FEFF 		bl	lv_led_set_brightness
+ 712              	.LVL67:
+  93:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 713              		.loc 1 93 1 is_stmt 0 view .LVU152
+ 714 0008 08BD     		pop	{r3, pc}
+ 715              		.cfi_endproc
+ 716              	.LFE175:
+ 718              		.section	.text.lv_led_off,"ax",%progbits
+ 719              		.align	1
+ 720              		.global	lv_led_off
+ 721              		.syntax unified
+ 722              		.thumb
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 19
+
+
+ 723              		.thumb_func
+ 725              	lv_led_off:
+ 726              	.LVL68:
+ 727              	.LFB176:
+  96:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_set_brightness(led, LV_LED_BRIGHT_MIN);
+ 728              		.loc 1 96 1 is_stmt 1 view -0
+ 729              		.cfi_startproc
+ 730              		@ args = 0, pretend = 0, frame = 0
+ 731              		@ frame_needed = 0, uses_anonymous_args = 0
+  96:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     lv_led_set_brightness(led, LV_LED_BRIGHT_MIN);
+ 732              		.loc 1 96 1 is_stmt 0 view .LVU154
+ 733 0000 08B5     		push	{r3, lr}
+ 734              	.LCFI13:
+ 735              		.cfi_def_cfa_offset 8
+ 736              		.cfi_offset 3, -8
+ 737              		.cfi_offset 14, -4
+  97:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 738              		.loc 1 97 5 is_stmt 1 view .LVU155
+ 739 0002 5021     		movs	r1, #80
+ 740 0004 FFF7FEFF 		bl	lv_led_set_brightness
+ 741              	.LVL69:
+  98:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 742              		.loc 1 98 1 is_stmt 0 view .LVU156
+ 743 0008 08BD     		pop	{r3, pc}
+ 744              		.cfi_endproc
+ 745              	.LFE176:
+ 747              		.section	.text.lv_led_get_brightness,"ax",%progbits
+ 748              		.align	1
+ 749              		.global	lv_led_get_brightness
+ 750              		.syntax unified
+ 751              		.thumb
+ 752              		.thumb_func
+ 754              	lv_led_get_brightness:
+ 755              	.LVL70:
+ 756              	.LFB178:
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     LV_ASSERT_OBJ(obj, MY_CLASS);
+ 757              		.loc 1 114 1 is_stmt 1 view -0
+ 758              		.cfi_startproc
+ 759              		@ args = 0, pretend = 0, frame = 0
+ 760              		@ frame_needed = 0, uses_anonymous_args = 0
+ 761              		@ link register save eliminated.
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 762              		.loc 1 115 5 view .LVU158
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 763              		.loc 1 115 5 view .LVU159
+ 764 0000 10B1     		cbz	r0, .L32
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 765              		.loc 1 115 5 view .LVU160
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 766              		.loc 1 115 33 view .LVU161
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     return led->bright;
+ 767              		.loc 1 117 5 view .LVU162
+ 768              	.LVL71:
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 769              		.loc 1 118 5 view .LVU163
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 770              		.loc 1 119 1 is_stmt 0 view .LVU164
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 20
+
+
+ 771 0002 90F82F00 		ldrb	r0, [r0, #47]	@ zero_extendqisi2
+ 772              	.LVL72:
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 773              		.loc 1 119 1 view .LVU165
+ 774 0006 7047     		bx	lr
+ 775              	.LVL73:
+ 776              	.L32:
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 777              		.loc 1 115 5 is_stmt 1 view .LVU166
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 778              		.loc 1 115 5 view .LVU167
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 779              		.loc 1 115 5 view .LVU168
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 780              		.loc 1 115 5 view .LVU169
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 781              		.loc 1 115 5 view .LVU170
+ 782 0008 FEE7     		b	.L32
+ 783              		.cfi_endproc
+ 784              	.LFE178:
+ 786              		.section	.text.lv_led_toggle,"ax",%progbits
+ 787              		.align	1
+ 788              		.global	lv_led_toggle
+ 789              		.syntax unified
+ 790              		.thumb
+ 791              		.thumb_func
+ 793              	lv_led_toggle:
+ 794              	.LVL74:
+ 795              	.LFB177:
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     uint8_t bright = lv_led_get_brightness(obj);
+ 796              		.loc 1 101 1 view -0
+ 797              		.cfi_startproc
+ 798              		@ args = 0, pretend = 0, frame = 0
+ 799              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     uint8_t bright = lv_led_get_brightness(obj);
+ 800              		.loc 1 101 1 is_stmt 0 view .LVU172
+ 801 0000 10B5     		push	{r4, lr}
+ 802              	.LCFI14:
+ 803              		.cfi_def_cfa_offset 8
+ 804              		.cfi_offset 4, -8
+ 805              		.cfi_offset 14, -4
+ 806 0002 0446     		mov	r4, r0
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     if(bright > (LV_LED_BRIGHT_MIN + LV_LED_BRIGHT_MAX) >> 1)
+ 807              		.loc 1 102 5 is_stmt 1 view .LVU173
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     if(bright > (LV_LED_BRIGHT_MIN + LV_LED_BRIGHT_MAX) >> 1)
+ 808              		.loc 1 102 22 is_stmt 0 view .LVU174
+ 809 0004 FFF7FEFF 		bl	lv_led_get_brightness
+ 810              	.LVL75:
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_led_off(obj);
+ 811              		.loc 1 103 5 is_stmt 1 view .LVU175
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****         lv_led_off(obj);
+ 812              		.loc 1 103 7 is_stmt 0 view .LVU176
+ 813 0008 A728     		cmp	r0, #167
+ 814 000a 03D9     		bls	.L34
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     else
+ 815              		.loc 1 104 9 is_stmt 1 view .LVU177
+ 816 000c 2046     		mov	r0, r4
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 21
+
+
+ 817              	.LVL76:
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c ****     else
+ 818              		.loc 1 104 9 is_stmt 0 view .LVU178
+ 819 000e FFF7FEFF 		bl	lv_led_off
+ 820              	.LVL77:
+ 821              	.L33:
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 822              		.loc 1 107 1 view .LVU179
+ 823 0012 10BD     		pop	{r4, pc}
+ 824              	.LVL78:
+ 825              	.L34:
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 826              		.loc 1 106 9 is_stmt 1 view .LVU180
+ 827 0014 2046     		mov	r0, r4
+ 828              	.LVL79:
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** }
+ 829              		.loc 1 106 9 is_stmt 0 view .LVU181
+ 830 0016 FFF7FEFF 		bl	lv_led_on
+ 831              	.LVL80:
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.c **** 
+ 832              		.loc 1 107 1 view .LVU182
+ 833 001a FAE7     		b	.L33
+ 834              		.cfi_endproc
+ 835              	.LFE177:
+ 837              		.global	lv_led_class
+ 838              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 839              		.align	2
+ 840              	.LC0:
+ 841 0000 6C765F6C 		.ascii	"lv_led\000"
+ 841      656400
+ 842              		.section	.rodata.lv_led_class,"a"
+ 843              		.align	2
+ 846              	lv_led_class:
+ 847 0000 00000000 		.word	lv_obj_class
+ 848 0004 00000000 		.word	lv_led_constructor
+ 849 0008 00000000 		.space	4
+ 850 000c 00000000 		.word	lv_led_event
+ 851 0010 00000000 		.space	4
+ 852 0014 00000000 		.word	.LC0
+ 853 0018 1A000000 		.word	26
+ 854 001c 1A000000 		.word	26
+ 855 0020 00       		.byte	0
+ 856 0021 03       		.byte	3
+ 857 0022 00       		.byte	0
+ 858 0023 00       		.space	1
+ 859              		.text
+ 860              	.Letext0:
+ 861              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 862              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 863              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 864              		.file 5 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ 865              		.file 6 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_private.h"
+ 866              		.file 7 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class_private.h"
+ 867              		.file 8 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw.h"
+ 868              		.file 9 "../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led_private.h"
+ 869              		.file 10 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_array.h"
+ 870              		.file 11 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 22
+
+
+ 871              		.file 12 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_area.h"
+ 872              		.file 13 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_color.h"
+ 873              		.file 14 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_image_dsc.h"
+ 874              		.file 15 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.h"
+ 875              		.file 16 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_style.h"
+ 876              		.file 17 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_event.h"
+ 877              		.file 18 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_rect.h"
+ 878              		.file 19 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/indev/lv_indev.h"
+ 879              		.file 20 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj.h"
+ 880              		.file 21 "../../Middlewares/LVGL/GUI/lvgl/src/widgets/led/lv_led.h"
+ 881              		.file 22 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_pos.h"
+ 882              		.file 23 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_class.h"
+ 883              		.file 24 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/themes/lv_theme.h"
+ 884              		.file 25 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_color_op.h"
+ 885              		.file 26 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_draw.h"
+ 886              		.file 27 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/core/lv_obj_event.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s 			page 23
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_led.c
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:20     .text.lv_led_event:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:25     .text.lv_led_event:00000000 lv_led_event
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:98     .text.lv_led_event:00000034 $d
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:846    .rodata.lv_led_class:00000000 lv_led_class
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:107    .text.lv_led_event:00000038 $t
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:467    .text.lv_led_event:000003e0 $d
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:473    .text.lv_led_constructor:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:478    .text.lv_led_constructor:00000000 lv_led_constructor
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:519    .text.lv_led_create:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:525    .text.lv_led_create:00000000 lv_led_create
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:564    .text.lv_led_create:00000014 $d
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:569    .text.lv_led_set_color:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:575    .text.lv_led_set_color:00000000 lv_led_set_color
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:628    .text.lv_led_set_brightness:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:634    .text.lv_led_set_brightness:00000000 lv_led_set_brightness
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:690    .text.lv_led_on:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:696    .text.lv_led_on:00000000 lv_led_on
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:719    .text.lv_led_off:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:725    .text.lv_led_off:00000000 lv_led_off
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:748    .text.lv_led_get_brightness:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:754    .text.lv_led_get_brightness:00000000 lv_led_get_brightness
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:787    .text.lv_led_toggle:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:793    .text.lv_led_toggle:00000000 lv_led_toggle
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:839    .rodata.str1.4:00000000 $d
+C:\Users\28576\AppData\Local\Temp\ccJQ95Cb.s:843    .rodata.lv_led_class:00000000 $d
+
+UNDEFINED SYMBOLS
+lv_event_get_code
+lv_obj_event_base
+lv_event_get_current_target
+lv_event_get_layer
+lv_draw_rect_dsc_init
+lv_obj_init_draw_rect_dsc
+lv_color_black
+lv_color_brightness
+lv_color_mix
+lv_draw_rect
+lv_theme_get_color_primary
+lv_obj_class_create_obj
+lv_obj_class_init_obj
+lv_obj_invalidate
+lv_obj_class

@@ -1,0 +1,386 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc70IFNv.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_grad.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c"
+  19              		.section	.text.lv_grad_init_stops,"ax",%progbits
+  20              		.align	1
+  21              		.global	lv_grad_init_stops
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_grad_init_stops:
+  27              	.LVL0:
+  28              	.LFB5:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  * @file lv_grad.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** #include "lv_grad.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+  11:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** /*********************
+  12:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  *      DEFINES
+  13:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  *********************/
+  14:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+  15:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** /**********************
+  16:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  *      TYPEDEFS
+  17:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  **********************/
+  18:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+  19:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** /**********************
+  20:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  *  STATIC PROTOTYPES
+  21:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  **********************/
+  22:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+  23:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** /**********************
+  24:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  *  STATIC VARIABLES
+  25:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  **********************/
+  26:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+  27:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** /**********************
+  28:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  *      MACROS
+  29:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  **********************/
+  30:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc70IFNv.s 			page 2
+
+
+  31:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** /**********************
+  32:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  *   GLOBAL FUNCTIONS
+  33:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****  **********************/
+  34:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** void lv_grad_init_stops(lv_grad_dsc_t * dsc, const lv_color_t colors[], const lv_opa_t opa[],
+  35:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****                         const uint8_t fracs[], int num_stops)
+  36:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** {
+  29              		.loc 1 36 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 4, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 36 1 is_stmt 0 view .LVU1
+  34 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 24
+  37              		.cfi_offset 4, -24
+  38              		.cfi_offset 5, -20
+  39              		.cfi_offset 6, -16
+  40              		.cfi_offset 7, -12
+  41              		.cfi_offset 8, -8
+  42              		.cfi_offset 14, -4
+  43 0004 1F46     		mov	r7, r3
+  44 0006 069B     		ldr	r3, [sp, #24]
+  45              	.LVL1:
+  37:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT(num_stops <= LV_GRADIENT_MAX_STOPS);
+  46              		.loc 1 37 5 is_stmt 1 view .LVU2
+  47              		.loc 1 37 5 view .LVU3
+  48 0008 022B     		cmp	r3, #2
+  49 000a 00DD     		ble	.L2
+  50              	.L3:
+  51              		.loc 1 37 5 view .LVU4
+  52              		.loc 1 37 5 view .LVU5
+  53              		.loc 1 37 5 view .LVU6
+  54              		.loc 1 37 5 view .LVU7
+  55              		.loc 1 37 5 view .LVU8
+  56 000c FEE7     		b	.L3
+  57              	.L2:
+  58 000e 8E46     		mov	lr, r1
+  59 0010 1646     		mov	r6, r2
+  60              		.loc 1 37 5 view .LVU9
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT(num_stops > 1);
+  61              		.loc 1 38 5 view .LVU10
+  62              		.loc 1 38 5 view .LVU11
+  63 0012 012B     		cmp	r3, #1
+  64 0014 05DD     		ble	.L5
+  65              		.loc 1 38 5 view .LVU12
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+  66              		.loc 1 39 5 view .LVU13
+  67              		.loc 1 39 5 view .LVU14
+  68 0016 28B1     		cbz	r0, .L7
+  69              		.loc 1 39 5 view .LVU15
+  70              		.loc 1 39 24 view .LVU16
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(colors);
+  71              		.loc 1 40 5 view .LVU17
+  72              		.loc 1 40 5 view .LVU18
+  73 0018 29B1     		cbz	r1, .L9
+  74              		.loc 1 40 5 view .LVU19
+  75              		.loc 1 40 27 view .LVU20
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc70IFNv.s 			page 3
+
+
+  41:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+  42:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     dsc->stops_count = num_stops;
+  76              		.loc 1 42 5 view .LVU21
+  77              		.loc 1 42 22 is_stmt 0 view .LVU22
+  78 001a 8372     		strb	r3, [r0, #10]
+  43:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     for(int i = 0; i < num_stops; i++) {
+  79              		.loc 1 43 5 is_stmt 1 view .LVU23
+  80              	.LBB2:
+  81              		.loc 1 43 9 view .LVU24
+  82              	.LVL2:
+  83              		.loc 1 43 13 is_stmt 0 view .LVU25
+  84 001c 4FF0000C 		mov	ip, #0
+  85              		.loc 1 43 5 view .LVU26
+  86 0020 12E0     		b	.L10
+  87              	.LVL3:
+  88              	.L5:
+  89              		.loc 1 43 5 view .LVU27
+  90              	.LBE2:
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+  91              		.loc 1 38 5 is_stmt 1 view .LVU28
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+  92              		.loc 1 38 5 view .LVU29
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+  93              		.loc 1 38 5 view .LVU30
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+  94              		.loc 1 38 5 view .LVU31
+  38:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+  95              		.loc 1 38 5 view .LVU32
+  96 0022 FEE7     		b	.L5
+  97              	.L7:
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(colors);
+  98              		.loc 1 39 5 view .LVU33
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(colors);
+  99              		.loc 1 39 5 view .LVU34
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(colors);
+ 100              		.loc 1 39 5 view .LVU35
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(colors);
+ 101              		.loc 1 39 5 view .LVU36
+  39:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(colors);
+ 102              		.loc 1 39 5 view .LVU37
+ 103 0024 FEE7     		b	.L7
+ 104              	.L9:
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+ 105              		.loc 1 40 5 view .LVU38
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+ 106              		.loc 1 40 5 view .LVU39
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+ 107              		.loc 1 40 5 view .LVU40
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+ 108              		.loc 1 40 5 view .LVU41
+  40:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+ 109              		.loc 1 40 5 view .LVU42
+ 110 0026 FEE7     		b	.L9
+ 111              	.LVL4:
+ 112              	.L15:
+ 113              	.LBB3:
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].color = colors[i];
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc70IFNv.s 			page 4
+
+
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].opa = opa != NULL ? opa[i] : LV_OPA_COVER;
+ 114              		.loc 1 45 27 is_stmt 0 discriminator 2 view .LVU43
+ 115 0028 FF22     		movs	r2, #255
+ 116 002a 1146     		mov	r1, r2
+ 117 002c 20E0     		b	.L11
+ 118              	.L12:
+  46:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].frac = fracs != NULL ? fracs[i] : 255 * i / (num_stops - 1);
+ 119              		.loc 1 46 78 discriminator 2 view .LVU44
+ 120 002e 5A1E     		subs	r2, r3, #1
+ 121              		.loc 1 46 65 discriminator 2 view .LVU45
+ 122 0030 CCEB0C21 		rsb	r1, ip, ip, lsl #8
+ 123 0034 91FBF2F2 		sdiv	r2, r1, r2
+ 124              		.loc 1 46 28 discriminator 2 view .LVU46
+ 125 0038 D2B2     		uxtb	r2, r2
+ 126 003a 1146     		mov	r1, r2
+ 127              	.L13:
+ 128              		.loc 1 46 28 discriminator 4 view .LVU47
+ 129 003c 0CEB8C02 		add	r2, ip, ip, lsl #2
+ 130 0040 8218     		adds	r2, r0, r2
+ 131 0042 1171     		strb	r1, [r2, #4]
+  43:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].color = colors[i];
+ 132              		.loc 1 43 36 is_stmt 1 discriminator 2 view .LVU48
+ 133 0044 0CF1010C 		add	ip, ip, #1
+ 134              	.LVL5:
+ 135              	.L10:
+  43:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].color = colors[i];
+ 136              		.loc 1 43 22 discriminator 1 view .LVU49
+ 137 0048 9C45     		cmp	ip, r3
+ 138 004a 1BDA     		bge	.L17
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].color = colors[i];
+ 139              		.loc 1 44 9 view .LVU50
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].color = colors[i];
+ 140              		.loc 1 44 37 is_stmt 0 view .LVU51
+ 141 004c E046     		mov	r8, ip
+ 142 004e 0CEB4C01 		add	r1, ip, ip, lsl #1
+ 143 0052 0EEB0104 		add	r4, lr, r1
+  44:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].color = colors[i];
+ 144              		.loc 1 44 29 view .LVU52
+ 145 0056 0CEB8C02 		add	r2, ip, ip, lsl #2
+ 146 005a 8518     		adds	r5, r0, r2
+ 147 005c 3EF80110 		ldrh	r1, [lr, r1]	@ unaligned
+ 148 0060 A478     		ldrb	r4, [r4, #2]	@ zero_extendqisi2
+ 149 0062 8152     		strh	r1, [r0, r2]	@ unaligned
+ 150 0064 AC70     		strb	r4, [r5, #2]
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].frac = fracs != NULL ? fracs[i] : 255 * i / (num_stops - 1);
+ 151              		.loc 1 45 9 is_stmt 1 view .LVU53
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].frac = fracs != NULL ? fracs[i] : 255 * i / (num_stops - 1);
+ 152              		.loc 1 45 27 is_stmt 0 view .LVU54
+ 153 0066 002E     		cmp	r6, #0
+ 154 0068 DED0     		beq	.L15
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].frac = fracs != NULL ? fracs[i] : 255 * i / (num_stops - 1);
+ 155              		.loc 1 45 27 discriminator 1 view .LVU55
+ 156 006a 16F80C20 		ldrb	r2, [r6, ip]	@ zero_extendqisi2
+ 157 006e 1146     		mov	r1, r2
+ 158              	.L11:
+  45:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****         dsc->stops[i].frac = fracs != NULL ? fracs[i] : 255 * i / (num_stops - 1);
+ 159              		.loc 1 45 27 discriminator 4 view .LVU56
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc70IFNv.s 			page 5
+
+
+ 160 0070 0CEB8C02 		add	r2, ip, ip, lsl #2
+ 161 0074 8218     		adds	r2, r0, r2
+ 162 0076 D170     		strb	r1, [r2, #3]
+ 163              		.loc 1 46 9 is_stmt 1 view .LVU57
+ 164              		.loc 1 46 28 is_stmt 0 view .LVU58
+ 165 0078 002F     		cmp	r7, #0
+ 166 007a D8D0     		beq	.L12
+ 167              		.loc 1 46 28 discriminator 1 view .LVU59
+ 168 007c 17F80820 		ldrb	r2, [r7, r8]	@ zero_extendqisi2
+ 169 0080 1146     		mov	r1, r2
+ 170 0082 DBE7     		b	.L13
+ 171              	.L17:
+ 172              		.loc 1 46 28 discriminator 1 view .LVU60
+ 173              	.LBE3:
+  47:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     }
+  48:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** }
+ 174              		.loc 1 48 1 view .LVU61
+ 175 0084 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 176              		.loc 1 48 1 view .LVU62
+ 177              		.cfi_endproc
+ 178              	.LFE5:
+ 180              		.section	.text.lv_grad_horizontal_init,"ax",%progbits
+ 181              		.align	1
+ 182              		.global	lv_grad_horizontal_init
+ 183              		.syntax unified
+ 184              		.thumb
+ 185              		.thumb_func
+ 187              	lv_grad_horizontal_init:
+ 188              	.LVL6:
+ 189              	.LFB6:
+  49:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+  50:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** void lv_grad_horizontal_init(lv_grad_dsc_t * dsc)
+  51:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** {
+ 190              		.loc 1 51 1 is_stmt 1 view -0
+ 191              		.cfi_startproc
+ 192              		@ args = 0, pretend = 0, frame = 0
+ 193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 194              		@ link register save eliminated.
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 195              		.loc 1 52 5 view .LVU64
+ 196              		.loc 1 52 5 view .LVU65
+ 197 0000 28B1     		cbz	r0, .L20
+ 198              		.loc 1 52 5 view .LVU66
+ 199              		.loc 1 52 24 view .LVU67
+  53:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+  54:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     dsc->dir = LV_GRAD_DIR_HOR;
+ 200              		.loc 1 54 5 view .LVU68
+ 201              		.loc 1 54 14 is_stmt 0 view .LVU69
+ 202 0002 C27A     		ldrb	r2, [r0, #11]	@ zero_extendqisi2
+ 203 0004 0221     		movs	r1, #2
+ 204 0006 61F30302 		bfi	r2, r1, #0, #4
+ 205 000a C272     		strb	r2, [r0, #11]
+  55:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** }
+ 206              		.loc 1 55 1 view .LVU70
+ 207 000c 7047     		bx	lr
+ 208              	.L20:
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc70IFNv.s 			page 6
+
+
+ 209              		.loc 1 52 5 is_stmt 1 view .LVU71
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 210              		.loc 1 52 5 view .LVU72
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 211              		.loc 1 52 5 view .LVU73
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 212              		.loc 1 52 5 view .LVU74
+  52:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 213              		.loc 1 52 5 view .LVU75
+ 214 000e FEE7     		b	.L20
+ 215              		.cfi_endproc
+ 216              	.LFE6:
+ 218              		.section	.text.lv_grad_vertical_init,"ax",%progbits
+ 219              		.align	1
+ 220              		.global	lv_grad_vertical_init
+ 221              		.syntax unified
+ 222              		.thumb
+ 223              		.thumb_func
+ 225              	lv_grad_vertical_init:
+ 226              	.LVL7:
+ 227              	.LFB7:
+  56:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+  57:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** void lv_grad_vertical_init(lv_grad_dsc_t * dsc)
+  58:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** {
+ 228              		.loc 1 58 1 view -0
+ 229              		.cfi_startproc
+ 230              		@ args = 0, pretend = 0, frame = 0
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232              		@ link register save eliminated.
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 233              		.loc 1 59 5 view .LVU77
+ 234              		.loc 1 59 5 view .LVU78
+ 235 0000 28B1     		cbz	r0, .L23
+ 236              		.loc 1 59 5 view .LVU79
+ 237              		.loc 1 59 24 view .LVU80
+  60:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** 
+  61:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     dsc->dir = LV_GRAD_DIR_VER;
+ 238              		.loc 1 61 5 view .LVU81
+ 239              		.loc 1 61 14 is_stmt 0 view .LVU82
+ 240 0002 C27A     		ldrb	r2, [r0, #11]	@ zero_extendqisi2
+ 241 0004 0121     		movs	r1, #1
+ 242 0006 61F30302 		bfi	r2, r1, #0, #4
+ 243 000a C272     		strb	r2, [r0, #11]
+  62:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c **** }
+ 244              		.loc 1 62 1 view .LVU83
+ 245 000c 7047     		bx	lr
+ 246              	.L23:
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 247              		.loc 1 59 5 is_stmt 1 view .LVU84
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 248              		.loc 1 59 5 view .LVU85
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 249              		.loc 1 59 5 view .LVU86
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 250              		.loc 1 59 5 view .LVU87
+  59:../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.c ****     LV_ASSERT_NULL(dsc);
+ 251              		.loc 1 59 5 view .LVU88
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc70IFNv.s 			page 7
+
+
+ 252 000e FEE7     		b	.L23
+ 253              		.cfi_endproc
+ 254              	.LFE7:
+ 256              		.text
+ 257              	.Letext0:
+ 258              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 259              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 260              		.file 4 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_types.h"
+ 261              		.file 5 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_color.h"
+ 262              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/misc/lv_grad.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc70IFNv.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_grad.c
+C:\Users\28576\AppData\Local\Temp\cc70IFNv.s:20     .text.lv_grad_init_stops:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc70IFNv.s:26     .text.lv_grad_init_stops:00000000 lv_grad_init_stops
+C:\Users\28576\AppData\Local\Temp\cc70IFNv.s:181    .text.lv_grad_horizontal_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc70IFNv.s:187    .text.lv_grad_horizontal_init:00000000 lv_grad_horizontal_init
+C:\Users\28576\AppData\Local\Temp\cc70IFNv.s:219    .text.lv_grad_vertical_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc70IFNv.s:225    .text.lv_grad_vertical_init:00000000 lv_grad_vertical_init
+
+NO UNDEFINED SYMBOLS

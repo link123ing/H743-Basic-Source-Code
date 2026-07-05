@@ -1,0 +1,2552 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_draw_sw_border.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c"
+  19              		.section	.text.draw_border_simple,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	draw_border_simple:
+  26              	.LVL0:
+  27              	.LFB189:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  * @file lv_draw_sw_border.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "../../misc/lv_area_private.h"
+  10:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "lv_draw_sw_mask_private.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "../lv_draw_private.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "../lv_draw_private.h"
+  13:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "lv_draw_sw.h"
+  14:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #if LV_USE_DRAW_SW
+  15:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  16:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "blend/lv_draw_sw_blend_private.h"
+  17:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "../../misc/lv_math.h"
+  18:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "../../misc/lv_text_ap.h"
+  19:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "../../core/lv_refr.h"
+  20:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "../../misc/lv_assert.h"
+  21:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "../../stdlib/lv_string.h"
+  22:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #include "../lv_draw_mask.h"
+  23:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  24:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** /*********************
+  25:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *      DEFINES
+  26:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *********************/
+  27:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #define SPLIT_LIMIT             50
+  28:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  29:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** /**********************
+  30:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *      TYPEDEFS
+  31:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  **********************/
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 2
+
+
+  32:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  33:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** /**********************
+  34:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *  STATIC PROTOTYPES
+  35:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  **********************/
+  36:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** static void draw_border_complex(lv_draw_task_t * t, const lv_area_t * outer_area, const lv_area_t *
+  37:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                                 int32_t rout, int32_t rin, lv_color_t color, lv_opa_t opa);
+  38:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  39:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** static void draw_border_simple(lv_draw_task_t * t, const lv_area_t * outer_area, const lv_area_t * 
+  40:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                                lv_color_t color, lv_opa_t opa);
+  41:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  42:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** /**********************
+  43:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *  STATIC VARIABLES
+  44:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  **********************/
+  45:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  46:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** /**********************
+  47:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *      MACROS
+  48:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  **********************/
+  49:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  50:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** /**********************
+  51:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *   GLOBAL FUNCTIONS
+  52:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  **********************/
+  53:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  54:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** void lv_draw_sw_border(lv_draw_task_t * t, const lv_draw_border_dsc_t * dsc, const lv_area_t * coor
+  55:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** {
+  56:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->opa <= LV_OPA_MIN) return;
+  57:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->width == 0) return;
+  58:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->side == LV_BORDER_SIDE_NONE) return;
+  59:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t coords_w = lv_area_get_width(coords);
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t coords_h = lv_area_get_height(coords);
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t rout = dsc->radius;
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t short_side = LV_MIN(coords_w, coords_h);
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rout > short_side >> 1) rout = short_side >> 1;
+  65:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  66:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Get the inner area*/
+  67:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_area_t area_inner;
+  68:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_area_copy(&area_inner, coords);
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x1 += ((dsc->side & LV_BORDER_SIDE_LEFT) ? dsc->width : - (dsc->width + rout));
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x2 -= ((dsc->side & LV_BORDER_SIDE_RIGHT) ? dsc->width : - (dsc->width + rout));
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y1 += ((dsc->side & LV_BORDER_SIDE_TOP) ? dsc->width : - (dsc->width + rout));
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y2 -= ((dsc->side & LV_BORDER_SIDE_BOTTOM) ? dsc->width : - (dsc->width + rout));
+  73:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t rin = rout - dsc->width;
+  75:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rin < 0) rin = 0;
+  76:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rout == 0 && rin == 0) {
+  78:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         draw_border_simple(t, coords, &area_inner, dsc->color, dsc->opa);
+  79:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+  80:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     else {
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         draw_border_complex(t, coords, &area_inner, rout, rin, dsc->color, dsc->opa);
+  82:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+  83:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  84:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** }
+  85:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  86:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** /**********************
+  87:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  *   STATIC FUNCTIONS
+  88:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****  **********************/
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 3
+
+
+  89:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+  90:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** void draw_border_complex(lv_draw_task_t * t, const lv_area_t * outer_area, const lv_area_t * inner_
+  91:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                          int32_t rout, int32_t rin, lv_color_t color, lv_opa_t opa)
+  92:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** {
+  93:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #if LV_DRAW_SW_COMPLEX
+  94:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Get clipped draw area which is the real draw area.
+  95:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****      *It is always the same or inside `coords`*/
+  96:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_area_t draw_area;
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(!lv_area_intersect(&draw_area, outer_area, &t->clip_area)) return;
+  98:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t draw_area_w = lv_area_get_width(&draw_area);
+  99:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_draw_sw_blend_dsc_t blend_dsc;
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_memzero(&blend_dsc, sizeof(blend_dsc));
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_opa_t * mask_buf = lv_malloc(draw_area_w);
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.mask_buf = mask_buf;
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     void * mask_list[3] = {0};
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Create mask for the inner mask*/
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_draw_sw_mask_radius_param_t mask_rin_param;
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_draw_sw_mask_radius_init(&mask_rin_param, inner_area, rin, true);
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     mask_list[0] = &mask_rin_param;
+ 111:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Create mask for the outer area*/
+ 113:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_draw_sw_mask_radius_param_t mask_rout_param;
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rout > 0) {
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_mask_radius_init(&mask_rout_param, outer_area, rout, false);
+ 116:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         mask_list[1] = &mask_rout_param;
+ 117:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 118:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t h;
+ 120:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_area_t blend_area;
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.blend_area = &blend_area;
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.mask_area = &blend_area;
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.color = color;
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.opa = opa;
+ 125:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 126:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Calculate the x and y coordinates where the straight parts area is*/
+ 127:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_area_t core_area;
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.x1 = LV_MAX(outer_area->x1 + rout, inner_area->x1);
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.x2 = LV_MIN(outer_area->x2 - rout, inner_area->x2);
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.y1 = LV_MAX(outer_area->y1 + rout, inner_area->y1);
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.y2 = LV_MIN(outer_area->y2 - rout, inner_area->y2);
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t core_w = lv_area_get_width(&core_area);
+ 133:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool top_side = outer_area->y1 <= inner_area->y1;
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool bottom_side = outer_area->y2 >= inner_area->y2;
+ 136:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 137:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*No masks*/
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool left_side = outer_area->x1 <= inner_area->x1;
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool right_side = outer_area->x2 >= inner_area->x2;
+ 140:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool split_hor = true;
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(left_side && right_side && top_side && bottom_side &&
+ 143:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****        core_w < SPLIT_LIMIT) {
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         split_hor = false;
+ 145:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 4
+
+
+ 146:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 147:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.mask_res = LV_DRAW_SW_MASK_RES_FULL_COVER;
+ 148:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Draw the straight lines first if they are long enough*/
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(top_side && split_hor) {
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = core_area.x1;
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = core_area.x2;
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = outer_area->y1;
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = inner_area->y1 - 1;
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 155:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 156:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(bottom_side && split_hor) {
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = core_area.x1;
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = core_area.x2;
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = inner_area->y2 + 1;
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = outer_area->y2;
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 163:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 164:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 165:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*If the border is very thick and the vertical sides overlap horizontally draw a single rectang
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(inner_area->x1 >= inner_area->x2 && left_side && right_side) {
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = outer_area->x1;
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = outer_area->x2;
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = core_area.y1;
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = core_area.y2;
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 172:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 173:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     else {
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         if(left_side) {
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x1 = outer_area->x1;
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x2 = inner_area->x1 - 1;
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y1 = core_area.y1;
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y2 = core_area.y2;
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             lv_draw_sw_blend(t, &blend_dsc);
+ 180:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         }
+ 181:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         if(right_side) {
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x1 = inner_area->x2 + 1;
+ 184:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x2 = outer_area->x2;
+ 185:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y1 = core_area.y1;
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y2 = core_area.y2;
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             lv_draw_sw_blend(t, &blend_dsc);
+ 188:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         }
+ 189:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 190:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 191:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Draw the corners*/
+ 192:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t blend_w;
+ 193:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 194:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Left and right corner together if they are close to each other*/
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(!split_hor) {
+ 196:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         /*Calculate the top corner and mirror it to the bottom*/
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = draw_area.x1;
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = draw_area.x2;
+ 199:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         int32_t max_h = LV_MAX(rout, inner_area->y1 - outer_area->y1);
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         for(h = 0; h < max_h; h++) {
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t top_y = outer_area->y1 + h;
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t bottom_y = outer_area->y2 - h;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 5
+
+
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(top_y < draw_area.y1 && bottom_y > draw_area.y2) continue;   /*This line is clipped 
+ 204:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             lv_memset(mask_buf, 0xff, draw_area_w);
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_dsc.mask_res = lv_draw_sw_mask_apply(mask_list, mask_buf, blend_area.x1, top_y, d
+ 207:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(top_y >= draw_area.y1) {
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y1 = top_y;
+ 210:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y2 = top_y;
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 lv_draw_sw_blend(t, &blend_dsc);
+ 212:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             }
+ 213:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(bottom_y <= draw_area.y2) {
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y1 = bottom_y;
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y2 = bottom_y;
+ 217:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 lv_draw_sw_blend(t, &blend_dsc);
+ 218:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             }
+ 219:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         }
+ 220:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 221:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     else {
+ 222:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         /*Left corners*/
+ 223:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = draw_area.x1;
+ 224:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = LV_MIN(draw_area.x2, core_area.x1 - 1);
+ 225:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_w = lv_area_get_width(&blend_area);
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         if(blend_w > 0) {
+ 227:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(left_side || top_side) {
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = draw_area.y1; h < core_area.y1; h++) {
+ 229:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 230:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 231:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 232:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_memset(mask_buf, 0xff, blend_w);
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_dsc.mask_res = lv_draw_sw_mask_apply(mask_list, mask_buf, blend_area.x1, 
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 235:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 }
+ 236:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             }
+ 237:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 238:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(left_side || bottom_side) {
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = core_area.y2 + 1; h <= draw_area.y2; h++) {
+ 240:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 241:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 242:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 243:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_memset(mask_buf, 0xff, blend_w);
+ 244:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_dsc.mask_res = lv_draw_sw_mask_apply(mask_list, mask_buf, blend_area.x1, 
+ 245:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 246:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 }
+ 247:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             }
+ 248:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         }
+ 249:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 250:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         /*Right corners*/
+ 251:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = LV_MAX(draw_area.x1, blend_area.x2 + 1);    /*To not overlap with the left 
+ 252:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = LV_MAX(draw_area.x1, core_area.x2 + 1);
+ 253:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = draw_area.x2;
+ 255:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_w = lv_area_get_width(&blend_area);
+ 256:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 257:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         if(blend_w > 0) {
+ 258:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(right_side || top_side) {
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = draw_area.y1; h < core_area.y1; h++) {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 6
+
+
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 261:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 262:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 263:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_memset(mask_buf, 0xff, blend_w);
+ 264:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_dsc.mask_res = lv_draw_sw_mask_apply(mask_list, mask_buf, blend_area.x1, 
+ 265:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 266:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 }
+ 267:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             }
+ 268:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(right_side || bottom_side) {
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = core_area.y2 + 1; h <= draw_area.y2; h++) {
+ 271:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 272:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 273:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 274:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_memset(mask_buf, 0xff, blend_w);
+ 275:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_dsc.mask_res = lv_draw_sw_mask_apply(mask_list, mask_buf, blend_area.x1, 
+ 276:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 277:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 }
+ 278:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             }
+ 279:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         }
+ 280:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 281:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 282:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_draw_sw_mask_free_param(&mask_rin_param);
+ 283:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rout > 0) lv_draw_sw_mask_free_param(&mask_rout_param);
+ 284:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_free(mask_buf);
+ 285:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 286:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #else
+ 287:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     LV_UNUSED(t);
+ 288:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     LV_UNUSED(outer_area);
+ 289:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     LV_UNUSED(inner_area);
+ 290:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     LV_UNUSED(rout);
+ 291:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     LV_UNUSED(rin);
+ 292:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     LV_UNUSED(color);
+ 293:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     LV_UNUSED(opa);
+ 294:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #endif /*LV_DRAW_SW_COMPLEX*/
+ 295:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** }
+ 296:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** static void draw_border_simple(lv_draw_task_t * t, const lv_area_t * outer_area, const lv_area_t * 
+ 297:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                                lv_color_t color, lv_opa_t opa)
+ 298:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** {
+  28              		.loc 1 298 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 4, pretend = 0, frame = 80
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 298 1 is_stmt 0 view .LVU1
+  33 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 36
+  36              		.cfi_offset 4, -36
+  37              		.cfi_offset 5, -32
+  38              		.cfi_offset 6, -28
+  39              		.cfi_offset 7, -24
+  40              		.cfi_offset 8, -20
+  41              		.cfi_offset 9, -16
+  42              		.cfi_offset 10, -12
+  43              		.cfi_offset 11, -8
+  44              		.cfi_offset 14, -4
+  45 0004 95B0     		sub	sp, sp, #84
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 7
+
+
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 120
+  48 0006 0090     		str	r0, [sp]
+  49 0008 0C46     		mov	r4, r1
+  50 000a 1546     		mov	r5, r2
+  51 000c 0393     		str	r3, [sp, #12]
+ 299:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_area_t a;
+  52              		.loc 1 299 5 is_stmt 1 view .LVU2
+ 300:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_draw_sw_blend_dsc_t blend_dsc;
+  53              		.loc 1 300 5 view .LVU3
+ 301:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_memzero(&blend_dsc, sizeof(lv_draw_sw_blend_dsc_t));
+  54              		.loc 1 301 5 view .LVU4
+  55              	.LVL1:
+  56              	.LBB10:
+  57              	.LBI10:
+  58              		.file 2 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib/lv_string.h"
+   1:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+   2:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @file lv_string.h
+   3:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *
+   4:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+   5:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+   6:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #ifndef LV_STRING_H
+   7:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #define LV_STRING_H
+   8:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+   9:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #ifdef __cplusplus
+  10:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** extern "C" {
+  11:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #endif
+  12:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  13:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /*********************
+  14:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *      INCLUDES
+  15:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *********************/
+  16:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #include "../lv_conf_internal.h"
+  17:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #include "../misc/lv_types.h"
+  18:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  19:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /*********************
+  20:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *      DEFINES
+  21:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *********************/
+  22:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  23:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**********************
+  24:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *      TYPEDEFS
+  25:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  **********************/
+  26:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  27:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**********************
+  28:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * GLOBAL PROTOTYPES
+  29:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  **********************/
+  30:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  31:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  32:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief Copies a block of memory from a source address to a destination address.
+  33:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst Pointer to the destination array where the content is to be copied.
+  34:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param src Pointer to the source of data to be copied.
+  35:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to copy.
+  36:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @return Pointer to the destination array.
+  37:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @note The function does not check for any overlapping of the source and destination memory block
+  38:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  39:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** void * lv_memcpy(void * dst, const void * src, size_t len);
+  40:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  41:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 8
+
+
+  42:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief Fills a block of memory with a specified value.
+  43:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst Pointer to the destination array to fill with the specified value.
+  44:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param v Value to be set. The value is passed as an int, but the function fills
+  45:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *          the block of memory using the unsigned char conversion of this value.
+  46:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to be set to the value.
+  47:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  48:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** void lv_memset(void * dst, uint8_t v, size_t len);
+  49:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  50:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  51:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief Move a block of memory from source to destination
+  52:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst Pointer to the destination array where the content is to be copied.
+  53:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param src Pointer to the source of data to be copied.
+  54:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to copy
+  55:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @return Pointer to the destination array.
+  56:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  57:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** void * lv_memmove(void * dst, const void * src, size_t len);
+  58:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  59:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  60:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief This function will compare two memory blocks
+  61:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param p1 Pointer to the first memory block
+  62:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param p2 Pointer to the second memory block
+  63:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to compare
+  64:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @return The difference between the value of the first unmatching byte.
+  65:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  66:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** int lv_memcmp(const void * p1, const void * p2, size_t len);
+  67:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  68:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  69:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * Same as `memset(dst, 0x00, len)`.
+  70:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst pointer to the destination buffer
+  71:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len number of byte to set
+  72:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  73:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** static inline void lv_memzero(void * dst, size_t len)
+  59              		.loc 2 73 20 view .LVU5
+  60              	.LBB11:
+  74:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** {
+  75:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****     lv_memset(dst, 0x00, len);
+  61              		.loc 2 75 5 view .LVU6
+  62 000e 2C22     		movs	r2, #44
+  63              	.LVL2:
+  64              		.loc 2 75 5 is_stmt 0 view .LVU7
+  65 0010 0021     		movs	r1, #0
+  66              	.LVL3:
+  67              		.loc 2 75 5 view .LVU8
+  68 0012 05A8     		add	r0, sp, #20
+  69              	.LVL4:
+  70              		.loc 2 75 5 view .LVU9
+  71 0014 FFF7FEFF 		bl	lv_memset
+  72              	.LVL5:
+  73              		.loc 2 75 5 view .LVU10
+  74              	.LBE11:
+  75              	.LBE10:
+ 302:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.blend_area = &a;
+  76              		.loc 1 302 5 is_stmt 1 view .LVU11
+  77              		.loc 1 302 26 is_stmt 0 view .LVU12
+  78 0018 10AB     		add	r3, sp, #64
+  79 001a 0593     		str	r3, [sp, #20]
+ 303:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.color = color;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 9
+
+
+  80              		.loc 1 303 5 is_stmt 1 view .LVU13
+  81              		.loc 1 303 21 is_stmt 0 view .LVU14
+  82 001c BDF80C20 		ldrh	r2, [sp, #12]	@ unaligned
+  83 0020 9DF80E30 		ldrb	r3, [sp, #14]	@ zero_extendqisi2
+  84 0024 ADF82920 		strh	r2, [sp, #41]	@ unaligned
+  85 0028 8DF82B30 		strb	r3, [sp, #43]
+ 304:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.opa = opa;
+  86              		.loc 1 304 5 is_stmt 1 view .LVU15
+  87              		.loc 1 304 19 is_stmt 0 view .LVU16
+  88 002c 9DF87830 		ldrb	r3, [sp, #120]	@ zero_extendqisi2
+  89 0030 8DF82830 		strb	r3, [sp, #40]
+ 305:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 306:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool top_side = outer_area->y1 <= inner_area->y1;
+  90              		.loc 1 306 5 is_stmt 1 view .LVU17
+  91              		.loc 1 306 31 is_stmt 0 view .LVU18
+  92 0034 6768     		ldr	r7, [r4, #4]
+  93              		.loc 1 306 49 view .LVU19
+  94 0036 6E68     		ldr	r6, [r5, #4]
+  95              	.LVL6:
+ 307:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool bottom_side = outer_area->y2 >= inner_area->y2;
+  96              		.loc 1 307 5 is_stmt 1 view .LVU20
+  97              		.loc 1 307 34 is_stmt 0 view .LVU21
+  98 0038 D4F80CB0 		ldr	fp, [r4, #12]
+  99              		.loc 1 307 52 view .LVU22
+ 100 003c D5F80CA0 		ldr	r10, [r5, #12]
+ 101              	.LVL7:
+ 308:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool left_side = outer_area->x1 <= inner_area->x1;
+ 102              		.loc 1 308 5 is_stmt 1 view .LVU23
+ 103              		.loc 1 308 32 is_stmt 0 view .LVU24
+ 104 0040 D4F80090 		ldr	r9, [r4]
+ 105              		.loc 1 308 50 view .LVU25
+ 106 0044 2B68     		ldr	r3, [r5]
+ 107 0046 0193     		str	r3, [sp, #4]
+ 108              	.LVL8:
+ 309:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool right_side = outer_area->x2 >= inner_area->x2;
+ 109              		.loc 1 309 5 is_stmt 1 view .LVU26
+ 110              		.loc 1 309 33 is_stmt 0 view .LVU27
+ 111 0048 D4F80880 		ldr	r8, [r4, #8]
+ 112              		.loc 1 309 51 view .LVU28
+ 113 004c AB68     		ldr	r3, [r5, #8]
+ 114              	.LVL9:
+ 115              		.loc 1 309 51 view .LVU29
+ 116 004e 0293     		str	r3, [sp, #8]
+ 117              	.LVL10:
+ 310:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 311:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Top*/
+ 312:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.x1 = outer_area->x1;
+ 118              		.loc 1 312 5 is_stmt 1 view .LVU30
+ 119              		.loc 1 312 10 is_stmt 0 view .LVU31
+ 120 0050 CDF84090 		str	r9, [sp, #64]
+ 121              	.LVL11:
+ 313:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.x2 = outer_area->x2;
+ 122              		.loc 1 313 5 is_stmt 1 view .LVU32
+ 123              		.loc 1 313 10 is_stmt 0 view .LVU33
+ 124 0054 CDF84880 		str	r8, [sp, #72]
+ 314:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.y1 = outer_area->y1;
+ 125              		.loc 1 314 5 is_stmt 1 view .LVU34
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 10
+
+
+ 126              		.loc 1 314 10 is_stmt 0 view .LVU35
+ 127 0058 1197     		str	r7, [sp, #68]
+ 315:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.y2 = inner_area->y1 - 1;
+ 128              		.loc 1 315 5 is_stmt 1 view .LVU36
+ 129              		.loc 1 315 27 is_stmt 0 view .LVU37
+ 130 005a 731E     		subs	r3, r6, #1
+ 131              	.LVL12:
+ 132              		.loc 1 315 10 view .LVU38
+ 133 005c 1393     		str	r3, [sp, #76]
+ 316:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(top_side) {
+ 134              		.loc 1 316 5 is_stmt 1 view .LVU39
+ 135              		.loc 1 316 7 is_stmt 0 view .LVU40
+ 136 005e B742     		cmp	r7, r6
+ 137 0060 21DD     		ble	.L11
+ 138              	.L2:
+ 317:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 318:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 319:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 320:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Bottom*/
+ 321:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.y1 = inner_area->y2 + 1;
+ 139              		.loc 1 321 5 is_stmt 1 view .LVU41
+ 140              		.loc 1 321 22 is_stmt 0 view .LVU42
+ 141 0062 EB68     		ldr	r3, [r5, #12]
+ 142              		.loc 1 321 27 view .LVU43
+ 143 0064 0133     		adds	r3, r3, #1
+ 144              		.loc 1 321 10 view .LVU44
+ 145 0066 1193     		str	r3, [sp, #68]
+ 322:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.y2 = outer_area->y2;
+ 146              		.loc 1 322 5 is_stmt 1 view .LVU45
+ 147              		.loc 1 322 22 is_stmt 0 view .LVU46
+ 148 0068 E368     		ldr	r3, [r4, #12]
+ 149              		.loc 1 322 10 view .LVU47
+ 150 006a 1393     		str	r3, [sp, #76]
+ 323:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(bottom_side) {
+ 151              		.loc 1 323 5 is_stmt 1 view .LVU48
+ 152              		.loc 1 323 7 is_stmt 0 view .LVU49
+ 153 006c D345     		cmp	fp, r10
+ 154 006e 1FDA     		bge	.L12
+ 155              	.L3:
+ 324:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 325:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 326:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 327:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Left*/
+ 328:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.x1 = outer_area->x1;
+ 156              		.loc 1 328 5 is_stmt 1 view .LVU50
+ 157              		.loc 1 328 22 is_stmt 0 view .LVU51
+ 158 0070 2368     		ldr	r3, [r4]
+ 159              		.loc 1 328 10 view .LVU52
+ 160 0072 1093     		str	r3, [sp, #64]
+ 329:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.x2 = inner_area->x1 - 1;
+ 161              		.loc 1 329 5 is_stmt 1 view .LVU53
+ 162              		.loc 1 329 22 is_stmt 0 view .LVU54
+ 163 0074 2B68     		ldr	r3, [r5]
+ 164              		.loc 1 329 27 view .LVU55
+ 165 0076 013B     		subs	r3, r3, #1
+ 166              		.loc 1 329 10 view .LVU56
+ 167 0078 1293     		str	r3, [sp, #72]
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 11
+
+
+ 330:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.y1 = (top_side) ? inner_area->y1 : outer_area->y1;
+ 168              		.loc 1 330 5 is_stmt 1 view .LVU57
+ 169              		.loc 1 330 40 is_stmt 0 view .LVU58
+ 170 007a B742     		cmp	r7, r6
+ 171 007c 1DDC     		bgt	.L4
+ 172              		.loc 1 330 40 discriminator 1 view .LVU59
+ 173 007e 6B68     		ldr	r3, [r5, #4]
+ 174              	.L5:
+ 175              		.loc 1 330 10 discriminator 4 view .LVU60
+ 176 0080 1193     		str	r3, [sp, #68]
+ 331:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.y2 = (bottom_side) ? inner_area->y2 : outer_area->y2;
+ 177              		.loc 1 331 5 is_stmt 1 view .LVU61
+ 178              		.loc 1 331 43 is_stmt 0 view .LVU62
+ 179 0082 D345     		cmp	fp, r10
+ 180 0084 1BDB     		blt	.L6
+ 181              		.loc 1 331 43 discriminator 1 view .LVU63
+ 182 0086 EB68     		ldr	r3, [r5, #12]
+ 183              	.L7:
+ 184              		.loc 1 331 10 discriminator 4 view .LVU64
+ 185 0088 1393     		str	r3, [sp, #76]
+ 332:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(left_side) {
+ 186              		.loc 1 332 5 is_stmt 1 view .LVU65
+ 187              		.loc 1 332 7 is_stmt 0 view .LVU66
+ 188 008a 019B     		ldr	r3, [sp, #4]
+ 189 008c 9945     		cmp	r9, r3
+ 190 008e 18DD     		ble	.L13
+ 191              	.L8:
+ 333:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 334:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 335:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 336:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Right*/
+ 337:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.x1 = inner_area->x2 + 1;
+ 192              		.loc 1 337 5 is_stmt 1 view .LVU67
+ 193              		.loc 1 337 22 is_stmt 0 view .LVU68
+ 194 0090 AB68     		ldr	r3, [r5, #8]
+ 195              		.loc 1 337 27 view .LVU69
+ 196 0092 0133     		adds	r3, r3, #1
+ 197              		.loc 1 337 10 view .LVU70
+ 198 0094 1093     		str	r3, [sp, #64]
+ 338:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.x2 = outer_area->x2;
+ 199              		.loc 1 338 5 is_stmt 1 view .LVU71
+ 200              		.loc 1 338 22 is_stmt 0 view .LVU72
+ 201 0096 A368     		ldr	r3, [r4, #8]
+ 202              		.loc 1 338 10 view .LVU73
+ 203 0098 1293     		str	r3, [sp, #72]
+ 339:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(right_side) {
+ 204              		.loc 1 339 5 is_stmt 1 view .LVU74
+ 205              		.loc 1 339 7 is_stmt 0 view .LVU75
+ 206 009a 029B     		ldr	r3, [sp, #8]
+ 207 009c 9845     		cmp	r8, r3
+ 208 009e 15DA     		bge	.L14
+ 209              	.L1:
+ 340:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 341:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 342:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** }
+ 210              		.loc 1 342 1 view .LVU76
+ 211 00a0 15B0     		add	sp, sp, #84
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 12
+
+
+ 212              	.LCFI2:
+ 213              		.cfi_remember_state
+ 214              		.cfi_def_cfa_offset 36
+ 215              	.LVL13:
+ 216              		.loc 1 342 1 view .LVU77
+ 217              		@ sp needed
+ 218 00a2 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 219              	.LVL14:
+ 220              	.L11:
+ 221              	.LCFI3:
+ 222              		.cfi_restore_state
+ 317:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 223              		.loc 1 317 9 is_stmt 1 view .LVU78
+ 224 00a6 05A9     		add	r1, sp, #20
+ 225 00a8 0098     		ldr	r0, [sp]
+ 226 00aa FFF7FEFF 		bl	lv_draw_sw_blend
+ 227              	.LVL15:
+ 228 00ae D8E7     		b	.L2
+ 229              	.L12:
+ 324:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 230              		.loc 1 324 9 view .LVU79
+ 231 00b0 05A9     		add	r1, sp, #20
+ 232 00b2 0098     		ldr	r0, [sp]
+ 233 00b4 FFF7FEFF 		bl	lv_draw_sw_blend
+ 234              	.LVL16:
+ 235 00b8 DAE7     		b	.L3
+ 236              	.L4:
+ 330:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     a.y2 = (bottom_side) ? inner_area->y2 : outer_area->y2;
+ 237              		.loc 1 330 40 is_stmt 0 discriminator 2 view .LVU80
+ 238 00ba 6368     		ldr	r3, [r4, #4]
+ 239 00bc E0E7     		b	.L5
+ 240              	.L6:
+ 331:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(left_side) {
+ 241              		.loc 1 331 43 discriminator 2 view .LVU81
+ 242 00be E368     		ldr	r3, [r4, #12]
+ 243 00c0 E2E7     		b	.L7
+ 244              	.L13:
+ 333:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 245              		.loc 1 333 9 is_stmt 1 view .LVU82
+ 246 00c2 05A9     		add	r1, sp, #20
+ 247 00c4 0098     		ldr	r0, [sp]
+ 248 00c6 FFF7FEFF 		bl	lv_draw_sw_blend
+ 249              	.LVL17:
+ 250 00ca E1E7     		b	.L8
+ 251              	.L14:
+ 340:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 252              		.loc 1 340 9 view .LVU83
+ 253 00cc 05A9     		add	r1, sp, #20
+ 254 00ce 0098     		ldr	r0, [sp]
+ 255 00d0 FFF7FEFF 		bl	lv_draw_sw_blend
+ 256              	.LVL18:
+ 257              		.loc 1 342 1 is_stmt 0 view .LVU84
+ 258 00d4 E4E7     		b	.L1
+ 259              		.cfi_endproc
+ 260              	.LFE189:
+ 262              		.section	.text.draw_border_complex,"ax",%progbits
+ 263              		.align	1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 13
+
+
+ 264              		.syntax unified
+ 265              		.thumb
+ 266              		.thumb_func
+ 268              	draw_border_complex:
+ 269              	.LVL19:
+ 270              	.LFB188:
+  92:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #if LV_DRAW_SW_COMPLEX
+ 271              		.loc 1 92 1 is_stmt 1 view -0
+ 272              		.cfi_startproc
+ 273              		@ args = 12, pretend = 0, frame = 208
+ 274              		@ frame_needed = 0, uses_anonymous_args = 0
+  92:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** #if LV_DRAW_SW_COMPLEX
+ 275              		.loc 1 92 1 is_stmt 0 view .LVU86
+ 276 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 277              	.LCFI4:
+ 278              		.cfi_def_cfa_offset 36
+ 279              		.cfi_offset 4, -36
+ 280              		.cfi_offset 5, -32
+ 281              		.cfi_offset 6, -28
+ 282              		.cfi_offset 7, -24
+ 283              		.cfi_offset 8, -20
+ 284              		.cfi_offset 9, -16
+ 285              		.cfi_offset 10, -12
+ 286              		.cfi_offset 11, -8
+ 287              		.cfi_offset 14, -4
+ 288 0004 B7B0     		sub	sp, sp, #220
+ 289              	.LCFI5:
+ 290              		.cfi_def_cfa_offset 256
+ 291 0006 8146     		mov	r9, r0
+ 292 0008 0E46     		mov	r6, r1
+ 293 000a 1446     		mov	r4, r2
+ 294 000c 1F46     		mov	r7, r3
+  96:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(!lv_area_intersect(&draw_area, outer_area, &t->clip_area)) return;
+ 295              		.loc 1 96 5 is_stmt 1 view .LVU87
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t draw_area_w = lv_area_get_width(&draw_area);
+ 296              		.loc 1 97 5 view .LVU88
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t draw_area_w = lv_area_get_width(&draw_area);
+ 297              		.loc 1 97 9 is_stmt 0 view .LVU89
+ 298 000e 00F13802 		add	r2, r0, #56
+ 299              	.LVL20:
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t draw_area_w = lv_area_get_width(&draw_area);
+ 300              		.loc 1 97 9 view .LVU90
+ 301 0012 32A8     		add	r0, sp, #200
+ 302              	.LVL21:
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t draw_area_w = lv_area_get_width(&draw_area);
+ 303              		.loc 1 97 9 view .LVU91
+ 304 0014 FFF7FEFF 		bl	lv_area_intersect
+ 305              	.LVL22:
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t draw_area_w = lv_area_get_width(&draw_area);
+ 306              		.loc 1 97 7 discriminator 1 view .LVU92
+ 307 0018 10B9     		cbnz	r0, .L47
+ 308              	.LVL23:
+ 309              	.L15:
+ 295:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** static void draw_border_simple(lv_draw_task_t * t, const lv_area_t * outer_area, const lv_area_t * 
+ 310              		.loc 1 295 1 view .LVU93
+ 311 001a 37B0     		add	sp, sp, #220
+ 312              	.LCFI6:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 14
+
+
+ 313              		.cfi_remember_state
+ 314              		.cfi_def_cfa_offset 36
+ 315              		@ sp needed
+ 316 001c BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 317              	.LVL24:
+ 318              	.L47:
+ 319              	.LCFI7:
+ 320              		.cfi_restore_state
+ 295:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** static void draw_border_simple(lv_draw_task_t * t, const lv_area_t * outer_area, const lv_area_t * 
+ 321              		.loc 1 295 1 view .LVU94
+ 322 0020 0546     		mov	r5, r0
+  98:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 323              		.loc 1 98 5 is_stmt 1 view .LVU95
+  98:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 324              		.loc 1 98 27 is_stmt 0 view .LVU96
+ 325 0022 32A8     		add	r0, sp, #200
+ 326 0024 FFF7FEFF 		bl	lv_area_get_width
+ 327              	.LVL25:
+ 328 0028 8246     		mov	r10, r0
+ 329              	.LVL26:
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_memzero(&blend_dsc, sizeof(blend_dsc));
+ 330              		.loc 1 100 5 is_stmt 1 view .LVU97
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_opa_t * mask_buf = lv_malloc(draw_area_w);
+ 331              		.loc 1 101 5 view .LVU98
+ 332              	.LBB12:
+ 333              	.LBI12:
+  73:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** {
+ 334              		.loc 2 73 20 view .LVU99
+ 335              	.LBB13:
+ 336              		.loc 2 75 5 view .LVU100
+ 337 002a 2C22     		movs	r2, #44
+ 338 002c 0021     		movs	r1, #0
+ 339 002e 27A8     		add	r0, sp, #156
+ 340              	.LVL27:
+ 341              		.loc 2 75 5 is_stmt 0 view .LVU101
+ 342 0030 FFF7FEFF 		bl	lv_memset
+ 343              	.LVL28:
+ 344              		.loc 2 75 5 view .LVU102
+ 345              	.LBE13:
+ 346              	.LBE12:
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.mask_buf = mask_buf;
+ 347              		.loc 1 102 5 is_stmt 1 view .LVU103
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.mask_buf = mask_buf;
+ 348              		.loc 1 102 27 is_stmt 0 view .LVU104
+ 349 0034 5046     		mov	r0, r10
+ 350 0036 FFF7FEFF 		bl	lv_malloc
+ 351              	.LVL29:
+ 352 003a 8046     		mov	r8, r0
+ 353              	.LVL30:
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 354              		.loc 1 103 5 is_stmt 1 view .LVU105
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 355              		.loc 1 103 24 is_stmt 0 view .LVU106
+ 356 003c 2D90     		str	r0, [sp, #180]
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 357              		.loc 1 105 5 is_stmt 1 view .LVU107
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 15
+
+
+ 358              		.loc 1 105 12 is_stmt 0 view .LVU108
+ 359 003e 0023     		movs	r3, #0
+ 360 0040 2493     		str	r3, [sp, #144]
+ 361 0042 2593     		str	r3, [sp, #148]
+ 362 0044 2693     		str	r3, [sp, #152]
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_draw_sw_mask_radius_init(&mask_rin_param, inner_area, rin, true);
+ 363              		.loc 1 108 5 is_stmt 1 view .LVU109
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     mask_list[0] = &mask_rin_param;
+ 364              		.loc 1 109 5 view .LVU110
+ 365 0046 0DF16C0B 		add	fp, sp, #108
+ 366 004a 0123     		movs	r3, #1
+ 367 004c 409A     		ldr	r2, [sp, #256]
+ 368 004e 2146     		mov	r1, r4
+ 369 0050 5846     		mov	r0, fp
+ 370              	.LVL31:
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     mask_list[0] = &mask_rin_param;
+ 371              		.loc 1 109 5 is_stmt 0 view .LVU111
+ 372 0052 FFF7FEFF 		bl	lv_draw_sw_mask_radius_init
+ 373              	.LVL32:
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 374              		.loc 1 110 5 is_stmt 1 view .LVU112
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 375              		.loc 1 110 18 is_stmt 0 view .LVU113
+ 376 0056 CDF890B0 		str	fp, [sp, #144]
+ 113:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rout > 0) {
+ 377              		.loc 1 113 5 is_stmt 1 view .LVU114
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_mask_radius_init(&mask_rout_param, outer_area, rout, false);
+ 378              		.loc 1 114 5 view .LVU115
+ 114:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_mask_radius_init(&mask_rout_param, outer_area, rout, false);
+ 379              		.loc 1 114 7 is_stmt 0 view .LVU116
+ 380 005a 002F     		cmp	r7, #0
+ 381 005c 59DC     		bgt	.L48
+ 382              	.L18:
+ 119:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_area_t blend_area;
+ 383              		.loc 1 119 5 is_stmt 1 view .LVU117
+ 120:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.blend_area = &blend_area;
+ 384              		.loc 1 120 5 view .LVU118
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.mask_area = &blend_area;
+ 385              		.loc 1 121 5 view .LVU119
+ 121:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.mask_area = &blend_area;
+ 386              		.loc 1 121 26 is_stmt 0 view .LVU120
+ 387 005e 0EAB     		add	r3, sp, #56
+ 388 0060 2793     		str	r3, [sp, #156]
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.color = color;
+ 389              		.loc 1 122 5 is_stmt 1 view .LVU121
+ 122:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.color = color;
+ 390              		.loc 1 122 25 is_stmt 0 view .LVU122
+ 391 0062 2F93     		str	r3, [sp, #188]
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.opa = opa;
+ 392              		.loc 1 123 5 is_stmt 1 view .LVU123
+ 123:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     blend_dsc.opa = opa;
+ 393              		.loc 1 123 21 is_stmt 0 view .LVU124
+ 394 0064 BDF80421 		ldrh	r2, [sp, #260]	@ unaligned
+ 395 0068 9DF80631 		ldrb	r3, [sp, #262]	@ zero_extendqisi2
+ 396 006c ADF8B120 		strh	r2, [sp, #177]	@ unaligned
+ 397 0070 8DF8B330 		strb	r3, [sp, #179]
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 16
+
+
+ 398              		.loc 1 124 5 is_stmt 1 view .LVU125
+ 124:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 399              		.loc 1 124 19 is_stmt 0 view .LVU126
+ 400 0074 9DF80831 		ldrb	r3, [sp, #264]	@ zero_extendqisi2
+ 401 0078 8DF8B030 		strb	r3, [sp, #176]
+ 127:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.x1 = LV_MAX(outer_area->x1 + rout, inner_area->x1);
+ 402              		.loc 1 127 5 is_stmt 1 view .LVU127
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.x2 = LV_MIN(outer_area->x2 - rout, inner_area->x2);
+ 403              		.loc 1 128 5 view .LVU128
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.x2 = LV_MIN(outer_area->x2 - rout, inner_area->x2);
+ 404              		.loc 1 128 20 is_stmt 0 view .LVU129
+ 405 007c 2268     		ldr	r2, [r4]
+ 406 007e 3368     		ldr	r3, [r6]
+ 407 0080 3B44     		add	r3, r3, r7
+ 408 0082 9342     		cmp	r3, r2
+ 409 0084 B8BF     		it	lt
+ 410 0086 1346     		movlt	r3, r2
+ 128:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.x2 = LV_MIN(outer_area->x2 - rout, inner_area->x2);
+ 411              		.loc 1 128 18 view .LVU130
+ 412 0088 0A93     		str	r3, [sp, #40]
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.y1 = LV_MAX(outer_area->y1 + rout, inner_area->y1);
+ 413              		.loc 1 129 5 is_stmt 1 view .LVU131
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.y1 = LV_MAX(outer_area->y1 + rout, inner_area->y1);
+ 414              		.loc 1 129 20 is_stmt 0 view .LVU132
+ 415 008a A268     		ldr	r2, [r4, #8]
+ 416 008c B368     		ldr	r3, [r6, #8]
+ 417 008e DB1B     		subs	r3, r3, r7
+ 418 0090 9342     		cmp	r3, r2
+ 419 0092 A8BF     		it	ge
+ 420 0094 1346     		movge	r3, r2
+ 129:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.y1 = LV_MAX(outer_area->y1 + rout, inner_area->y1);
+ 421              		.loc 1 129 18 view .LVU133
+ 422 0096 0C93     		str	r3, [sp, #48]
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.y2 = LV_MIN(outer_area->y2 - rout, inner_area->y2);
+ 423              		.loc 1 130 5 is_stmt 1 view .LVU134
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.y2 = LV_MIN(outer_area->y2 - rout, inner_area->y2);
+ 424              		.loc 1 130 20 is_stmt 0 view .LVU135
+ 425 0098 6268     		ldr	r2, [r4, #4]
+ 426 009a 7368     		ldr	r3, [r6, #4]
+ 427 009c 3B44     		add	r3, r3, r7
+ 428 009e 9342     		cmp	r3, r2
+ 429 00a0 B8BF     		it	lt
+ 430 00a2 1346     		movlt	r3, r2
+ 130:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     core_area.y2 = LV_MIN(outer_area->y2 - rout, inner_area->y2);
+ 431              		.loc 1 130 18 view .LVU136
+ 432 00a4 0B93     		str	r3, [sp, #44]
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t core_w = lv_area_get_width(&core_area);
+ 433              		.loc 1 131 5 is_stmt 1 view .LVU137
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t core_w = lv_area_get_width(&core_area);
+ 434              		.loc 1 131 20 is_stmt 0 view .LVU138
+ 435 00a6 E268     		ldr	r2, [r4, #12]
+ 436 00a8 F368     		ldr	r3, [r6, #12]
+ 437 00aa DB1B     		subs	r3, r3, r7
+ 438 00ac 9342     		cmp	r3, r2
+ 439 00ae A8BF     		it	ge
+ 440 00b0 1346     		movge	r3, r2
+ 131:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t core_w = lv_area_get_width(&core_area);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 17
+
+
+ 441              		.loc 1 131 18 view .LVU139
+ 442 00b2 0D93     		str	r3, [sp, #52]
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 443              		.loc 1 132 5 is_stmt 1 view .LVU140
+ 132:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 444              		.loc 1 132 22 is_stmt 0 view .LVU141
+ 445 00b4 0AA8     		add	r0, sp, #40
+ 446 00b6 FFF7FEFF 		bl	lv_area_get_width
+ 447              	.LVL33:
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool bottom_side = outer_area->y2 >= inner_area->y2;
+ 448              		.loc 1 134 5 is_stmt 1 view .LVU142
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool bottom_side = outer_area->y2 >= inner_area->y2;
+ 449              		.loc 1 134 31 is_stmt 0 view .LVU143
+ 450 00ba 7268     		ldr	r2, [r6, #4]
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool bottom_side = outer_area->y2 >= inner_area->y2;
+ 451              		.loc 1 134 49 view .LVU144
+ 452 00bc 6368     		ldr	r3, [r4, #4]
+ 134:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool bottom_side = outer_area->y2 >= inner_area->y2;
+ 453              		.loc 1 134 10 view .LVU145
+ 454 00be 9A42     		cmp	r2, r3
+ 455 00c0 CCBF     		ite	gt
+ 456 00c2 0023     		movgt	r3, #0
+ 457 00c4 0123     		movle	r3, #1
+ 458 00c6 0293     		str	r3, [sp, #8]
+ 459              	.LVL34:
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 460              		.loc 1 135 5 is_stmt 1 view .LVU146
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 461              		.loc 1 135 34 is_stmt 0 view .LVU147
+ 462 00c8 F268     		ldr	r2, [r6, #12]
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 463              		.loc 1 135 52 view .LVU148
+ 464 00ca E368     		ldr	r3, [r4, #12]
+ 135:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 465              		.loc 1 135 10 view .LVU149
+ 466 00cc 9A42     		cmp	r2, r3
+ 467 00ce B4BF     		ite	lt
+ 468 00d0 4FF0000B 		movlt	fp, #0
+ 469 00d4 4FF0010B 		movge	fp, #1
+ 470              	.LVL35:
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool right_side = outer_area->x2 >= inner_area->x2;
+ 471              		.loc 1 138 5 is_stmt 1 view .LVU150
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool right_side = outer_area->x2 >= inner_area->x2;
+ 472              		.loc 1 138 32 is_stmt 0 view .LVU151
+ 473 00d8 3368     		ldr	r3, [r6]
+ 474 00da 0393     		str	r3, [sp, #12]
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool right_side = outer_area->x2 >= inner_area->x2;
+ 475              		.loc 1 138 50 view .LVU152
+ 476 00dc 2268     		ldr	r2, [r4]
+ 477 00de 0492     		str	r2, [sp, #16]
+ 138:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     bool right_side = outer_area->x2 >= inner_area->x2;
+ 478              		.loc 1 138 10 view .LVU153
+ 479 00e0 9342     		cmp	r3, r2
+ 480 00e2 CCBF     		ite	gt
+ 481 00e4 0023     		movgt	r3, #0
+ 482 00e6 0123     		movle	r3, #1
+ 483 00e8 0893     		str	r3, [sp, #32]
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 18
+
+
+ 484              	.LVL36:
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 485              		.loc 1 139 5 is_stmt 1 view .LVU154
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 486              		.loc 1 139 33 is_stmt 0 view .LVU155
+ 487 00ea B268     		ldr	r2, [r6, #8]
+ 488 00ec 0592     		str	r2, [sp, #20]
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 489              		.loc 1 139 51 view .LVU156
+ 490 00ee A168     		ldr	r1, [r4, #8]
+ 491 00f0 0691     		str	r1, [sp, #24]
+ 139:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 492              		.loc 1 139 10 view .LVU157
+ 493 00f2 8A42     		cmp	r2, r1
+ 494 00f4 B4BF     		ite	lt
+ 495 00f6 0022     		movlt	r2, #0
+ 496 00f8 0122     		movge	r2, #1
+ 497 00fa 0992     		str	r2, [sp, #36]
+ 498              	.LVL37:
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(left_side && right_side && top_side && bottom_side &&
+ 499              		.loc 1 141 5 is_stmt 1 view .LVU158
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****        core_w < SPLIT_LIMIT) {
+ 500              		.loc 1 142 5 view .LVU159
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****        core_w < SPLIT_LIMIT) {
+ 501              		.loc 1 142 7 is_stmt 0 view .LVU160
+ 502 00fc 1A40     		ands	r2, r3, r2
+ 503              	.LVL38:
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****        core_w < SPLIT_LIMIT) {
+ 504              		.loc 1 142 7 view .LVU161
+ 505 00fe 0792     		str	r2, [sp, #28]
+ 506 0100 13D0     		beq	.L19
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****        core_w < SPLIT_LIMIT) {
+ 507              		.loc 1 142 44 discriminator 1 view .LVU162
+ 508 0102 029B     		ldr	r3, [sp, #8]
+ 509              	.LVL39:
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****        core_w < SPLIT_LIMIT) {
+ 510              		.loc 1 142 44 discriminator 1 view .LVU163
+ 511 0104 13EA0B05 		ands	r5, r3, fp
+ 512 0108 0ED0     		beq	.L44
+ 142:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****        core_w < SPLIT_LIMIT) {
+ 513              		.loc 1 142 59 discriminator 2 view .LVU164
+ 514 010a 3128     		cmp	r0, #49
+ 515 010c 0DDC     		bgt	.L19
+ 144:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 516              		.loc 1 144 19 view .LVU165
+ 517 010e 0025     		movs	r5, #0
+ 518 0110 0BE0     		b	.L19
+ 519              	.LVL40:
+ 520              	.L48:
+ 115:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         mask_list[1] = &mask_rout_param;
+ 521              		.loc 1 115 9 is_stmt 1 view .LVU166
+ 522 0112 0DF1480B 		add	fp, sp, #72
+ 523 0116 0023     		movs	r3, #0
+ 524 0118 3A46     		mov	r2, r7
+ 525 011a 3146     		mov	r1, r6
+ 526 011c 5846     		mov	r0, fp
+ 527 011e FFF7FEFF 		bl	lv_draw_sw_mask_radius_init
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 19
+
+
+ 528              	.LVL41:
+ 116:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 529              		.loc 1 116 9 view .LVU167
+ 116:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 530              		.loc 1 116 22 is_stmt 0 view .LVU168
+ 531 0122 CDF894B0 		str	fp, [sp, #148]
+ 532 0126 9AE7     		b	.L18
+ 533              	.LVL42:
+ 534              	.L44:
+ 141:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(left_side && right_side && top_side && bottom_side &&
+ 535              		.loc 1 141 10 view .LVU169
+ 536 0128 079D     		ldr	r5, [sp, #28]
+ 537              	.L19:
+ 538              	.LVL43:
+ 147:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Draw the straight lines first if they are long enough*/
+ 539              		.loc 1 147 5 is_stmt 1 view .LVU170
+ 147:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     /*Draw the straight lines first if they are long enough*/
+ 540              		.loc 1 147 24 is_stmt 0 view .LVU171
+ 541 012a 0123     		movs	r3, #1
+ 542 012c 8DF8B830 		strb	r3, [sp, #184]
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = core_area.x1;
+ 543              		.loc 1 149 5 is_stmt 1 view .LVU172
+ 149:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = core_area.x1;
+ 544              		.loc 1 149 7 is_stmt 0 view .LVU173
+ 545 0130 029B     		ldr	r3, [sp, #8]
+ 546 0132 1D42     		tst	r5, r3
+ 547 0134 21D1     		bne	.L49
+ 548              	.LVL44:
+ 549              	.L20:
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = core_area.x1;
+ 550              		.loc 1 157 5 is_stmt 1 view .LVU174
+ 157:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = core_area.x1;
+ 551              		.loc 1 157 7 is_stmt 0 view .LVU175
+ 552 0136 15EA0B0F 		tst	r5, fp
+ 553 013a 2CD1     		bne	.L50
+ 554              	.L21:
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = outer_area->x1;
+ 555              		.loc 1 166 5 is_stmt 1 view .LVU176
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = outer_area->x1;
+ 556              		.loc 1 166 18 is_stmt 0 view .LVU177
+ 557 013c 2268     		ldr	r2, [r4]
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = outer_area->x1;
+ 558              		.loc 1 166 36 view .LVU178
+ 559 013e A368     		ldr	r3, [r4, #8]
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = outer_area->x1;
+ 560              		.loc 1 166 7 view .LVU179
+ 561 0140 9A42     		cmp	r2, r3
+ 562 0142 02DB     		blt	.L22
+ 166:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = outer_area->x1;
+ 563              		.loc 1 166 54 discriminator 1 view .LVU180
+ 564 0144 079B     		ldr	r3, [sp, #28]
+ 565 0146 002B     		cmp	r3, #0
+ 566 0148 33D1     		bne	.L51
+ 567              	.L22:
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x1 = outer_area->x1;
+ 568              		.loc 1 174 9 is_stmt 1 view .LVU181
+ 174:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x1 = outer_area->x1;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 20
+
+
+ 569              		.loc 1 174 11 is_stmt 0 view .LVU182
+ 570 014a 039B     		ldr	r3, [sp, #12]
+ 571 014c 049A     		ldr	r2, [sp, #16]
+ 572 014e 9342     		cmp	r3, r2
+ 573 0150 3CDD     		ble	.L52
+ 574              	.L24:
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x1 = inner_area->x2 + 1;
+ 575              		.loc 1 182 9 is_stmt 1 view .LVU183
+ 182:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x1 = inner_area->x2 + 1;
+ 576              		.loc 1 182 11 is_stmt 0 view .LVU184
+ 577 0152 059B     		ldr	r3, [sp, #20]
+ 578 0154 069A     		ldr	r2, [sp, #24]
+ 579 0156 9342     		cmp	r3, r2
+ 580 0158 46DA     		bge	.L53
+ 581              	.L23:
+ 192:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 582              		.loc 1 192 5 is_stmt 1 view .LVU185
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         /*Calculate the top corner and mirror it to the bottom*/
+ 583              		.loc 1 195 5 view .LVU186
+ 195:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         /*Calculate the top corner and mirror it to the bottom*/
+ 584              		.loc 1 195 7 is_stmt 0 view .LVU187
+ 585 015a 002D     		cmp	r5, #0
+ 586 015c 40F08E80 		bne	.L25
+ 587              	.LBB14:
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = draw_area.x2;
+ 588              		.loc 1 197 9 is_stmt 1 view .LVU188
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = draw_area.x2;
+ 589              		.loc 1 197 34 is_stmt 0 view .LVU189
+ 590 0160 329B     		ldr	r3, [sp, #200]
+ 197:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = draw_area.x2;
+ 591              		.loc 1 197 23 view .LVU190
+ 592 0162 0E93     		str	r3, [sp, #56]
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         int32_t max_h = LV_MAX(rout, inner_area->y1 - outer_area->y1);
+ 593              		.loc 1 198 9 is_stmt 1 view .LVU191
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         int32_t max_h = LV_MAX(rout, inner_area->y1 - outer_area->y1);
+ 594              		.loc 1 198 34 is_stmt 0 view .LVU192
+ 595 0164 349B     		ldr	r3, [sp, #208]
+ 198:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         int32_t max_h = LV_MAX(rout, inner_area->y1 - outer_area->y1);
+ 596              		.loc 1 198 23 view .LVU193
+ 597 0166 1093     		str	r3, [sp, #64]
+ 199:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         for(h = 0; h < max_h; h++) {
+ 598              		.loc 1 199 9 is_stmt 1 view .LVU194
+ 199:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         for(h = 0; h < max_h; h++) {
+ 599              		.loc 1 199 25 is_stmt 0 view .LVU195
+ 600 0168 6368     		ldr	r3, [r4, #4]
+ 601 016a 7268     		ldr	r2, [r6, #4]
+ 602 016c A3EB020B 		sub	fp, r3, r2
+ 603              	.LVL45:
+ 199:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         for(h = 0; h < max_h; h++) {
+ 604              		.loc 1 199 17 view .LVU196
+ 605 0170 BB45     		cmp	fp, r7
+ 606 0172 B8BF     		it	lt
+ 607 0174 BB46     		movlt	fp, r7
+ 608              	.LVL46:
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t top_y = outer_area->y1 + h;
+ 609              		.loc 1 200 9 is_stmt 1 view .LVU197
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t top_y = outer_area->y1 + h;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 21
+
+
+ 610              		.loc 1 200 9 is_stmt 0 view .LVU198
+ 611 0176 0297     		str	r7, [sp, #8]
+ 612              	.LVL47:
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t top_y = outer_area->y1 + h;
+ 613              		.loc 1 200 9 view .LVU199
+ 614 0178 5AE0     		b	.L26
+ 615              	.LVL48:
+ 616              	.L49:
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t top_y = outer_area->y1 + h;
+ 617              		.loc 1 200 9 view .LVU200
+ 618              	.LBE14:
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = core_area.x2;
+ 619              		.loc 1 150 9 is_stmt 1 view .LVU201
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = core_area.x2;
+ 620              		.loc 1 150 34 is_stmt 0 view .LVU202
+ 621 017a 0A9B     		ldr	r3, [sp, #40]
+ 150:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = core_area.x2;
+ 622              		.loc 1 150 23 view .LVU203
+ 623 017c 0E93     		str	r3, [sp, #56]
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = outer_area->y1;
+ 624              		.loc 1 151 9 is_stmt 1 view .LVU204
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = outer_area->y1;
+ 625              		.loc 1 151 34 is_stmt 0 view .LVU205
+ 626 017e 0C9B     		ldr	r3, [sp, #48]
+ 151:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = outer_area->y1;
+ 627              		.loc 1 151 23 view .LVU206
+ 628 0180 1093     		str	r3, [sp, #64]
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = inner_area->y1 - 1;
+ 629              		.loc 1 152 9 is_stmt 1 view .LVU207
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = inner_area->y1 - 1;
+ 630              		.loc 1 152 35 is_stmt 0 view .LVU208
+ 631 0182 7368     		ldr	r3, [r6, #4]
+ 152:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = inner_area->y1 - 1;
+ 632              		.loc 1 152 23 view .LVU209
+ 633 0184 0F93     		str	r3, [sp, #60]
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 634              		.loc 1 153 9 is_stmt 1 view .LVU210
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 635              		.loc 1 153 35 is_stmt 0 view .LVU211
+ 636 0186 6368     		ldr	r3, [r4, #4]
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 637              		.loc 1 153 40 view .LVU212
+ 638 0188 013B     		subs	r3, r3, #1
+ 153:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 639              		.loc 1 153 23 view .LVU213
+ 640 018a 1193     		str	r3, [sp, #68]
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 641              		.loc 1 154 9 is_stmt 1 view .LVU214
+ 642 018c 27A9     		add	r1, sp, #156
+ 643 018e 4846     		mov	r0, r9
+ 644              	.LVL49:
+ 154:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 645              		.loc 1 154 9 is_stmt 0 view .LVU215
+ 646 0190 FFF7FEFF 		bl	lv_draw_sw_blend
+ 647              	.LVL50:
+ 648 0194 CFE7     		b	.L20
+ 649              	.L50:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 22
+
+
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = core_area.x2;
+ 650              		.loc 1 158 9 is_stmt 1 view .LVU216
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = core_area.x2;
+ 651              		.loc 1 158 34 is_stmt 0 view .LVU217
+ 652 0196 0A9B     		ldr	r3, [sp, #40]
+ 158:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = core_area.x2;
+ 653              		.loc 1 158 23 view .LVU218
+ 654 0198 0E93     		str	r3, [sp, #56]
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = inner_area->y2 + 1;
+ 655              		.loc 1 159 9 is_stmt 1 view .LVU219
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = inner_area->y2 + 1;
+ 656              		.loc 1 159 34 is_stmt 0 view .LVU220
+ 657 019a 0C9B     		ldr	r3, [sp, #48]
+ 159:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = inner_area->y2 + 1;
+ 658              		.loc 1 159 23 view .LVU221
+ 659 019c 1093     		str	r3, [sp, #64]
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = outer_area->y2;
+ 660              		.loc 1 160 9 is_stmt 1 view .LVU222
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = outer_area->y2;
+ 661              		.loc 1 160 35 is_stmt 0 view .LVU223
+ 662 019e E368     		ldr	r3, [r4, #12]
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = outer_area->y2;
+ 663              		.loc 1 160 40 view .LVU224
+ 664 01a0 0133     		adds	r3, r3, #1
+ 160:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = outer_area->y2;
+ 665              		.loc 1 160 23 view .LVU225
+ 666 01a2 0F93     		str	r3, [sp, #60]
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 667              		.loc 1 161 9 is_stmt 1 view .LVU226
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 668              		.loc 1 161 35 is_stmt 0 view .LVU227
+ 669 01a4 F368     		ldr	r3, [r6, #12]
+ 161:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 670              		.loc 1 161 23 view .LVU228
+ 671 01a6 1193     		str	r3, [sp, #68]
+ 162:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 672              		.loc 1 162 9 is_stmt 1 view .LVU229
+ 673 01a8 27A9     		add	r1, sp, #156
+ 674 01aa 4846     		mov	r0, r9
+ 675 01ac FFF7FEFF 		bl	lv_draw_sw_blend
+ 676              	.LVL51:
+ 677 01b0 C4E7     		b	.L21
+ 678              	.L51:
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = outer_area->x2;
+ 679              		.loc 1 167 9 view .LVU230
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = outer_area->x2;
+ 680              		.loc 1 167 35 is_stmt 0 view .LVU231
+ 681 01b2 3368     		ldr	r3, [r6]
+ 167:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = outer_area->x2;
+ 682              		.loc 1 167 23 view .LVU232
+ 683 01b4 0E93     		str	r3, [sp, #56]
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = core_area.y1;
+ 684              		.loc 1 168 9 is_stmt 1 view .LVU233
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = core_area.y1;
+ 685              		.loc 1 168 35 is_stmt 0 view .LVU234
+ 686 01b6 B368     		ldr	r3, [r6, #8]
+ 168:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y1 = core_area.y1;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 23
+
+
+ 687              		.loc 1 168 23 view .LVU235
+ 688 01b8 1093     		str	r3, [sp, #64]
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = core_area.y2;
+ 689              		.loc 1 169 9 is_stmt 1 view .LVU236
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = core_area.y2;
+ 690              		.loc 1 169 34 is_stmt 0 view .LVU237
+ 691 01ba 0B9B     		ldr	r3, [sp, #44]
+ 169:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.y2 = core_area.y2;
+ 692              		.loc 1 169 23 view .LVU238
+ 693 01bc 0F93     		str	r3, [sp, #60]
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 694              		.loc 1 170 9 is_stmt 1 view .LVU239
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 695              		.loc 1 170 34 is_stmt 0 view .LVU240
+ 696 01be 0D9B     		ldr	r3, [sp, #52]
+ 170:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         lv_draw_sw_blend(t, &blend_dsc);
+ 697              		.loc 1 170 23 view .LVU241
+ 698 01c0 1193     		str	r3, [sp, #68]
+ 171:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 699              		.loc 1 171 9 is_stmt 1 view .LVU242
+ 700 01c2 27A9     		add	r1, sp, #156
+ 701 01c4 4846     		mov	r0, r9
+ 702 01c6 FFF7FEFF 		bl	lv_draw_sw_blend
+ 703              	.LVL52:
+ 704 01ca C6E7     		b	.L23
+ 705              	.L52:
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x2 = inner_area->x1 - 1;
+ 706              		.loc 1 175 13 view .LVU243
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x2 = inner_area->x1 - 1;
+ 707              		.loc 1 175 39 is_stmt 0 view .LVU244
+ 708 01cc 3368     		ldr	r3, [r6]
+ 175:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x2 = inner_area->x1 - 1;
+ 709              		.loc 1 175 27 view .LVU245
+ 710 01ce 0E93     		str	r3, [sp, #56]
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y1 = core_area.y1;
+ 711              		.loc 1 176 13 is_stmt 1 view .LVU246
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y1 = core_area.y1;
+ 712              		.loc 1 176 39 is_stmt 0 view .LVU247
+ 713 01d0 2368     		ldr	r3, [r4]
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y1 = core_area.y1;
+ 714              		.loc 1 176 44 view .LVU248
+ 715 01d2 013B     		subs	r3, r3, #1
+ 176:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y1 = core_area.y1;
+ 716              		.loc 1 176 27 view .LVU249
+ 717 01d4 1093     		str	r3, [sp, #64]
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y2 = core_area.y2;
+ 718              		.loc 1 177 13 is_stmt 1 view .LVU250
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y2 = core_area.y2;
+ 719              		.loc 1 177 38 is_stmt 0 view .LVU251
+ 720 01d6 0B9B     		ldr	r3, [sp, #44]
+ 177:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y2 = core_area.y2;
+ 721              		.loc 1 177 27 view .LVU252
+ 722 01d8 0F93     		str	r3, [sp, #60]
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             lv_draw_sw_blend(t, &blend_dsc);
+ 723              		.loc 1 178 13 is_stmt 1 view .LVU253
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             lv_draw_sw_blend(t, &blend_dsc);
+ 724              		.loc 1 178 38 is_stmt 0 view .LVU254
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 24
+
+
+ 725 01da 0D9B     		ldr	r3, [sp, #52]
+ 178:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             lv_draw_sw_blend(t, &blend_dsc);
+ 726              		.loc 1 178 27 view .LVU255
+ 727 01dc 1193     		str	r3, [sp, #68]
+ 179:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         }
+ 728              		.loc 1 179 13 is_stmt 1 view .LVU256
+ 729 01de 27A9     		add	r1, sp, #156
+ 730 01e0 4846     		mov	r0, r9
+ 731 01e2 FFF7FEFF 		bl	lv_draw_sw_blend
+ 732              	.LVL53:
+ 733 01e6 B4E7     		b	.L24
+ 734              	.L53:
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x2 = outer_area->x2;
+ 735              		.loc 1 183 13 view .LVU257
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x2 = outer_area->x2;
+ 736              		.loc 1 183 39 is_stmt 0 view .LVU258
+ 737 01e8 A368     		ldr	r3, [r4, #8]
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x2 = outer_area->x2;
+ 738              		.loc 1 183 44 view .LVU259
+ 739 01ea 0133     		adds	r3, r3, #1
+ 183:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.x2 = outer_area->x2;
+ 740              		.loc 1 183 27 view .LVU260
+ 741 01ec 0E93     		str	r3, [sp, #56]
+ 184:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y1 = core_area.y1;
+ 742              		.loc 1 184 13 is_stmt 1 view .LVU261
+ 184:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y1 = core_area.y1;
+ 743              		.loc 1 184 39 is_stmt 0 view .LVU262
+ 744 01ee B368     		ldr	r3, [r6, #8]
+ 184:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y1 = core_area.y1;
+ 745              		.loc 1 184 27 view .LVU263
+ 746 01f0 1093     		str	r3, [sp, #64]
+ 185:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y2 = core_area.y2;
+ 747              		.loc 1 185 13 is_stmt 1 view .LVU264
+ 185:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y2 = core_area.y2;
+ 748              		.loc 1 185 38 is_stmt 0 view .LVU265
+ 749 01f2 0B9B     		ldr	r3, [sp, #44]
+ 185:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_area.y2 = core_area.y2;
+ 750              		.loc 1 185 27 view .LVU266
+ 751 01f4 0F93     		str	r3, [sp, #60]
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             lv_draw_sw_blend(t, &blend_dsc);
+ 752              		.loc 1 186 13 is_stmt 1 view .LVU267
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             lv_draw_sw_blend(t, &blend_dsc);
+ 753              		.loc 1 186 38 is_stmt 0 view .LVU268
+ 754 01f6 0D9B     		ldr	r3, [sp, #52]
+ 186:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             lv_draw_sw_blend(t, &blend_dsc);
+ 755              		.loc 1 186 27 view .LVU269
+ 756 01f8 1193     		str	r3, [sp, #68]
+ 187:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         }
+ 757              		.loc 1 187 13 is_stmt 1 view .LVU270
+ 758 01fa 27A9     		add	r1, sp, #156
+ 759 01fc 4846     		mov	r0, r9
+ 760 01fe FFF7FEFF 		bl	lv_draw_sw_blend
+ 761              	.LVL54:
+ 762 0202 AAE7     		b	.L23
+ 763              	.LVL55:
+ 764              	.L27:
+ 765              	.LBB17:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 25
+
+
+ 766              	.LBB15:
+ 205:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             blend_dsc.mask_res = lv_draw_sw_mask_apply(mask_list, mask_buf, blend_area.x1, top_y, d
+ 767              		.loc 1 205 13 view .LVU271
+ 768 0204 5246     		mov	r2, r10
+ 769 0206 FF21     		movs	r1, #255
+ 770 0208 4046     		mov	r0, r8
+ 771 020a FFF7FEFF 		bl	lv_memset
+ 772              	.LVL56:
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 773              		.loc 1 206 13 view .LVU272
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 774              		.loc 1 206 34 is_stmt 0 view .LVU273
+ 775 020e CDF800A0 		str	r10, [sp]
+ 776 0212 2346     		mov	r3, r4
+ 777 0214 0E9A     		ldr	r2, [sp, #56]
+ 778 0216 4146     		mov	r1, r8
+ 779 0218 24A8     		add	r0, sp, #144
+ 780 021a FFF7FEFF 		bl	lv_draw_sw_mask_apply
+ 781              	.LVL57:
+ 206:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 782              		.loc 1 206 32 discriminator 1 view .LVU274
+ 783 021e 8DF8B800 		strb	r0, [sp, #184]
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y1 = top_y;
+ 784              		.loc 1 208 13 is_stmt 1 view .LVU275
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y1 = top_y;
+ 785              		.loc 1 208 34 is_stmt 0 view .LVU276
+ 786 0222 339B     		ldr	r3, [sp, #204]
+ 208:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y1 = top_y;
+ 787              		.loc 1 208 15 view .LVU277
+ 788 0224 A342     		cmp	r3, r4
+ 789 0226 10DD     		ble	.L54
+ 790              	.L29:
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y1 = bottom_y;
+ 791              		.loc 1 214 13 is_stmt 1 view .LVU278
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y1 = bottom_y;
+ 792              		.loc 1 214 37 is_stmt 0 view .LVU279
+ 793 0228 359B     		ldr	r3, [sp, #212]
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y1 = bottom_y;
+ 794              		.loc 1 214 15 view .LVU280
+ 795 022a BB42     		cmp	r3, r7
+ 796 022c 14DA     		bge	.L55
+ 797              	.L28:
+ 214:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y1 = bottom_y;
+ 798              		.loc 1 214 15 view .LVU281
+ 799              	.LBE15:
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t top_y = outer_area->y1 + h;
+ 800              		.loc 1 200 32 is_stmt 1 discriminator 2 view .LVU282
+ 801 022e 0135     		adds	r5, r5, #1
+ 802              	.LVL58:
+ 803              	.L26:
+ 200:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t top_y = outer_area->y1 + h;
+ 804              		.loc 1 200 22 discriminator 1 view .LVU283
+ 805 0230 5D45     		cmp	r5, fp
+ 806 0232 18DA     		bge	.L56
+ 807              	.LBB16:
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t bottom_y = outer_area->y2 - h;
+ 808              		.loc 1 201 13 view .LVU284
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 26
+
+
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t bottom_y = outer_area->y2 - h;
+ 809              		.loc 1 201 39 is_stmt 0 view .LVU285
+ 810 0234 7468     		ldr	r4, [r6, #4]
+ 201:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             int32_t bottom_y = outer_area->y2 - h;
+ 811              		.loc 1 201 21 view .LVU286
+ 812 0236 2C44     		add	r4, r4, r5
+ 813              	.LVL59:
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(top_y < draw_area.y1 && bottom_y > draw_area.y2) continue;   /*This line is clipped 
+ 814              		.loc 1 202 13 is_stmt 1 view .LVU287
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(top_y < draw_area.y1 && bottom_y > draw_area.y2) continue;   /*This line is clipped 
+ 815              		.loc 1 202 42 is_stmt 0 view .LVU288
+ 816 0238 F768     		ldr	r7, [r6, #12]
+ 202:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(top_y < draw_area.y1 && bottom_y > draw_area.y2) continue;   /*This line is clipped 
+ 817              		.loc 1 202 21 view .LVU289
+ 818 023a 7F1B     		subs	r7, r7, r5
+ 819              	.LVL60:
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 820              		.loc 1 203 13 is_stmt 1 view .LVU290
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 821              		.loc 1 203 33 is_stmt 0 view .LVU291
+ 822 023c 339B     		ldr	r3, [sp, #204]
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 823              		.loc 1 203 15 view .LVU292
+ 824 023e A342     		cmp	r3, r4
+ 825 0240 E0DD     		ble	.L27
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 826              		.loc 1 203 60 discriminator 1 view .LVU293
+ 827 0242 359B     		ldr	r3, [sp, #212]
+ 203:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 828              		.loc 1 203 37 discriminator 1 view .LVU294
+ 829 0244 BB42     		cmp	r3, r7
+ 830 0246 DDDA     		bge	.L27
+ 831 0248 F1E7     		b	.L28
+ 832              	.L54:
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y2 = top_y;
+ 833              		.loc 1 209 17 is_stmt 1 view .LVU295
+ 209:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y2 = top_y;
+ 834              		.loc 1 209 31 is_stmt 0 view .LVU296
+ 835 024a 0F94     		str	r4, [sp, #60]
+ 210:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 lv_draw_sw_blend(t, &blend_dsc);
+ 836              		.loc 1 210 17 is_stmt 1 view .LVU297
+ 210:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 lv_draw_sw_blend(t, &blend_dsc);
+ 837              		.loc 1 210 31 is_stmt 0 view .LVU298
+ 838 024c 1194     		str	r4, [sp, #68]
+ 211:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             }
+ 839              		.loc 1 211 17 is_stmt 1 view .LVU299
+ 840 024e 27A9     		add	r1, sp, #156
+ 841 0250 4846     		mov	r0, r9
+ 842 0252 FFF7FEFF 		bl	lv_draw_sw_blend
+ 843              	.LVL61:
+ 844 0256 E7E7     		b	.L29
+ 845              	.L55:
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y2 = bottom_y;
+ 846              		.loc 1 215 17 view .LVU300
+ 215:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 blend_area.y2 = bottom_y;
+ 847              		.loc 1 215 31 is_stmt 0 view .LVU301
+ 848 0258 0F97     		str	r7, [sp, #60]
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 27
+
+
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 lv_draw_sw_blend(t, &blend_dsc);
+ 849              		.loc 1 216 17 is_stmt 1 view .LVU302
+ 216:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 lv_draw_sw_blend(t, &blend_dsc);
+ 850              		.loc 1 216 31 is_stmt 0 view .LVU303
+ 851 025a 1197     		str	r7, [sp, #68]
+ 217:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             }
+ 852              		.loc 1 217 17 is_stmt 1 view .LVU304
+ 853 025c 27A9     		add	r1, sp, #156
+ 854 025e 4846     		mov	r0, r9
+ 855 0260 FFF7FEFF 		bl	lv_draw_sw_blend
+ 856              	.LVL62:
+ 857 0264 E3E7     		b	.L28
+ 858              	.LVL63:
+ 859              	.L56:
+ 217:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             }
+ 860              		.loc 1 217 17 is_stmt 0 view .LVU305
+ 861              	.LBE16:
+ 862 0266 029F     		ldr	r7, [sp, #8]
+ 863              	.LVL64:
+ 864              	.L31:
+ 217:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             }
+ 865              		.loc 1 217 17 view .LVU306
+ 866              	.LBE17:
+ 282:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rout > 0) lv_draw_sw_mask_free_param(&mask_rout_param);
+ 867              		.loc 1 282 5 is_stmt 1 view .LVU307
+ 868 0268 1BA8     		add	r0, sp, #108
+ 869 026a FFF7FEFF 		bl	lv_draw_sw_mask_free_param
+ 870              	.LVL65:
+ 283:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_free(mask_buf);
+ 871              		.loc 1 283 5 view .LVU308
+ 283:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_free(mask_buf);
+ 872              		.loc 1 283 7 is_stmt 0 view .LVU309
+ 873 026e 002F     		cmp	r7, #0
+ 874 0270 00F3A280 		bgt	.L57
+ 875              	.L43:
+ 284:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 876              		.loc 1 284 5 is_stmt 1 view .LVU310
+ 877 0274 4046     		mov	r0, r8
+ 878 0276 FFF7FEFF 		bl	lv_free
+ 879              	.LVL66:
+ 880 027a CEE6     		b	.L15
+ 881              	.LVL67:
+ 882              	.L25:
+ 223:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = LV_MIN(draw_area.x2, core_area.x1 - 1);
+ 883              		.loc 1 223 9 view .LVU311
+ 223:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = LV_MIN(draw_area.x2, core_area.x1 - 1);
+ 884              		.loc 1 223 34 is_stmt 0 view .LVU312
+ 885 027c 329B     		ldr	r3, [sp, #200]
+ 223:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x2 = LV_MIN(draw_area.x2, core_area.x1 - 1);
+ 886              		.loc 1 223 23 view .LVU313
+ 887 027e 0E93     		str	r3, [sp, #56]
+ 224:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_w = lv_area_get_width(&blend_area);
+ 888              		.loc 1 224 9 is_stmt 1 view .LVU314
+ 224:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_w = lv_area_get_width(&blend_area);
+ 889              		.loc 1 224 25 is_stmt 0 view .LVU315
+ 890 0280 0A9B     		ldr	r3, [sp, #40]
+ 891 0282 013B     		subs	r3, r3, #1
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 28
+
+
+ 892 0284 349A     		ldr	r2, [sp, #208]
+ 893 0286 9342     		cmp	r3, r2
+ 894 0288 A8BF     		it	ge
+ 895 028a 1346     		movge	r3, r2
+ 224:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_w = lv_area_get_width(&blend_area);
+ 896              		.loc 1 224 23 view .LVU316
+ 897 028c 1093     		str	r3, [sp, #64]
+ 225:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         if(blend_w > 0) {
+ 898              		.loc 1 225 9 is_stmt 1 view .LVU317
+ 225:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         if(blend_w > 0) {
+ 899              		.loc 1 225 19 is_stmt 0 view .LVU318
+ 900 028e 0EA8     		add	r0, sp, #56
+ 901 0290 FFF7FEFF 		bl	lv_area_get_width
+ 902              	.LVL68:
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(left_side || top_side) {
+ 903              		.loc 1 226 9 is_stmt 1 view .LVU319
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(left_side || top_side) {
+ 904              		.loc 1 226 11 is_stmt 0 view .LVU320
+ 905 0294 051E     		subs	r5, r0, #0
+ 906              	.LVL69:
+ 226:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(left_side || top_side) {
+ 907              		.loc 1 226 11 view .LVU321
+ 908 0296 3CDD     		ble	.L32
+ 227:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = draw_area.y1; h < core_area.y1; h++) {
+ 909              		.loc 1 227 13 is_stmt 1 view .LVU322
+ 227:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = draw_area.y1; h < core_area.y1; h++) {
+ 910              		.loc 1 227 15 is_stmt 0 view .LVU323
+ 911 0298 029B     		ldr	r3, [sp, #8]
+ 912 029a 089A     		ldr	r2, [sp, #32]
+ 913 029c 1343     		orrs	r3, r3, r2
+ 914 029e 19D0     		beq	.L33
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 915              		.loc 1 228 17 is_stmt 1 view .LVU324
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 916              		.loc 1 228 23 is_stmt 0 view .LVU325
+ 917 02a0 339C     		ldr	r4, [sp, #204]
+ 918              	.LVL70:
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 919              		.loc 1 228 17 view .LVU326
+ 920 02a2 14E0     		b	.L34
+ 921              	.LVL71:
+ 922              	.L35:
+ 229:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 923              		.loc 1 229 21 is_stmt 1 view .LVU327
+ 229:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 924              		.loc 1 229 35 is_stmt 0 view .LVU328
+ 925 02a4 0F94     		str	r4, [sp, #60]
+ 230:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 926              		.loc 1 230 21 is_stmt 1 view .LVU329
+ 230:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 927              		.loc 1 230 35 is_stmt 0 view .LVU330
+ 928 02a6 1194     		str	r4, [sp, #68]
+ 232:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_dsc.mask_res = lv_draw_sw_mask_apply(mask_list, mask_buf, blend_area.x1, 
+ 929              		.loc 1 232 21 is_stmt 1 view .LVU331
+ 930 02a8 2A46     		mov	r2, r5
+ 931 02aa FF21     		movs	r1, #255
+ 932 02ac 4046     		mov	r0, r8
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 29
+
+
+ 933 02ae FFF7FEFF 		bl	lv_memset
+ 934              	.LVL72:
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 935              		.loc 1 233 21 view .LVU332
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 936              		.loc 1 233 42 is_stmt 0 view .LVU333
+ 937 02b2 0095     		str	r5, [sp]
+ 938 02b4 2346     		mov	r3, r4
+ 939 02b6 0E9A     		ldr	r2, [sp, #56]
+ 940 02b8 4146     		mov	r1, r8
+ 941 02ba 24A8     		add	r0, sp, #144
+ 942 02bc FFF7FEFF 		bl	lv_draw_sw_mask_apply
+ 943              	.LVL73:
+ 233:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 944              		.loc 1 233 40 discriminator 1 view .LVU334
+ 945 02c0 8DF8B800 		strb	r0, [sp, #184]
+ 234:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 }
+ 946              		.loc 1 234 21 is_stmt 1 view .LVU335
+ 947 02c4 27A9     		add	r1, sp, #156
+ 948 02c6 4846     		mov	r0, r9
+ 949 02c8 FFF7FEFF 		bl	lv_draw_sw_blend
+ 950              	.LVL74:
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 951              		.loc 1 228 58 discriminator 3 view .LVU336
+ 952 02cc 0134     		adds	r4, r4, #1
+ 953              	.LVL75:
+ 954              	.L34:
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 955              		.loc 1 228 41 discriminator 1 view .LVU337
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 956              		.loc 1 228 52 is_stmt 0 discriminator 1 view .LVU338
+ 957 02ce 0B9B     		ldr	r3, [sp, #44]
+ 228:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 958              		.loc 1 228 41 discriminator 1 view .LVU339
+ 959 02d0 A342     		cmp	r3, r4
+ 960 02d2 E7DC     		bgt	.L35
+ 961              	.LVL76:
+ 962              	.L33:
+ 238:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = core_area.y2 + 1; h <= draw_area.y2; h++) {
+ 963              		.loc 1 238 13 is_stmt 1 view .LVU340
+ 238:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = core_area.y2 + 1; h <= draw_area.y2; h++) {
+ 964              		.loc 1 238 15 is_stmt 0 view .LVU341
+ 965 02d4 089B     		ldr	r3, [sp, #32]
+ 966 02d6 5BEA0303 		orrs	r3, fp, r3
+ 967 02da 1AD0     		beq	.L32
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 968              		.loc 1 239 17 is_stmt 1 view .LVU342
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 969              		.loc 1 239 34 is_stmt 0 view .LVU343
+ 970 02dc 0D9C     		ldr	r4, [sp, #52]
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 971              		.loc 1 239 23 view .LVU344
+ 972 02de 0134     		adds	r4, r4, #1
+ 973              	.LVL77:
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 974              		.loc 1 239 17 view .LVU345
+ 975 02e0 14E0     		b	.L36
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 30
+
+
+ 976              	.L37:
+ 240:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 977              		.loc 1 240 21 is_stmt 1 view .LVU346
+ 240:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 978              		.loc 1 240 35 is_stmt 0 view .LVU347
+ 979 02e2 0F94     		str	r4, [sp, #60]
+ 241:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 980              		.loc 1 241 21 is_stmt 1 view .LVU348
+ 241:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 981              		.loc 1 241 35 is_stmt 0 view .LVU349
+ 982 02e4 1194     		str	r4, [sp, #68]
+ 243:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_dsc.mask_res = lv_draw_sw_mask_apply(mask_list, mask_buf, blend_area.x1, 
+ 983              		.loc 1 243 21 is_stmt 1 view .LVU350
+ 984 02e6 2A46     		mov	r2, r5
+ 985 02e8 FF21     		movs	r1, #255
+ 986 02ea 4046     		mov	r0, r8
+ 987 02ec FFF7FEFF 		bl	lv_memset
+ 988              	.LVL78:
+ 244:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 989              		.loc 1 244 21 view .LVU351
+ 244:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 990              		.loc 1 244 42 is_stmt 0 view .LVU352
+ 991 02f0 0095     		str	r5, [sp]
+ 992 02f2 2346     		mov	r3, r4
+ 993 02f4 0E9A     		ldr	r2, [sp, #56]
+ 994 02f6 4146     		mov	r1, r8
+ 995 02f8 24A8     		add	r0, sp, #144
+ 996 02fa FFF7FEFF 		bl	lv_draw_sw_mask_apply
+ 997              	.LVL79:
+ 244:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 998              		.loc 1 244 40 discriminator 1 view .LVU353
+ 999 02fe 8DF8B800 		strb	r0, [sp, #184]
+ 245:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 }
+ 1000              		.loc 1 245 21 is_stmt 1 view .LVU354
+ 1001 0302 27A9     		add	r1, sp, #156
+ 1002 0304 4846     		mov	r0, r9
+ 1003 0306 FFF7FEFF 		bl	lv_draw_sw_blend
+ 1004              	.LVL80:
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1005              		.loc 1 239 63 discriminator 3 view .LVU355
+ 1006 030a 0134     		adds	r4, r4, #1
+ 1007              	.LVL81:
+ 1008              	.L36:
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1009              		.loc 1 239 45 discriminator 1 view .LVU356
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1010              		.loc 1 239 57 is_stmt 0 discriminator 1 view .LVU357
+ 1011 030c 359B     		ldr	r3, [sp, #212]
+ 239:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1012              		.loc 1 239 45 discriminator 1 view .LVU358
+ 1013 030e A342     		cmp	r3, r4
+ 1014 0310 E7DA     		bge	.L37
+ 1015              	.LVL82:
+ 1016              	.L32:
+ 251:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = LV_MAX(draw_area.x1, core_area.x2 + 1);
+ 1017              		.loc 1 251 9 is_stmt 1 view .LVU359
+ 251:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = LV_MAX(draw_area.x1, core_area.x2 + 1);
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 31
+
+
+ 1018              		.loc 1 251 25 is_stmt 0 view .LVU360
+ 1019 0312 109B     		ldr	r3, [sp, #64]
+ 1020 0314 0133     		adds	r3, r3, #1
+ 1021 0316 329A     		ldr	r2, [sp, #200]
+ 1022 0318 9342     		cmp	r3, r2
+ 1023 031a B8BF     		it	lt
+ 1024 031c 1346     		movlt	r3, r2
+ 251:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_area.x1 = LV_MAX(draw_area.x1, core_area.x2 + 1);
+ 1025              		.loc 1 251 23 view .LVU361
+ 1026 031e 0E93     		str	r3, [sp, #56]
+ 252:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1027              		.loc 1 252 9 is_stmt 1 view .LVU362
+ 252:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1028              		.loc 1 252 25 is_stmt 0 view .LVU363
+ 1029 0320 0C9B     		ldr	r3, [sp, #48]
+ 1030 0322 0133     		adds	r3, r3, #1
+ 1031 0324 9342     		cmp	r3, r2
+ 1032 0326 B8BF     		it	lt
+ 1033 0328 1346     		movlt	r3, r2
+ 252:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1034              		.loc 1 252 23 view .LVU364
+ 1035 032a 0E93     		str	r3, [sp, #56]
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_w = lv_area_get_width(&blend_area);
+ 1036              		.loc 1 254 9 is_stmt 1 view .LVU365
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_w = lv_area_get_width(&blend_area);
+ 1037              		.loc 1 254 34 is_stmt 0 view .LVU366
+ 1038 032c 349B     		ldr	r3, [sp, #208]
+ 254:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         blend_w = lv_area_get_width(&blend_area);
+ 1039              		.loc 1 254 23 view .LVU367
+ 1040 032e 1093     		str	r3, [sp, #64]
+ 255:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1041              		.loc 1 255 9 is_stmt 1 view .LVU368
+ 255:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1042              		.loc 1 255 19 is_stmt 0 view .LVU369
+ 1043 0330 0EA8     		add	r0, sp, #56
+ 1044 0332 FFF7FEFF 		bl	lv_area_get_width
+ 1045              	.LVL83:
+ 257:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(right_side || top_side) {
+ 1046              		.loc 1 257 9 is_stmt 1 view .LVU370
+ 257:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****             if(right_side || top_side) {
+ 1047              		.loc 1 257 11 is_stmt 0 view .LVU371
+ 1048 0336 051E     		subs	r5, r0, #0
+ 1049 0338 96DD     		ble	.L31
+ 258:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = draw_area.y1; h < core_area.y1; h++) {
+ 1050              		.loc 1 258 13 is_stmt 1 view .LVU372
+ 258:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = draw_area.y1; h < core_area.y1; h++) {
+ 1051              		.loc 1 258 15 is_stmt 0 view .LVU373
+ 1052 033a 029B     		ldr	r3, [sp, #8]
+ 1053 033c 099A     		ldr	r2, [sp, #36]
+ 1054 033e 1343     		orrs	r3, r3, r2
+ 1055              	.LVL84:
+ 258:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = draw_area.y1; h < core_area.y1; h++) {
+ 1056              		.loc 1 258 15 view .LVU374
+ 1057 0340 19D0     		beq	.L38
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1058              		.loc 1 259 17 is_stmt 1 view .LVU375
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 32
+
+
+ 1059              		.loc 1 259 23 is_stmt 0 view .LVU376
+ 1060 0342 339C     		ldr	r4, [sp, #204]
+ 1061              	.LVL85:
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1062              		.loc 1 259 17 view .LVU377
+ 1063 0344 14E0     		b	.L39
+ 1064              	.LVL86:
+ 1065              	.L40:
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 1066              		.loc 1 260 21 is_stmt 1 view .LVU378
+ 260:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 1067              		.loc 1 260 35 is_stmt 0 view .LVU379
+ 1068 0346 0F94     		str	r4, [sp, #60]
+ 261:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1069              		.loc 1 261 21 is_stmt 1 view .LVU380
+ 261:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1070              		.loc 1 261 35 is_stmt 0 view .LVU381
+ 1071 0348 1194     		str	r4, [sp, #68]
+ 263:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_dsc.mask_res = lv_draw_sw_mask_apply(mask_list, mask_buf, blend_area.x1, 
+ 1072              		.loc 1 263 21 is_stmt 1 view .LVU382
+ 1073 034a 2A46     		mov	r2, r5
+ 1074 034c FF21     		movs	r1, #255
+ 1075 034e 4046     		mov	r0, r8
+ 1076 0350 FFF7FEFF 		bl	lv_memset
+ 1077              	.LVL87:
+ 264:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 1078              		.loc 1 264 21 view .LVU383
+ 264:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 1079              		.loc 1 264 42 is_stmt 0 view .LVU384
+ 1080 0354 0095     		str	r5, [sp]
+ 1081 0356 2346     		mov	r3, r4
+ 1082 0358 0E9A     		ldr	r2, [sp, #56]
+ 1083 035a 4146     		mov	r1, r8
+ 1084 035c 24A8     		add	r0, sp, #144
+ 1085 035e FFF7FEFF 		bl	lv_draw_sw_mask_apply
+ 1086              	.LVL88:
+ 264:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 1087              		.loc 1 264 40 discriminator 1 view .LVU385
+ 1088 0362 8DF8B800 		strb	r0, [sp, #184]
+ 265:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 }
+ 1089              		.loc 1 265 21 is_stmt 1 view .LVU386
+ 1090 0366 27A9     		add	r1, sp, #156
+ 1091 0368 4846     		mov	r0, r9
+ 1092 036a FFF7FEFF 		bl	lv_draw_sw_blend
+ 1093              	.LVL89:
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1094              		.loc 1 259 58 discriminator 3 view .LVU387
+ 1095 036e 0134     		adds	r4, r4, #1
+ 1096              	.LVL90:
+ 1097              	.L39:
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1098              		.loc 1 259 41 discriminator 1 view .LVU388
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1099              		.loc 1 259 52 is_stmt 0 discriminator 1 view .LVU389
+ 1100 0370 0B9B     		ldr	r3, [sp, #44]
+ 259:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1101              		.loc 1 259 41 discriminator 1 view .LVU390
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 33
+
+
+ 1102 0372 A342     		cmp	r3, r4
+ 1103 0374 E7DC     		bgt	.L40
+ 1104              	.LVL91:
+ 1105              	.L38:
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = core_area.y2 + 1; h <= draw_area.y2; h++) {
+ 1106              		.loc 1 269 13 is_stmt 1 view .LVU391
+ 269:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 for(h = core_area.y2 + 1; h <= draw_area.y2; h++) {
+ 1107              		.loc 1 269 15 is_stmt 0 view .LVU392
+ 1108 0376 099B     		ldr	r3, [sp, #36]
+ 1109 0378 5BEA0303 		orrs	r3, fp, r3
+ 1110 037c 3FF474AF 		beq	.L31
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1111              		.loc 1 270 17 is_stmt 1 view .LVU393
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1112              		.loc 1 270 34 is_stmt 0 view .LVU394
+ 1113 0380 0D9C     		ldr	r4, [sp, #52]
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1114              		.loc 1 270 23 view .LVU395
+ 1115 0382 0134     		adds	r4, r4, #1
+ 1116              	.LVL92:
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1117              		.loc 1 270 17 view .LVU396
+ 1118 0384 14E0     		b	.L41
+ 1119              	.L42:
+ 271:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 1120              		.loc 1 271 21 is_stmt 1 view .LVU397
+ 271:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y2 = h;
+ 1121              		.loc 1 271 35 is_stmt 0 view .LVU398
+ 1122 0386 0F94     		str	r4, [sp, #60]
+ 272:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1123              		.loc 1 272 21 is_stmt 1 view .LVU399
+ 272:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1124              		.loc 1 272 35 is_stmt 0 view .LVU400
+ 1125 0388 1194     		str	r4, [sp, #68]
+ 274:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_dsc.mask_res = lv_draw_sw_mask_apply(mask_list, mask_buf, blend_area.x1, 
+ 1126              		.loc 1 274 21 is_stmt 1 view .LVU401
+ 1127 038a 2A46     		mov	r2, r5
+ 1128 038c FF21     		movs	r1, #255
+ 1129 038e 4046     		mov	r0, r8
+ 1130 0390 FFF7FEFF 		bl	lv_memset
+ 1131              	.LVL93:
+ 275:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 1132              		.loc 1 275 21 view .LVU402
+ 275:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 1133              		.loc 1 275 42 is_stmt 0 view .LVU403
+ 1134 0394 0095     		str	r5, [sp]
+ 1135 0396 2346     		mov	r3, r4
+ 1136 0398 0E9A     		ldr	r2, [sp, #56]
+ 1137 039a 4146     		mov	r1, r8
+ 1138 039c 24A8     		add	r0, sp, #144
+ 1139 039e FFF7FEFF 		bl	lv_draw_sw_mask_apply
+ 1140              	.LVL94:
+ 275:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     lv_draw_sw_blend(t, &blend_dsc);
+ 1141              		.loc 1 275 40 discriminator 1 view .LVU404
+ 1142 03a2 8DF8B800 		strb	r0, [sp, #184]
+ 276:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                 }
+ 1143              		.loc 1 276 21 is_stmt 1 view .LVU405
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 34
+
+
+ 1144 03a6 27A9     		add	r1, sp, #156
+ 1145 03a8 4846     		mov	r0, r9
+ 1146 03aa FFF7FEFF 		bl	lv_draw_sw_blend
+ 1147              	.LVL95:
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1148              		.loc 1 270 63 discriminator 3 view .LVU406
+ 1149 03ae 0134     		adds	r4, r4, #1
+ 1150              	.LVL96:
+ 1151              	.L41:
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1152              		.loc 1 270 45 discriminator 1 view .LVU407
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1153              		.loc 1 270 57 is_stmt 0 discriminator 1 view .LVU408
+ 1154 03b0 359B     		ldr	r3, [sp, #212]
+ 270:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****                     blend_area.y1 = h;
+ 1155              		.loc 1 270 45 discriminator 1 view .LVU409
+ 1156 03b2 A342     		cmp	r3, r4
+ 1157 03b4 E7DA     		bge	.L42
+ 1158 03b6 57E7     		b	.L31
+ 1159              	.LVL97:
+ 1160              	.L57:
+ 283:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_free(mask_buf);
+ 1161              		.loc 1 283 18 is_stmt 1 discriminator 1 view .LVU410
+ 1162 03b8 12A8     		add	r0, sp, #72
+ 1163 03ba FFF7FEFF 		bl	lv_draw_sw_mask_free_param
+ 1164              	.LVL98:
+ 1165 03be 59E7     		b	.L43
+ 1166              		.cfi_endproc
+ 1167              	.LFE188:
+ 1169              		.section	.text.lv_draw_sw_border,"ax",%progbits
+ 1170              		.align	1
+ 1171              		.global	lv_draw_sw_border
+ 1172              		.syntax unified
+ 1173              		.thumb
+ 1174              		.thumb_func
+ 1176              	lv_draw_sw_border:
+ 1177              	.LVL99:
+ 1178              	.LFB187:
+  55:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->opa <= LV_OPA_MIN) return;
+ 1179              		.loc 1 55 1 view -0
+ 1180              		.cfi_startproc
+ 1181              		@ args = 0, pretend = 0, frame = 16
+ 1182              		@ frame_needed = 0, uses_anonymous_args = 0
+  56:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->width == 0) return;
+ 1183              		.loc 1 56 5 view .LVU412
+  56:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->width == 0) return;
+ 1184              		.loc 1 56 11 is_stmt 0 view .LVU413
+ 1185 0000 91F82830 		ldrb	r3, [r1, #40]	@ zero_extendqisi2
+  56:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->width == 0) return;
+ 1186              		.loc 1 56 7 view .LVU414
+ 1187 0004 022B     		cmp	r3, #2
+ 1188 0006 7ED9     		bls	.L75
+  55:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->opa <= LV_OPA_MIN) return;
+ 1189              		.loc 1 55 1 view .LVU415
+ 1190 0008 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1191              	.LCFI8:
+ 1192              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 35
+
+
+ 1193              		.cfi_offset 4, -24
+ 1194              		.cfi_offset 5, -20
+ 1195              		.cfi_offset 6, -16
+ 1196              		.cfi_offset 7, -12
+ 1197              		.cfi_offset 8, -8
+ 1198              		.cfi_offset 14, -4
+ 1199 000c 88B0     		sub	sp, sp, #32
+ 1200              	.LCFI9:
+ 1201              		.cfi_def_cfa_offset 56
+ 1202 000e 8046     		mov	r8, r0
+ 1203 0010 0C46     		mov	r4, r1
+ 1204 0012 1546     		mov	r5, r2
+ 1205 0014 1746     		mov	r7, r2
+  57:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->side == LV_BORDER_SIDE_NONE) return;
+ 1206              		.loc 1 57 5 is_stmt 1 view .LVU416
+  57:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->side == LV_BORDER_SIDE_NONE) return;
+ 1207              		.loc 1 57 11 is_stmt 0 view .LVU417
+ 1208 0016 4B6A     		ldr	r3, [r1, #36]
+  57:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(dsc->side == LV_BORDER_SIDE_NONE) return;
+ 1209              		.loc 1 57 7 view .LVU418
+ 1210 0018 23B1     		cbz	r3, .L58
+  58:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1211              		.loc 1 58 5 is_stmt 1 view .LVU419
+  58:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1212              		.loc 1 58 18 is_stmt 0 view .LVU420
+ 1213 001a 91F82930 		ldrb	r3, [r1, #41]	@ zero_extendqisi2
+  58:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1214              		.loc 1 58 7 view .LVU421
+ 1215 001e 13F01F0F 		tst	r3, #31
+ 1216 0022 02D1     		bne	.L78
+ 1217              	.LVL100:
+ 1218              	.L58:
+  84:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1219              		.loc 1 84 1 view .LVU422
+ 1220 0024 08B0     		add	sp, sp, #32
+ 1221              	.LCFI10:
+ 1222              		.cfi_remember_state
+ 1223              		.cfi_def_cfa_offset 24
+ 1224              		@ sp needed
+ 1225 0026 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1226              	.LVL101:
+ 1227              	.L78:
+ 1228              	.LCFI11:
+ 1229              		.cfi_restore_state
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t coords_h = lv_area_get_height(coords);
+ 1230              		.loc 1 60 5 is_stmt 1 view .LVU423
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t coords_h = lv_area_get_height(coords);
+ 1231              		.loc 1 60 24 is_stmt 0 view .LVU424
+ 1232 002a 1046     		mov	r0, r2
+ 1233              	.LVL102:
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t coords_h = lv_area_get_height(coords);
+ 1234              		.loc 1 60 24 view .LVU425
+ 1235 002c FFF7FEFF 		bl	lv_area_get_width
+ 1236              	.LVL103:
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t coords_h = lv_area_get_height(coords);
+ 1237              		.loc 1 60 24 view .LVU426
+ 1238 0030 0646     		mov	r6, r0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 36
+
+
+ 1239              	.LVL104:
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t rout = dsc->radius;
+ 1240              		.loc 1 61 5 is_stmt 1 view .LVU427
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t rout = dsc->radius;
+ 1241              		.loc 1 61 24 is_stmt 0 view .LVU428
+ 1242 0032 2846     		mov	r0, r5
+ 1243              	.LVL105:
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t rout = dsc->radius;
+ 1244              		.loc 1 61 24 view .LVU429
+ 1245 0034 FFF7FEFF 		bl	lv_area_get_height
+ 1246              	.LVL106:
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t short_side = LV_MIN(coords_w, coords_h);
+ 1247              		.loc 1 62 5 is_stmt 1 view .LVU430
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t short_side = LV_MIN(coords_w, coords_h);
+ 1248              		.loc 1 62 13 is_stmt 0 view .LVU431
+ 1249 0038 E269     		ldr	r2, [r4, #28]
+ 1250              	.LVL107:
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rout > short_side >> 1) rout = short_side >> 1;
+ 1251              		.loc 1 63 5 is_stmt 1 view .LVU432
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rout > short_side >> 1) rout = short_side >> 1;
+ 1252              		.loc 1 63 13 is_stmt 0 view .LVU433
+ 1253 003a 3346     		mov	r3, r6
+ 1254 003c 8642     		cmp	r6, r0
+ 1255 003e A8BF     		it	ge
+ 1256 0040 0346     		movge	r3, r0
+ 1257 0042 1846     		mov	r0, r3
+ 1258              	.LVL108:
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1259              		.loc 1 64 5 is_stmt 1 view .LVU434
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1260              		.loc 1 64 26 is_stmt 0 view .LVU435
+ 1261 0044 5B10     		asrs	r3, r3, #1
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1262              		.loc 1 64 7 view .LVU436
+ 1263 0046 B2EB600F 		cmp	r2, r0, asr #1
+ 1264 004a 00DC     		bgt	.L60
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     int32_t short_side = LV_MIN(coords_w, coords_h);
+ 1265              		.loc 1 62 13 view .LVU437
+ 1266 004c 1346     		mov	r3, r2
+ 1267              	.L60:
+ 1268              	.LVL109:
+  67:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     lv_area_copy(&area_inner, coords);
+ 1269              		.loc 1 67 5 is_stmt 1 view .LVU438
+  68:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x1 += ((dsc->side & LV_BORDER_SIDE_LEFT) ? dsc->width : - (dsc->width + rout));
+ 1270              		.loc 1 68 5 view .LVU439
+ 1271              	.LBB18:
+ 1272              	.LBI18:
+ 1273              		.file 3 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h"
+   1:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * @file lv_area.h
+   3:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** #ifndef LV_AREA_H
+   7:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** #define LV_AREA_H
+   8:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+   9:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** #ifdef __cplusplus
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 37
+
+
+  10:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** extern "C" {
+  11:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** #endif
+  12:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  13:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** /*********************
+  14:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  *      INCLUDES
+  15:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  *********************/
+  16:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** #include "../lv_conf_internal.h"
+  17:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** #include "lv_types.h"
+  18:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** #include "lv_math.h"
+  19:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  20:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** /*********************
+  21:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  *      DEFINES
+  22:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  *********************/
+  23:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  24:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** /**********************
+  25:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  *      TYPEDEFS
+  26:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  **********************/
+  27:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  28:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** /**
+  29:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * Represents a point on the screen.
+  30:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  */
+  31:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** typedef struct {
+  32:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     int32_t x;
+  33:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     int32_t y;
+  34:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** } lv_point_t;
+  35:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  36:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** typedef struct {
+  37:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     lv_value_precise_t x;
+  38:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     lv_value_precise_t y;
+  39:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** } lv_point_precise_t;
+  40:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  41:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** /** Represents an area of the screen.*/
+  42:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** typedef struct {
+  43:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     int32_t x1;
+  44:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     int32_t y1;
+  45:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     int32_t x2;
+  46:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     int32_t y2;
+  47:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** } lv_area_t;
+  48:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  49:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** /** Alignments*/
+  50:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  51:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** typedef enum {
+  52:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_DEFAULT = 0,
+  53:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_TOP_LEFT,
+  54:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_TOP_MID,
+  55:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_TOP_RIGHT,
+  56:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_BOTTOM_LEFT,
+  57:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_BOTTOM_MID,
+  58:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_BOTTOM_RIGHT,
+  59:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_LEFT_MID,
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_RIGHT_MID,
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_CENTER,
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_TOP_LEFT,
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_TOP_MID,
+  65:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_TOP_RIGHT,
+  66:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_BOTTOM_LEFT,
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 38
+
+
+  67:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_BOTTOM_MID,
+  68:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_BOTTOM_RIGHT,
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_LEFT_TOP,
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_LEFT_MID,
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_LEFT_BOTTOM,
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_RIGHT_TOP,
+  73:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_RIGHT_MID,
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_ALIGN_OUT_RIGHT_BOTTOM,
+  75:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** } lv_align_t;
+  76:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** typedef enum {
+  78:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_DIR_NONE     = 0x00,
+  79:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_DIR_LEFT     = (1 << 0),
+  80:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_DIR_RIGHT    = (1 << 1),
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_DIR_TOP      = (1 << 2),
+  82:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_DIR_BOTTOM   = (1 << 3),
+  83:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_DIR_HOR      = LV_DIR_LEFT | LV_DIR_RIGHT,
+  84:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_DIR_VER      = LV_DIR_TOP | LV_DIR_BOTTOM,
+  85:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     LV_DIR_ALL      = LV_DIR_HOR | LV_DIR_VER,
+  86:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** } lv_dir_t;
+  87:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  88:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** /**********************
+  89:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * GLOBAL PROTOTYPES
+  90:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  **********************/
+  91:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+  92:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** /**
+  93:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * Initialize an area
+  94:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * @param area_p pointer to an area
+  95:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * @param x1 left coordinate of the area
+  96:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * @param y1 top coordinate of the area
+  97:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * @param x2 right coordinate of the area
+  98:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * @param y2 bottom coordinate of the area
+  99:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  */
+ 100:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** void lv_area_set(lv_area_t * area_p, int32_t x1, int32_t y1, int32_t x2, int32_t y2);
+ 101:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** 
+ 102:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** /**
+ 103:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * Copy an area
+ 104:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * @param dest pointer to the destination area
+ 105:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  * @param src pointer to the source area
+ 106:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****  */
+ 107:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** inline static void lv_area_copy(lv_area_t * dest, const lv_area_t * src)
+ 1274              		.loc 3 107 20 view .LVU440
+ 1275              	.LBB19:
+ 108:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h **** {
+ 109:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     dest->x1 = src->x1;
+ 1276              		.loc 3 109 5 view .LVU441
+ 1277              		.loc 3 109 19 is_stmt 0 view .LVU442
+ 1278 004e 3968     		ldr	r1, [r7]
+ 1279 0050 0D46     		mov	r5, r1
+ 1280              	.LVL110:
+ 1281              		.loc 3 109 14 view .LVU443
+ 1282 0052 0491     		str	r1, [sp, #16]
+ 110:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     dest->y1 = src->y1;
+ 1283              		.loc 3 110 5 is_stmt 1 view .LVU444
+ 1284              		.loc 3 110 19 is_stmt 0 view .LVU445
+ 1285 0054 D7F804C0 		ldr	ip, [r7, #4]
+ 1286              		.loc 3 110 14 view .LVU446
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 39
+
+
+ 1287 0058 CDF814C0 		str	ip, [sp, #20]
+ 111:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     dest->x2 = src->x2;
+ 1288              		.loc 3 111 5 is_stmt 1 view .LVU447
+ 1289              		.loc 3 111 19 is_stmt 0 view .LVU448
+ 1290 005c D7F808E0 		ldr	lr, [r7, #8]
+ 1291              		.loc 3 111 14 view .LVU449
+ 1292 0060 CDF818E0 		str	lr, [sp, #24]
+ 112:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area.h ****     dest->y2 = src->y2;
+ 1293              		.loc 3 112 5 is_stmt 1 view .LVU450
+ 1294              		.loc 3 112 19 is_stmt 0 view .LVU451
+ 1295 0064 F968     		ldr	r1, [r7, #12]
+ 1296              		.loc 3 112 14 view .LVU452
+ 1297 0066 0791     		str	r1, [sp, #28]
+ 1298              	.LVL111:
+ 1299              		.loc 3 112 14 view .LVU453
+ 1300              	.LBE19:
+ 1301              	.LBE18:
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x2 -= ((dsc->side & LV_BORDER_SIDE_RIGHT) ? dsc->width : - (dsc->width + rout));
+ 1302              		.loc 1 69 5 is_stmt 1 view .LVU454
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x2 -= ((dsc->side & LV_BORDER_SIDE_RIGHT) ? dsc->width : - (dsc->width + rout));
+ 1303              		.loc 1 69 27 is_stmt 0 view .LVU455
+ 1304 0068 94F82920 		ldrb	r2, [r4, #41]	@ zero_extendqisi2
+ 1305 006c 02F01F00 		and	r0, r2, #31
+ 1306              	.LVL112:
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x2 -= ((dsc->side & LV_BORDER_SIDE_RIGHT) ? dsc->width : - (dsc->width + rout));
+ 1307              		.loc 1 69 70 view .LVU456
+ 1308 0070 12F0040F 		tst	r2, #4
+ 1309 0074 25D0     		beq	.L61
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x2 -= ((dsc->side & LV_BORDER_SIDE_RIGHT) ? dsc->width : - (dsc->width + rout));
+ 1310              		.loc 1 69 70 discriminator 1 view .LVU457
+ 1311 0076 626A     		ldr	r2, [r4, #36]
+ 1312              	.L62:
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x2 -= ((dsc->side & LV_BORDER_SIDE_RIGHT) ? dsc->width : - (dsc->width + rout));
+ 1313              		.loc 1 69 19 discriminator 4 view .LVU458
+ 1314 0078 2A44     		add	r2, r2, r5
+ 1315 007a 0492     		str	r2, [sp, #16]
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y1 += ((dsc->side & LV_BORDER_SIDE_TOP) ? dsc->width : - (dsc->width + rout));
+ 1316              		.loc 1 70 5 is_stmt 1 view .LVU459
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y1 += ((dsc->side & LV_BORDER_SIDE_TOP) ? dsc->width : - (dsc->width + rout));
+ 1317              		.loc 1 70 71 is_stmt 0 view .LVU460
+ 1318 007c 10F0080F 		tst	r0, #8
+ 1319 0080 23D0     		beq	.L63
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y1 += ((dsc->side & LV_BORDER_SIDE_TOP) ? dsc->width : - (dsc->width + rout));
+ 1320              		.loc 1 70 71 discriminator 1 view .LVU461
+ 1321 0082 626A     		ldr	r2, [r4, #36]
+ 1322              	.L64:
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y1 += ((dsc->side & LV_BORDER_SIDE_TOP) ? dsc->width : - (dsc->width + rout));
+ 1323              		.loc 1 70 19 discriminator 4 view .LVU462
+ 1324 0084 AEEB0202 		sub	r2, lr, r2
+ 1325 0088 0692     		str	r2, [sp, #24]
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y2 -= ((dsc->side & LV_BORDER_SIDE_BOTTOM) ? dsc->width : - (dsc->width + rout));
+ 1326              		.loc 1 71 5 is_stmt 1 view .LVU463
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y2 -= ((dsc->side & LV_BORDER_SIDE_BOTTOM) ? dsc->width : - (dsc->width + rout));
+ 1327              		.loc 1 71 69 is_stmt 0 view .LVU464
+ 1328 008a 10F0020F 		tst	r0, #2
+ 1329 008e 20D0     		beq	.L65
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y2 -= ((dsc->side & LV_BORDER_SIDE_BOTTOM) ? dsc->width : - (dsc->width + rout));
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 40
+
+
+ 1330              		.loc 1 71 69 discriminator 1 view .LVU465
+ 1331 0090 626A     		ldr	r2, [r4, #36]
+ 1332              	.L66:
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y2 -= ((dsc->side & LV_BORDER_SIDE_BOTTOM) ? dsc->width : - (dsc->width + rout));
+ 1333              		.loc 1 71 19 discriminator 4 view .LVU466
+ 1334 0092 6244     		add	r2, r2, ip
+ 1335 0094 0592     		str	r2, [sp, #20]
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1336              		.loc 1 72 5 is_stmt 1 view .LVU467
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1337              		.loc 1 72 72 is_stmt 0 view .LVU468
+ 1338 0096 10F0010F 		tst	r0, #1
+ 1339 009a 1ED0     		beq	.L67
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1340              		.loc 1 72 72 discriminator 1 view .LVU469
+ 1341 009c 626A     		ldr	r2, [r4, #36]
+ 1342              	.L68:
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1343              		.loc 1 72 19 discriminator 4 view .LVU470
+ 1344 009e 891A     		subs	r1, r1, r2
+ 1345 00a0 0791     		str	r1, [sp, #28]
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rin < 0) rin = 0;
+ 1346              		.loc 1 74 5 is_stmt 1 view .LVU471
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     if(rin < 0) rin = 0;
+ 1347              		.loc 1 74 29 is_stmt 0 view .LVU472
+ 1348 00a2 626A     		ldr	r2, [r4, #36]
+ 1349              	.LVL113:
+  75:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1350              		.loc 1 75 5 is_stmt 1 view .LVU473
+  75:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1351              		.loc 1 75 7 is_stmt 0 view .LVU474
+ 1352 00a4 9A1A     		subs	r2, r3, r2
+ 1353              	.LVL114:
+  75:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1354              		.loc 1 75 7 view .LVU475
+ 1355 00a6 1CD4     		bmi	.L79
+ 1356              	.LVL115:
+ 1357              	.L69:
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         draw_border_simple(t, coords, &area_inner, dsc->color, dsc->opa);
+ 1358              		.loc 1 77 5 is_stmt 1 view .LVU476
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****         draw_border_simple(t, coords, &area_inner, dsc->color, dsc->opa);
+ 1359              		.loc 1 77 7 is_stmt 0 view .LVU477
+ 1360 00a8 53EA0201 		orrs	r1, r3, r2
+ 1361 00ac 1BD1     		bne	.L70
+  78:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 1362              		.loc 1 78 9 is_stmt 1 view .LVU478
+  78:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 1363              		.loc 1 78 67 is_stmt 0 view .LVU479
+ 1364 00ae 94F82830 		ldrb	r3, [r4, #40]	@ zero_extendqisi2
+ 1365              	.LVL116:
+  78:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 1366              		.loc 1 78 9 view .LVU480
+ 1367 00b2 0093     		str	r3, [sp]
+ 1368 00b4 236A     		ldr	r3, [r4, #32]
+ 1369 00b6 04AA     		add	r2, sp, #16
+ 1370              	.LVL117:
+  78:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 41
+
+
+ 1371              		.loc 1 78 9 view .LVU481
+ 1372 00b8 3946     		mov	r1, r7
+ 1373 00ba 4046     		mov	r0, r8
+ 1374 00bc FFF7FEFF 		bl	draw_border_simple
+ 1375              	.LVL118:
+ 1376 00c0 B0E7     		b	.L58
+ 1377              	.LVL119:
+ 1378              	.L61:
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x2 -= ((dsc->side & LV_BORDER_SIDE_RIGHT) ? dsc->width : - (dsc->width + rout));
+ 1379              		.loc 1 69 78 discriminator 2 view .LVU482
+ 1380 00c2 626A     		ldr	r2, [r4, #36]
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x2 -= ((dsc->side & LV_BORDER_SIDE_RIGHT) ? dsc->width : - (dsc->width + rout));
+ 1381              		.loc 1 69 86 discriminator 2 view .LVU483
+ 1382 00c4 1A44     		add	r2, r2, r3
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.x2 -= ((dsc->side & LV_BORDER_SIDE_RIGHT) ? dsc->width : - (dsc->width + rout));
+ 1383              		.loc 1 69 70 discriminator 2 view .LVU484
+ 1384 00c6 5242     		rsbs	r2, r2, #0
+ 1385 00c8 D6E7     		b	.L62
+ 1386              	.L63:
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y1 += ((dsc->side & LV_BORDER_SIDE_TOP) ? dsc->width : - (dsc->width + rout));
+ 1387              		.loc 1 70 79 discriminator 2 view .LVU485
+ 1388 00ca 626A     		ldr	r2, [r4, #36]
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y1 += ((dsc->side & LV_BORDER_SIDE_TOP) ? dsc->width : - (dsc->width + rout));
+ 1389              		.loc 1 70 87 discriminator 2 view .LVU486
+ 1390 00cc 1A44     		add	r2, r2, r3
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y1 += ((dsc->side & LV_BORDER_SIDE_TOP) ? dsc->width : - (dsc->width + rout));
+ 1391              		.loc 1 70 71 discriminator 2 view .LVU487
+ 1392 00ce 5242     		rsbs	r2, r2, #0
+ 1393 00d0 D8E7     		b	.L64
+ 1394              	.L65:
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y2 -= ((dsc->side & LV_BORDER_SIDE_BOTTOM) ? dsc->width : - (dsc->width + rout));
+ 1395              		.loc 1 71 77 discriminator 2 view .LVU488
+ 1396 00d2 626A     		ldr	r2, [r4, #36]
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y2 -= ((dsc->side & LV_BORDER_SIDE_BOTTOM) ? dsc->width : - (dsc->width + rout));
+ 1397              		.loc 1 71 85 discriminator 2 view .LVU489
+ 1398 00d4 1A44     		add	r2, r2, r3
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     area_inner.y2 -= ((dsc->side & LV_BORDER_SIDE_BOTTOM) ? dsc->width : - (dsc->width + rout));
+ 1399              		.loc 1 71 69 discriminator 2 view .LVU490
+ 1400 00d6 5242     		rsbs	r2, r2, #0
+ 1401 00d8 DBE7     		b	.L66
+ 1402              	.L67:
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1403              		.loc 1 72 80 discriminator 2 view .LVU491
+ 1404 00da 626A     		ldr	r2, [r4, #36]
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1405              		.loc 1 72 88 discriminator 2 view .LVU492
+ 1406 00dc 1A44     		add	r2, r2, r3
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1407              		.loc 1 72 72 discriminator 2 view .LVU493
+ 1408 00de 5242     		rsbs	r2, r2, #0
+ 1409 00e0 DDE7     		b	.L68
+ 1410              	.LVL120:
+ 1411              	.L79:
+  75:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1412              		.loc 1 75 21 discriminator 1 view .LVU494
+ 1413 00e2 0022     		movs	r2, #0
+ 1414              	.LVL121:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 42
+
+
+  75:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c **** 
+ 1415              		.loc 1 75 21 discriminator 1 view .LVU495
+ 1416 00e4 E0E7     		b	.L69
+ 1417              	.LVL122:
+ 1418              	.L70:
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 1419              		.loc 1 81 9 is_stmt 1 view .LVU496
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 1420              		.loc 1 81 79 is_stmt 0 view .LVU497
+ 1421 00e6 94F82810 		ldrb	r1, [r4, #40]	@ zero_extendqisi2
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 1422              		.loc 1 81 9 view .LVU498
+ 1423 00ea 0291     		str	r1, [sp, #8]
+ 1424 00ec 216A     		ldr	r1, [r4, #32]
+ 1425 00ee ADF80410 		strh	r1, [sp, #4]	@ movhi
+ 1426 00f2 090C     		lsrs	r1, r1, #16
+ 1427 00f4 8DF80610 		strb	r1, [sp, #6]
+ 1428 00f8 0092     		str	r2, [sp]
+ 1429 00fa 04AA     		add	r2, sp, #16
+ 1430              	.LVL123:
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 1431              		.loc 1 81 9 view .LVU499
+ 1432 00fc 3946     		mov	r1, r7
+ 1433 00fe 4046     		mov	r0, r8
+ 1434 0100 FFF7FEFF 		bl	draw_border_complex
+ 1435              	.LVL124:
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 1436              		.loc 1 81 9 view .LVU500
+ 1437 0104 8EE7     		b	.L58
+ 1438              	.LVL125:
+ 1439              	.L75:
+ 1440              	.LCFI12:
+ 1441              		.cfi_def_cfa_offset 0
+ 1442              		.cfi_restore 4
+ 1443              		.cfi_restore 5
+ 1444              		.cfi_restore 6
+ 1445              		.cfi_restore 7
+ 1446              		.cfi_restore 8
+ 1447              		.cfi_restore 14
+  81:../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_border.c ****     }
+ 1448              		.loc 1 81 9 view .LVU501
+ 1449 0106 7047     		bx	lr
+ 1450              		.cfi_endproc
+ 1451              	.LFE187:
+ 1453              		.text
+ 1454              	.Letext0:
+ 1455              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1456              		.file 5 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1457              		.file 6 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 1458              		.file 7 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_types.h"
+ 1459              		.file 8 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../lv_draw.h"
+ 1460              		.file 9 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../lv_draw_private.h"
+ 1461              		.file 10 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_mask_private.h"
+ 1462              		.file 11 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend_private.h"
+ 1463              		.file 12 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf.h"
+ 1464              		.file 13 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_color.h"
+ 1465              		.file 14 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/lv_draw_sw_mask.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 43
+
+
+ 1466              		.file 15 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_image_dsc.h"
+ 1467              		.file 16 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_style.h"
+ 1468              		.file 17 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../lv_draw_rect.h"
+ 1469              		.file 18 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib/lv_mem.h"
+ 1470              		.file 19 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/../../misc/lv_area_private.h"
+ 1471              		.file 20 "../../Middlewares/LVGL/GUI/lvgl/src/draw/sw/blend/lv_draw_sw_blend.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccotDFbd.s 			page 44
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_draw_sw_border.c
+C:\Users\28576\AppData\Local\Temp\ccotDFbd.s:20     .text.draw_border_simple:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccotDFbd.s:25     .text.draw_border_simple:00000000 draw_border_simple
+C:\Users\28576\AppData\Local\Temp\ccotDFbd.s:263    .text.draw_border_complex:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccotDFbd.s:268    .text.draw_border_complex:00000000 draw_border_complex
+C:\Users\28576\AppData\Local\Temp\ccotDFbd.s:1170   .text.lv_draw_sw_border:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccotDFbd.s:1176   .text.lv_draw_sw_border:00000000 lv_draw_sw_border
+
+UNDEFINED SYMBOLS
+lv_memset
+lv_draw_sw_blend
+lv_area_intersect
+lv_area_get_width
+lv_malloc
+lv_draw_sw_mask_radius_init
+lv_draw_sw_mask_apply
+lv_draw_sw_mask_free_param
+lv_free
+lv_area_get_height

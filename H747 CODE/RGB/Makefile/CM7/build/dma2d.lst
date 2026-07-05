@@ -1,0 +1,360 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"dma2d.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../CM7/Core/Src/dma2d.c"
+  19              		.section	.text.MX_DMA2D_Init,"ax",%progbits
+  20              		.align	1
+  21              		.global	MX_DMA2D_Init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	MX_DMA2D_Init:
+  27              	.LFB144:
+   1:../../CM7/Core/Src/dma2d.c **** /* USER CODE BEGIN Header */
+   2:../../CM7/Core/Src/dma2d.c **** /**
+   3:../../CM7/Core/Src/dma2d.c ****   ******************************************************************************
+   4:../../CM7/Core/Src/dma2d.c ****   * @file    dma2d.c
+   5:../../CM7/Core/Src/dma2d.c ****   * @brief   This file provides code for the configuration
+   6:../../CM7/Core/Src/dma2d.c ****   *          of the DMA2D instances.
+   7:../../CM7/Core/Src/dma2d.c ****   ******************************************************************************
+   8:../../CM7/Core/Src/dma2d.c ****   * @attention
+   9:../../CM7/Core/Src/dma2d.c ****   *
+  10:../../CM7/Core/Src/dma2d.c ****   * Copyright (c) 2026 STMicroelectronics.
+  11:../../CM7/Core/Src/dma2d.c ****   * All rights reserved.
+  12:../../CM7/Core/Src/dma2d.c ****   *
+  13:../../CM7/Core/Src/dma2d.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  14:../../CM7/Core/Src/dma2d.c ****   * in the root directory of this software component.
+  15:../../CM7/Core/Src/dma2d.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  16:../../CM7/Core/Src/dma2d.c ****   *
+  17:../../CM7/Core/Src/dma2d.c ****   ******************************************************************************
+  18:../../CM7/Core/Src/dma2d.c ****   */
+  19:../../CM7/Core/Src/dma2d.c **** /* USER CODE END Header */
+  20:../../CM7/Core/Src/dma2d.c **** /* Includes ------------------------------------------------------------------*/
+  21:../../CM7/Core/Src/dma2d.c **** #include "dma2d.h"
+  22:../../CM7/Core/Src/dma2d.c **** 
+  23:../../CM7/Core/Src/dma2d.c **** /* USER CODE BEGIN 0 */
+  24:../../CM7/Core/Src/dma2d.c **** 
+  25:../../CM7/Core/Src/dma2d.c **** /* USER CODE END 0 */
+  26:../../CM7/Core/Src/dma2d.c **** 
+  27:../../CM7/Core/Src/dma2d.c **** DMA2D_HandleTypeDef hdma2d;
+  28:../../CM7/Core/Src/dma2d.c **** 
+  29:../../CM7/Core/Src/dma2d.c **** /* DMA2D init function */
+  30:../../CM7/Core/Src/dma2d.c **** void MX_DMA2D_Init(void)
+  31:../../CM7/Core/Src/dma2d.c **** {
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s 			page 2
+
+
+  28              		.loc 1 31 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  32:../../CM7/Core/Src/dma2d.c **** 
+  33:../../CM7/Core/Src/dma2d.c ****   /* USER CODE BEGIN DMA2D_Init 0 */
+  34:../../CM7/Core/Src/dma2d.c **** 
+  35:../../CM7/Core/Src/dma2d.c ****   /* USER CODE END DMA2D_Init 0 */
+  36:../../CM7/Core/Src/dma2d.c **** 
+  37:../../CM7/Core/Src/dma2d.c ****   /* USER CODE BEGIN DMA2D_Init 1 */
+  38:../../CM7/Core/Src/dma2d.c **** 
+  39:../../CM7/Core/Src/dma2d.c ****   /* USER CODE END DMA2D_Init 1 */
+  40:../../CM7/Core/Src/dma2d.c ****   hdma2d.Instance = DMA2D;
+  37              		.loc 1 40 3 view .LVU1
+  38              		.loc 1 40 19 is_stmt 0 view .LVU2
+  39 0002 0F48     		ldr	r0, .L7
+  40 0004 0F4B     		ldr	r3, .L7+4
+  41 0006 0360     		str	r3, [r0]
+  41:../../CM7/Core/Src/dma2d.c ****   hdma2d.Init.Mode = DMA2D_M2M;
+  42              		.loc 1 41 3 is_stmt 1 view .LVU3
+  43              		.loc 1 41 20 is_stmt 0 view .LVU4
+  44 0008 0023     		movs	r3, #0
+  45 000a 4360     		str	r3, [r0, #4]
+  42:../../CM7/Core/Src/dma2d.c ****   hdma2d.Init.ColorMode = DMA2D_OUTPUT_RGB565;
+  46              		.loc 1 42 3 is_stmt 1 view .LVU5
+  47              		.loc 1 42 25 is_stmt 0 view .LVU6
+  48 000c 0222     		movs	r2, #2
+  49 000e 8260     		str	r2, [r0, #8]
+  43:../../CM7/Core/Src/dma2d.c ****   hdma2d.Init.OutputOffset = 0;
+  50              		.loc 1 43 3 is_stmt 1 view .LVU7
+  51              		.loc 1 43 28 is_stmt 0 view .LVU8
+  52 0010 C360     		str	r3, [r0, #12]
+  44:../../CM7/Core/Src/dma2d.c ****   hdma2d.LayerCfg[1].InputOffset = 0;
+  53              		.loc 1 44 3 is_stmt 1 view .LVU9
+  54              		.loc 1 44 34 is_stmt 0 view .LVU10
+  55 0012 4364     		str	r3, [r0, #68]
+  45:../../CM7/Core/Src/dma2d.c ****   hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_RGB565;
+  56              		.loc 1 45 3 is_stmt 1 view .LVU11
+  57              		.loc 1 45 37 is_stmt 0 view .LVU12
+  58 0014 8264     		str	r2, [r0, #72]
+  46:../../CM7/Core/Src/dma2d.c ****   hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
+  59              		.loc 1 46 3 is_stmt 1 view .LVU13
+  60              		.loc 1 46 32 is_stmt 0 view .LVU14
+  61 0016 C364     		str	r3, [r0, #76]
+  47:../../CM7/Core/Src/dma2d.c ****   hdma2d.LayerCfg[1].InputAlpha = 255;
+  62              		.loc 1 47 3 is_stmt 1 view .LVU15
+  63              		.loc 1 47 33 is_stmt 0 view .LVU16
+  64 0018 FF22     		movs	r2, #255
+  65 001a 0265     		str	r2, [r0, #80]
+  48:../../CM7/Core/Src/dma2d.c ****   hdma2d.LayerCfg[1].AlphaInverted = DMA2D_REGULAR_ALPHA;
+  66              		.loc 1 48 3 is_stmt 1 view .LVU17
+  67              		.loc 1 48 36 is_stmt 0 view .LVU18
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s 			page 3
+
+
+  68 001c 4365     		str	r3, [r0, #84]
+  49:../../CM7/Core/Src/dma2d.c ****   hdma2d.LayerCfg[1].RedBlueSwap = DMA2D_RB_REGULAR;
+  69              		.loc 1 49 3 is_stmt 1 view .LVU19
+  70              		.loc 1 49 34 is_stmt 0 view .LVU20
+  71 001e 8365     		str	r3, [r0, #88]
+  50:../../CM7/Core/Src/dma2d.c ****   hdma2d.LayerCfg[1].ChromaSubSampling = DMA2D_NO_CSS;
+  72              		.loc 1 50 3 is_stmt 1 view .LVU21
+  73              		.loc 1 50 40 is_stmt 0 view .LVU22
+  74 0020 C365     		str	r3, [r0, #92]
+  51:../../CM7/Core/Src/dma2d.c ****   if (HAL_DMA2D_Init(&hdma2d) != HAL_OK)
+  75              		.loc 1 51 3 is_stmt 1 view .LVU23
+  76              		.loc 1 51 7 is_stmt 0 view .LVU24
+  77 0022 FFF7FEFF 		bl	HAL_DMA2D_Init
+  78              	.LVL0:
+  79              		.loc 1 51 6 discriminator 1 view .LVU25
+  80 0026 28B9     		cbnz	r0, .L5
+  81              	.L2:
+  52:../../CM7/Core/Src/dma2d.c ****   {
+  53:../../CM7/Core/Src/dma2d.c ****     Error_Handler();
+  54:../../CM7/Core/Src/dma2d.c ****   }
+  55:../../CM7/Core/Src/dma2d.c ****   if (HAL_DMA2D_ConfigLayer(&hdma2d, 1) != HAL_OK)
+  82              		.loc 1 55 3 is_stmt 1 view .LVU26
+  83              		.loc 1 55 7 is_stmt 0 view .LVU27
+  84 0028 0121     		movs	r1, #1
+  85 002a 0548     		ldr	r0, .L7
+  86 002c FFF7FEFF 		bl	HAL_DMA2D_ConfigLayer
+  87              	.LVL1:
+  88              		.loc 1 55 6 discriminator 1 view .LVU28
+  89 0030 18B9     		cbnz	r0, .L6
+  90              	.L1:
+  56:../../CM7/Core/Src/dma2d.c ****   {
+  57:../../CM7/Core/Src/dma2d.c ****     Error_Handler();
+  58:../../CM7/Core/Src/dma2d.c ****   }
+  59:../../CM7/Core/Src/dma2d.c ****   /* USER CODE BEGIN DMA2D_Init 2 */
+  60:../../CM7/Core/Src/dma2d.c **** 
+  61:../../CM7/Core/Src/dma2d.c ****   /* USER CODE END DMA2D_Init 2 */
+  62:../../CM7/Core/Src/dma2d.c **** 
+  63:../../CM7/Core/Src/dma2d.c **** }
+  91              		.loc 1 63 1 view .LVU29
+  92 0032 08BD     		pop	{r3, pc}
+  93              	.L5:
+  53:../../CM7/Core/Src/dma2d.c ****   }
+  94              		.loc 1 53 5 is_stmt 1 view .LVU30
+  95 0034 FFF7FEFF 		bl	Error_Handler
+  96              	.LVL2:
+  97 0038 F6E7     		b	.L2
+  98              	.L6:
+  57:../../CM7/Core/Src/dma2d.c ****   }
+  99              		.loc 1 57 5 view .LVU31
+ 100 003a FFF7FEFF 		bl	Error_Handler
+ 101              	.LVL3:
+ 102              		.loc 1 63 1 is_stmt 0 view .LVU32
+ 103 003e F8E7     		b	.L1
+ 104              	.L8:
+ 105              		.align	2
+ 106              	.L7:
+ 107 0040 00000000 		.word	hdma2d
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s 			page 4
+
+
+ 108 0044 00100052 		.word	1375735808
+ 109              		.cfi_endproc
+ 110              	.LFE144:
+ 112              		.section	.text.HAL_DMA2D_MspInit,"ax",%progbits
+ 113              		.align	1
+ 114              		.global	HAL_DMA2D_MspInit
+ 115              		.syntax unified
+ 116              		.thumb
+ 117              		.thumb_func
+ 119              	HAL_DMA2D_MspInit:
+ 120              	.LVL4:
+ 121              	.LFB145:
+  64:../../CM7/Core/Src/dma2d.c **** 
+  65:../../CM7/Core/Src/dma2d.c **** void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef* dma2dHandle)
+  66:../../CM7/Core/Src/dma2d.c **** {
+ 122              		.loc 1 66 1 is_stmt 1 view -0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 8
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126              		@ link register save eliminated.
+  67:../../CM7/Core/Src/dma2d.c **** 
+  68:../../CM7/Core/Src/dma2d.c ****   if(dma2dHandle->Instance==DMA2D)
+ 127              		.loc 1 68 3 view .LVU34
+ 128              		.loc 1 68 17 is_stmt 0 view .LVU35
+ 129 0000 0268     		ldr	r2, [r0]
+ 130              		.loc 1 68 5 view .LVU36
+ 131 0002 0A4B     		ldr	r3, .L16
+ 132 0004 9A42     		cmp	r2, r3
+ 133 0006 00D0     		beq	.L15
+ 134 0008 7047     		bx	lr
+ 135              	.L15:
+  66:../../CM7/Core/Src/dma2d.c **** 
+ 136              		.loc 1 66 1 view .LVU37
+ 137 000a 82B0     		sub	sp, sp, #8
+ 138              	.LCFI1:
+ 139              		.cfi_def_cfa_offset 8
+  69:../../CM7/Core/Src/dma2d.c ****   {
+  70:../../CM7/Core/Src/dma2d.c ****   /* USER CODE BEGIN DMA2D_MspInit 0 */
+  71:../../CM7/Core/Src/dma2d.c **** 
+  72:../../CM7/Core/Src/dma2d.c ****   /* USER CODE END DMA2D_MspInit 0 */
+  73:../../CM7/Core/Src/dma2d.c ****     /* DMA2D clock enable */
+  74:../../CM7/Core/Src/dma2d.c ****     __HAL_RCC_DMA2D_CLK_ENABLE();
+ 140              		.loc 1 74 5 is_stmt 1 view .LVU38
+ 141              	.LBB2:
+ 142              		.loc 1 74 5 view .LVU39
+ 143              		.loc 1 74 5 view .LVU40
+ 144 000c 084B     		ldr	r3, .L16+4
+ 145 000e D3F8D420 		ldr	r2, [r3, #212]
+ 146 0012 42F01002 		orr	r2, r2, #16
+ 147 0016 C3F8D420 		str	r2, [r3, #212]
+ 148              		.loc 1 74 5 view .LVU41
+ 149 001a D3F8D430 		ldr	r3, [r3, #212]
+ 150 001e 03F01003 		and	r3, r3, #16
+ 151 0022 0193     		str	r3, [sp, #4]
+ 152              		.loc 1 74 5 view .LVU42
+ 153 0024 019B     		ldr	r3, [sp, #4]
+ 154              	.LBE2:
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s 			page 5
+
+
+ 155              		.loc 1 74 5 view .LVU43
+  75:../../CM7/Core/Src/dma2d.c ****   /* USER CODE BEGIN DMA2D_MspInit 1 */
+  76:../../CM7/Core/Src/dma2d.c **** 
+  77:../../CM7/Core/Src/dma2d.c ****   /* USER CODE END DMA2D_MspInit 1 */
+  78:../../CM7/Core/Src/dma2d.c ****   }
+  79:../../CM7/Core/Src/dma2d.c **** }
+ 156              		.loc 1 79 1 is_stmt 0 view .LVU44
+ 157 0026 02B0     		add	sp, sp, #8
+ 158              	.LCFI2:
+ 159              		.cfi_def_cfa_offset 0
+ 160              		@ sp needed
+ 161 0028 7047     		bx	lr
+ 162              	.L17:
+ 163 002a 00BF     		.align	2
+ 164              	.L16:
+ 165 002c 00100052 		.word	1375735808
+ 166 0030 00440258 		.word	1476543488
+ 167              		.cfi_endproc
+ 168              	.LFE145:
+ 170              		.section	.text.HAL_DMA2D_MspDeInit,"ax",%progbits
+ 171              		.align	1
+ 172              		.global	HAL_DMA2D_MspDeInit
+ 173              		.syntax unified
+ 174              		.thumb
+ 175              		.thumb_func
+ 177              	HAL_DMA2D_MspDeInit:
+ 178              	.LVL5:
+ 179              	.LFB146:
+  80:../../CM7/Core/Src/dma2d.c **** 
+  81:../../CM7/Core/Src/dma2d.c **** void HAL_DMA2D_MspDeInit(DMA2D_HandleTypeDef* dma2dHandle)
+  82:../../CM7/Core/Src/dma2d.c **** {
+ 180              		.loc 1 82 1 is_stmt 1 view -0
+ 181              		.cfi_startproc
+ 182              		@ args = 0, pretend = 0, frame = 0
+ 183              		@ frame_needed = 0, uses_anonymous_args = 0
+ 184              		@ link register save eliminated.
+  83:../../CM7/Core/Src/dma2d.c **** 
+  84:../../CM7/Core/Src/dma2d.c ****   if(dma2dHandle->Instance==DMA2D)
+ 185              		.loc 1 84 3 view .LVU46
+ 186              		.loc 1 84 17 is_stmt 0 view .LVU47
+ 187 0000 0268     		ldr	r2, [r0]
+ 188              		.loc 1 84 5 view .LVU48
+ 189 0002 064B     		ldr	r3, .L21
+ 190 0004 9A42     		cmp	r2, r3
+ 191 0006 00D0     		beq	.L20
+ 192              	.L18:
+  85:../../CM7/Core/Src/dma2d.c ****   {
+  86:../../CM7/Core/Src/dma2d.c ****   /* USER CODE BEGIN DMA2D_MspDeInit 0 */
+  87:../../CM7/Core/Src/dma2d.c **** 
+  88:../../CM7/Core/Src/dma2d.c ****   /* USER CODE END DMA2D_MspDeInit 0 */
+  89:../../CM7/Core/Src/dma2d.c ****     /* Peripheral clock disable */
+  90:../../CM7/Core/Src/dma2d.c ****     __HAL_RCC_DMA2D_CLK_DISABLE();
+  91:../../CM7/Core/Src/dma2d.c ****   /* USER CODE BEGIN DMA2D_MspDeInit 1 */
+  92:../../CM7/Core/Src/dma2d.c **** 
+  93:../../CM7/Core/Src/dma2d.c ****   /* USER CODE END DMA2D_MspDeInit 1 */
+  94:../../CM7/Core/Src/dma2d.c ****   }
+  95:../../CM7/Core/Src/dma2d.c **** }
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s 			page 6
+
+
+ 193              		.loc 1 95 1 view .LVU49
+ 194 0008 7047     		bx	lr
+ 195              	.L20:
+  90:../../CM7/Core/Src/dma2d.c ****   /* USER CODE BEGIN DMA2D_MspDeInit 1 */
+ 196              		.loc 1 90 5 is_stmt 1 view .LVU50
+ 197 000a 054A     		ldr	r2, .L21+4
+ 198 000c D2F8D430 		ldr	r3, [r2, #212]
+ 199 0010 23F01003 		bic	r3, r3, #16
+ 200 0014 C2F8D430 		str	r3, [r2, #212]
+ 201              		.loc 1 95 1 is_stmt 0 view .LVU51
+ 202 0018 F6E7     		b	.L18
+ 203              	.L22:
+ 204 001a 00BF     		.align	2
+ 205              	.L21:
+ 206 001c 00100052 		.word	1375735808
+ 207 0020 00440258 		.word	1476543488
+ 208              		.cfi_endproc
+ 209              	.LFE146:
+ 211              		.global	hdma2d
+ 212              		.section	.bss.hdma2d,"aw",%nobits
+ 213              		.align	2
+ 216              	hdma2d:
+ 217 0000 00000000 		.space	104
+ 217      00000000 
+ 217      00000000 
+ 217      00000000 
+ 217      00000000 
+ 218              		.text
+ 219              	.Letext0:
+ 220              		.file 2 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 221              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 222              		.file 4 "../../Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h747xx.h"
+ 223              		.file 5 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 224              		.file 6 "../../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h"
+ 225              		.file 7 "../../CM7/Core/Inc/dma2d.h"
+ 226              		.file 8 "../../CM7/Core/Inc/main.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dma2d.c
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:20     .text.MX_DMA2D_Init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:26     .text.MX_DMA2D_Init:00000000 MX_DMA2D_Init
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:107    .text.MX_DMA2D_Init:00000040 $d
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:216    .bss.hdma2d:00000000 hdma2d
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:113    .text.HAL_DMA2D_MspInit:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:119    .text.HAL_DMA2D_MspInit:00000000 HAL_DMA2D_MspInit
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:165    .text.HAL_DMA2D_MspInit:0000002c $d
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:171    .text.HAL_DMA2D_MspDeInit:00000000 $t
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:177    .text.HAL_DMA2D_MspDeInit:00000000 HAL_DMA2D_MspDeInit
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:206    .text.HAL_DMA2D_MspDeInit:0000001c $d
+C:\Users\28576\AppData\Local\Temp\ccUrL2Nz.s:213    .bss.hdma2d:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_DMA2D_Init
+HAL_DMA2D_ConfigLayer
+Error_Handler

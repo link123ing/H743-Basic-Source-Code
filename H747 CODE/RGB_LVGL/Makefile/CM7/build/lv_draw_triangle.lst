@@ -1,0 +1,471 @@
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"lv_draw_triangle.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c"
+  19              		.section	.text.lv_draw_triangle_dsc_init,"ax",%progbits
+  20              		.align	1
+  21              		.global	lv_draw_triangle_dsc_init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lv_draw_triangle_dsc_init:
+  27              	.LVL0:
+  28              	.LFB187:
+   1:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** /**
+   2:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  * @file lv_draw_triangle.c
+   3:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  *
+   4:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  */
+   5:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+   6:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** /*********************
+   7:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  *      INCLUDES
+   8:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  *********************/
+   9:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  10:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** #include "lv_draw_triangle_private.h"
+  11:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** #include "lv_draw_private.h"
+  12:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** #include "../core/lv_obj.h"
+  13:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** #include "../misc/lv_math.h"
+  14:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** #include "../stdlib/lv_mem.h"
+  15:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** #include "../stdlib/lv_string.h"
+  16:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  17:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** /*********************
+  18:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  *      DEFINES
+  19:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  *********************/
+  20:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  21:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** /**********************
+  22:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  *      TYPEDEFS
+  23:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  **********************/
+  24:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  25:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** /**********************
+  26:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  *  STATIC PROTOTYPES
+  27:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  **********************/
+  28:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  29:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** /**********************
+  30:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  *  STATIC VARIABLES
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s 			page 2
+
+
+  31:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  **********************/
+  32:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  33:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** /**********************
+  34:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  *      MACROS
+  35:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  **********************/
+  36:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  37:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** /**********************
+  38:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  *   GLOBAL FUNCTIONS
+  39:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****  **********************/
+  40:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  41:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** void lv_draw_triangle_dsc_init(lv_draw_triangle_dsc_t * dsc)
+  42:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** {
+  29              		.loc 1 42 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 42 1 is_stmt 0 view .LVU1
+  34 0000 10B5     		push	{r4, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+  39 0002 0446     		mov	r4, r0
+  43:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     LV_PROFILER_DRAW_BEGIN;
+  40              		.loc 1 43 27 is_stmt 1 view .LVU2
+  44:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     lv_memzero(dsc, sizeof(lv_draw_triangle_dsc_t));
+  41              		.loc 1 44 5 view .LVU3
+  42              	.LVL1:
+  43              	.LBB4:
+  44              	.LBI4:
+  45              		.file 2 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib/lv_string.h"
+   1:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+   2:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @file lv_string.h
+   3:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *
+   4:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+   5:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+   6:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #ifndef LV_STRING_H
+   7:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #define LV_STRING_H
+   8:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+   9:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #ifdef __cplusplus
+  10:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** extern "C" {
+  11:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #endif
+  12:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  13:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /*********************
+  14:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *      INCLUDES
+  15:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *********************/
+  16:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #include "../lv_conf_internal.h"
+  17:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** #include "../misc/lv_types.h"
+  18:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  19:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /*********************
+  20:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *      DEFINES
+  21:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *********************/
+  22:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  23:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**********************
+  24:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *      TYPEDEFS
+  25:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  **********************/
+  26:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s 			page 3
+
+
+  27:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**********************
+  28:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * GLOBAL PROTOTYPES
+  29:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  **********************/
+  30:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  31:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  32:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief Copies a block of memory from a source address to a destination address.
+  33:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst Pointer to the destination array where the content is to be copied.
+  34:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param src Pointer to the source of data to be copied.
+  35:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to copy.
+  36:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @return Pointer to the destination array.
+  37:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @note The function does not check for any overlapping of the source and destination memory block
+  38:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  39:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** void * lv_memcpy(void * dst, const void * src, size_t len);
+  40:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  41:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  42:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief Fills a block of memory with a specified value.
+  43:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst Pointer to the destination array to fill with the specified value.
+  44:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param v Value to be set. The value is passed as an int, but the function fills
+  45:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  *          the block of memory using the unsigned char conversion of this value.
+  46:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to be set to the value.
+  47:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  48:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** void lv_memset(void * dst, uint8_t v, size_t len);
+  49:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  50:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  51:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief Move a block of memory from source to destination
+  52:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst Pointer to the destination array where the content is to be copied.
+  53:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param src Pointer to the source of data to be copied.
+  54:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to copy
+  55:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @return Pointer to the destination array.
+  56:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  57:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** void * lv_memmove(void * dst, const void * src, size_t len);
+  58:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  59:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  60:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @brief This function will compare two memory blocks
+  61:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param p1 Pointer to the first memory block
+  62:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param p2 Pointer to the second memory block
+  63:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len Number of bytes to compare
+  64:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @return The difference between the value of the first unmatching byte.
+  65:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  66:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** int lv_memcmp(const void * p1, const void * p2, size_t len);
+  67:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** 
+  68:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** /**
+  69:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * Same as `memset(dst, 0x00, len)`.
+  70:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param dst pointer to the destination buffer
+  71:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  * @param len number of byte to set
+  72:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****  */
+  73:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** static inline void lv_memzero(void * dst, size_t len)
+  46              		.loc 2 73 20 view .LVU4
+  47              	.LBB5:
+  74:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h **** {
+  75:H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/stdlib\lv_string.h ****     lv_memset(dst, 0x00, len);
+  48              		.loc 2 75 5 view .LVU5
+  49 0004 4422     		movs	r2, #68
+  50 0006 0021     		movs	r1, #0
+  51 0008 FFF7FEFF 		bl	lv_memset
+  52              	.LVL2:
+  53              		.loc 2 75 5 is_stmt 0 view .LVU6
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s 			page 4
+
+
+  54              	.LBE5:
+  55              	.LBE4:
+  45:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     dsc->color = lv_color_white();
+  56              		.loc 1 45 5 is_stmt 1 view .LVU7
+  57              		.loc 1 45 18 is_stmt 0 view .LVU8
+  58 000c FFF7FEFF 		bl	lv_color_white
+  59              	.LVL3:
+  60 0010 84F83400 		strb	r0, [r4, #52]
+  61 0014 C0F30723 		ubfx	r3, r0, #8, #8
+  62 0018 84F83530 		strb	r3, [r4, #53]
+  63 001c C0F30740 		ubfx	r0, r0, #16, #8
+  64 0020 84F83600 		strb	r0, [r4, #54]
+  46:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     dsc->grad.stops[0].color = lv_color_white();
+  65              		.loc 1 46 5 is_stmt 1 view .LVU9
+  66              		.loc 1 46 32 is_stmt 0 view .LVU10
+  67 0024 FFF7FEFF 		bl	lv_color_white
+  68              	.LVL4:
+  69 0028 84F83800 		strb	r0, [r4, #56]
+  70 002c C0F30723 		ubfx	r3, r0, #8, #8
+  71 0030 84F83930 		strb	r3, [r4, #57]
+  72 0034 C0F30740 		ubfx	r0, r0, #16, #8
+  73 0038 84F83A00 		strb	r0, [r4, #58]
+  47:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     dsc->grad.stops[1].color = lv_color_black();
+  74              		.loc 1 47 5 is_stmt 1 view .LVU11
+  75              		.loc 1 47 32 is_stmt 0 view .LVU12
+  76 003c FFF7FEFF 		bl	lv_color_black
+  77              	.LVL5:
+  78 0040 84F83D00 		strb	r0, [r4, #61]
+  79 0044 C0F30723 		ubfx	r3, r0, #8, #8
+  80 0048 84F83E30 		strb	r3, [r4, #62]
+  81 004c C0F30740 		ubfx	r0, r0, #16, #8
+  82 0050 84F83F00 		strb	r0, [r4, #63]
+  48:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     dsc->grad.stops[1].frac = 0xFF;
+  83              		.loc 1 48 5 is_stmt 1 view .LVU13
+  84              		.loc 1 48 29 is_stmt 0 view .LVU14
+  85 0054 FF23     		movs	r3, #255
+  86 0056 84F84130 		strb	r3, [r4, #65]
+  49:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     dsc->grad.stops_count = 2;
+  87              		.loc 1 49 5 is_stmt 1 view .LVU15
+  88              		.loc 1 49 27 is_stmt 0 view .LVU16
+  89 005a 0222     		movs	r2, #2
+  90 005c 84F84220 		strb	r2, [r4, #66]
+  50:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     dsc->opa = LV_OPA_COVER;
+  91              		.loc 1 50 5 is_stmt 1 view .LVU17
+  92              		.loc 1 50 14 is_stmt 0 view .LVU18
+  93 0060 84F83730 		strb	r3, [r4, #55]
+  51:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     dsc->base.dsc_size = sizeof(lv_draw_triangle_dsc_t);
+  94              		.loc 1 51 5 is_stmt 1 view .LVU19
+  95              		.loc 1 51 24 is_stmt 0 view .LVU20
+  96 0064 4423     		movs	r3, #68
+  97 0066 6361     		str	r3, [r4, #20]
+  52:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     LV_PROFILER_DRAW_END;
+  98              		.loc 1 52 25 is_stmt 1 view .LVU21
+  53:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** }
+  99              		.loc 1 53 1 is_stmt 0 view .LVU22
+ 100 0068 10BD     		pop	{r4, pc}
+ 101              		.loc 1 53 1 view .LVU23
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s 			page 5
+
+
+ 102              		.cfi_endproc
+ 103              	.LFE187:
+ 105              		.section	.text.lv_draw_task_get_triangle_dsc,"ax",%progbits
+ 106              		.align	1
+ 107              		.global	lv_draw_task_get_triangle_dsc
+ 108              		.syntax unified
+ 109              		.thumb
+ 110              		.thumb_func
+ 112              	lv_draw_task_get_triangle_dsc:
+ 113              	.LVL6:
+ 114              	.LFB188:
+  54:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  55:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** lv_draw_triangle_dsc_t * lv_draw_task_get_triangle_dsc(lv_draw_task_t * task)
+  56:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** {
+ 115              		.loc 1 56 1 is_stmt 1 view -0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		@ link register save eliminated.
+  57:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     return task->type == LV_DRAW_TASK_TYPE_TRIANGLE ? (lv_draw_triangle_dsc_t *)task->draw_dsc : NU
+ 120              		.loc 1 57 5 view .LVU25
+ 121              		.loc 1 57 16 is_stmt 0 view .LVU26
+ 122 0000 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 123              		.loc 1 57 96 view .LVU27
+ 124 0002 0A2B     		cmp	r3, #10
+ 125 0004 01D1     		bne	.L5
+ 126              		.loc 1 57 96 discriminator 1 view .LVU28
+ 127 0006 406D     		ldr	r0, [r0, #84]
+ 128              	.LVL7:
+ 129              		.loc 1 57 96 discriminator 1 view .LVU29
+ 130 0008 7047     		bx	lr
+ 131              	.LVL8:
+ 132              	.L5:
+ 133              		.loc 1 57 96 discriminator 2 view .LVU30
+ 134 000a 0020     		movs	r0, #0
+ 135              	.LVL9:
+  58:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** }
+ 136              		.loc 1 58 1 view .LVU31
+ 137 000c 7047     		bx	lr
+ 138              		.cfi_endproc
+ 139              	.LFE188:
+ 141              		.section	.text.lv_draw_triangle,"ax",%progbits
+ 142              		.align	1
+ 143              		.global	lv_draw_triangle
+ 144              		.syntax unified
+ 145              		.thumb
+ 146              		.thumb_func
+ 148              	lv_draw_triangle:
+ 149              	.LVL10:
+ 150              	.LFB189:
+  59:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  60:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** void lv_draw_triangle(lv_layer_t * layer, const lv_draw_triangle_dsc_t * dsc)
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** {
+ 151              		.loc 1 61 1 is_stmt 1 view -0
+ 152              		.cfi_startproc
+ 153              		@ args = 0, pretend = 0, frame = 16
+ 154              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s 			page 6
+
+
+  62:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     if(dsc->opa <= LV_OPA_MIN) return;
+ 155              		.loc 1 62 5 view .LVU33
+ 156              		.loc 1 62 11 is_stmt 0 view .LVU34
+ 157 0000 91F83730 		ldrb	r3, [r1, #55]	@ zero_extendqisi2
+ 158              		.loc 1 62 7 view .LVU35
+ 159 0004 022B     		cmp	r3, #2
+ 160 0006 00D8     		bhi	.L13
+ 161 0008 7047     		bx	lr
+ 162              	.L13:
+  61:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     if(dsc->opa <= LV_OPA_MIN) return;
+ 163              		.loc 1 61 1 view .LVU36
+ 164 000a 30B5     		push	{r4, r5, lr}
+ 165              	.LCFI1:
+ 166              		.cfi_def_cfa_offset 12
+ 167              		.cfi_offset 4, -12
+ 168              		.cfi_offset 5, -8
+ 169              		.cfi_offset 14, -4
+ 170 000c 85B0     		sub	sp, sp, #20
+ 171              	.LCFI2:
+ 172              		.cfi_def_cfa_offset 32
+ 173 000e 0546     		mov	r5, r0
+ 174 0010 0C46     		mov	r4, r1
+  63:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  64:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     LV_PROFILER_DRAW_BEGIN;
+ 175              		.loc 1 64 27 is_stmt 1 view .LVU37
+  65:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  66:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     lv_area_t a;
+ 176              		.loc 1 66 5 view .LVU38
+  67:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     a.x1 = (int32_t)LV_MIN3(dsc->p[0].x, dsc->p[1].x, dsc->p[2].x);
+ 177              		.loc 1 67 5 view .LVU39
+ 178              		.loc 1 67 21 is_stmt 0 view .LVU40
+ 179 0012 D1F82CE0 		ldr	lr, [r1, #44]
+ 180 0016 4A6A     		ldr	r2, [r1, #36]
+ 181 0018 CB69     		ldr	r3, [r1, #28]
+ 182 001a 9342     		cmp	r3, r2
+ 183 001c A8BF     		it	ge
+ 184 001e 1346     		movge	r3, r2
+ 185              		.loc 1 67 12 view .LVU41
+ 186 0020 7345     		cmp	r3, lr
+ 187 0022 A8BF     		it	ge
+ 188 0024 7346     		movge	r3, lr
+ 189              		.loc 1 67 10 view .LVU42
+ 190 0026 0093     		str	r3, [sp]
+  68:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     a.y1 = (int32_t)LV_MIN3(dsc->p[0].y, dsc->p[1].y, dsc->p[2].y);
+ 191              		.loc 1 68 5 is_stmt 1 view .LVU43
+ 192              		.loc 1 68 21 is_stmt 0 view .LVU44
+ 193 0028 086B     		ldr	r0, [r1, #48]
+ 194              	.LVL11:
+ 195              		.loc 1 68 21 view .LVU45
+ 196 002a 8B6A     		ldr	r3, [r1, #40]
+ 197 002c D1F820C0 		ldr	ip, [r1, #32]
+ 198 0030 1946     		mov	r1, r3
+ 199              	.LVL12:
+ 200              		.loc 1 68 21 view .LVU46
+ 201 0032 6345     		cmp	r3, ip
+ 202 0034 A8BF     		it	ge
+ 203 0036 6146     		movge	r1, ip
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s 			page 7
+
+
+ 204              		.loc 1 68 12 view .LVU47
+ 205 0038 8142     		cmp	r1, r0
+ 206 003a A8BF     		it	ge
+ 207 003c 0146     		movge	r1, r0
+ 208              		.loc 1 68 10 view .LVU48
+ 209 003e 0191     		str	r1, [sp, #4]
+  69:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     a.x2 = (int32_t)LV_MAX3(dsc->p[0].x, dsc->p[1].x, dsc->p[2].x);
+ 210              		.loc 1 69 5 is_stmt 1 view .LVU49
+ 211              		.loc 1 69 21 is_stmt 0 view .LVU50
+ 212 0040 E169     		ldr	r1, [r4, #28]
+ 213 0042 8A42     		cmp	r2, r1
+ 214 0044 B8BF     		it	lt
+ 215 0046 0A46     		movlt	r2, r1
+ 216              		.loc 1 69 12 view .LVU51
+ 217 0048 7245     		cmp	r2, lr
+ 218 004a B8BF     		it	lt
+ 219 004c 7246     		movlt	r2, lr
+ 220              		.loc 1 69 10 view .LVU52
+ 221 004e 0292     		str	r2, [sp, #8]
+  70:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     a.y2 = (int32_t)LV_MAX3(dsc->p[0].y, dsc->p[1].y, dsc->p[2].y);
+ 222              		.loc 1 70 5 is_stmt 1 view .LVU53
+ 223              		.loc 1 70 21 is_stmt 0 view .LVU54
+ 224 0050 6345     		cmp	r3, ip
+ 225 0052 B8BF     		it	lt
+ 226 0054 6346     		movlt	r3, ip
+ 227              		.loc 1 70 12 view .LVU55
+ 228 0056 8342     		cmp	r3, r0
+ 229 0058 B8BF     		it	lt
+ 230 005a 0346     		movlt	r3, r0
+ 231              		.loc 1 70 10 view .LVU56
+ 232 005c 0393     		str	r3, [sp, #12]
+  71:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  72:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     lv_draw_task_t * t = lv_draw_add_task(layer, &a, LV_DRAW_TASK_TYPE_TRIANGLE);
+ 233              		.loc 1 72 5 is_stmt 1 view .LVU57
+ 234              		.loc 1 72 26 is_stmt 0 view .LVU58
+ 235 005e 0A22     		movs	r2, #10
+ 236 0060 6946     		mov	r1, sp
+ 237 0062 2846     		mov	r0, r5
+ 238 0064 FFF7FEFF 		bl	lv_draw_add_task
+ 239              	.LVL13:
+  73:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  74:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     lv_memcpy(t->draw_dsc, dsc, sizeof(*dsc));
+ 240              		.loc 1 74 5 is_stmt 1 view .LVU59
+ 241 0068 4422     		movs	r2, #68
+ 242 006a 2146     		mov	r1, r4
+ 243 006c 0446     		mov	r4, r0
+ 244              	.LVL14:
+ 245              		.loc 1 74 5 is_stmt 0 view .LVU60
+ 246 006e 406D     		ldr	r0, [r0, #84]
+ 247              	.LVL15:
+ 248              		.loc 1 74 5 view .LVU61
+ 249 0070 FFF7FEFF 		bl	lv_memcpy
+ 250              	.LVL16:
+  75:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** 
+  76:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     lv_draw_finalize_task_creation(layer, t);
+ 251              		.loc 1 76 5 is_stmt 1 view .LVU62
+ 252 0074 2146     		mov	r1, r4
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s 			page 8
+
+
+ 253 0076 2846     		mov	r0, r5
+ 254 0078 FFF7FEFF 		bl	lv_draw_finalize_task_creation
+ 255              	.LVL17:
+  77:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c ****     LV_PROFILER_DRAW_END;
+ 256              		.loc 1 77 25 view .LVU63
+  78:../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.c **** }
+ 257              		.loc 1 78 1 is_stmt 0 view .LVU64
+ 258 007c 05B0     		add	sp, sp, #20
+ 259              	.LCFI3:
+ 260              		.cfi_def_cfa_offset 12
+ 261              		@ sp needed
+ 262 007e 30BD     		pop	{r4, r5, pc}
+ 263              		.loc 1 78 1 view .LVU65
+ 264              		.cfi_endproc
+ 265              	.LFE189:
+ 267              		.text
+ 268              	.Letext0:
+ 269              		.file 3 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 270              		.file 4 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 271              		.file 5 "C:/Users/28576/AppData/Roaming/xPacks/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.co
+ 272              		.file 6 "../../Middlewares/LVGL/GUI/lvgl/src/draw/../misc/lv_types.h"
+ 273              		.file 7 "../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw.h"
+ 274              		.file 8 "../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_private.h"
+ 275              		.file 9 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_buf.h"
+ 276              		.file 10 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_area.h"
+ 277              		.file 11 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/misc/lv_color.h"
+ 278              		.file 12 "H:/STM32H7/RGB_LVGL/Middlewares/LVGL/GUI/lvgl/src/draw/lv_image_dsc.h"
+ 279              		.file 13 "../../Middlewares/LVGL/GUI/lvgl/src/draw/../misc/lv_grad.h"
+ 280              		.file 14 "../../Middlewares/LVGL/GUI/lvgl/src/draw/lv_draw_triangle.h"
+ARM GAS  C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lv_draw_triangle.c
+C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s:20     .text.lv_draw_triangle_dsc_init:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s:26     .text.lv_draw_triangle_dsc_init:00000000 lv_draw_triangle_dsc_init
+C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s:106    .text.lv_draw_task_get_triangle_dsc:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s:112    .text.lv_draw_task_get_triangle_dsc:00000000 lv_draw_task_get_triangle_dsc
+C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s:142    .text.lv_draw_triangle:00000000 $t
+C:\Users\28576\AppData\Local\Temp\cc5Tsd7R.s:148    .text.lv_draw_triangle:00000000 lv_draw_triangle
+
+UNDEFINED SYMBOLS
+lv_memset
+lv_color_white
+lv_color_black
+lv_draw_add_task
+lv_memcpy
+lv_draw_finalize_task_creation
